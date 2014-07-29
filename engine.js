@@ -1,6 +1,15 @@
 function Engine() { }
 
 // *************************************************************************************
+// External dependencies
+Engine.prototype.Dependencies =
+[
+	"script/third_party/ajq/ajq.js",
+	"script/third_party/hashCode-v1.0.0.js",
+	"script/third_party/webtoolkit.md5.js",
+];
+
+// *************************************************************************************
 // Resource collections
 Engine.prototype.Textures       = { };
 Engine.prototype.Shaders        = { };
@@ -12,6 +21,12 @@ Engine.prototype.RenderTargets  = { };
 Engine.prototype.Init = function(canvas, callback)
 {
 	_this = this;
+
+	Engine.Log("Preloading external dependencies...");
+	for(var i = 0; i < _this.Dependencies.length; ++i)
+	{
+		$.getScript(_this.Dependencies[i], function(script) { eval(script); });
+	}
 
 	Engine.Log("Initialising WebGL context");
 	try
