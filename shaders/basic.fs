@@ -1,4 +1,5 @@
 precision mediump float;
+uniform float time2;
 
 // Input
 varying vec2 vs_out_uv;

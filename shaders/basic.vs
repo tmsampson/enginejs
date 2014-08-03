@@ -4,6 +4,7 @@ attribute vec2 vs_in_uv;
 
 // Output
 varying vec2 vs_out_uv;
+uniform float time2;
 
 void main(void)
 {
