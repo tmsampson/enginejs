@@ -2,109 +2,177 @@ function Engine() { }
 
 // *************************************************************************************
 // External dependencies
-Engine.prototype.Dependencies =
+Engine.Dependencies =
 [
-	"script/third_party/ajq/ajq.js",
-	"script/third_party/hashCode-v1.0.0.js",
-	"script/third_party/webtoolkit.md5.js",
+	"enginejs/script/third_party/hashCode-v1.0.0.js",
+	"enginejs/script/third_party/webtoolkit.md5.js",
 ];
 
 // *************************************************************************************
-// Resource collections
-Engine.prototype.Textures       = { };
-Engine.prototype.Shaders        = { };
-Engine.prototype.ShaderPrograms = { };
-Engine.prototype.RenderTargets  = { };
+// Resources
+Engine.Resources =
+{
+	// Vertex shaders
+	vs_basic                 : { file: "enginejs/shaders/basic.vs" },
+	vs_basic_flip_y          : { file: "enginejs/shaders/basic.vs", define: ["FLIP_Y"] },
+
+	// Fragment shaders
+	fs_basic                 : { file: "enginejs/shaders/basic.fs" },
+	fs_basic_textured        : { file: "enginejs/shaders/basic-textured.fs" },
+	fs_basic_textured_flip_y : { file: "enginejs/shaders/basic-textured.fs", define: ["FLIP_Y"] },
+};
+
+// *************************************************************************************
+// Cache linked shader programs for performance
+Engine.prototype.ShaderProgramCache = { };
 
 // *************************************************************************************
 // Main initialisation
-Engine.prototype.Init = function(canvas, callback)
+Engine.prototype.Init = function(canvas, user_resources, on_complete, on_render)
 {
-	_this = this;
+	var _this = this;
 
-	Engine.Log("Preloading external dependencies...");
-	for(var i = 0; i < _this.Dependencies.length; ++i)
+	// First load out JS dependencies...
+	_this.LoadDependencies(function()
 	{
-		$.getScript(_this.Dependencies[i], function(script) { eval(script); });
-	}
-
-	Engine.Log("Initialising WebGL context");
-	try
-	{
-		// Try to grab the standard context. If it fails, fallback to experimental
-		this.gl = canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
-		this.canvas = canvas;
-	}
-	catch(e)
-	{
-		Engine.Log("Failed initialising WebGL context");
-		if(callback) { callback(null); }
-		return;
-	}
-
-	// Setup texture slots for easy access by index
-	Engine.Log("Setting up texture slots");
-
-	Engine.Log("Building shader library load chain");
-	var async_jobs =
-	[
-		// Load built-in shaders
-		{ first : function(cb) { _this.LoadShader("vs_basic",                 "script/engine/shaders/basic.vs",          cb);             } },
-		{ first : function(cb) { _this.LoadShader("vs_basic_flip_y",          "script/engine/shaders/basic.vs",          cb, ["FLIP_Y"]); } },
-		{ first : function(cb) { _this.LoadShader("fs_basic",                 "script/engine/shaders/basic.fs",          cb);             } },
-		{ first : function(cb) { _this.LoadShader("fs_basic_textured",        "script/engine/shaders/basic-textured.fs", cb);             } },
-		{ first : function(cb) { _this.LoadShader("fs_basic_textured_flip_y", "script/engine/shaders/basic-textured.fs", cb, ["FLIP_Y"]); } }
-	];
-
-	Engine.Log("Loading shader library");
-	ExecuteAsyncJobQueue(
-	{
-		jobs : async_jobs,
-		finally: function(ok)
+		Engine.Log("Initialising WebGL context");
+		try
 		{
-			Engine.Log(ok? "Initialised successfully" : "Initialised failed");
-			if(callback) { callback(ok? _this.gl : null); }
+			// Try to grab the standard context. If it fails, fallback to experimental
+			_this.gl = canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
+			_this.canvas = canvas;
 		}
+		catch(e)
+		{
+			Engine.Log("Failed initialising WebGL context");
+			if(on_complete) { on_complete(null); }
+			return;
+		}
+
+		// Load internal & user resources
+		ExecuteAsyncJobQueue(
+		{
+			jobs : [{ first : function(cb) { Engine.LogSection("Loading internal resources"); _this.LoadResources(Engine.Resources, cb); }},
+			        { first : function(cb) { Engine.LogSection("Loading user resources"); _this.LoadResources(user_resources, cb); }}],
+			finally: function(ok)
+			{
+				Engine.Log(ok? "Initialised successfully" : "Initialised failed");
+				if(on_complete) { on_complete(ok? _this.gl : null); }
+
+				// Setup internal render loop
+				var on_render_internal = function()
+				{
+					// Request that this callback is fired next frame
+					//var render_id = window.requestAnimationFrame(callback);       // Firefox 23 / IE 10 / Chrome / Safari 7 (incl. iOS)
+					var render_id = window.mozRequestAnimationFrame(on_render_internal);    // Firefox < 23
+					//var render_id = window.webkitRequestAnimationFrame(callback); // Older versions of Safari / Chrome
+
+					// Call client render loop
+					on_render(render_id);
+				};
+
+				// Request first render frame
+				window.mozRequestAnimationFrame(on_render_internal, canvas);
+			}
+		});
 	});
 }
 
 // *************************************************************************************
-// Texture operations
-Engine.prototype.LoadTexture = function(texture_url, callback)
+// Runtime javascript dependency load & init
+Engine.prototype.LoadDependencies = function(on_complete)
 {
 	var _this = this;
-	img = new Image();
 
-	// Generate a texture name from the url
-	var texture_name = texture_url.replace(/^.*[\\\/]/, '');
-	texture_name = texture_name.replace(' ', '_').replace('.', '_');
-
-	// Return shader object
-	var texture_object =
+	// 1. Load ajq for better async jobs/loops
+	Engine.LogSection("Loading Dependencies");
+	$.getScript("enginejs/script/third_party/ajq/ajq.js", function(script)
 	{
-		name         : texture_name,
-		status       : "ok",
-		src          : texture_url,
-		resource     : null,
-		image_object : img,
-		error_msg    : "",
-		width        : 0,
-		height       : 0
-	};
+		eval(script); // Hotload ajq.js
+
+		// 2. Use ajq to load remaining dependencies
+		ExecuteAsyncLoop(Engine.Dependencies, function(entry, carry_on)
+		{
+			Engine.Log("Loading dependency: " + entry);
+			$.getScript(entry, function(script)
+			{
+				eval(script); // Hotload dependency
+				carry_on(true);
+			});
+		}, on_complete);
+	});
+}
+
+Engine.prototype.LoadResources = function(resource_list, on_complete)
+{
+	var _this = this;
+
+	// Process all descriptors in resource list
+	ExecuteAsyncLoopProps(resource_list, function(prop_key, descriptor, carry_on)
+	{
+		Engine.Log("Loading resource: " + descriptor.file);
+		descriptor.prop_key = prop_key; // Pass prop_key through closure
+		_this.LoadResourceByDescriptor(descriptor, function(resource_object)
+		{
+			resource_list[descriptor.prop_key] = resource_object;
+			delete descriptor.prop_key; // No use to client
+			carry_on(true);
+		});
+	}, on_complete);
+}
+
+// *************************************************************************************
+// Generic resource load (type determined by fie extension)
+Engine.prototype.LoadResourceByDescriptor = function(descriptor, on_complete)
+{
+	var _this = this;
+
+	var extension = descriptor.file.split('.').pop();
+	switch(extension)
+	{
+		case "png":
+		{
+			_this.LoadTexture(descriptor, function(texture_object)
+			{
+				on_complete(texture_object);
+			});
+			break;
+		}
+		case "vs":
+		case "fs":
+		{
+			_this.LoadShader(descriptor, function(shader_object)
+			{
+				on_complete(shader_object);
+			});
+			break;
+		}
+	}
+}
+
+// *************************************************************************************
+// Texture operations
+Engine.prototype.LoadTexture = function(descriptor, callback)
+{
+	var _this = this;
+	var img_object = new Image();
 
 	// Handle success
-	img.onload = function()
+	img_object.onload = function()
 	{
 		// Create gl texture
-		texture_object.resource = _this.gl.createTexture();
-		texture_object.width  = this.width;
-		texture_object.height = this.height;
+		var texture_object =
+		{
+			resource : _this.gl.createTexture(),
+			width    : this.width,
+			height   : this.height
+		};
 
 		// Bind
 		_this.gl.bindTexture(_this.gl.TEXTURE_2D, texture_object.resource);
 
 		// Setup params
-		_this.gl.texImage2D(_this.gl.TEXTURE_2D, 0, _this.gl.RGBA, _this.gl.RGBA, _this.gl.UNSIGNED_BYTE, texture_object.image_object);
+		_this.gl.texImage2D(_this.gl.TEXTURE_2D, 0, _this.gl.RGBA, _this.gl.RGBA, _this.gl.UNSIGNED_BYTE, img_object);
 		_this.gl.texParameteri(_this.gl.TEXTURE_2D, _this.gl.TEXTURE_MAG_FILTER, _this.gl.LINEAR);
 		_this.gl.texParameteri(_this.gl.TEXTURE_2D, _this.gl.TEXTURE_MIN_FILTER, _this.gl.LINEAR_MIPMAP_NEAREST);
 		_this.gl.generateMipmap(_this.gl.TEXTURE_2D);
@@ -113,20 +181,19 @@ Engine.prototype.LoadTexture = function(texture_url, callback)
 		_this.gl.bindTexture(_this.gl.TEXTURE_2D, null);
 
 		// Done
-		_this.Textures[texture_name] = texture_object;
-		if(callback) { callback(texture_object); }
+		if(callback) { callback(new EngineResourceBase(descriptor, texture_object)); }
 	};
 
 	// Handle errors
-	img.onerror = function()
+	img_object.onerror = function()
 	{
-		texture_object.error_msg = "Failed loading texture: " + texture_url;
-		Engine.LogError(texture_object.error_msg);
-		if(callback) { callback(texture_object); }
+		var error_msg = "Failed loading texture: " + descriptor.file;
+		Engine.LogError(error_msg);
+		if(callback) { callback(new EngineResourceBase(descriptor, null)); }
 	};
 
 	// Initiate load
-	img.src = texture_url;
+	img_object.src = descriptor.file;
 }
 
 Engine.prototype.BindTexture = function(texture, idx, sampler_name)
@@ -146,51 +213,47 @@ Engine.prototype.BindTexture = function(texture, idx, sampler_name)
 
 // *************************************************************************************
 // Shader operations
-Engine.prototype.LoadShader = function(shader_name, shader_url, callback, defines)
+Engine.prototype.LoadShader = function(descriptor, callback)
 {
-	_this = this;
+	var _this = this;
 
-	var id_string = shader_name + " (" + shader_url + ")";
-	_this.FetchResource(shader_url, function(shader_code)
+	// Setup pre-processor defines...
+	var defines = (descriptor.define)? descriptor.define : [];
+
+	_this.FetchResource(descriptor.file, function(shader_code)
 	{
-		var extension = shader_url.split('.').pop();
-		var shader = (extension == "vs")? _this.CompileVertexShader(shader_name, shader_code, defines) :
-		                                  _this.CompileFragmentShader(shader_name, shader_code, defines);
-		shader.src = shader_url;
-		
-		if(shader.status != "ok")
+		var extension = descriptor.file.split('.').pop();
+		var shader = (extension == "vs")? _this.CompileVertexShader(shader_code, defines) :
+		                                  _this.CompileFragmentShader(shader_code, defines);
+
+		if(shader)
 		{
-			Engine.LogError("Failed loading shader: " + id_string);
-			Engine.LogError(shader.error_msg);
+			Engine.Log("Successfully loaded shader: " + descriptor.file);
 		}
 
-		Engine.Log("Successfully loaded shader: " + id_string);
-		if(callback) { callback(shader); }
+		if(callback) { callback(new EngineResourceBase(descriptor, shader)); }
 	});
 }
 
-Engine.prototype.CompileVertexShader = function(shader_name, code, defines)
+Engine.prototype.CompileVertexShader = function(code, defines)
 {
-	return this.CompileShader(shader_name, code, this.gl.VERTEX_SHADER, defines);
+	return this.CompileShader(code, this.gl.VERTEX_SHADER, defines);
 }
 
-Engine.prototype.CompileFragmentShader = function(shader_name, code, defines)
+Engine.prototype.CompileFragmentShader = function(code, defines)
 {
-	return this.CompileShader(shader_name, code, this.gl.FRAGMENT_SHADER, defines);
+	return this.CompileShader(code, this.gl.FRAGMENT_SHADER, defines);
 }
 
-Engine.prototype.CompileShader = function(shader_name, shader_code, shader_type, defines)
+Engine.prototype.CompileShader = function(shader_code, shader_type, defines)
 {
 	var shader_resource = this.gl.createShader(shader_type);
 
 	// Add pre-processor defines...
-	if(defines)
+	$.each(defines, function(idx, definition)
 	{
-		$.each(defines, function(idx, definition)
-		{
-			shader_code = "#define " + definition + "\n" + shader_code;
-		});
-	}
+		shader_code = "#define " + definition + "\n" + shader_code;
+	});
 
 	// Compile code
 	this.gl.shaderSource(shader_resource, shader_code);
@@ -200,34 +263,27 @@ Engine.prototype.CompileShader = function(shader_name, shader_code, shader_type,
 	// Return shader object
 	var shader_object =
 	{
-		name      : shader_name,
-		status    : success? "ok" : "fail",
-		type      : shader_type,
-		src       : "?",
-		defines   : defines,
-		code      : shader_code,
 		resource  : success? shader_resource : null,
-		error_msg : success? "" : this.gl.getShaderInfoLog(shader_resource)
+		type      : shader_type,
+		code      : shader_code,
+		defines   : defines
 	};
 
-	if(success)
+	// Report errors?
+	if(!success)
 	{
-		Engine.Log("Successfully compiled shader: " + shader_name);
-		this.Shaders[shader_name] = shader_object;
-	}
-	else
-	{
-		Engine.LogError("Failed compiling shader: " + shader_name);
+		var error_msg = "Failed compiling shader: " + this.gl.getShaderInfoLog(shader_resource);
+		Engine.LogError(error_msg);
 	}
 
-	return shader_object;
+	return success? shader_object : null;
 }
 
 Engine.prototype.CreateShaderProgram = function(vertex_shader, fragment_shader)
 {
 	// Generate a name for this resource based on MD5 of both shaders
 	var uid = this.MD5([vertex_shader, fragment_shader]);
-	if(uid in this.ShaderPrograms) { return this.ShaderPrograms[uid]; }
+	if(uid in this.ShaderProgramCache) { return this.ShaderProgramCache[uid]; }
 
 	// Create new shader program
 	var shader_program = this.gl.createProgram();
@@ -237,7 +293,7 @@ Engine.prototype.CreateShaderProgram = function(vertex_shader, fragment_shader)
 	var success = this.gl.getProgramParameter(shader_program, this.gl.LINK_STATUS);
 
 	// Create shader program object
-	var id_string = uid + " (" + vertex_shader.name + " --> " + fragment_shader.name + ")";
+	var id_string = uid + " (" + vertex_shader.descriptor.file + " --> " + fragment_shader.descriptor.file + ")";
 	var shader_program_object =
 	{
 		name      : uid,
@@ -251,7 +307,7 @@ Engine.prototype.CreateShaderProgram = function(vertex_shader, fragment_shader)
 	if(success)
 	{
 		Engine.Log("Successfully linked shader program: " + id_string);
-		this.ShaderPrograms[uid] = shader_program_object;
+		this.ShaderProgramCache[uid] = shader_program_object;
 	}
 	else
 	{
@@ -355,7 +411,7 @@ Engine.prototype.UnBindRenderTarget = function(render_target)
 Engine.prototype.Clear = function(colour)
 {
 	this.gl.clearColor(colour.r, colour.g, colour.b, colour.a);
-	this.gl.clear(gl.COLOR_BUFFER_BIT);
+	this.gl.clear(this.gl.COLOR_BUFFER_BIT);
 }
 
 Engine.prototype.DrawArray = function()
@@ -372,6 +428,7 @@ Engine.prototype.FetchResource = function(resource_url, callback)
 	{
 		url     : resource_url,
 		async   : callback,
+		cache   : false,
 		success : function(data)
 		{
 			if(callback) { callback(data); }
@@ -463,6 +520,13 @@ Engine.Colour =
 
 // *************************************
 // Logging
+Engine.LogSection = function(msg)
+{
+	console.log("[engine] *****************************************");
+	console.log("[engine]  " + msg);
+	console.log("[engine] *****************************************");
+};
+
 Engine.Log = function(msg)
 {
 	console.log("[engine]  INFO: " + msg)
@@ -472,3 +536,16 @@ Engine.LogError = function(msg)
 {
 	console.error("[engine] ERROR: " + msg);
 };
+
+// *************************************
+// Misc
+function EngineResourceBase(descriptor, resource_object)
+{
+	$.extend(this, resource_object);
+	this.descriptor = descriptor;
+}
+
+EngineResourceBase.prototype.IsValid = function()
+{
+	return !(typeof this.resource === 'undefined') && (this.resource != null);
+}
