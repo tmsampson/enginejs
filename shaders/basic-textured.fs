@@ -14,5 +14,5 @@ void main(void)
 	uv.y = 1.0 - uv.y;
 #endif
 
-	gl_FragColor = texture2D(tx0, vec2(time2,time2));
+	gl_FragColor = texture2D(tx0, uv);
 }
