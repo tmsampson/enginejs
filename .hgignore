@@ -1,0 +1,4 @@
+syntax: regexp
+
+# Ignore webserver log files
+^utils/webserver/.*_log
