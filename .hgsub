@@ -1,1 +1,1 @@
-script/third_party/ajq = ssh://hg@bitbucket.org/drummertom999/ajq-asynchronous-job-queue
+script/third_party/ajq = https://drummertom999@bitbucket.org/drummertom999/ajq-asynchronous-job-queue
