@@ -1,3 +1,5 @@
+precision mediump float;
+
 // Input
 attribute vec3 vs_in_pos;
 attribute vec2 vs_in_uv;
