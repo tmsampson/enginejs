@@ -62,20 +62,27 @@ Engine.prototype.Init = function(canvas, user_resources, on_complete, on_render)
 				// Setup internal render loop
 				var on_render_internal = function()
 				{
-					// Request that this callback is fired next frame
-					//var render_id = window.requestAnimationFrame(callback);       // Firefox 23 / IE 10 / Chrome / Safari 7 (incl. iOS)
-					var render_id = window.mozRequestAnimationFrame(on_render_internal);    // Firefox < 23
-					//var render_id = window.webkitRequestAnimationFrame(callback); // Older versions of Safari / Chrome
+					// Request next render frame
+					_this.SetRenderCallback(on_render_internal);
 
 					// Call client render loop
-					on_render(render_id);
+					on_render();
 				};
 
 				// Request first render frame
-				window.mozRequestAnimationFrame(on_render_internal, canvas);
+				_this.SetRenderCallback(on_render_internal);
 			}
 		});
 	});
+}
+
+Engine.prototype.SetRenderCallback = function(callback)
+{
+	var request_func = window.requestAnimationFrame       ||
+	                   window.webkitRequestAnimationFrame ||
+	                   window.mozRequestAnimationFrame    ||
+	                   function(callback) { window.setTimeout(callback, 1000 / 60); };
+	request_func(callback, this.canvas);
 }
 
 // *************************************************************************************
@@ -312,6 +319,7 @@ Engine.prototype.CreateShaderProgram = function(vertex_shader, fragment_shader)
 	else
 	{
 		Engine.LogError(shader_program_object.error_msg);
+		Engine.LogError(this.gl.getProgramInfoLog(shader_program));
 	}
 
 	return shader_program_object;
