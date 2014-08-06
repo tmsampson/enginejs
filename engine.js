@@ -224,7 +224,7 @@ Engine.prototype.BindTexture = function(texture, idx, sampler_name)
 	// Bind texture
 	this.gl.activeTexture(this.gl.TEXTURE0 + idx);
 	this.gl.bindTexture(this.gl.TEXTURE_2D, tx_resource);
-	this.gl.uniform1i(this.gl.getUniformLocation(this.current_shader_program.resource, sampler_name), idx);
+	this.SetShaderConstant(sampler_name, idx, Engine.SC_SAMPLER);
 }
 
 // *************************************************************************************
@@ -317,7 +317,8 @@ Engine.prototype.CreateShaderProgram = function(vertex_shader, fragment_shader)
 		resource  : success? shader_program : null,
 		v_shader  : vertex_shader,
 		f_shader  : fragment_shader,
-		error_msg : success? "" : ("Failed linking shader program: " + id_string)
+		error_msg : success? "" : ("Failed linking shader program: " + id_string),
+		uniform_location_cache  : { }
 	};
 
 	if(success)
@@ -338,6 +339,27 @@ Engine.prototype.BindShaderProgram = function(program)
 {
 	this.current_shader_program = program;
 	this.gl.useProgram(program.resource);
+}
+
+Engine.prototype.SetShaderConstant = function(constant_name, constant_value, setter_func)
+{
+	var uniform_location = null;
+	var program = this.current_shader_program;
+
+	// Asking WebGL for uniform locations is slow, can we
+	// re-use a cached result?
+	if(program.uniform_location_cache[constant_name])
+	{
+		uniform_location = program.uniform_location_cache[constant_name];
+	}
+	else
+	{
+		uniform_location = engine.gl.getUniformLocation(program.resource, constant_name);
+		program.uniform_location_cache[constant_name] = uniform_location; // Cache for later
+	}
+
+	// Set the constant
+	setter_func(this.gl, uniform_location, constant_value);
 }
 
 // *************************************************************************************
@@ -534,6 +556,12 @@ Engine.Colour =
 	Green : { r : 0.0, g : 1.0, b : 0.0, a : 1.0 },
 	Blue  : { r : 0.0, g : 0.0, b : 1.0, a : 1.0 }
 };
+
+// *************************************
+// Uniform setter functions (passed to SetShaderConstant)
+Engine.SC_FLOAT   = function(gl, uniform_location, new_value) { gl.uniform1f(uniform_location, new_value); }
+Engine.SC_INT     = function(gl, uniform_location, new_value) { gl.uniform1i(uniform_location, new_value); }
+Engine.SC_SAMPLER = function(gl, uniform_location, new_value) { gl.uniform1i(uniform_location, new_value); }
 
 // *************************************
 // Logging
