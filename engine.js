@@ -60,16 +60,22 @@ Engine.prototype.Init = function(canvas, user_resources, on_complete, on_render)
 				if(on_complete) { on_complete(ok? _this.gl : null); }
 
 				// Setup internal render loop
+
 				var on_render_internal = function()
 				{
+					// How long did last frame take?
+					var delta = Engine.GetTime() - last_frame_time;
+
 					// Request next render frame
 					_this.SetRenderCallback(on_render_internal);
 
 					// Call client render loop
-					on_render();
+					last_frame_time = Engine.GetTime();
+					on_render(delta);
 				};
 
 				// Request first render frame
+				var last_frame_time = Engine.GetTime();
 				_this.SetRenderCallback(on_render_internal);
 			}
 		});
@@ -113,6 +119,9 @@ Engine.prototype.LoadDependencies = function(on_complete)
 Engine.prototype.LoadResources = function(resource_list, on_complete)
 {
 	var _this = this;
+
+	// Skip null / empty lists
+	if(!resource_list) { return on_complete(); }
 
 	// Process all descriptors in resource list
 	ExecuteAsyncLoopProps(resource_list, function(prop_key, descriptor, carry_on)
@@ -547,6 +556,13 @@ Engine.LogError = function(msg)
 
 // *************************************
 // Misc
+Engine.GetTime = function()
+{
+	return (new Date).getTime();
+}
+
+// *************************************
+// EngineResourceBase
 function EngineResourceBase(descriptor, resource_object)
 {
 	$.extend(this, resource_object);
