@@ -13,13 +13,18 @@ Engine.Dependencies =
 Engine.Resources =
 {
 	// Vertex shaders
-	vs_basic                 : { file: "enginejs/shaders/basic.vs" },
-	vs_basic_flip_y          : { file: "enginejs/shaders/basic.vs", define: ["FLIP_Y"] },
+	vs_basic_fullscreen                 : { file: "enginejs/shaders/basic-fullscreen.vs" },
+	vs_basic_fullscreen_flip_y          : { file: "enginejs/shaders/basic-fullscreen.vs", define: ["FLIP_Y"] },
+	vs_basic                            : { file: "enginejs/shaders/basic.vs" },
+	vs_basic_flip_y                     : { file: "enginejs/shaders/basic.vs", define: ["FLIP_Y"] },
 
 	// Fragment shaders
-	fs_basic                 : { file: "enginejs/shaders/basic.fs" },
-	fs_basic_textured        : { file: "enginejs/shaders/basic-textured.fs" },
-	fs_basic_textured_flip_y : { file: "enginejs/shaders/basic-textured.fs", define: ["FLIP_Y"] },
+	fs_basic                            : { file: "enginejs/shaders/basic.fs" },
+	fs_basic_fullscreen                 : { file: "enginejs/shaders/basic-fullscreen.fs" },
+	fs_basic_textured                   : { file: "enginejs/shaders/basic-textured.fs" },
+	fs_basic_textured_flip_y            : { file: "enginejs/shaders/basic-textured.fs", define: ["FLIP_Y"] },
+	fs_basic_textured_fullscreen        : { file: "enginejs/shaders/basic-textured-fullscreen.fs" },
+	fs_basic_textured_fullscreen_flip_y : { file: "enginejs/shaders/basic-textured-fullscreen.fs", define: ["FLIP_Y"] },
 };
 
 // *************************************************************************************
