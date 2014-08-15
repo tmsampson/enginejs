@@ -1,18 +1,18 @@
 precision mediump float;
 
 // Input
-attribute vec3 vs_in_pos;
-attribute vec2 vs_in_uv;
+attribute vec3 a_pos;
+attribute vec2 a_uv;
 
 // Output
-varying vec2 vs_out_uv;
+varying vec2 v_uv;
 
 void main(void)
 {
-	gl_Position = vec4(vs_in_pos, 1.0);
-	vs_out_uv = vs_in_uv;
+	gl_Position = vec4(a_pos, 1.0);
+	v_uv = a_uv;
 
 #ifdef FLIP_Y
-	vs_out_uv.y = 1.0 - vs_out_uv.y;
+	v_uv.y = 1.0 - v_uv.y;
 #endif
 }
