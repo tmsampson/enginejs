@@ -6,6 +6,7 @@ Engine.Dependencies =
 [
 	"enginejs/script/third_party/hashCode-v1.0.0.js",
 	"enginejs/script/third_party/webtoolkit.md5.js",
+	"enginejs/script/third_party/gl-matrix-min.js",
 ];
 
 // *************************************************************************************
@@ -13,18 +14,13 @@ Engine.Dependencies =
 Engine.Resources =
 {
 	// Vertex shaders
-	vs_basic_fullscreen                 : { file: "enginejs/shaders/basic-fullscreen.vs" },
-	vs_basic_fullscreen_flip_y          : { file: "enginejs/shaders/basic-fullscreen.vs", define: ["FLIP_Y"] },
-	vs_basic                            : { file: "enginejs/shaders/basic.vs" },
-	vs_basic_flip_y                     : { file: "enginejs/shaders/basic.vs", define: ["FLIP_Y"] },
+	vs_basic             : { file: "enginejs/shaders/basic.vs" },
+	vs_basic_transformed : { file: "enginejs/shaders/basic-transformed.vs" },
 
 	// Fragment shaders
-	fs_basic                            : { file: "enginejs/shaders/basic.fs" },
-	fs_basic_fullscreen                 : { file: "enginejs/shaders/basic-fullscreen.fs" },
-	fs_basic_textured                   : { file: "enginejs/shaders/basic-textured.fs" },
-	fs_basic_textured_flip_y            : { file: "enginejs/shaders/basic-textured.fs", define: ["FLIP_Y"] },
-	fs_basic_textured_fullscreen        : { file: "enginejs/shaders/basic-textured-fullscreen.fs" },
-	fs_basic_textured_fullscreen_flip_y : { file: "enginejs/shaders/basic-textured-fullscreen.fs", define: ["FLIP_Y"] },
+	fs_basic             : { file: "enginejs/shaders/basic.fs" },
+	fs_basic_colour      : { file: "enginejs/shaders/basic-colour.fs" },
+	fs_basic_textured    : { file: "enginejs/shaders/basic-textured.fs" },
 };
 
 // *************************************************************************************
@@ -33,7 +29,7 @@ Engine.prototype.ShaderProgramCache = { };
 
 // *************************************************************************************
 // Main initialisation
-Engine.prototype.Init = function(canvas, user_resources, on_complete, on_render)
+Engine.prototype.Init = function(on_complete, on_render, user_resources, canvas)
 {
 	var _this = this;
 
@@ -44,15 +40,20 @@ Engine.prototype.Init = function(canvas, user_resources, on_complete, on_render)
 		try
 		{
 			// Try to grab the standard context. If it fails, fallback to experimental
+			canvas = canvas || document.getElementsByTagName("canvas")[0];
 			_this.gl = canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
 			_this.canvas = canvas;
 		}
 		catch(e)
 		{
+			$(canvas).html("EngineJS initialisation failed");
 			Engine.Log("Failed initialising WebGL context");
 			if(on_complete) { on_complete(null); }
 			return;
 		}
+
+		// Internal setup
+		Engine.IdentityMatrix = mat4.create();
 
 		// Load internal & user resources
 		ExecuteAsyncJobQueue(
@@ -65,7 +66,6 @@ Engine.prototype.Init = function(canvas, user_resources, on_complete, on_render)
 				if(on_complete) { on_complete(ok? _this.gl : null); }
 
 				// Setup internal render loop
-
 				var on_render_internal = function()
 				{
 					// How long did last frame take?
@@ -223,8 +223,8 @@ Engine.prototype.BindTexture = function(texture, idx, sampler_name)
 	var tx_resource = texture.hasOwnProperty("resource")? texture.resource :
 	                                                      texture;
 
-	// If no sampler name is specified use default based on index e.g. "tx0"
-	if(sampler_name == undefined) { sampler_name = ("tx" + idx); }
+	// If no sampler name is specified use default based on index e.g. "u_tx0"
+	if(sampler_name == undefined) { sampler_name = ("u_tx" + idx); }
 
 	// Bind texture
 	this.gl.activeTexture(this.gl.TEXTURE0 + idx);
@@ -344,6 +344,12 @@ Engine.prototype.BindShaderProgram = function(program)
 {
 	this.current_shader_program = program;
 	this.gl.useProgram(program.resource);
+
+	// Bind camera?
+	if(this.active_camera)
+	{
+		this.SetShaderConstant("u_trans_proj", this.active_camera.mtx_proj, Engine.SC_MATRIX4);
+	}
 }
 
 Engine.prototype.SetShaderConstant = function(constant_name, constant_value, setter_func)
@@ -464,6 +470,13 @@ Engine.prototype.DrawArray = function()
 }
 
 // *************************************************************************************
+// Camera
+Engine.prototype.SetActiveCamera = function(cam)
+{
+	this.active_camera = cam;
+}
+
+// *************************************************************************************
 // Misc
 Engine.prototype.FetchResource = function(resource_url, callback)
 {
@@ -476,6 +489,10 @@ Engine.prototype.FetchResource = function(resource_url, callback)
 		success : function(data)
 		{
 			if(callback) { callback(data); }
+		},
+		error   : function(err)
+		{
+			Engine.LogError("Failed fetching resource: " + resource_url);
 		}
 	});
 }
@@ -493,11 +510,11 @@ Engine.DefaultVertexSize = 3;
 // Basic primitives
 Engine.Primitive =
 {
-	Quad : 
+	Quad :
 	{
 		Vertices :
 		{
-			AttributeName : "vs_in_pos",
+			AttributeName : "a_pos",
 			ItemSize      : 3,
 			Data          :
 			[
@@ -508,9 +525,9 @@ Engine.Primitive =
 			]
 		},
 
-		TextureCoordinates : 
+		TextureCoordinates :
 		{
-			AttributeName : "vs_in_uv",
+			AttributeName : "a_uv",
 			ItemSize      : 2,
 			Data          :
 			[
@@ -521,34 +538,6 @@ Engine.Primitive =
 			]
 		}
 	},
-	QuadFlipY :
-	{
-		Vertices :
-		{
-			AttributeName : "vs_in_pos",
-			ItemSize      : 3,
-			Data          :
-			[
-				 1.0, -1.0,  0.0,
-				-1.0, -1.0,  0.0,
-				 1.0,  1.0,  0.0,
-				-1.0,  1.0,  0.0
-			]
-		},
-
-		TextureCoordinates : 
-		{
-			AttributeName : "vs_in_uv",
-			ItemSize      : 2,
-			Data          :
-			[
-				1.0, 0.0,
-				0.0, 0.0,
-				1.0, 1.0,
-				0.0, 1.0
-			]
-		}
-	}
 };
 
 // *************************************
@@ -563,10 +552,16 @@ Engine.Colour =
 };
 
 // *************************************
+// Matrix
+Engine.prototype.IdentityMatrix = null; // Set on init
+
+// *************************************
 // Uniform setter functions (passed to SetShaderConstant)
-Engine.SC_FLOAT   = function(gl, uniform_location, new_value) { gl.uniform1f(uniform_location, new_value); }
-Engine.SC_INT     = function(gl, uniform_location, new_value) { gl.uniform1i(uniform_location, new_value); }
-Engine.SC_SAMPLER = function(gl, uniform_location, new_value) { gl.uniform1i(uniform_location, new_value); }
+Engine.SC_FLOAT   = function(gl, uniform_location, new_value) { gl.uniform1f(uniform_location,        new_value); }
+Engine.SC_INT     = function(gl, uniform_location, new_value) { gl.uniform1i(uniform_location,        new_value); }
+Engine.SC_SAMPLER = function(gl, uniform_location, new_value) { gl.uniform1i(uniform_location,        new_value); }
+Engine.SC_VEC4    = function(gl, uniform_location, new_value) { gl.uniform4fv(uniform_location,       new_value); }
+Engine.SC_MATRIX4 = function(gl, uniform_location, new_value) { gl.uniformMatrix4fv(uniform_location, false, new_value); }
 
 // *************************************
 // Logging
@@ -605,4 +600,26 @@ function EngineResourceBase(descriptor, resource_object)
 EngineResourceBase.prototype.IsValid = function()
 {
 	return !(typeof this.resource === 'undefined') && (this.resource != null);
+}
+
+// *************************************
+// EngineCameraOrtho
+function EngineCameraOrtho(config)
+{
+	$.extend(this, config);
+	this.mtx_proj = mat4.create();
+
+	// By default, centre camera
+	this.x = 0;
+	this.y = 0;
+	this.UpdateMtx();
+}
+
+EngineCameraOrtho.prototype.UpdateMtx = function()
+{
+	// Camera x/y represents bottom left of view region
+	mat4.ortho(this.mtx_proj,
+	           this.x, this.x + this.width,
+	           this.y, this.y + this.height,
+	           -1.0, 1.0);
 }
