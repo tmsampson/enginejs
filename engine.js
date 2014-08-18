@@ -128,15 +128,23 @@ Engine.prototype.LoadResources = function(resource_list, on_complete)
 	// Skip null / empty lists
 	if(!resource_list) { return on_complete(); }
 
+	// Extract optional on_loaded callback from list
+	var on_loaded = resource_list["on_loaded"];
+
 	// Process all descriptors in resource list
+	var i = 0; var property_count = Object.keys(resource_list).length - (on_loaded? 1 : 0);
 	ExecuteAsyncLoopProps(resource_list, function(prop_key, descriptor, carry_on)
 	{
+		// Don't try and load the user callback as a resource!
+		if(prop_key == "on_loaded") { return carry_on(true); }
+
 		Engine.Log("Loading resource: " + descriptor.file);
 		descriptor.prop_key = prop_key; // Pass prop_key through closure
 		_this.LoadResourceByDescriptor(descriptor, function(resource_object)
 		{
 			resource_list[descriptor.prop_key] = resource_object;
 			delete descriptor.prop_key; // No use to client
+			if(on_loaded) { on_loaded(descriptor.file, ++i, property_count); }
 			carry_on(true);
 		});
 	}, on_complete);
@@ -587,6 +595,18 @@ Engine.LogError = function(msg)
 Engine.GetTime = function()
 {
 	return (new Date).getTime();
+}
+
+Engine.Sleep = function(milliseconds)
+{
+	var start = new Date().getTime();
+	for(var i = 0; i < 1e7; i++)
+	{
+		if((new Date().getTime() - start) > milliseconds)
+		{
+			break;
+		}
+	}
 }
 
 // *************************************
