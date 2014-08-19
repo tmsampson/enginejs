@@ -21,6 +21,7 @@ Engine.Resources =
 	fs_basic             : { file: "enginejs/shaders/basic.fs" },
 	fs_basic_colour      : { file: "enginejs/shaders/basic-colour.fs" },
 	fs_basic_textured    : { file: "enginejs/shaders/basic-textured.fs" },
+	fs_grid              : { file: "enginejs/shaders/grid.fs" },
 };
 
 // *************************************************************************************
