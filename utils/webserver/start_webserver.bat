@@ -12,7 +12,7 @@ CLS
 
 :: Change current directory such that log files don't end up elsewhere
 SET MY_ROOT=%~dp0
-cd %MY_ROOT%
+pushd %MY_ROOT%
 
 :: Start webserver
 START %MY_ROOT%\tiny.exe %SERVER_ROOT% %PORT% > nul
@@ -25,3 +25,4 @@ START %URI%
 ECHO Press any key to terminate...
 PAUSE > nul
 taskkill /im tiny.exe /f /t
+popd
