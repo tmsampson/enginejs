@@ -22,6 +22,9 @@ Engine.Resources =
 	fs_basic_colour      : { file: "enginejs/shaders/basic-colour.fs" },
 	fs_basic_textured    : { file: "enginejs/shaders/basic-textured.fs" },
 	fs_grid              : { file: "enginejs/shaders/grid.fs" },
+
+	// Models
+	ml_quad              : { file: "enginejs/models/quad.model" },
 };
 
 // *************************************************************************************
@@ -174,6 +177,14 @@ Engine.prototype.LoadResourceByDescriptor = function(descriptor, on_complete)
 			_this.LoadShader(descriptor, function(shader_object)
 			{
 				on_complete(shader_object);
+			});
+			break;
+		}
+		case "model":
+		{
+			_this.LoadModel(descriptor, function(model_object)
+			{
+				on_complete(model_object);
 			});
 			break;
 		}
@@ -383,20 +394,41 @@ Engine.prototype.SetShaderConstant = function(constant_name, constant_value, set
 }
 
 // *************************************************************************************
+// Model operations
+Engine.prototype.LoadModel = function(descriptor, callback)
+{
+	var _this = this;
+
+	_this.FetchResource(descriptor.file, function(model_json)
+	{
+		// Build vertex buffers
+		var model = jQuery.parseJSON(model_json);
+		var vertex_buffers = model.model_data.vertex_buffers;
+		for(var i = 0; i < vertex_buffers.length; ++i)
+		{
+			// Place vertex buffer object immediately inside buffer object
+			vertex_buffers[i].vbo = _this.CreateVertexBuffer(vertex_buffers[i]);
+		}
+
+		callback(model);
+	});
+}
+
+// *************************************************************************************
 // Vertex buffer operations
 Engine.prototype.CreateVertexBuffer = function(vertex_buffer_descriptor)
 {
 	var buffer = this.gl.createBuffer();
 	this.gl.bindBuffer(this.gl.ARRAY_BUFFER, buffer);
-	this.gl.bufferData(this.gl.ARRAY_BUFFER, new Float32Array(vertex_buffer_descriptor.Data), this.gl.STATIC_DRAW);
+	this.gl.bufferData(this.gl.ARRAY_BUFFER, new Float32Array(vertex_buffer_descriptor.stream), this.gl.STATIC_DRAW);
 
 	var vertex_buffer_object =
 	{
 		descriptor     : vertex_buffer_descriptor,
 		resource       : buffer,
-		item_size      : vertex_buffer_descriptor.ItemSize,
-		item_count     : vertex_buffer_descriptor.Data.length / vertex_buffer_descriptor.ItemSize,
-		attribute_name : vertex_buffer_descriptor.AttributeName
+		item_size      : vertex_buffer_descriptor.item_size,
+		item_count     : vertex_buffer_descriptor.stream.length / vertex_buffer_descriptor.item_size,
+		attribute_name : vertex_buffer_descriptor.attribute_name
 	};
 
 	return vertex_buffer_object;
@@ -478,6 +510,19 @@ Engine.prototype.DrawArray = function()
 	this.gl.drawArrays(this.gl.TRIANGLE_STRIP, 0, this.current_vertex_buffer.item_count);
 }
 
+Engine.prototype.DrawQuad = function()
+{
+	// Bind full-screen quad
+	var vertex_buffers = Engine.Resources["ml_quad"].model_data.vertex_buffers;
+	for(var i = 0; i < vertex_buffers.length; ++i)
+	{
+		this.BindVertexBuffer(vertex_buffers[i].vbo);
+	}
+
+	// Draw full-screen quad
+	this.DrawArray();
+}
+
 // *************************************************************************************
 // Camera
 Engine.prototype.SetActiveCamera = function(cam)
@@ -514,40 +559,6 @@ Engine.prototype.MD5 = function(data)
 // *************************************
 // Constants
 Engine.DefaultVertexSize = 3;
-
-// *************************************
-// Basic primitives
-Engine.Primitive =
-{
-	Quad :
-	{
-		Vertices :
-		{
-			AttributeName : "a_pos",
-			ItemSize      : 3,
-			Data          :
-			[
-				 1.0,  1.0,  0.0,
-				-1.0,  1.0,  0.0,
-				 1.0, -1.0,  0.0,
-				-1.0, -1.0,  0.0
-			]
-		},
-
-		TextureCoordinates :
-		{
-			AttributeName : "a_uv",
-			ItemSize      : 2,
-			Data          :
-			[
-				1.0, 0.0,
-				0.0, 0.0,
-				1.0, 1.0,
-				0.0, 1.0
-			]
-		}
-	},
-};
 
 // *************************************
 // Basic colours
