@@ -160,34 +160,28 @@ Engine.prototype.LoadResourceByDescriptor = function(descriptor, on_complete)
 {
 	var _this = this;
 
-	var extension = descriptor.file.split('.').pop();
-	switch(extension)
+	// Supported resource extension --> load handler func
+	var resource_load_functions =
 	{
-		case "png":
+		png   : function(descriptor, callback) { _this.LoadTexture(descriptor, callback); },
+		vs    : function(descriptor, callback) { _this.LoadShader(descriptor, callback);  },
+		fs    : function(descriptor, callback) { _this.LoadShader(descriptor, callback);  },
+		model : function(descriptor, callback) { _this.LoadModel(descriptor, callback);   },
+	}
+
+	// Is this resource type supported?
+	var extension = descriptor.file.split('.').pop();
+	if(extension in resource_load_functions)
+	{
+		resource_load_functions[extension](descriptor, function(texture_object)
 		{
-			_this.LoadTexture(descriptor, function(texture_object)
-			{
-				on_complete(texture_object);
-			});
-			break;
-		}
-		case "vs":
-		case "fs":
-		{
-			_this.LoadShader(descriptor, function(shader_object)
-			{
-				on_complete(shader_object);
-			});
-			break;
-		}
-		case "model":
-		{
-			_this.LoadModel(descriptor, function(model_object)
-			{
-				on_complete(model_object);
-			});
-			break;
-		}
+			on_complete(texture_object);
+		});
+	}
+	else
+	{
+		Engine.LogError("Resource type with extension '" + extension + "' not supported");
+		on_complete(null);
 	}
 }
 
@@ -342,8 +336,9 @@ Engine.prototype.CreateShaderProgram = function(vertex_shader, fragment_shader)
 		resource  : success? shader_program : null,
 		v_shader  : vertex_shader,
 		f_shader  : fragment_shader,
-		error_msg : success? "" : ("Failed linking shader program: " + id_string),
-		uniform_location_cache  : { }
+		error_msg : success? ""  : ("Failed linking shader program: " + id_string),
+		uniform_location_cache   : { },
+		attribute_location_cache : { }
 	};
 
 	if(success)
@@ -379,7 +374,7 @@ Engine.prototype.SetShaderConstant = function(constant_name, constant_value, set
 
 	// Asking WebGL for uniform locations is slow, can we
 	// re-use a cached result?
-	if(program.uniform_location_cache[constant_name])
+	if(constant_name in program.uniform_location_cache)
 	{
 		uniform_location = program.uniform_location_cache[constant_name];
 	}
@@ -437,10 +432,27 @@ Engine.prototype.CreateVertexBuffer = function(vertex_buffer_descriptor)
 Engine.prototype.BindVertexBuffer = function(vertex_buffer_object)
 {
 	this.current_vertex_buffer = vertex_buffer_object;
+
+	var program = this.current_shader_program;
+	var attribute_name = vertex_buffer_object.attribute_name;
+
+	// Asking WebGL for attribute locations is slow, can we
+	// re-use a cached result?
+	var attribute_location = null;
+	if(attribute_name in program.attribute_location_cache)
+	{
+		attribute_location = program.attribute_location_cache[attribute_name];
+	}
+	else
+	{
+		attribute_location = this.gl.getAttribLocation(program.resource, attribute_name);
+		program.attribute_location_cache[attribute_name] = attribute_location; // Cache for later
+	}
+
+	// Bind vertex buffer to program attribute location
 	this.gl.bindBuffer(this.gl.ARRAY_BUFFER, vertex_buffer_object.resource);
-	var vertex_attrib = this.gl.getAttribLocation(this.current_shader_program.resource, vertex_buffer_object.attribute_name);
-	this.gl.enableVertexAttribArray(vertex_attrib);
-	this.gl.vertexAttribPointer(vertex_attrib, vertex_buffer_object.item_size, this.gl.FLOAT, false, 0, 0);
+	this.gl.enableVertexAttribArray(attribute_location);
+	this.gl.vertexAttribPointer(attribute_location, vertex_buffer_object.item_size, this.gl.FLOAT, false, 0, 0);
 }
 
 // *************************************************************************************
