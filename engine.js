@@ -170,6 +170,7 @@ Engine.prototype.LoadResourceByDescriptor = function(descriptor, on_complete)
 	var resource_load_functions =
 	{
 		png   : function(descriptor, callback) { _this.LoadTexture(descriptor, callback); },
+		jpg   : function(descriptor, callback) { _this.LoadTexture(descriptor, callback); },
 		vs    : function(descriptor, callback) { _this.LoadShader(descriptor, callback);  },
 		fs    : function(descriptor, callback) { _this.LoadShader(descriptor, callback);  },
 		model : function(descriptor, callback) { _this.LoadModel(descriptor, callback);   },
