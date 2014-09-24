@@ -412,6 +412,8 @@ Engine.prototype.LoadModel = function(descriptor, callback)
 			vertex_buffers[i].vbo = _this.CreateVertexBuffer(vertex_buffers[i]);
 		}
 
+		// Finalise
+		model.is_loaded = true;
 		callback(model);
 	});
 }
@@ -529,10 +531,22 @@ Engine.prototype.DrawArray = function()
 	this.gl.drawArrays(this.gl.TRIANGLE_STRIP, 0, this.current_vertex_buffer.item_count);
 }
 
-Engine.prototype.DrawQuad = function()
+Engine.prototype.DrawModel = function(model)
 {
+	// NOTE: This is a very basic implementation which simply binds all of
+	// the model's vertex streams and issues a draw call. This will need
+	// developing and maintaining as the model format matures to support shader,
+	// material, texture binding etc.
+
+	// Make sure model has been "loaded" (vertex buffer objects have been created)
+	if(!model.hasOwnProperty("is_loaded"))
+	{
+		Engine.LogError("Attempt to draw unloaded model: " + model.name);
+		return false;
+	}
+
 	// Bind full-screen quad
-	var vertex_buffers = Engine.Resources["ml_quad"].model_data.vertex_buffers;
+	var vertex_buffers = model.model_data.vertex_buffers;
 	for(var i = 0; i < vertex_buffers.length; ++i)
 	{
 		this.BindVertexBuffer(vertex_buffers[i].vbo);
@@ -540,6 +554,13 @@ Engine.prototype.DrawQuad = function()
 
 	// Draw full-screen quad
 	this.DrawArray();
+	return true;
+}
+
+Engine.prototype.DrawQuad = function()
+{
+	// Draw full-screen quad
+	this.DrawModel(Engine.Resources["ml_quad"]);
 }
 
 // *************************************************************************************
@@ -547,6 +568,50 @@ Engine.prototype.DrawQuad = function()
 Engine.prototype.SetActiveCamera = function(cam)
 {
 	this.active_camera = cam;
+}
+
+// *************************************************************************************
+// Geometry
+Engine.prototype.GenerateCircleModel = function(params)
+{
+	// Setup empty model
+	var model = { name : "Circle", is_loaded : true, model_data : { vertex_buffers : [] } };
+
+	// Generate verts
+	if(!params.hasOwnProperty("segment_count"))
+		return false;
+
+	var vertex_buffer = { name : "vertices", attribute_name : "a_pos", item_size : 3, stream : [] };
+	var theta = (2 * Math.PI) / params.segment_count;
+	for(var i = 0; i < params.segment_count; ++i)
+	{
+		vertex_buffer.stream.push(0.0, 0.0, 0.0);
+		vertex_buffer.stream.push(Math.cos(theta * i),       Math.sin(theta * i),       0.0);
+		vertex_buffer.stream.push(Math.cos(theta * (i + 1)), Math.sin(theta * (i + 1)), 0.0);
+	}
+
+	// Create vertex buffer
+	vertex_buffer.vbo = this.CreateVertexBuffer(vertex_buffer);
+	model.model_data.vertex_buffers.push(vertex_buffer);
+
+	// Generate UVs?
+	if(params.hasOwnProperty("generate_uvs") && !params.generate_uvs)
+		return model;
+
+	var uv_buffer = { name : "texture-coordinates", attribute_name : "a_uv", item_size : 2, stream : [] };
+	var normalise = function (x) { return ((x + 1) / 2); }
+	for(var i = 0; i < params.segment_count; ++i)
+	{
+		uv_buffer.stream.push(0.5, -0.5);
+		uv_buffer.stream.push(normalise(Math.cos(theta * i)),       -normalise(Math.sin(theta * i)));
+		uv_buffer.stream.push(normalise(Math.cos(theta * (i + 1))), -normalise(Math.sin(theta * (i + 1))));
+	}
+
+	// Create uv buffer
+	uv_buffer.vbo = this.CreateVertexBuffer(uv_buffer);
+	model.model_data.vertex_buffers.push(uv_buffer);
+
+	return model;
 }
 
 // *************************************************************************************
