@@ -435,6 +435,13 @@ Engine.prototype.CreateVertexBuffer = function(vertex_buffer_descriptor)
 	this.gl.bindBuffer(this.gl.ARRAY_BUFFER, buffer);
 	this.gl.bufferData(this.gl.ARRAY_BUFFER, new Float32Array(vertex_buffer_descriptor.stream), this.gl.STATIC_DRAW);
 
+	// Use default draw mode?
+	var vertex_draw_mode = Engine.DrawModeFromString["triangles"];
+	if(vertex_buffer_descriptor.hasOwnProperty("draw_mode"))
+	{
+		vertex_draw_mode = Engine.DrawModeFromString[vertex_buffer_descriptor.draw_mode];
+	}
+
 	var vertex_buffer_object =
 	{
 		descriptor     : vertex_buffer_descriptor,
@@ -442,7 +449,7 @@ Engine.prototype.CreateVertexBuffer = function(vertex_buffer_descriptor)
 		item_size      : vertex_buffer_descriptor.item_size,
 		item_count     : vertex_buffer_descriptor.stream.length / vertex_buffer_descriptor.item_size,
 		attribute_name : vertex_buffer_descriptor.attribute_name,
-		draw_mode      : Engine.DrawModeFromString[vertex_buffer_descriptor.draw_mode]
+		draw_mode      : vertex_draw_mode
 	};
 
 	return vertex_buffer_object;
