@@ -58,6 +58,15 @@ Engine.prototype.Init = function(on_user_init, user_resources, canvas)
 
 		// Internal setup
 		Engine.IdentityMatrix = mat4.create();
+		Engine.DrawModeFromString =
+		{
+			triangle        : _this.gl.TRIANGLES,
+			triangles       : _this.gl.TRIANGLES,
+			triangle_strip  : _this.gl.TRIANGLE_STRIP,
+			triangle_strips : _this.gl.TRIANGLE_STRIP,
+			triangle_fan    : _this.gl.TRIANGLE_FAN,
+			triangle_fans   : _this.gl.TRIANGLE_FAN
+		};
 
 		// Load internal & user resources
 		ExecuteAsyncJobQueue(
@@ -432,7 +441,8 @@ Engine.prototype.CreateVertexBuffer = function(vertex_buffer_descriptor)
 		resource       : buffer,
 		item_size      : vertex_buffer_descriptor.item_size,
 		item_count     : vertex_buffer_descriptor.stream.length / vertex_buffer_descriptor.item_size,
-		attribute_name : vertex_buffer_descriptor.attribute_name
+		attribute_name : vertex_buffer_descriptor.attribute_name,
+		draw_mode      : Engine.DrawModeFromString[vertex_buffer_descriptor.draw_mode]
 	};
 
 	return vertex_buffer_object;
@@ -528,7 +538,7 @@ Engine.prototype.Clear = function(colour)
 
 Engine.prototype.DrawArray = function()
 {
-	this.gl.drawArrays(this.gl.TRIANGLE_STRIP, 0, this.current_vertex_buffer.item_count);
+	this.gl.drawArrays(this.current_vertex_buffer.draw_mode, 0, this.current_vertex_buffer.item_count);
 }
 
 Engine.prototype.DrawModel = function(model)
@@ -545,14 +555,14 @@ Engine.prototype.DrawModel = function(model)
 		return false;
 	}
 
-	// Bind full-screen quad
+	// Bind vertex buffers
 	var vertex_buffers = model.model_data.vertex_buffers;
 	for(var i = 0; i < vertex_buffers.length; ++i)
 	{
 		this.BindVertexBuffer(vertex_buffers[i].vbo);
 	}
 
-	// Draw full-screen quad
+	// Draw model
 	this.DrawArray();
 	return true;
 }
@@ -581,13 +591,11 @@ Engine.prototype.GenerateCircleModel = function(params)
 	if(!params.hasOwnProperty("segment_count"))
 		return false;
 
-	var vertex_buffer = { name : "vertices", attribute_name : "a_pos", item_size : 3, stream : [] };
+	var vertex_buffer = { name : "vertices", attribute_name : "a_pos", item_size : 3, draw_mode : "triangle_fan", stream : [0.0, 0.0, 0.0] };
 	var theta = (2 * Math.PI) / params.segment_count;
-	for(var i = 0; i < params.segment_count; ++i)
+	for(var i = 0; i <= params.segment_count; ++i)
 	{
-		vertex_buffer.stream.push(0.0, 0.0, 0.0);
-		vertex_buffer.stream.push(Math.cos(theta * i),       Math.sin(theta * i),       0.0);
-		vertex_buffer.stream.push(Math.cos(theta * (i + 1)), Math.sin(theta * (i + 1)), 0.0);
+		vertex_buffer.stream.push(Math.cos(theta * i), Math.sin(theta * i), 0.0);
 	}
 
 	// Create vertex buffer
@@ -598,13 +606,11 @@ Engine.prototype.GenerateCircleModel = function(params)
 	if(params.hasOwnProperty("generate_uvs") && !params.generate_uvs)
 		return model;
 
-	var uv_buffer = { name : "texture-coordinates", attribute_name : "a_uv", item_size : 2, stream : [] };
+	var uv_buffer = { name : "texture-coordinates", attribute_name : "a_uv", item_size : 2, draw_mode : "triangle_fan", stream : [0.5, -0.5] };
 	var normalise = function (x) { return ((x + 1) / 2); }
-	for(var i = 0; i < params.segment_count; ++i)
+	for(var i = 0; i <= params.segment_count; ++i)
 	{
-		uv_buffer.stream.push(0.5, -0.5);
-		uv_buffer.stream.push(normalise(Math.cos(theta * i)),       -normalise(Math.sin(theta * i)));
-		uv_buffer.stream.push(normalise(Math.cos(theta * (i + 1))), -normalise(Math.sin(theta * (i + 1))));
+		uv_buffer.stream.push(normalise(Math.cos(theta * i)), -normalise(Math.sin(theta * i)));
 	}
 
 	// Create uv buffer
@@ -658,6 +664,10 @@ Engine.Colour =
 // *************************************
 // Matrix
 Engine.prototype.IdentityMatrix = null; // Set on init
+
+// *************************************
+// Draw mode lookup
+Engine.DrawModeFromString = { };
 
 // *************************************
 // Uniform setter functions (passed to SetShaderConstant)
