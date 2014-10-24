@@ -47,7 +47,7 @@ Engine.prototype.Init = function(on_user_init, user_resources, canvas)
 {
 	var _this = this;
 
-	// First load out JS dependencies...
+	// First load in JS dependencies...
 	_this.LoadDependencies(function()
 	{
 		Engine.Log("Initialising WebGL context");
@@ -80,6 +80,9 @@ Engine.prototype.Init = function(on_user_init, user_resources, canvas)
 
 		// Initialise gl state tracking
 		_this.InitStateTracking();
+
+		// Initialise user input
+		_this.InitUserInput();
 
 		// Load internal & user resources
 		ExecuteAsyncJobQueue(
@@ -795,6 +798,28 @@ Engine.prototype.BindParamEditor = function(param_editor)
 	{
 		_this.SetShaderConstant($(this).attr("id"), $(this).slider("value"), Engine.SC_FLOAT);
 	});
+}
+
+// *************************************
+// User input
+Engine.prototype.KeyboardKeyStates = [];
+Engine.KeyboardKeyCodeMap =
+{
+	"left" : 37, "right" : 39, "up"    : 38, "down"  : 40,
+	"w"    : 87, "a"     : 65, "s"     : 83, "d"     : 68,
+	"ctrl" : 17, "alt"   : 18, "shift" : 16, "space" : 32
+};
+
+Engine.prototype.InitUserInput = function()
+{
+	var _this = this;
+	document.onkeydown = function(e) { _this.KeyboardKeyStates[e.keyCode] = true;  return false; };
+	document.onkeyup   = function(e) { _this.KeyboardKeyStates[e.keyCode] = false; return false; };
+}
+
+Engine.prototype.IsKeyPressed = function(key_name)
+{
+	return this.KeyboardKeyStates[Engine.KeyboardKeyCodeMap[key_name]];
 }
 
 // *************************************
