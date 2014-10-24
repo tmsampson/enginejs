@@ -7,6 +7,8 @@ Engine.Dependencies =
 	"enginejs/script/third_party/hashCode-v1.0.0.js",
 	"enginejs/script/third_party/webtoolkit.md5.js",
 	"enginejs/script/third_party/gl-matrix-min.js",
+	"enginejs/script/third_party/jquery-ui.min.js",
+	"enginejs/css/third_party/jquery-ui.css",
 ];
 
 // *************************************************************************************
@@ -131,6 +133,11 @@ Engine.prototype.SetRenderCallback = function(callback)
 Engine.prototype.LoadDependencies = function(on_complete)
 {
 	var _this = this;
+	var dependency_load_functions =
+	{
+		js  : function(url, callback) { _this.LoadJS(url, callback);  },
+		css : function(url, callback) { _this.LoadCSS(url, callback); },
+	};
 
 	// 1. Load ajq for better async jobs/loops
 	Engine.LogSection("Loading Dependencies");
@@ -138,19 +145,44 @@ Engine.prototype.LoadDependencies = function(on_complete)
 	{
 		eval(script); // Hotload ajq.js
 
-		// 2. Use ajq to load remaining dependencies
+		// 2. Use ajq to dynamically load remaining dependencies
 		ExecuteAsyncLoop(Engine.Dependencies, function(entry, carry_on)
 		{
 			Engine.Log("Loading dependency: " + entry);
-			$.getScript(entry, function(script)
+			var extension = entry.split('.').pop();
+			if(extension in dependency_load_functions)
 			{
-				eval(script); // Hotload dependency
-				carry_on(true);
-			});
+				dependency_load_functions[extension](entry, function()
+				{
+					carry_on(true);
+				});
+			}
+			else
+			{
+				Engine.LogError("Dependency type with extension '" + extension + "' not supported");
+				on_complete(null);
+			}
 		}, on_complete);
 	});
 }
 
+Engine.prototype.LoadJS = function(url, callback)
+{
+	$.getScript(url, function(script)
+	{
+		eval(script); // Hotload script
+		callback(script);
+	});
+}
+
+Engine.prototype.LoadCSS = function(url, callback)
+{
+	$("<link/>", { rel: "stylesheet", type: "text/css", href: url }).appendTo("head");
+	callback();
+}
+
+// *************************************************************************************
+// Resource loading
 Engine.prototype.LoadResources = function(resource_list, on_complete)
 {
 	var _this = this;
@@ -181,7 +213,7 @@ Engine.prototype.LoadResources = function(resource_list, on_complete)
 }
 
 // *************************************************************************************
-// Generic resource load (type determined by fie extension)
+// Generic resource load (type determined by file extension)
 Engine.prototype.LoadResourceByDescriptor = function(descriptor, on_complete)
 {
 	var _this = this;
