@@ -32,6 +32,14 @@ Engine.Resources =
 Engine.prototype.ShaderProgramCache = { };
 
 // *************************************************************************************
+// Cache gl state to minimise redundant state changes
+Engine.prototype.StateTracking = { };
+Engine.prototype.InitStateTracking = function()
+{
+	this.StateTracking[engine.gl.BLEND] = 0;
+}
+
+// *************************************************************************************
 // Main initialisation
 Engine.prototype.Init = function(on_user_init, user_resources, canvas)
 {
@@ -67,6 +75,9 @@ Engine.prototype.Init = function(on_user_init, user_resources, canvas)
 			triangle_fan    : _this.gl.TRIANGLE_FAN,
 			triangle_fans   : _this.gl.TRIANGLE_FAN
 		};
+
+		// Initialise gl state tracking
+		_this.InitStateTracking();
 
 		// Load internal & user resources
 		ExecuteAsyncJobQueue(
@@ -683,6 +694,76 @@ Engine.SC_INT     = function(gl, uniform_location, new_value) { gl.uniform1i(uni
 Engine.SC_SAMPLER = function(gl, uniform_location, new_value) { gl.uniform1i(uniform_location,        new_value); }
 Engine.SC_VEC4    = function(gl, uniform_location, new_value) { gl.uniform4fv(uniform_location,       new_value); }
 Engine.SC_MATRIX4 = function(gl, uniform_location, new_value) { gl.uniformMatrix4fv(uniform_location, false, new_value); }
+
+// *************************************
+// State management
+Engine.prototype.SetStateBool = function(state, new_value)
+{
+	if(new_value == this.StateTracking[state]) { return; }
+
+	// Update state
+	this.StateTracking[state] = new_value;
+	if(new_value)
+	{
+		this.gl.enable(state);
+	}
+	else
+	{
+		this.gl.disable(state)
+	}
+}
+
+Engine.prototype.EnableBlend = function(new_value)
+{
+	this.SetStateBool(this.gl.BLEND, new_value);
+}
+
+Engine.prototype.SetBlendMode = function(a, b, also_enable)
+{
+	this.gl.blendFunc(a, b);
+	if(also_enable) { this.SetStateBool(this.gl.BLEND, true); }
+}
+
+// *************************************
+// Param editor
+Engine.prototype.BuildParamEditor = function(shader_object)
+{
+	// Parse shader for [EDITOR] blocks
+	var shader_params = { }; var match;
+	var regex = /uniform float ([^;]*).* \[EDITOR\] (.*)/g;
+	while(match = regex.exec(shader_object.code))
+	{
+		var entry = $.extend({ var_name : match[1] }, eval("(" + match[2] + ")"));
+		if(!shader_params.hasOwnProperty(entry.group)) {shader_params[entry.group] = [] }
+		shader_params[entry.group].push(entry);
+	}
+
+	// Build editor
+	var editor = $("<div>", { id : "param_editor" });
+	$.each(shader_params, function(group, entries)
+	{
+		var heading = $("<h2>", { text : group }).appendTo(editor);
+		var table   = $("<table>").appendTo(editor);
+		for(var i = 0; i < entries.length; ++i)
+		{
+			var row    = $("<tr>").appendTo(table);
+			var call_l = $("<td>", { text : entries[i].label }).appendTo(row);
+			var cell_r = $("<td>").appendTo(row);
+			var slider = $("<div id='" + entries[i].var_name + "' style='width:200px'/>");
+			slider.slider(entries[i]).appendTo(cell_r);
+		}
+	});
+	return editor;
+}
+
+Engine.prototype.BindParamEditor = function(param_editor)
+{
+	var _this = this;
+	param_editor.find("td div").each(function()
+	{
+		_this.SetShaderConstant($(this).attr("id"), $(this).slider("value"), Engine.SC_FLOAT);
+	});
+}
 
 // *************************************
 // Logging
