@@ -817,7 +817,7 @@ Engine.prototype.InitUserInput = function()
 	document.onmousemove     = function(e)
 	{
 		_this.Mouse["position"] = [e.clientX - _this.canvas.getBoundingClientRect().left,
-		                           e.clientY - _this.canvas.getBoundingClientRect().top];
+		                           _this.canvas.getBoundingClientRect().bottom - e.clientY];
 	};
 }
 
@@ -848,6 +848,13 @@ Engine.prototype.GetMousePosition = function()
 {
 	return this.Mouse["position"];
 }
+
+// *************************************
+// Math
+Engine.Clamp = function(x, min, max)
+{
+	return Math.min(Math.max(x, min), max);
+};
 
 // *************************************
 // Logging
