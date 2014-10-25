@@ -707,11 +707,12 @@ Engine.DefaultVertexSize = 3;
 // Basic colours
 Engine.Colour =
 {
-	Black : { r : 0.0, g : 0.0, b : 0.0, a : 1.0 },
-	White : { r : 1.0, g : 1.0, b : 1.0, a : 1.0 },
-	Red   : { r : 1.0, g : 0.0, b : 0.0, a : 1.0 },
-	Green : { r : 0.0, g : 1.0, b : 0.0, a : 1.0 },
-	Blue  : { r : 0.0, g : 0.0, b : 1.0, a : 1.0 }
+	Black     : { r : 0.0, g : 0.0, b : 0.0, a : 1.0 },
+	White     : { r : 1.0, g : 1.0, b : 1.0, a : 1.0 },
+	Red       : { r : 1.0, g : 0.0, b : 0.0, a : 1.0 },
+	Green     : { r : 0.0, g : 1.0, b : 0.0, a : 1.0 },
+	DarkGreen : { r : 0.0, g : 0.4, b : 0.0, a : 1.0 },
+	Blue      : { r : 0.0, g : 0.0, b : 1.0, a : 1.0 }
 };
 
 // *************************************
@@ -802,6 +803,26 @@ Engine.prototype.BindParamEditor = function(param_editor)
 
 // *************************************
 // User input
+Engine.prototype.InitUserInput = function()
+{
+	var _this = this;
+
+	// Keyboard
+	document.onkeydown = function(e) { _this.KeyboardKeyStates[e.keyCode] = true;  return false; };
+	document.onkeyup   = function(e) { _this.KeyboardKeyStates[e.keyCode] = false; return false; };
+
+	// Mouse
+	_this.canvas.onmousedown = function(e) { _this.Mouse["pressed"] = true; };
+	document.onmouseup       = function(e) { _this.Mouse["pressed"] = false; };
+	document.onmousemove     = function(e)
+	{
+		_this.Mouse["position"] = [e.clientX - _this.canvas.getBoundingClientRect().left,
+		                           e.clientY - _this.canvas.getBoundingClientRect().top];
+	};
+}
+
+// *************************************
+// Keyboard
 Engine.prototype.KeyboardKeyStates = [];
 Engine.KeyboardKeyCodeMap =
 {
@@ -810,16 +831,22 @@ Engine.KeyboardKeyCodeMap =
 	"ctrl" : 17, "alt"   : 18, "shift" : 16, "space" : 32
 };
 
-Engine.prototype.InitUserInput = function()
-{
-	var _this = this;
-	document.onkeydown = function(e) { _this.KeyboardKeyStates[e.keyCode] = true;  return false; };
-	document.onkeyup   = function(e) { _this.KeyboardKeyStates[e.keyCode] = false; return false; };
-}
-
 Engine.prototype.IsKeyPressed = function(key_name)
 {
 	return this.KeyboardKeyStates[Engine.KeyboardKeyCodeMap[key_name]];
+}
+
+// *************************************
+// Mouse
+Engine.prototype.Mouse = { "clicked" : false, "position" : [0, 0] };
+Engine.prototype.IsMousePressed = function()
+{
+	return this.Mouse["pressed"];
+}
+
+Engine.prototype.GetMousePosition = function()
+{
+	return this.Mouse["position"];
 }
 
 // *************************************
