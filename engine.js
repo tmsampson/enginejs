@@ -838,18 +838,22 @@ Engine.prototype.InitUserInput = function()
 	{
 		key_buffer     : [[], [], []], // tripple-buffered
 		key_buffer_idx : 0,            // "current" buffer-index
+		is_ignored     : function(key_code)
+		{
+			return key_code == Engine.KeyboardKeyCodeMap["f5"];
+		}
 	};
 
 	var _this = this;
 	document.onkeydown = function(e)
 	{
 		_this.Keyboard.key_buffer[2][e.keyCode] = 1;
-		return false;
+		return _this.Keyboard.is_ignored(e.keyCode);
 	};
 	document.onkeyup   = function(e)
 	{
 		_this.Keyboard.key_buffer[2][e.keyCode] = 0;
-		return false;
+		return _this.Keyboard.is_ignored(e.keyCode);
 	};
 
 	// Mouse
@@ -874,7 +878,10 @@ Engine.KeyboardKeyCodeMap =
 
 	// Numeric (default)
 	"0" : 48, "1" : 49, "2" : 50, "3" : 51, "4" : 52,
-	"5" : 53, "6" : 54, "7" : 55, "8" : 56, "9" : 57
+	"5" : 53, "6" : 54, "7" : 55, "8" : 56, "9" : 57,
+
+	// Ignored
+	"f5" : 116
 };
 
 Engine.prototype.IsKeyPressed = function(key_name, debounce)
