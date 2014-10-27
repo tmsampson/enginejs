@@ -78,10 +78,8 @@ Engine.prototype.Init = function(on_user_init, user_resources, canvas)
 			triangle_fans   : _this.gl.TRIANGLE_FAN
 		};
 
-		// Initialise gl state tracking
+		// Initialise components
 		_this.InitStateTracking();
-
-		// Initialise user input
 		_this.InitUserInput();
 
 		// Load internal & user resources
@@ -106,6 +104,11 @@ Engine.prototype.Init = function(on_user_init, user_resources, canvas)
 
 							// Request next render frame
 							_this.SetRenderCallback(on_render_internal);
+
+							// Flip keyboard buffer
+							_this.Keyboard.key_buffer_idx = _this.Keyboard.key_buffer_idx? 0 : 1;
+							var latest_state = Engine.CopyArray(_this.Keyboard.key_buffer[2]);
+							_this.Keyboard.key_buffer[_this.Keyboard.key_buffer_idx] = latest_state;
 
 							// Call user render loop
 							last_frame_time = Engine.GetTime();
@@ -235,9 +238,9 @@ Engine.prototype.LoadResourceByDescriptor = function(descriptor, on_complete)
 	var extension = descriptor.file.split('.').pop();
 	if(extension in resource_load_functions)
 	{
-		resource_load_functions[extension](descriptor, function(texture_object)
+		resource_load_functions[extension](descriptor, function(resource_object)
 		{
-			on_complete(texture_object);
+			on_complete(resource_object);
 		});
 	}
 	else
@@ -805,11 +808,24 @@ Engine.prototype.BindParamEditor = function(param_editor)
 // User input
 Engine.prototype.InitUserInput = function()
 {
-	var _this = this;
-
 	// Keyboard
-	document.onkeydown = function(e) { _this.KeyboardKeyStates[e.keyCode] = true;  return false; };
-	document.onkeyup   = function(e) { _this.KeyboardKeyStates[e.keyCode] = false; return false; };
+	this.Keyboard =
+	{
+		key_buffer     : [[], [], []], // tripple-buffered
+		key_buffer_idx : 0,            // "current" buffer-index
+	};
+
+	var _this = this;
+	document.onkeydown = function(e)
+	{
+		_this.Keyboard.key_buffer[2][e.keyCode] = 1;
+		return false;
+	};
+	document.onkeyup   = function(e)
+	{
+		_this.Keyboard.key_buffer[2][e.keyCode] = 0;
+		return false;
+	};
 
 	// Mouse
 	_this.canvas.onmousedown = function(e) { _this.Mouse["pressed"] = true; };
@@ -823,17 +839,26 @@ Engine.prototype.InitUserInput = function()
 
 // *************************************
 // Keyboard
-Engine.prototype.KeyboardKeyStates = [];
+Engine.prototype.Keyboard = null;
 Engine.KeyboardKeyCodeMap =
 {
+	// Common
 	"left" : 37, "right" : 39, "up"    : 38, "down"  : 40,
 	"w"    : 87, "a"     : 65, "s"     : 83, "d"     : 68,
-	"ctrl" : 17, "alt"   : 18, "shift" : 16, "space" : 32
+	"ctrl" : 17, "alt"   : 18, "shift" : 16, "space" : 32,
+
+	// Numeric (default)
+	"0" : 48, "1" : 49, "2" : 50, "3" : 51, "4" : 52,
+	"5" : 53, "6" : 54, "7" : 55, "8" : 56, "9" : 57
 };
 
-Engine.prototype.IsKeyPressed = function(key_name)
+Engine.prototype.IsKeyPressed = function(key_name, debounce)
 {
-	return this.KeyboardKeyStates[Engine.KeyboardKeyCodeMap[key_name]];
+	var key_code = Engine.KeyboardKeyCodeMap[key_name];
+	var this_buffer = this.Keyboard.key_buffer[this.Keyboard.key_buffer_idx];
+	var prev_buffer = this.Keyboard.key_buffer[this.Keyboard.key_buffer_idx? 0 : 1];
+	return debounce? this_buffer[key_code] && !prev_buffer[key_code] :
+	                 this_buffer[key_code]
 }
 
 // *************************************
@@ -877,6 +902,11 @@ Engine.LogError = function(msg)
 
 // *************************************
 // Misc
+Engine.CopyArray = function(array)
+{
+	return array.slice(0);
+}
+
 Engine.GetTime = function()
 {
 	return (new Date).getTime();
