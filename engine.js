@@ -81,6 +81,7 @@ Engine.prototype.Init = function(on_user_init, user_resources, canvas)
 		// Initialise components
 		_this.InitStateTracking();
 		_this.InitUserInput();
+		_this.InitAudio();
 
 		// Load internal & user resources
 		ExecuteAsyncJobQueue(
@@ -232,6 +233,7 @@ Engine.prototype.LoadResourceByDescriptor = function(descriptor, on_complete)
 		vs    : function(descriptor, callback) { _this.LoadShader(descriptor, callback);  },
 		fs    : function(descriptor, callback) { _this.LoadShader(descriptor, callback);  },
 		model : function(descriptor, callback) { _this.LoadModel(descriptor, callback);   },
+		mp3   : function(descriptor, callback) { _this.LoadSound(descriptor, callback);   },
 	}
 
 	// Is this resource type supported?
@@ -697,6 +699,29 @@ Engine.prototype.FetchResource = function(resource_url, callback)
 	});
 }
 
+Engine.prototype.FetchBinaryResource = function(resource_url, callback)
+{
+	// No support for binary ajax calls in jQuery, using XHTML Request Level 2 instead
+	// see: http://bugs.jquery.com/ticket/11461
+	callback = callback || false;
+	var xhr = new XMLHttpRequest();
+	var no_cache = "?timestamp=" + new Date().getTime();
+	xhr.open("GET", resource_url + no_cache, true);
+	xhr.responseType = 'arraybuffer';
+	xhr.onload = function(e)
+	{
+		if(this.status == 200)
+		{
+			if(callback) { callback(xhr.response); }
+		}
+		else
+		{
+			Engine.LogError("Failed fetching resource: " + resource_url);
+		}
+	};
+	xhr.send();
+}
+
 Engine.prototype.MD5 = function(data)
 {
 	return HashCode.value(data);
@@ -872,6 +897,77 @@ Engine.prototype.IsMousePressed = function()
 Engine.prototype.GetMousePosition = function()
 {
 	return this.Mouse["position"];
+}
+
+// *************************************
+// Audio
+Engine.prototype.InitAudio = function()
+{
+	window.AudioContext = window.AudioContext || window.webkitAudioContext;
+	var audio_context = new AudioContext();
+	this.audio =
+	{
+		context         : audio_context,
+		volume_nodes    :
+		{
+			"bgm" : audio_context.createGain(),
+			"sfx" : audio_context.createGain()
+		}
+	};
+}
+
+Engine.prototype.LoadSound = function(descriptor, callback)
+{
+	var _this = this;
+	this.FetchBinaryResource(descriptor.file, function(encoded_audio)
+	{
+		_this.audio.context.decodeAudioData(encoded_audio, function(buffer)
+		{
+			var sound_object =
+			{
+				url        : descriptor.file,
+				pcm_buffer : buffer
+			}
+			callback(sound_object);
+		});
+	});
+}
+
+Engine.prototype.PlayBGM = function(sound_object, params)
+{
+	this.PlaySound(sound_object, params, this.audio.volume_nodes["bgm"]);
+}
+
+Engine.prototype.PlaySFX = function(sound_object, params)
+{
+	this.PlaySound(sound_object, params, this.audio.volume_nodes["sfx"]);
+}
+
+Engine.prototype.PlaySound = function(sound_object, params, volume_node)
+{
+	var source = this.audio.context.createBufferSource();
+	source.loop = (params && params["loop"])? params["loop"] : false;
+	source.buffer = sound_object.pcm_buffer;
+
+	// sound --> volume node --> speakers
+	source.connect(volume_node);
+	volume_node.connect(this.audio.context.destination);
+	source.start(0);
+}
+
+Engine.prototype.SetVolumeBGM = function(volume)
+{
+	this.SetVolume("bgm", volume);
+}
+
+Engine.prototype.SetVolumeSFX = function(volume)
+{
+	this.SetVolume("sfx", volume);
+}
+
+Engine.prototype.SetVolume = function(volume_node_name, volume)
+{
+	this.audio.volume_nodes[volume_node_name].gain.value = volume;
 }
 
 // *************************************
