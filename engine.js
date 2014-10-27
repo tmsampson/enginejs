@@ -8,7 +8,7 @@ Engine.Dependencies =
 	"enginejs/script/third_party/webtoolkit.md5.js",
 	"enginejs/script/third_party/gl-matrix-min.js",
 	"enginejs/script/third_party/jquery-ui.min.js",
-	"enginejs/css/third_party/jquery-ui.css",
+	"enginejs/css/third_party/jquery-ui/jquery-ui.css",
 ];
 
 // *************************************************************************************
