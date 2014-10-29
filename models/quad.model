@@ -2,32 +2,38 @@
 	"name"       : "Quad",
 	"model_data" :
 	{
-		"vertex_buffers" :
+		"primitives" :
 		[
 			{
-				"name"           : "vertices",
-				"attribute_name" : "a_pos",
-				"item_size"      : 3,
-				"draw_mode"      : "triangle_strip",
-				"stream"         :
+				"name"           : "face",
+				"vertex_buffers" :
 				[
-					 1.0,  1.0,  0.0,
-					-1.0,  1.0,  0.0,
-					 1.0, -1.0,  0.0,
-					-1.0, -1.0,  0.0
-				]
-			},
-			{
-				"name"           : "texture-coordinates",
-				"attribute_name" : "a_uv",
-				"item_size"      : 2,
-				"draw_mode"      : "triangle_strip",
-				"stream"         :
-				[
-					1.0, 0.0,
-					0.0, 0.0,
-					1.0, 1.0,
-					0.0, 1.0
+					{
+						"name"           : "vertices",
+						"attribute_name" : "a_pos",
+						"item_size"      : 3,
+						"draw_mode"      : "triangle_strip",
+						"stream"         :
+						[
+							 1.0,  1.0,  0.0,
+							-1.0,  1.0,  0.0,
+							 1.0, -1.0,  0.0,
+							-1.0, -1.0,  0.0
+						]
+					},
+					{
+						"name"           : "texture-coordinates",
+						"attribute_name" : "a_uv",
+						"item_size"      : 2,
+						"draw_mode"      : "triangle_strip",
+						"stream"         :
+						[
+							1.0, 0.0,
+							0.0, 0.0,
+							1.0, 1.0,
+							0.0, 1.0
+						]
+					}
 				]
 			}
 		]
