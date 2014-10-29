@@ -27,6 +27,8 @@ Engine.Resources =
 
 	// Models
 	ml_quad              : { file: "enginejs/models/quad.model" },
+	ml_tri               : { file: "enginejs/models/tri.model"  },
+	ml_cube              : { file: "enginejs/models/cube.model" },
 };
 
 // *************************************************************************************
@@ -36,9 +38,11 @@ Engine.prototype.ShaderProgramCache = { };
 // *************************************************************************************
 // Cache gl state to minimise redundant state changes
 Engine.prototype.StateTracking = { };
-Engine.prototype.InitStateTracking = function()
+Engine.prototype.InitRenderStateTracking = function()
 {
-	this.StateTracking[engine.gl.BLEND] = 0;
+	// Initialise default state
+	this.StateTracking[engine.gl.BLEND]      = 0;
+	this.StateTracking[engine.gl.DEPTH_TEST] = 0;
 }
 
 // *************************************************************************************
@@ -79,9 +83,9 @@ Engine.prototype.Init = function(on_user_init, user_resources, canvas)
 		};
 
 		// Initialise components
-		_this.InitStateTracking();
+		_this.InitRenderStateTracking();
 		_this.InitUserInput();
-		_this.InitAudio();
+		_this.InitAudio()
 
 		// Load internal & user resources
 		ExecuteAsyncJobQueue(
@@ -126,6 +130,8 @@ Engine.prototype.Init = function(on_user_init, user_resources, canvas)
 	});
 }
 
+// *************************************************************************************
+// Render callback registration
 Engine.prototype.SetRenderCallback = function(callback)
 {
 	var request_func = window.requestAnimationFrame       ||
@@ -430,6 +436,7 @@ Engine.prototype.BindShaderProgram = function(program)
 	// Bind camera?
 	if(this.active_camera)
 	{
+		this.SetShaderConstant("u_trans_view", this.active_camera.mtx_view, Engine.SC_MATRIX4);
 		this.SetShaderConstant("u_trans_proj", this.active_camera.mtx_proj, Engine.SC_MATRIX4);
 	}
 }
@@ -463,13 +470,19 @@ Engine.prototype.LoadModel = function(descriptor, callback)
 
 	_this.FetchResource(descriptor.file, function(model_json)
 	{
-		// Build vertex buffers
 		var model = jQuery.parseJSON(model_json);
-		var vertex_buffers = model.model_data.vertex_buffers;
-		for(var i = 0; i < vertex_buffers.length; ++i)
+
+		// For each primitive...
+		var prims = model.model_data.primitives;
+		for(var i = 0; i < prims.length; ++i)
 		{
-			// Place vertex buffer object immediately inside buffer object
-			vertex_buffers[i].vbo = _this.CreateVertexBuffer(vertex_buffers[i]);
+			// Build vertex buffers
+			var vertex_buffers = prims[i].vertex_buffers;
+			for(var j = 0; j < vertex_buffers.length; ++j)
+			{
+				// Place vertex buffer object immediately inside buffer object
+				vertex_buffers[j].vbo = _this.CreateVertexBuffer(vertex_buffers[j]);
+			}
 		}
 
 		// Finalise
@@ -482,9 +495,19 @@ Engine.prototype.LoadModel = function(descriptor, callback)
 // Vertex buffer operations
 Engine.prototype.CreateVertexBuffer = function(vertex_buffer_descriptor)
 {
+	// Determine buffer type (normal/index)?
+	var is_index_buffer = (vertex_buffer_descriptor.name == "indices");
+	var vertex_buffer_type = is_index_buffer? this.gl.ELEMENT_ARRAY_BUFFER :
+	                                          this.gl.ARRAY_BUFFER;
+
+	// Create and bind the new buffer
 	var buffer = this.gl.createBuffer();
-	this.gl.bindBuffer(this.gl.ARRAY_BUFFER, buffer);
-	this.gl.bufferData(this.gl.ARRAY_BUFFER, new Float32Array(vertex_buffer_descriptor.stream), this.gl.STATIC_DRAW);
+	this.gl.bindBuffer(vertex_buffer_type, buffer);
+
+	// Bind data stream to buffer
+	var vertex_data_stream = is_index_buffer? new Uint16Array(vertex_buffer_descriptor.stream) :
+	                                          new Float32Array(vertex_buffer_descriptor.stream);
+	this.gl.bufferData(vertex_buffer_type, vertex_data_stream, this.gl.STATIC_DRAW);
 
 	// Use default draw mode?
 	var vertex_draw_mode = Engine.DrawModeFromString["triangles"];
@@ -493,43 +516,53 @@ Engine.prototype.CreateVertexBuffer = function(vertex_buffer_descriptor)
 		vertex_draw_mode = Engine.DrawModeFromString[vertex_buffer_descriptor.draw_mode];
 	}
 
+	// Setup our own VBO type
 	var vertex_buffer_object =
 	{
 		descriptor     : vertex_buffer_descriptor,
+		buffer_type    : vertex_buffer_type,
 		resource       : buffer,
 		item_size      : vertex_buffer_descriptor.item_size,
 		item_count     : vertex_buffer_descriptor.stream.length / vertex_buffer_descriptor.item_size,
 		attribute_name : vertex_buffer_descriptor.attribute_name,
 		draw_mode      : vertex_draw_mode
 	};
-
 	return vertex_buffer_object;
 }
 
 Engine.prototype.BindVertexBuffer = function(vertex_buffer_object)
 {
-	this.current_vertex_buffer = vertex_buffer_object;
+	this.current_vertex_buffer_object = vertex_buffer_object;
 
-	var program = this.current_shader_program;
-	var attribute_name = vertex_buffer_object.attribute_name;
+	// Bind vertex buffer
+	var is_index_buffer = (vertex_buffer_object.buffer_type == this.gl.ELEMENT_ARRAY_BUFFER);
+	this.gl.bindBuffer(is_index_buffer? this.gl.ELEMENT_ARRAY_BUFFER :
+	                                    this.gl.ARRAY_BUFFER,
+	                   vertex_buffer_object.resource);
 
-	// Asking WebGL for attribute locations is slow, can we
-	// re-use a cached result?
-	var attribute_location = null;
-	if(attribute_name in program.attribute_location_cache)
+	// Bind to shader attribute (indices not passed to shaders)
+	if(!is_index_buffer)
 	{
-		attribute_location = program.attribute_location_cache[attribute_name];
-	}
-	else
-	{
-		attribute_location = this.gl.getAttribLocation(program.resource, attribute_name);
-		program.attribute_location_cache[attribute_name] = attribute_location; // Cache for later
-	}
+		var program = this.current_shader_program;
+		var attribute_name = vertex_buffer_object.attribute_name;
 
-	// Bind vertex buffer to program attribute location
-	this.gl.bindBuffer(this.gl.ARRAY_BUFFER, vertex_buffer_object.resource);
-	this.gl.enableVertexAttribArray(attribute_location);
-	this.gl.vertexAttribPointer(attribute_location, vertex_buffer_object.item_size, this.gl.FLOAT, false, 0, 0);
+		// Asking WebGL for attribute locations is slow, can we
+		// re-use a cached result?
+		var attribute_location = null;
+		if(attribute_name in program.attribute_location_cache)
+		{
+			attribute_location = program.attribute_location_cache[attribute_name];
+		}
+		else
+		{
+			attribute_location = this.gl.getAttribLocation(program.resource, attribute_name);
+			program.attribute_location_cache[attribute_name] = attribute_location; // Cache for later
+		}
+
+		// Bind vertex buffer to program attribute location
+		this.gl.enableVertexAttribArray(attribute_location);
+		this.gl.vertexAttribPointer(attribute_location, vertex_buffer_object.item_size, this.gl.FLOAT, false, 0, 0);
+	}
 }
 
 // *************************************************************************************
@@ -596,16 +629,23 @@ Engine.prototype.Clear = function(colour)
 
 Engine.prototype.DrawArray = function()
 {
-	this.gl.drawArrays(this.current_vertex_buffer.draw_mode, 0, this.current_vertex_buffer.item_count);
+	var draw_mode = this.current_vertex_buffer_object.draw_mode;
+	var item_count = this.current_vertex_buffer_object.item_count;
+	var is_index_buffer = (this.current_vertex_buffer_object.buffer_type  == this.gl.ELEMENT_ARRAY_BUFFER);
+	if(is_index_buffer)
+	{
+		// Draw indexed
+		this.gl.drawElements(draw_mode, item_count, this.gl.UNSIGNED_SHORT, 0);
+	}
+	else
+	{
+		// Draw non-indexed
+		this.gl.drawArrays(draw_mode, 0, item_count);
+	}
 }
 
 Engine.prototype.DrawModel = function(model)
 {
-	// NOTE: This is a very basic implementation which simply binds all of
-	// the model's vertex streams and issues a draw call. This will need
-	// developing and maintaining as the model format matures to support shader,
-	// material, texture binding etc.
-
 	// Make sure model has been "loaded" (vertex buffer objects have been created)
 	if(!model.hasOwnProperty("is_loaded"))
 	{
@@ -613,15 +653,41 @@ Engine.prototype.DrawModel = function(model)
 		return false;
 	}
 
-	// Bind vertex buffers
-	var vertex_buffers = model.model_data.vertex_buffers;
-	for(var i = 0; i < vertex_buffers.length; ++i)
+	// For each primitive...
+	var prims = model.model_data.primitives
+	for(var i = 0; i < prims.length; ++i)
 	{
-		this.BindVertexBuffer(vertex_buffers[i].vbo);
+		var index_buffer = null;
+
+		// Bind vertex buffers
+		var vertex_buffers = prims[i].vertex_buffers;
+		for(var j = 0; j < vertex_buffers.length; ++j)
+		{
+			// Is this an index buffer?
+			if(vertex_buffers[j].vbo.buffer_type == this.gl.ELEMENT_ARRAY_BUFFER)
+			{
+				// Only allow a single index buffer per-prim
+				if(index_buffer)
+				{
+					Engine.LogError("Model '" + model.name + "' primitive: " + i + ", attempting to bind multiple index buffers");
+					return false;
+				}
+
+				// Always bind index buffers last
+				index_buffer = vertex_buffers[j];
+				continue;
+			}
+
+			this.BindVertexBuffer(vertex_buffers[j].vbo);
+		}
+
+		// Always bind index buffer last
+		if(index_buffer) { this.BindVertexBuffer(index_buffer.vbo); }
+
+		// Draw primitive
+		this.DrawArray();
 	}
 
-	// Draw model
-	this.DrawArray();
 	return true;
 }
 
@@ -642,8 +708,9 @@ Engine.prototype.SetActiveCamera = function(cam)
 // Geometry
 Engine.prototype.GenerateCircleModel = function(params)
 {
-	// Setup empty model
-	var model = { name : "Circle", is_loaded : true, model_data : { vertex_buffers : [] } };
+	// Setup empty model with 1 prim
+	var prim = { vertex_buffers : [] }
+	var model = { name : "Circle", is_loaded : true, model_data : { primitives : [prim] } };
 
 	// Generate verts
 	if(!params.hasOwnProperty("segment_count"))
@@ -658,7 +725,7 @@ Engine.prototype.GenerateCircleModel = function(params)
 
 	// Create vertex buffer
 	vertex_buffer.vbo = this.CreateVertexBuffer(vertex_buffer);
-	model.model_data.vertex_buffers.push(vertex_buffer);
+	prim.vertex_buffers.push(vertex_buffer);
 
 	// Generate UVs?
 	if(params.hasOwnProperty("generate_uvs") && !params.generate_uvs)
@@ -673,7 +740,7 @@ Engine.prototype.GenerateCircleModel = function(params)
 
 	// Create uv buffer
 	uv_buffer.vbo = this.CreateVertexBuffer(uv_buffer);
-	model.model_data.vertex_buffers.push(uv_buffer);
+	prim.vertex_buffers.push(uv_buffer);
 
 	return model;
 }
@@ -785,7 +852,18 @@ Engine.prototype.EnableBlend = function(new_value)
 Engine.prototype.SetBlendMode = function(a, b, also_enable)
 {
 	this.gl.blendFunc(a, b);
-	if(also_enable) { this.SetStateBool(this.gl.BLEND, true); }
+	if(also_enable) { this.EnableBlend(true); }
+}
+
+Engine.prototype.EnableDepthTest = function(new_value)
+{
+	this.SetStateBool(this.gl.DEPTH_TEST, new_value);
+}
+
+Engine.prototype.SetDepthTestMode = function(mode, also_enable)
+{
+	this.gl.depthFunc(mode);
+	if(also_enable) { this.EnableDepthTest(true); }
 }
 
 // *************************************
@@ -1044,20 +1122,58 @@ EngineResourceBase.prototype.IsValid = function()
 // EngineCameraOrtho
 function EngineCameraOrtho(config)
 {
+	// Set defaults
+	this.position = [0, 0];
+	this.width    = [512, 512];
+
+	// Override defaults
 	$.extend(this, config);
+
+	// Init matrices
+	this.mtx_view = mat4.create();
 	this.mtx_proj = mat4.create();
 
-	// By default, centre camera
-	this.x = 0;
-	this.y = 0;
+	// Run first update
 	this.UpdateMtx();
 }
 
 EngineCameraOrtho.prototype.UpdateMtx = function()
 {
+	mat4.identity(this.mtx_view);
+
 	// Camera x/y represents bottom left of view region
 	mat4.ortho(this.mtx_proj,
-	           this.x, this.x + this.width,
-	           this.y, this.y + this.height,
+	           this.position[0], this.position[0] + this.width,
+	           this.position[1], this.position[1] + this.height,
 	           -1.0, 1.0);
+}
+
+// *************************************
+// EngineCameraPersp
+function EngineCameraPersp(config)
+{
+	// Set defaults
+	this.position = [0.0, 0.0, 0.0]; // Start at origin
+	this.look_at  = [0.0, 0.0, 1.0]; // Looking down z-axis
+	this.up       = [0.0, 1.0, 0.0]; // Default up
+	this.fov      = 45.0;
+	this.aspect   = 1.0;
+	this.near     = 0.1;
+	this.far      = 100;
+
+	// Override defaults
+	$.extend(this, config);
+
+	// Init matrices
+	this.mtx_view = mat4.create();
+	this.mtx_proj = mat4.create();
+
+	// Run first update
+	this.UpdateMtx();
+}
+
+EngineCameraPersp.prototype.UpdateMtx = function()
+{
+	mat4.lookAt(this.mtx_view, this.position, this.look_at, this.up);
+	mat4.perspective(this.mtx_proj, this.fov, this.aspect, this.near, this.far);
 }
