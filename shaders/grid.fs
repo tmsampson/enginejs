@@ -5,7 +5,7 @@ varying vec2 v_uv;
 
 // Settings
 #define REPEATS 32.0
-uniform vec4  u_colours[2];
+uniform vec4 u_colours[2];
 
 void main(void)
 {
