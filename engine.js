@@ -24,11 +24,13 @@ Engine.Resources =
 	fs_basic_colour      : { file: "enginejs/shaders/basic-colour.fs" },
 	fs_basic_textured    : { file: "enginejs/shaders/basic-textured.fs" },
 	fs_grid              : { file: "enginejs/shaders/grid.fs" },
+	fs_grid_floor_fog    : { file: "enginejs/shaders/grid-floor-fog.fs" },
 
 	// Models
-	ml_quad              : { file: "enginejs/models/quad.model" },
-	ml_tri               : { file: "enginejs/models/tri.model"  },
-	ml_cube              : { file: "enginejs/models/cube.model" },
+	ml_quad              : { file: "enginejs/models/quad.model"       },
+	ml_floor_tile        : { file: "enginejs/models/floor_tile.model" },
+	ml_tri               : { file: "enginejs/models/tri.model"        },
+	ml_cube              : { file: "enginejs/models/cube.model"       },
 };
 
 // *************************************************************************************
