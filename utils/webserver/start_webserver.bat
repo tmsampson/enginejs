@@ -10,12 +10,8 @@ SET URI=http://%HOST%:%PORT%
 taskkill /im tiny.exe /f /t
 CLS
 
-:: Change current directory such that log files don't end up elsewhere
-SET MY_ROOT=%~dp0
-pushd %MY_ROOT%
-
 :: Start webserver
-START %MY_ROOT%\tiny.exe %SERVER_ROOT% %PORT% > nul
+START /D "%MY_ROOT%" tiny.exe %SERVER_ROOT% %PORT% > nul
 ECHO Webserver running @ %URI%
 
 :: Launch in browser
