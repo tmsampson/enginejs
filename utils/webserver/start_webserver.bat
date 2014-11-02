@@ -11,6 +11,7 @@ taskkill /im tiny.exe /f /t
 CLS
 
 :: Start webserver
+SET MY_ROOT=%~dp0
 START /D "%MY_ROOT%" tiny.exe %SERVER_ROOT% %PORT% > nul
 ECHO Webserver running @ %URI%
 
