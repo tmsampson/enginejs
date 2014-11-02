@@ -107,10 +107,17 @@ Engine.prototype.Init = function(on_user_init, user_resources, canvas)
 						var on_render_internal = function()
 						{
 							// How long did last frame take?
-							var delta = Engine.GetTime() - last_frame_time;
+							var delta_msec = Engine.GetTime() - last_frame_time;
 
 							// Request next render frame
 							_this.SetRenderCallback(on_render_internal);
+
+							// Update camera?
+							if(_this.active_camera) { _this.active_camera.Update(delta_msec); }
+
+							// Update mouse deltas
+							_this.Mouse["prev_position"] = _this.Mouse["position"];
+							_this.Mouse["wheel_delta"] = 0;
 
 							// Flip keyboard buffer
 							_this.Keyboard.key_buffer_idx = _this.Keyboard.key_buffer_idx? 0 : 1;
@@ -119,7 +126,7 @@ Engine.prototype.Init = function(on_user_init, user_resources, canvas)
 
 							// Call user render loop
 							last_frame_time = Engine.GetTime();
-							on_user_render(delta);
+							on_user_render(delta_msec);
 						};
 
 						// Request first render frame
@@ -939,6 +946,7 @@ Engine.prototype.InitUserInput = function()
 	// Mouse
 	_this.canvas.onmousedown = function(e) { _this.Mouse["pressed"] = true; };
 	document.onmouseup       = function(e) { _this.Mouse["pressed"] = false; };
+	document.onmousewheel    = function(e) { _this.Mouse["wheel_delta"] = e.wheelDeltaY; };
 	document.onmousemove     = function(e)
 	{
 		_this.Mouse["position"] = [e.clientX - _this.canvas.getBoundingClientRect().left,
@@ -975,7 +983,7 @@ Engine.prototype.IsKeyPressed = function(key_name, debounce)
 
 // *************************************
 // Mouse
-Engine.prototype.Mouse = { "clicked" : false, "position" : [0, 0] };
+Engine.prototype.Mouse = { "clicked" : false, "position" : [0, 0], "prev_position" : [0, 0], "wheel_delta" : 0 };
 Engine.prototype.IsMousePressed = function()
 {
 	return this.Mouse["pressed"];
@@ -984,6 +992,17 @@ Engine.prototype.IsMousePressed = function()
 Engine.prototype.GetMousePosition = function()
 {
 	return this.Mouse["position"];
+}
+
+Engine.prototype.GetMouseDelta = function()
+{
+	return [ this.Mouse["position"][0] - this.Mouse["prev_position"][0],
+	         this.Mouse["position"][1] - this.Mouse["prev_position"][1] ];
+}
+
+Engine.prototype.GetMouseWheelDelta = function()
+{
+	return this.Mouse["wheel_delta"];
 }
 
 // *************************************
@@ -1121,25 +1140,47 @@ EngineResourceBase.prototype.IsValid = function()
 }
 
 // *************************************
-// EngineCameraOrtho
-function EngineCameraOrtho(config)
+// EngineCameraBase
+function EngineCameraBase()
 {
+	this.helpers  = [];
+	this.mtx_view = mat4.create();
+	this.mtx_proj = mat4.create();
+
+	this.AttachHelper = function(helper_class)
+	{
+		this.helpers.push(helper_class);
+	};
+
+	this.Update = function(delta_msec)
+	{
+		// Run any helpers
+		for(var i = 0; i < this.helpers.length; ++i)
+		{
+			this.helpers[i].Update(this, delta_msec);
+		}
+
+		// Update matrices
+		this.UpdateMatrices();
+	}
+}
+
+// *************************************
+// EngineCameraOrtho
+function EngineCameraOrtho(user_config)
+{
+	// Inherit base
+	$.extend(this, new EngineCameraBase());
+
 	// Set defaults
 	this.position = [0, 0];
 	this.width    = [512, 512];
 
-	// Override defaults
-	$.extend(this, config);
-
-	// Init matrices
-	this.mtx_view = mat4.create();
-	this.mtx_proj = mat4.create();
-
-	// Run first update
-	this.UpdateMtx();
+	$.extend(this, user_config); // Override defaults
+	this.UpdateMatrices();       // Run first update
 }
 
-EngineCameraOrtho.prototype.UpdateMtx = function()
+EngineCameraOrtho.prototype.UpdateMatrices = function()
 {
 	mat4.identity(this.mtx_view);
 
@@ -1152,8 +1193,11 @@ EngineCameraOrtho.prototype.UpdateMtx = function()
 
 // *************************************
 // EngineCameraPersp
-function EngineCameraPersp(config)
+function EngineCameraPersp(user_config)
 {
+	// Inherit base
+	$.extend(this, new EngineCameraBase());
+
 	// Set defaults
 	this.position = [0.0, 0.0, 0.0]; // Start at origin
 	this.look_at  = [0.0, 0.0, 1.0]; // Looking down z-axis
@@ -1163,19 +1207,51 @@ function EngineCameraPersp(config)
 	this.near     = 0.1;
 	this.far      = 100;
 
-	// Override defaults
-	$.extend(this, config);
-
-	// Init matrices
-	this.mtx_view = mat4.create();
-	this.mtx_proj = mat4.create();
-
-	// Run first update
-	this.UpdateMtx();
+	$.extend(this, user_config); // Override defaults
+	this.UpdateMatrices();       // Run first update
 }
 
-EngineCameraPersp.prototype.UpdateMtx = function()
+EngineCameraPersp.prototype.UpdateMatrices = function()
 {
 	mat4.lookAt(this.mtx_view, this.position, this.look_at, this.up);
 	mat4.perspective(this.mtx_proj, this.fov, this.aspect, this.near, this.far);
+}
+
+// *************************************
+// EngineCamera Helpers
+function EngineCameraHelper_Orbit(engine, user_config)
+{
+	this.engine = engine;
+	this.process_input = true;      // Update based on user input
+	this.look_at = [0.0, 0.0, 0.0]; // Look at origin
+	this.up      = [0.0, 1.0, 0.0]; // Default up
+	this.angles  = [0, 0];
+	this.radius  = 5;
+	this.min_y   = -(Math.PI / 2) + 0.1; // prevent alignment with -ve y-axis
+	this.max_y   =  (Math.PI / 2) - 0.1; // prevent alignment with +ve y-axis
+
+	// Override defaults
+	$.extend(this, user_config);
+}
+
+EngineCameraHelper_Orbit.prototype.Update = function(camera, delta_msec)
+{
+	// Zoom
+	var wheel_delta = this.engine.GetMouseWheelDelta();
+	if(wheel_delta != 0) { this.radius -= wheel_delta / 100; }
+
+	// Pan
+	if(this.engine.IsMousePressed())
+	{
+		var delta = this.engine.GetMouseDelta();
+		this.angles[0] += delta[0] / 100.0;
+		this.angles[1] = Engine.Clamp(this.angles[1] - delta[1] / 100.0, this.min_y, this.max_y);
+	}
+
+	// Update
+	camera.look_at  = this.look_at;
+	camera.up       = this.up;
+	camera.position = [this.look_at[0] + this.radius * Math.cos(this.angles[0]) * Math.cos(this.angles[1]),
+	                   this.look_at[1] + this.radius * Math.sin(this.angles[1]),
+	                   this.look_at[2] + this.radius * Math.sin(this.angles[0]) * Math.cos(this.angles[1])];
 }
