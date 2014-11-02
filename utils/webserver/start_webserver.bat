@@ -22,3 +22,4 @@ ECHO Press any key to terminate...
 PAUSE > nul
 taskkill /im tiny.exe /f /t
 popd
+CLS
