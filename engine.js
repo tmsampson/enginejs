@@ -715,6 +715,28 @@ Engine.prototype.SetActiveCamera = function(cam)
 }
 
 // *************************************************************************************
+// Canvas
+Engine.prototype.GetCanvas = function()
+{
+	return this.canvas;
+}
+
+Engine.prototype.GetCanvasWidth = function()
+{
+	return this.canvas.width;
+}
+
+Engine.prototype.GetCanvasHeight = function()
+{
+	return this.canvas.height;
+}
+
+Engine.prototype.GetCanvasCentre = function()
+{
+	return [this.canvas.width / 2, this.canvas.height / 2, 0];
+}
+
+// *************************************************************************************
 // Geometry
 Engine.prototype.GenerateCircleModel = function(params)
 {
