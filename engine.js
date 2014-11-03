@@ -985,12 +985,28 @@ Engine.prototype.InitUserInput = function()
 	// Mouse
 	_this.canvas.onmousedown = function(e) { _this.Mouse["pressed"] = true; };
 	document.onmouseup       = function(e) { _this.Mouse["pressed"] = false; };
-	document.onmousewheel    = function(e) { _this.Mouse["wheel_delta"] = e.wheelDeltaY; };
 	document.onmousemove     = function(e)
 	{
 		_this.Mouse["position"] = [e.clientX - _this.canvas.getBoundingClientRect().left,
 		                           _this.canvas.getBoundingClientRect().bottom - e.clientY];
 	};
+
+	// Mouse wheel
+	var on_mousewheel = function(e)
+	{
+		var e = window.event || e;
+		var delta = e.wheelDelta || (-e.detail * 40);
+		_this.Mouse["wheel_delta"] = delta;
+	}
+	if(document.addEventListener)
+	{
+		document.addEventListener("mousewheel", on_mousewheel, false);
+		document.addEventListener("DOMMouseScroll", on_mousewheel, false);
+	}
+	else
+	{
+		sq.attachEvent("onmousewheel", on_mousewheel);
+	}
 }
 
 // *************************************
