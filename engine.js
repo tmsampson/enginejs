@@ -4,6 +4,7 @@ function Engine() { }
 // External dependencies
 Engine.Dependencies =
 [
+	"enginejs/css/engine.css",
 	"enginejs/script/third_party/hashCode-v1.0.0.js",
 	"enginejs/script/third_party/webtoolkit.md5.js",
 	"enginejs/script/third_party/gl-matrix-min.js",
@@ -87,7 +88,7 @@ Engine.prototype.Init = function(on_user_init, user_resources, canvas)
 		// Initialise components
 		_this.InitRenderStateTracking();
 		_this.InitUserInput();
-		_this.InitAudio()
+		_this.InitAudio();
 
 		// Load internal & user resources
 		ExecuteAsyncJobQueue(
@@ -935,6 +936,13 @@ Engine.prototype.InitUserInput = function()
 	document.onkeydown = function(e)
 	{
 		_this.Keyboard.key_buffer[2][e.keyCode] = 1;
+
+		// Switch to full screen mode?
+		if(e.keyCode == Engine.KeyboardKeyCodeMap["f10"] && !_this.IsFullScreen())
+		{
+			_this.FullScreen();
+		}
+
 		return _this.Keyboard.is_ignored(e.keyCode);
 	};
 	document.onkeyup   = function(e)
@@ -967,6 +975,9 @@ Engine.KeyboardKeyCodeMap =
 	// Numeric (default)
 	"0" : 48, "1" : 49, "2" : 50, "3" : 51, "4" : 52,
 	"5" : 53, "6" : 54, "7" : 55, "8" : 56, "9" : 57,
+
+	// Function keys
+	"f10" : 121,
 
 	// Ignored
 	"f5" : 116
@@ -1077,6 +1088,57 @@ Engine.prototype.SetVolume = function(volume_node_name, volume)
 }
 
 // *************************************
+// Fullscreen mode
+Engine.prototype.FullScreen = function()
+{
+	var _this = this;
+	var canvas = this.canvas;
+
+	// Cache the original size of the canvas
+	var canvas_original_width  = canvas.width;
+	var canvas_original_height = canvas.height;
+
+	// Handle transition between windowed / fullscreen
+	var toggle_fullscreen = function(is_fullscreen)
+	{
+		_this.is_full_screen = is_fullscreen;
+		Engine.Log(document.webkitIsFullScreen? "Going full screen..." :
+		                                        "Going into windowed mode...");
+
+		// Update canvas size accordingly
+		canvas.width  = is_fullscreen? screen.width  : canvas_original_width;
+		canvas.height = is_fullscreen? screen.height : canvas_original_height;
+
+		// Update gl viewport to match canvas
+		_this.gl.viewport(0, 0, canvas.width, canvas.height);
+
+		// If we have an active camera, let's update this to cope with the new canvas size
+		if(_this.active_camera)
+		{
+			_this.active_camera.ResizeViewport(canvas.width, canvas.height);
+		}
+	};
+
+	canvas.onwebkitfullscreenchange = function() { toggle_fullscreen(document.webkitIsFullScreen); }
+
+	// Initiate transition to fullscreen mode
+	toggle_fullscreen(true);
+	if(canvas.webkitRequestFullScreen)
+	{
+		canvas.webkitRequestFullScreen();
+	}
+	else
+	{
+		canvas.mozRequestFullScreen();
+	}
+}
+
+Engine.prototype.IsFullScreen = function()
+{
+	return this.is_full_screen;
+}
+
+// *************************************
 // Math
 Engine.Clamp = function(x, min, max)
 {
@@ -1174,7 +1236,7 @@ function EngineCameraOrtho(user_config)
 
 	// Set defaults
 	this.position = [0, 0];
-	this.width    = [512, 512];
+	this.size     = [512, 512];
 
 	$.extend(this, user_config); // Override defaults
 	this.UpdateMatrices();       // Run first update
@@ -1186,9 +1248,14 @@ EngineCameraOrtho.prototype.UpdateMatrices = function()
 
 	// Camera x/y represents bottom left of view region
 	mat4.ortho(this.mtx_proj,
-	           this.position[0], this.position[0] + this.width,
-	           this.position[1], this.position[1] + this.height,
+	           this.position[0], this.position[0] + this.size[0],
+	           this.position[1], this.position[1] + this.size[1],
 	           -1.0, 1.0);
+}
+
+EngineCameraOrtho.prototype.ResizeViewport = function(width, height)
+{
+	this.size = [width, height];
 }
 
 // *************************************
@@ -1215,6 +1282,11 @@ EngineCameraPersp.prototype.UpdateMatrices = function()
 {
 	mat4.lookAt(this.mtx_view, this.position, this.look_at, this.up);
 	mat4.perspective(this.mtx_proj, this.fov, this.aspect, this.near, this.far);
+}
+
+EngineCameraPersp.prototype.ResizeViewport = function(width, height)
+{
+	this.aspect = width / height;
 }
 
 // *************************************
