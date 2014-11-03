@@ -107,14 +107,22 @@ Engine.prototype.Init = function(on_user_init, user_resources, canvas)
 						// Setup internal render loop
 						var on_render_internal = function()
 						{
-							// How long did last frame take?
-							var delta_msec = Engine.GetTime() - last_frame_time;
+							// Generate frame stats
+							var elapsed_msec = Engine.GetTime() - first_frame_time;
+							var delta_msec   = Engine.GetTime() - last_frame_time;
+							var stats =
+							{
+								elapsed_seconds      : elapsed_msec / 1000,
+								elapsed_milliseconds : elapsed_msec,
+								delta_seconds        : delta_msec / 1000,
+								delta_milliseconds   : delta_msec
+							};
 
 							// Request next render frame
 							_this.SetRenderCallback(on_render_internal);
 
 							// Update camera?
-							if(_this.active_camera) { _this.active_camera.Update(delta_msec); }
+							if(_this.active_camera) { _this.active_camera.Update(stats); }
 
 							// Update mouse deltas
 							_this.Mouse["prev_position"] = _this.Mouse["position"];
@@ -127,11 +135,12 @@ Engine.prototype.Init = function(on_user_init, user_resources, canvas)
 
 							// Call user render loop
 							last_frame_time = Engine.GetTime();
-							on_user_render(delta_msec);
+							on_user_render(stats);
 						};
 
 						// Request first render frame
-						var last_frame_time = Engine.GetTime();
+						var first_frame_time = Engine.GetTime();
+						var last_frame_time  = Engine.GetTime();
 						_this.SetRenderCallback(on_render_internal);
 					}
 				}
@@ -1236,12 +1245,12 @@ function EngineCameraBase()
 		this.helpers.push(helper_class);
 	};
 
-	this.Update = function(delta_msec)
+	this.Update = function(delta)
 	{
 		// Run any helpers
 		for(var i = 0; i < this.helpers.length; ++i)
 		{
-			this.helpers[i].Update(this, delta_msec);
+			this.helpers[i].Update(this, delta);
 		}
 
 		// Update matrices
@@ -1328,18 +1337,18 @@ function EngineCameraHelper_Orbit(engine, user_config)
 	$.extend(this, user_config);
 }
 
-EngineCameraHelper_Orbit.prototype.Update = function(camera, delta_msec)
+EngineCameraHelper_Orbit.prototype.Update = function(camera, stats)
 {
 	// Zoom
 	var wheel_delta = this.engine.GetMouseWheelDelta();
-	if(wheel_delta != 0) { this.radius -= wheel_delta / 100; }
+	if(wheel_delta != 0) { this.radius -= wheel_delta * stats.delta_seconds / 3; }
 
 	// Pan
 	if(this.engine.IsMousePressed())
 	{
-		var delta = this.engine.GetMouseDelta();
-		this.angles[0] += delta[0] / 100.0;
-		this.angles[1] = Engine.Clamp(this.angles[1] - delta[1] / 100.0, this.min_y, this.max_y);
+		var mouse_delta = this.engine.GetMouseDelta();
+		this.angles[0] += mouse_delta[0] * stats.delta_seconds / 3;
+		this.angles[1] = Engine.Clamp(this.angles[1] - mouse_delta[1] * stats.delta_seconds / 3, this.min_y, this.max_y);
 	}
 
 	// Update
