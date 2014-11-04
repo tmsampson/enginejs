@@ -1172,7 +1172,7 @@ Engine.prototype.FullScreen = function()
 	toggle_fullscreen(true);
 	if(canvas.webkitRequestFullScreen)
 	{
-		canvas.webkitRequestFullScreen();
+		canvas.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);
 	}
 	else
 	{
