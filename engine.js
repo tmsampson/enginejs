@@ -25,7 +25,8 @@ Engine.Resources =
 	fs_basic_colour      : { file: "enginejs/shaders/basic-colour.fs" },
 	fs_basic_textured    : { file: "enginejs/shaders/basic-textured.fs" },
 	fs_grid              : { file: "enginejs/shaders/grid.fs" },
-	fs_grid_floor_fog    : { file: "enginejs/shaders/grid-floor-fog.fs" },
+	fs_grid_3d           : { file: "enginejs/shaders/grid-3d.fs" },
+	fs_grid_3d_fog       : { file: "enginejs/shaders/grid-3d-fog.fs" },
 
 	// Models
 	ml_quad              : { file: "enginejs/models/quad.model"       },
@@ -1149,8 +1150,8 @@ Engine.prototype.FullScreen = function()
 	var toggle_fullscreen = function(is_fullscreen)
 	{
 		_this.is_full_screen = is_fullscreen;
-		Engine.Log(document.webkitIsFullScreen? "Going full screen..." :
-		                                        "Going into windowed mode...");
+		Engine.Log(is_fullscreen? "Going full screen..." :
+		                          "Going into windowed mode...");
 
 		// Update canvas size accordingly
 		canvas.width  = is_fullscreen? screen.width  : canvas_original_width;
@@ -1166,12 +1167,14 @@ Engine.prototype.FullScreen = function()
 		}
 	};
 
-	canvas.onwebkitfullscreenchange = function() { toggle_fullscreen(document.webkitIsFullScreen); }
+	// Hookup event handlers
+	document.onwebkitfullscreenchange = function() { toggle_fullscreen(document.webkitIsFullScreen); };
+	document.onmozfullscreenchange = function() { toggle_fullscreen(document.mozFullScreenElement != null); };
 
 	// Initiate transition to fullscreen mode
-	toggle_fullscreen(true);
 	if(canvas.webkitRequestFullScreen)
 	{
+		toggle_fullscreen(true); // Needed as Chrome doesn't fire first event
 		canvas.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);
 	}
 	else

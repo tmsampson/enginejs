@@ -16,8 +16,8 @@ void main(void)
 
 	// Calc fog
 	vec4 fog_colour = vec4(0.0, 0.0, 0.0, 1.0);
-	float fog_amount = 1.0 - (gl_FragCoord.w * 3.0);
+	float fog_amount = min(1.0, gl_FragCoord.w * 2.0);
 
 	// Blend fog
-	gl_FragColor = mix(albedo, fog_colour, fog_amount);
+	gl_FragColor = mix(fog_colour, albedo, fog_amount);
 }

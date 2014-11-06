@@ -1,16 +1,16 @@
 precision mediump float;
 
 // Input
-varying vec2 v_uv;
+varying vec4 v_world_pos;
 
 // Settings
-#define REPEATS 32.0
-uniform vec4 u_colours[2];
+#define CELL_SIZE 16.0
+vec4 col_one = vec4(0.8, 0.8, 0.8, 1.0);
+vec4 col_two = vec4(0.9, 0.9, 0.9, 1.0);
 
 void main(void)
 {
-	float cell_size = 1.0 / REPEATS;
-	vec2 row_col = floor(v_uv / cell_size);
-	float idx = mod(row_col.x + row_col.y, 2.0);
-	gl_FragColor = mix(u_colours[0], u_colours[1], idx);
+	vec2 temp = floor(v_world_pos.xy / CELL_SIZE);
+	float idx = mod(temp.x + temp.y, 2.0);
+	gl_FragColor = mix(col_one, col_two, idx);
 }
