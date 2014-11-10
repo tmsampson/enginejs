@@ -109,34 +109,42 @@ Engine.prototype.Init = function(on_user_init, user_resources, canvas)
 						var on_render_internal = function()
 						{
 							// Generate frame stats
-							var elapsed_msec = Engine.GetTime() - first_frame_time;
-							var delta_msec   = Engine.GetTime() - last_frame_time;
-							var stats =
-							{
-								elapsed_seconds      : elapsed_msec / 1000,
-								elapsed_milliseconds : elapsed_msec,
-								delta_seconds        : delta_msec / 1000,
-								delta_milliseconds   : delta_msec
-							};
+							var elapsed_ms = Engine.GetTime() - first_frame_time;
+							var delta_ms   = Engine.GetTime() - last_frame_time;
 
 							// Request next render frame
 							_this.SetRenderCallback(on_render_internal);
 
-							// Update camera?
-							if(_this.active_camera) { _this.active_camera.Update(stats); }
+							// Flip mouse buffers
+							_this.Mouse.pos_buffer_index = _this.Mouse.pos_buffer_index? 0 : 1;
+							_this.Mouse.position[_this.Mouse.pos_buffer_index] = Engine.CopyArray(_this.Mouse.position[2]);
+							_this.Mouse.wheel_delta[0] = _this.Mouse.wheel_delta[1];
+							_this.Mouse.wheel_delta[1] = 0;
 
-							// Update mouse deltas
-							_this.Mouse["prev_position"] = _this.Mouse["position"];
-							_this.Mouse["wheel_delta"] = 0;
-
-							// Flip keyboard buffer
+							// Flip keyboard buffers
 							_this.Keyboard.key_buffer_idx = _this.Keyboard.key_buffer_idx? 0 : 1;
-							var latest_state = Engine.CopyArray(_this.Keyboard.key_buffer[2]);
-							_this.Keyboard.key_buffer[_this.Keyboard.key_buffer_idx] = latest_state;
+							_this.Keyboard.key_buffer[_this.Keyboard.key_buffer_idx] = Engine.CopyArray(_this.Keyboard.key_buffer[2]);
+
+							// Switch to full screen mode?
+							if(_this.Keyboard.is_pressed("f10", true) && !_this.IsFullScreen())
+							{
+								_this.FullScreen();
+							}
+
+							// Setup per-frame data for client
+							var frame_data =
+							{
+								elapsed_s  : elapsed_ms / 1000,
+								elapsed_ms : elapsed_ms,
+								delta_s    : delta_ms / 1000,
+								delta_ms   : delta_ms,
+								keyboard   : _this.Keyboard, // Quick-access
+								mouse      : _this.Mouse,    // Quick-access
+							}
 
 							// Call user render loop
 							last_frame_time = Engine.GetTime();
-							on_user_render(stats);
+							on_user_render(frame_data);
 						};
 
 						// Request first render frame
@@ -640,6 +648,13 @@ Engine.prototype.UnBindRenderTarget = function(render_target)
 }
 
 // *************************************************************************************
+// Camera
+Engine.prototype.BindCamera = function(cam)
+{
+	this.active_camera = cam;
+}
+
+// *************************************************************************************
 // Drawing
 Engine.prototype.Clear = function(colour)
 {
@@ -715,13 +730,6 @@ Engine.prototype.DrawQuad = function()
 {
 	// Draw full-screen quad
 	this.DrawModel(Engine.Resources["ml_quad"]);
-}
-
-// *************************************************************************************
-// Camera
-Engine.prototype.SetActiveCamera = function(cam)
-{
-	this.active_camera = cam;
 }
 
 // *************************************************************************************
@@ -953,28 +961,11 @@ Engine.prototype.BindParamEditor = function(param_editor)
 // User input
 Engine.prototype.InitUserInput = function()
 {
-	// Keyboard
-	this.Keyboard =
-	{
-		key_buffer     : [[], [], []], // tripple-buffered
-		key_buffer_idx : 0,            // "current" buffer-index
-		is_ignored     : function(key_code)
-		{
-			return key_code == Engine.KeyboardKeyCodeMap["f5"];
-		}
-	};
-
+	// Keyboard update
 	var _this = this;
 	document.onkeydown = function(e)
 	{
 		_this.Keyboard.key_buffer[2][e.keyCode] = 1;
-
-		// Switch to full screen mode?
-		if(e.keyCode == Engine.KeyboardKeyCodeMap["f10"] && !_this.IsFullScreen())
-		{
-			_this.FullScreen();
-		}
-
 		return _this.Keyboard.is_ignored(e.keyCode);
 	};
 	document.onkeyup   = function(e)
@@ -983,21 +974,21 @@ Engine.prototype.InitUserInput = function()
 		return _this.Keyboard.is_ignored(e.keyCode);
 	};
 
-	// Mouse
-	_this.canvas.onmousedown = function(e) { _this.Mouse["pressed"] = true; };
-	document.onmouseup       = function(e) { _this.Mouse["pressed"] = false; };
+	// Mouse update
+	_this.canvas.onmousedown = function(e) { _this.Mouse.pressed = true; };
+	document.onmouseup       = function(e) { _this.Mouse.pressed = false; };
 	document.onmousemove     = function(e)
 	{
-		_this.Mouse["position"] = [e.clientX - _this.canvas.getBoundingClientRect().left,
+		_this.Mouse.position[2] = [e.clientX - _this.canvas.getBoundingClientRect().left,
 		                           _this.canvas.getBoundingClientRect().bottom - e.clientY];
 	};
 
-	// Mouse wheel
+	// Mouse wheel update
 	var on_mousewheel = function(e)
 	{
 		var e = window.event || e;
 		var delta = e.wheelDelta || (-e.detail * 40);
-		_this.Mouse["wheel_delta"] = delta;
+		_this.Mouse.wheel_delta[1] = delta;
 	}
 	if(document.addEventListener)
 	{
@@ -1012,7 +1003,6 @@ Engine.prototype.InitUserInput = function()
 
 // *************************************
 // Keyboard
-Engine.prototype.Keyboard = null;
 Engine.KeyboardKeyCodeMap =
 {
 	// Common
@@ -1031,38 +1021,76 @@ Engine.KeyboardKeyCodeMap =
 	"f5" : 116
 };
 
-Engine.prototype.IsKeyPressed = function(key_name, debounce)
+Engine.prototype.Keyboard =
 {
-	var key_code = Engine.KeyboardKeyCodeMap[key_name];
-	var this_buffer = this.Keyboard.key_buffer[this.Keyboard.key_buffer_idx];
-	var prev_buffer = this.Keyboard.key_buffer[this.Keyboard.key_buffer_idx? 0 : 1];
-	return debounce? this_buffer[key_code] && !prev_buffer[key_code] :
-	                 this_buffer[key_code]
-}
+	key_buffer     : [[], [], []], // tripple-buffered
+	key_buffer_idx : 0,            // "current" buffer-index
+	is_ignored : function(key_code)
+	{
+		return key_code == Engine.KeyboardKeyCodeMap["f5"];
+	},
+	is_pressed : function(key_name, debounce)
+	{
+		var key_code = Engine.KeyboardKeyCodeMap[key_name];
+		var this_buffer = this.key_buffer[this.key_buffer_idx];
+		var prev_buffer = this.key_buffer[this.key_buffer_idx? 0 : 1];
+		return debounce? this_buffer[key_code] && !prev_buffer[key_code] :
+		                 this_buffer[key_code]
+	},
+	is_released : function(key_name, debounce)
+	{
+		var key_code = Engine.KeyboardKeyCodeMap[key_name];
+		var this_buffer = this.key_buffer[this.key_buffer_idx];
+		var prev_buffer = this.key_buffer[this.key_buffer_idx? 0 : 1];
+		return debounce? !this_buffer[key_code] && prev_buffer[key_code] :
+		                 !this_buffer[key_code]
+	}
+};
 
 // *************************************
 // Mouse
-Engine.prototype.Mouse = { "clicked" : false, "position" : [0, 0], "prev_position" : [0, 0], "wheel_delta" : 0 };
-Engine.prototype.IsMousePressed = function()
+Engine.prototype.Mouse =
 {
-	return this.Mouse["pressed"];
-}
-
-Engine.prototype.GetMousePosition = function()
-{
-	return this.Mouse["position"];
-}
-
-Engine.prototype.GetMouseDelta = function()
-{
-	return [ this.Mouse["position"][0] - this.Mouse["prev_position"][0],
-	         this.Mouse["position"][1] - this.Mouse["prev_position"][1] ];
-}
-
-Engine.prototype.GetMouseWheelDelta = function()
-{
-	return this.Mouse["wheel_delta"];
-}
+	pressed            : false,
+	position           : [[0, 0], [0, 0], [0, 0]], // tripple-buffered
+	pos_buffer_index   : 0,                        // "current" buffer-index
+	wheel_delta        : [0, 0],                   // double-buffered
+	is_pressed : function()
+	{
+		return this.pressed;
+	},
+	get_position : function()
+	{
+		return this.position[this.pos_buffer_index];
+	},
+	get_x : function()
+	{
+		return this.get_position()[0];
+	},
+	get_y : function()
+	{
+		return this.get_position()[1];
+	},
+	get_position_delta : function()
+	{
+		var this_buffer = this.position[this.pos_buffer_index];
+		var prev_buffer = this.position[this.pos_buffer_index? 0 : 1];
+		return [ this_buffer[0] - prev_buffer[0],
+		         this_buffer[1] - prev_buffer[1] ];
+	},
+	get_x_delta : function()
+	{
+		return this.get_position_delta()[0];
+	},
+	get_y_delta : function()
+	{
+		return this.get_position_delta()[1];
+	},
+	get_wheel_delta : function()
+	{
+		return this.wheel_delta[0];
+	}
+};
 
 // *************************************
 // Audio
@@ -1264,12 +1292,12 @@ function EngineCameraBase()
 		this.helpers.push(helper_class);
 	};
 
-	this.Update = function(delta)
+	this.Update = function(info)
 	{
 		// Run any helpers
 		for(var i = 0; i < this.helpers.length; ++i)
 		{
-			this.helpers[i].Update(this, delta);
+			this.helpers[i].Update(this, info);
 		}
 
 		// Update matrices
@@ -1341,33 +1369,32 @@ EngineCameraPersp.prototype.ResizeViewport = function(width, height)
 
 // *************************************
 // EngineCamera Helpers
-function EngineCameraHelper_Orbit(engine, user_config)
+function EngineCameraHelper_Orbit(user_config)
 {
-	this.engine = engine;
 	this.process_input = true;      // Update based on user input
-	this.look_at = [0.0, 0.0, 0.0]; // Look at origin
-	this.up      = [0.0, 1.0, 0.0]; // Default up
-	this.angles  = [0, 0];
-	this.radius  = 5;
-	this.min_y   = -(Math.PI / 2) + 0.1; // prevent alignment with -ve y-axis
-	this.max_y   =  (Math.PI / 2) - 0.1; // prevent alignment with +ve y-axis
+	this.look_at       = [0.0, 0.0, 0.0]; // Look at origin
+	this.up            = [0.0, 1.0, 0.0]; // Default up
+	this.angles        = [0, 0];
+	this.radius        = 5;
+	this.min_y         = -(Math.PI / 2) + 0.1; // prevent alignment with -ve y-axis
+	this.max_y         =  (Math.PI / 2) - 0.1; // prevent alignment with +ve y-axis
 
 	// Override defaults
 	$.extend(this, user_config);
 }
 
-EngineCameraHelper_Orbit.prototype.Update = function(camera, stats)
+EngineCameraHelper_Orbit.prototype.Update = function(camera, info)
 {
 	// Zoom
-	var wheel_delta = this.engine.GetMouseWheelDelta();
-	if(wheel_delta != 0) { this.radius -= wheel_delta * stats.delta_seconds / 3; }
+	var wheel_delta = info.mouse.get_wheel_delta();
+	if(wheel_delta != 0) { this.radius -= wheel_delta * info.delta_s / 3; }
 
 	// Pan
-	if(this.engine.IsMousePressed())
+	if(info.mouse.is_pressed())
 	{
-		var mouse_delta = this.engine.GetMouseDelta();
-		this.angles[0] += mouse_delta[0] * stats.delta_seconds / 3;
-		this.angles[1] = Engine.Clamp(this.angles[1] - mouse_delta[1] * stats.delta_seconds / 3, this.min_y, this.max_y);
+		var mouse_delta = info.mouse.get_position_delta();
+		this.angles[0] += mouse_delta[0] * info.delta_s / 3;
+		this.angles[1] = Engine.Clamp(this.angles[1] - mouse_delta[1] * info.delta_s / 3, this.min_y, this.max_y);
 	}
 
 	// Update
