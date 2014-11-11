@@ -128,7 +128,7 @@ Engine.prototype.Init = function(on_user_init, user_resources, canvas)
 							// Toggle wireframe mode?
 							if(_this.Keyboard.is_pressed("f9", true))
 							{
-								_this.wireframe_mode = !_this.wireframe_mode;
+								_this.force_wireframe_mode = !_this.force_wireframe_mode;
 							}
 
 							// Setup per-frame data for client
@@ -664,7 +664,8 @@ Engine.prototype.Clear = function(colour)
 
 Engine.prototype.DrawArray = function()
 {
-	var draw_mode = this.wireframe_mode? this.gl.LINE_LOOP : this.current_vertex_buffer_object.draw_mode;
+	var wireframe = (this.wireframe_mode || this.force_wireframe_mode);
+	var draw_mode = wireframe? this.gl.LINE_LOOP : this.current_vertex_buffer_object.draw_mode;
 	var item_count = this.current_vertex_buffer_object.item_count;
 	var is_index_buffer = (this.current_vertex_buffer_object.buffer_type  == this.gl.ELEMENT_ARRAY_BUFFER);
 	if(is_index_buffer)
