@@ -975,8 +975,8 @@ Engine.prototype.InitUserInput = function()
 	};
 
 	// Mouse update
-	_this.canvas.onmousedown = function(e) { _this.Mouse.pressed = true; };
-	document.onmouseup       = function(e) { _this.Mouse.pressed = false; };
+	_this.canvas.onmousedown = function(e) { _this.Mouse.pressed[e.button] = true;  };
+	document.onmouseup       = function(e) { _this.Mouse.pressed[e.button] = false; };
 	document.onmousemove     = function(e)
 	{
 		_this.Mouse.position[2] = [e.clientX - _this.canvas.getBoundingClientRect().left,
@@ -1049,15 +1049,20 @@ Engine.prototype.Keyboard =
 
 // *************************************
 // Mouse
+Engine.MOUSE_BTN_LEFT   = 0;
+Engine.MOUSE_BTN_MIDDLE = 1;
+Engine.MOUSE_BTN_RIGHT  = 2;
+
 Engine.prototype.Mouse =
 {
-	pressed            : false,
+	pressed            : [false, false, false],    // L M R
 	position           : [[0, 0], [0, 0], [0, 0]], // tripple-buffered
 	pos_buffer_index   : 0,                        // "current" buffer-index
 	wheel_delta        : [0, 0],                   // double-buffered
-	is_pressed : function()
+	is_pressed : function(button)
 	{
-		return this.pressed;
+		var button_index = button || Engine.MOUSE_BTN_LEFT;
+		return this.pressed[button_index];
 	},
 	get_position : function()
 	{
@@ -1091,6 +1096,15 @@ Engine.prototype.Mouse =
 		return this.wheel_delta[0];
 	}
 };
+
+Engine.prototype.EnableContextMenu = function(do_enable)
+{
+	// Suppress canvas right-click context menu?
+	this.canvas.oncontextmenu = do_enable? null : function(e)
+	{
+		e.preventDefault();
+	};
+}
 
 // *************************************
 // Audio
