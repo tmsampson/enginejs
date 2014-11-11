@@ -125,10 +125,10 @@ Engine.prototype.Init = function(on_user_init, user_resources, canvas)
 							_this.Keyboard.key_buffer_idx = _this.Keyboard.key_buffer_idx? 0 : 1;
 							_this.Keyboard.key_buffer[_this.Keyboard.key_buffer_idx] = Engine.CopyArray(_this.Keyboard.key_buffer[2]);
 
-							// Switch to full screen mode?
-							if(_this.Keyboard.is_pressed("f10", true) && !_this.IsFullScreen())
+							// Toggle wireframe mode?
+							if(_this.Keyboard.is_pressed("f9", true))
 							{
-								_this.FullScreen();
+								_this.wireframe_mode = !_this.wireframe_mode;
 							}
 
 							// Setup per-frame data for client
@@ -664,7 +664,7 @@ Engine.prototype.Clear = function(colour)
 
 Engine.prototype.DrawArray = function()
 {
-	var draw_mode = this.current_vertex_buffer_object.draw_mode;
+	var draw_mode = this.wireframe_mode? this.gl.LINE_LOOP : this.current_vertex_buffer_object.draw_mode;
 	var item_count = this.current_vertex_buffer_object.item_count;
 	var is_index_buffer = (this.current_vertex_buffer_object.buffer_type  == this.gl.ELEMENT_ARRAY_BUFFER);
 	if(is_index_buffer)
@@ -730,6 +730,11 @@ Engine.prototype.DrawQuad = function()
 {
 	// Draw full-screen quad
 	this.DrawModel(Engine.Resources["ml_quad"]);
+}
+
+Engine.prototype.EnableWireframeMode = function(do_enable)
+{
+	this.wireframe_mode = do_enable;
 }
 
 // *************************************************************************************
@@ -966,9 +971,17 @@ Engine.prototype.InitUserInput = function()
 	document.onkeydown = function(e)
 	{
 		_this.Keyboard.key_buffer[2][e.keyCode] = 1;
+
+		// Enable full-screen mode?
+		// Note: This *must* be done from event handler for security reasons!
+		if(e.keyCode == Engine.KeyboardKeyCodeMap["f10"] && !_this.IsFullScreen())
+		{
+			_this.FullScreen();
+		}
+
 		return _this.Keyboard.is_ignored(e.keyCode);
 	};
-	document.onkeyup   = function(e)
+	document.onkeyup = function(e)
 	{
 		_this.Keyboard.key_buffer[2][e.keyCode] = 0;
 		return _this.Keyboard.is_ignored(e.keyCode);
@@ -1015,7 +1028,7 @@ Engine.KeyboardKeyCodeMap =
 	"5" : 53, "6" : 54, "7" : 55, "8" : 56, "9" : 57,
 
 	// Function keys
-	"f10" : 121,
+	"f9" : 120, "f10" : 121,
 
 	// Ignored
 	"f5" : 116
