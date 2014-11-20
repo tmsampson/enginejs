@@ -115,15 +115,9 @@ Engine.prototype.Init = function(on_user_init, user_resources, canvas)
 						// Request next render frame
 						_this.SetRenderCallback(on_render_internal);
 
-						// Flip mouse buffers
-						_this.Mouse.pos_buffer_index = _this.Mouse.pos_buffer_index? 0 : 1;
-						_this.Mouse.position[_this.Mouse.pos_buffer_index] = Engine.CopyArray(_this.Mouse.position[2]);
-						_this.Mouse.wheel_delta[0] = _this.Mouse.wheel_delta[1];
-						_this.Mouse.wheel_delta[1] = 0;
-
-						// Flip keyboard buffers
-						_this.Keyboard.key_buffer_idx = _this.Keyboard.key_buffer_idx? 0 : 1;
-						_this.Keyboard.key_buffer[_this.Keyboard.key_buffer_idx] = Engine.CopyArray(_this.Keyboard.key_buffer[2]);
+						// Flip input buffers
+						_this.Mouse.flip_buffers();
+						_this.Keyboard.flip_buffers();
 
 						// Toggle wireframe mode?
 						if(_this.Keyboard.is_pressed("f9", true))
@@ -988,8 +982,8 @@ Engine.prototype.InitUserInput = function()
 	};
 
 	// Mouse update
-	_this.canvas.onmousedown = function(e) { _this.Mouse.pressed[e.button] = true;  };
-	document.onmouseup       = function(e) { _this.Mouse.pressed[e.button] = false; };
+	_this.canvas.onmousedown = function(e) { _this.Mouse.pressed[2][e.button] = true;  };
+	document.onmouseup       = function(e) { _this.Mouse.pressed[2][e.button] = false; };
 	document.onmousemove     = function(e)
 	{
 		_this.Mouse.position[2] = [e.clientX - _this.canvas.getBoundingClientRect().left,
@@ -1036,8 +1030,13 @@ Engine.KeyboardKeyCodeMap =
 
 Engine.prototype.Keyboard =
 {
-	key_buffer     : [[], [], []], // tripple-buffered
-	key_buffer_idx : 0,            // "current" buffer-index
+	key_buffer   : [[], [], []], // tripple-buffered
+	buffer_idx   : 0,            // "current" buffer-index
+	flip_buffers : function()
+	{
+		this.buffer_idx = this.buffer_idx? 0 : 1;
+		this.key_buffer[this.buffer_idx] = Engine.CopyArray(this.key_buffer[2]);
+	},
 	is_ignored : function(key_code)
 	{
 		return key_code == Engine.KeyboardKeyCodeMap["f5"];
@@ -1045,16 +1044,16 @@ Engine.prototype.Keyboard =
 	is_pressed : function(key_name, debounce)
 	{
 		var key_code = Engine.KeyboardKeyCodeMap[key_name];
-		var this_buffer = this.key_buffer[this.key_buffer_idx];
-		var prev_buffer = this.key_buffer[this.key_buffer_idx? 0 : 1];
+		var this_buffer = this.key_buffer[this.buffer_idx];
+		var prev_buffer = this.key_buffer[this.buffer_idx? 0 : 1];
 		return debounce? this_buffer[key_code] && !prev_buffer[key_code] :
 		                 this_buffer[key_code]
 	},
 	is_released : function(key_name, debounce)
 	{
 		var key_code = Engine.KeyboardKeyCodeMap[key_name];
-		var this_buffer = this.key_buffer[this.key_buffer_idx];
-		var prev_buffer = this.key_buffer[this.key_buffer_idx? 0 : 1];
+		var this_buffer = this.key_buffer[this.buffer_idx];
+		var prev_buffer = this.key_buffer[this.buffer_idx? 0 : 1];
 		return debounce? !this_buffer[key_code] && prev_buffer[key_code] :
 		                 !this_buffer[key_code]
 	}
@@ -1068,18 +1067,37 @@ Engine.MOUSE_BTN_RIGHT  = 2;
 
 Engine.prototype.Mouse =
 {
-	pressed            : [false, false, false],    // L M R
-	position           : [[0, 0], [0, 0], [0, 0]], // tripple-buffered
-	pos_buffer_index   : 0,                        // "current" buffer-index
-	wheel_delta        : [0, 0],                   // double-buffered
-	is_pressed : function(button)
+	pressed            : [[0, 0, 0], [0, 0, 0], [0, 0, 0]], // tripple-buffered (L M R)
+	position           : [[0, 0], [0, 0], [0, 0]],          // tripple-buffered
+	buffer_idx         : 0,                                 // "current" buffer-index
+	wheel_delta        : [0, 0],                            // double-buffered
+	flip_buffers : function()
+	{
+		this.buffer_idx = this.buffer_idx? 0 : 1;
+		this.pressed[this.buffer_idx]  = Engine.CopyArray(this.pressed[2]);
+		this.position[this.buffer_idx] = Engine.CopyArray(this.position[2]);
+		this.wheel_delta[0] = this.wheel_delta[1];
+		this.wheel_delta[1] = 0;
+	},
+	is_pressed : function(button, debounce)
 	{
 		var button_index = button || Engine.MOUSE_BTN_LEFT;
-		return this.pressed[button_index];
+		var this_buffer = this.pressed[this.buffer_idx];
+		var prev_buffer = this.pressed[this.buffer_idx? 0 : 1];
+		return debounce? this_buffer[button_index] && !prev_buffer[button_index]:
+		                 this_buffer[button_index];
+	},
+	is_released : function(button, debounce)
+	{
+		var button_index = button || Engine.MOUSE_BTN_LEFT;
+		var this_buffer = this.pressed[this.buffer_idx];
+		var prev_buffer = this.pressed[this.buffer_idx? 0 : 1];
+		return debounce? !this_buffer[button_index] && prev_buffer[button_index]:
+		                 !this_buffer[button_index];
 	},
 	get_position : function()
 	{
-		return this.position[this.pos_buffer_index];
+		return this.position[this.buffer_idx];
 	},
 	get_x : function()
 	{
@@ -1091,8 +1109,8 @@ Engine.prototype.Mouse =
 	},
 	get_position_delta : function()
 	{
-		var this_buffer = this.position[this.pos_buffer_index];
-		var prev_buffer = this.position[this.pos_buffer_index? 0 : 1];
+		var this_buffer = this.position[this.buffer_idx];
+		var prev_buffer = this.position[this.buffer_idx? 0 : 1];
 		return [ this_buffer[0] - prev_buffer[0],
 		         this_buffer[1] - prev_buffer[1] ];
 	},
