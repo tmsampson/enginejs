@@ -99,59 +99,58 @@ Engine.prototype.Init = function(on_user_init, user_resources, canvas)
 			finally: function(ok)
 			{
 				Engine.Log(ok? "Initialised successfully" : "Initialised failed");
-				if(on_user_init)
+				if(!on_user_init) { return; }
+
+				// User init handler returns the user render function
+				var on_user_render = on_user_init(ok? _this.gl : null);
+				if(on_user_render)
 				{
-					// User init handler returns the user render function
-					var on_user_render = on_user_init(ok? _this.gl : null);
-					if(on_user_render)
+					// Setup internal render loop
+					var on_render_internal = function()
 					{
-						// Setup internal render loop
-						var on_render_internal = function()
-						{
-							// Generate frame stats
-							var elapsed_ms = Engine.GetTime() - first_frame_time;
-							var delta_ms   = Engine.GetTime() - last_frame_time;
+						// Generate frame stats
+						var elapsed_ms = Engine.GetTime() - first_frame_time;
+						var delta_ms   = Engine.GetTime() - last_frame_time;
 
-							// Request next render frame
-							_this.SetRenderCallback(on_render_internal);
-
-							// Flip mouse buffers
-							_this.Mouse.pos_buffer_index = _this.Mouse.pos_buffer_index? 0 : 1;
-							_this.Mouse.position[_this.Mouse.pos_buffer_index] = Engine.CopyArray(_this.Mouse.position[2]);
-							_this.Mouse.wheel_delta[0] = _this.Mouse.wheel_delta[1];
-							_this.Mouse.wheel_delta[1] = 0;
-
-							// Flip keyboard buffers
-							_this.Keyboard.key_buffer_idx = _this.Keyboard.key_buffer_idx? 0 : 1;
-							_this.Keyboard.key_buffer[_this.Keyboard.key_buffer_idx] = Engine.CopyArray(_this.Keyboard.key_buffer[2]);
-
-							// Toggle wireframe mode?
-							if(_this.Keyboard.is_pressed("f9", true))
-							{
-								_this.force_wireframe_mode = !_this.force_wireframe_mode;
-							}
-
-							// Setup per-frame data for client
-							var frame_data =
-							{
-								elapsed_s  : elapsed_ms / 1000,
-								elapsed_ms : elapsed_ms,
-								delta_s    : delta_ms / 1000,
-								delta_ms   : delta_ms,
-								keyboard   : _this.Keyboard, // Quick-access
-								mouse      : _this.Mouse,    // Quick-access
-							}
-
-							// Call user render loop
-							last_frame_time = Engine.GetTime();
-							on_user_render(frame_data);
-						};
-
-						// Request first render frame
-						var first_frame_time = Engine.GetTime();
-						var last_frame_time  = Engine.GetTime();
+						// Request next render frame
 						_this.SetRenderCallback(on_render_internal);
-					}
+
+						// Flip mouse buffers
+						_this.Mouse.pos_buffer_index = _this.Mouse.pos_buffer_index? 0 : 1;
+						_this.Mouse.position[_this.Mouse.pos_buffer_index] = Engine.CopyArray(_this.Mouse.position[2]);
+						_this.Mouse.wheel_delta[0] = _this.Mouse.wheel_delta[1];
+						_this.Mouse.wheel_delta[1] = 0;
+
+						// Flip keyboard buffers
+						_this.Keyboard.key_buffer_idx = _this.Keyboard.key_buffer_idx? 0 : 1;
+						_this.Keyboard.key_buffer[_this.Keyboard.key_buffer_idx] = Engine.CopyArray(_this.Keyboard.key_buffer[2]);
+
+						// Toggle wireframe mode?
+						if(_this.Keyboard.is_pressed("f9", true))
+						{
+							_this.force_wireframe_mode = !_this.force_wireframe_mode;
+						}
+
+						// Setup per-frame info for client
+						var info =
+						{
+							elapsed_s  : elapsed_ms / 1000,
+							elapsed_ms : elapsed_ms,
+							delta_s    : delta_ms / 1000,
+							delta_ms   : delta_ms,
+							keyboard   : _this.Keyboard,
+							mouse      : _this.Mouse,
+						}
+
+						// Call user render loop
+						last_frame_time = Engine.GetTime();
+						on_user_render(info);
+					};
+
+					// Request first render frame
+					var first_frame_time = Engine.GetTime();
+					var last_frame_time  = Engine.GetTime();
+					_this.SetRenderCallback(on_render_internal);
 				}
 			}
 		});
