@@ -27,6 +27,7 @@ Engine.Resources =
 	fs_grid              : { file: "enginejs/shaders/grid.fs" },
 	fs_grid_3d           : { file: "enginejs/shaders/grid-3d.fs" },
 	fs_grid_3d_fog       : { file: "enginejs/shaders/grid-3d-fog.fs" },
+	fs_2d_background     : { file: "enginejs/shaders/2d/background.fs" },
 
 	// Models
 	ml_quad              : { file: "enginejs/models/quad.model"       },
@@ -338,6 +339,30 @@ Engine.prototype.BindTexture = function(texture, idx, sampler_name)
 	this.gl.activeTexture(this.gl.TEXTURE0 + idx);
 	this.gl.bindTexture(this.gl.TEXTURE_2D, tx_resource);
 	this.SetShaderConstant(sampler_name, idx, Engine.SC_SAMPLER);
+}
+
+Engine.prototype.BindTextureArray = function(texture_array, sampler_name)
+{
+	// If no sampler name is specified use default sampler array
+	if(sampler_name == undefined) { sampler_name = ("u_tx"); }
+
+	// Bind textures
+	var sampler_indices = new Int32Array(texture_array.length);
+	for(var idx = 0; idx < texture_array.length; ++idx)
+	{
+		var texture = texture_array[idx];
+
+		// We support binding by our texture (wrapper) object or raw WebGL texture
+		var tx_resource = texture.hasOwnProperty("resource")? texture.resource :
+		                                                      texture;
+
+		this.gl.activeTexture(this.gl.TEXTURE0 + idx);
+		this.gl.bindTexture(this.gl.TEXTURE_2D, tx_resource);
+		sampler_indices[idx] = idx;
+	}
+
+	// Setup sampler array
+	this.SetShaderConstant(sampler_name, sampler_indices, Engine.SC_SAMPLER_ARRAY);
 }
 
 // *************************************************************************************
@@ -869,11 +894,16 @@ Engine.DrawModeFromString = { };
 
 // *************************************
 // Uniform setter functions (passed to SetShaderConstant)
-Engine.SC_FLOAT   = function(gl, uniform_location, new_value) { gl.uniform1f(uniform_location,        new_value); }
-Engine.SC_INT     = function(gl, uniform_location, new_value) { gl.uniform1i(uniform_location,        new_value); }
-Engine.SC_SAMPLER = function(gl, uniform_location, new_value) { gl.uniform1i(uniform_location,        new_value); }
-Engine.SC_VEC4    = function(gl, uniform_location, new_value) { gl.uniform4fv(uniform_location,       new_value); }
-Engine.SC_MATRIX4 = function(gl, uniform_location, new_value) { gl.uniformMatrix4fv(uniform_location, false, new_value); }
+Engine.SC_FLOAT         = function(gl, uniform_location, new_value) { gl.uniform1f(uniform_location,        new_value); }
+Engine.SC_FLOAT_ARRAY   = function(gl, uniform_location, new_value) { gl.uniform1fv(uniform_location,       new_value); }
+Engine.SC_INT           = function(gl, uniform_location, new_value) { gl.uniform1i(uniform_location,        new_value); }
+Engine.SC_INT_ARRAY     = function(gl, uniform_location, new_value) { gl.uniform1iv(uniform_location,       new_value); }
+Engine.SC_SAMPLER       = function(gl, uniform_location, new_value) { gl.uniform1i(uniform_location,        new_value); }
+Engine.SC_SAMPLER_ARRAY = function(gl, uniform_location, new_value) { gl.uniform1iv(uniform_location,       new_value); }
+Engine.SC_VEC2          = function(gl, uniform_location, new_value) { gl.uniform2fv(uniform_location,       new_value); }
+Engine.SC_VEC4          = function(gl, uniform_location, new_value) { gl.uniform4fv(uniform_location,       new_value); }
+Engine.SC_VEC4_ARRAY    = function(gl, uniform_location, new_value) { gl.uniform4fv(uniform_location,       new_value); }
+Engine.SC_MATRIX4       = function(gl, uniform_location, new_value) { gl.uniformMatrix4fv(uniform_location, false, new_value); }
 
 // *************************************
 // State management
