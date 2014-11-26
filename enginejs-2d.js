@@ -39,6 +39,7 @@ Engine2D_Scene.prototype.Render = function(info)
 	var mtx_trans = mat4.create();
 
 	// Render background (or grid if background not setup)
+	this.engine.EnableDepthTest(false);
 	var background_in_use = this.background.hasOwnProperty("colour") ||
 	                        this.background.layers.length > 0;
 	if(background_in_use)
@@ -64,16 +65,15 @@ Engine2D_Scene.prototype.Render = function(info)
 	}
 
 	// Render entities
-	this.entities.sort(function(a,b){ return a.depth >= b.depth; });
+	engine.SetDepthTestMode(engine.gl.LESS, true);
 	this.engine.SetBlendMode(this.engine.gl.SRC_ALPHA, this.engine.gl.ONE_MINUS_SRC_ALPHA, true);
 	for(var i = 0; i < this.entities.length; ++i)
 	{
 		var entity = this.entities[i];
 
 		// Setup transforms
-		var entity_trans = [entity.position[0], entity.position[1], 0];
-		var entity_scale = [entity.size[0] / 2, entity.size[1] / 2, 0.0]; // half size as DrawQuad is 2x2 clip space
-
+		var entity_trans = [entity.position[0], entity.position[1], entity.depth];
+		var entity_scale = [entity.size[0] / 2, entity.size[1] / 2, 0]; // half size as DrawQuad is 2x2 clip space
 		mat4.translate(mtx_trans, Engine.IdentityMatrix, entity_trans);
 		mat4.rotate(mtx_trans, mtx_trans, entity.rotation, [0, 0, 1]);
 		mat4.scale(mtx_trans, mtx_trans, entity_scale);
@@ -140,7 +140,7 @@ Engine2D_Background.prototype.Render = function(info)
 	}
 }
 
-function Engine2D_Entity(texture)
+function Engine2D_Entity(texture, config)
 {
 	this.texture = texture;
 	this.size = [texture.width, texture.height];

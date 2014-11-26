@@ -902,8 +902,12 @@ Engine.SC_INT_ARRAY     = function(gl, uniform_location, new_value) { gl.uniform
 Engine.SC_SAMPLER       = function(gl, uniform_location, new_value) { gl.uniform1i(uniform_location,        new_value); }
 Engine.SC_SAMPLER_ARRAY = function(gl, uniform_location, new_value) { gl.uniform1iv(uniform_location,       new_value); }
 Engine.SC_VEC2          = function(gl, uniform_location, new_value) { gl.uniform2fv(uniform_location,       new_value); }
+Engine.SC_VEC2_ARRAY    = function(gl, uniform_location, new_value) { gl.uniform2fv(uniform_location,       new_value); }
+Engine.SC_VEC3          = function(gl, uniform_location, new_value) { gl.uniform3fv(uniform_location,       new_value); }
+Engine.SC_VEC3_ARRAY    = function(gl, uniform_location, new_value) { gl.uniform3fv(uniform_location,       new_value); }
 Engine.SC_VEC4          = function(gl, uniform_location, new_value) { gl.uniform4fv(uniform_location,       new_value); }
 Engine.SC_VEC4_ARRAY    = function(gl, uniform_location, new_value) { gl.uniform4fv(uniform_location,       new_value); }
+Engine.SC_COLOUR        = function(gl, uniform_location, new_value) { gl.uniform4fv(uniform_location,       new_value); }
 Engine.SC_MATRIX4       = function(gl, uniform_location, new_value) { gl.uniformMatrix4fv(uniform_location, false, new_value); }
 
 // *************************************
@@ -1404,7 +1408,7 @@ EngineCameraOrtho.prototype.UpdateMatrices = function()
 	mat4.ortho(this.mtx_proj,
 	           this.position[0], this.position[0] + this.size[0],
 	           this.position[1], this.position[1] + this.size[1],
-	           -1.0, 1.0);
+	           -1000.0, 1000.0);
 }
 
 EngineCameraOrtho.prototype.ResizeViewport = function(width, height)
