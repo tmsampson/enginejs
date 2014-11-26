@@ -28,6 +28,7 @@ Engine.Resources =
 	fs_grid_3d           : { file: "enginejs/shaders/grid-3d.fs" },
 	fs_grid_3d_fog       : { file: "enginejs/shaders/grid-3d-fog.fs" },
 	fs_2d_background     : { file: "enginejs/shaders/2d/background.fs" },
+	fs_2d_sprite         : { file: "enginejs/shaders/2d/sprite.fs" },
 
 	// Models
 	ml_quad              : { file: "enginejs/models/quad.model"       },
