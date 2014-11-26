@@ -71,7 +71,7 @@ Engine2D_Scene.prototype.Render = function(info)
 		var entity = this.entities[i];
 
 		// Setup transforms
-		var entity_trans = [entity.position[0], entity.position[1], entity.depth];
+		var entity_trans = [entity.position[0], entity.position[1], 0];
 		var entity_scale = [entity.size[0] / 2, entity.size[1] / 2, 0.0]; // half size as DrawQuad is 2x2 clip space
 
 		mat4.translate(mtx_trans, Engine.IdentityMatrix, entity_trans);
@@ -162,6 +162,11 @@ Engine2D_Entity.prototype.MoveTo = function(x, y)
 {
 	this.position[0] = x;
 	this.position[1] = y;
+}
+
+Engine2D_Entity.prototype.SetDepth = function(depth)
+{
+	this.depth = depth;
 }
 
 Engine2D_Entity.prototype.SetRotation = function(theta)
