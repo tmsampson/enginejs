@@ -118,11 +118,11 @@ Engine.prototype.Init = function(on_user_init, user_resources, canvas)
 						_this.SetRenderCallback(on_render_internal);
 
 						// Flip input buffers
-						_this.Mouse.flip_buffers();
-						_this.Keyboard.flip_buffers();
+						_this.Mouse.FlipBuffers();
+						_this.Keyboard.FlipBuffers();
 
 						// Toggle wireframe mode?
-						if(_this.Keyboard.is_pressed("f9", true))
+						if(_this.Keyboard.IsPressed("f9", true))
 						{
 							_this.force_wireframe_mode = !_this.force_wireframe_mode;
 						}
@@ -1008,12 +1008,12 @@ Engine.prototype.InitUserInput = function()
 			_this.FullScreen();
 		}
 
-		return _this.Keyboard.is_ignored(e.keyCode);
+		return _this.Keyboard.IsIgnored(e.keyCode);
 	};
 	document.onkeyup = function(e)
 	{
 		_this.Keyboard.key_buffer[2][e.keyCode] = 0;
-		return _this.Keyboard.is_ignored(e.keyCode);
+		return _this.Keyboard.IsIgnored(e.keyCode);
 	};
 
 	// Mouse update
@@ -1067,16 +1067,16 @@ Engine.prototype.Keyboard =
 {
 	key_buffer   : [[], [], []], // tripple-buffered
 	buffer_idx   : 0,            // "current" buffer-index
-	flip_buffers : function()
+	FlipBuffers : function()
 	{
 		this.buffer_idx = this.buffer_idx? 0 : 1;
 		this.key_buffer[this.buffer_idx] = Engine.CopyArray(this.key_buffer[2]);
 	},
-	is_ignored : function(key_code)
+	IsIgnored : function(key_code)
 	{
 		return key_code == Engine.KeyboardKeyCodeMap["f5"];
 	},
-	is_pressed : function(key_name, debounce)
+	IsPressed : function(key_name, debounce)
 	{
 		var key_code = Engine.KeyboardKeyCodeMap[key_name];
 		var this_buffer = this.key_buffer[this.buffer_idx];
@@ -1084,7 +1084,7 @@ Engine.prototype.Keyboard =
 		return debounce? this_buffer[key_code] && !prev_buffer[key_code] :
 		                 this_buffer[key_code]
 	},
-	is_released : function(key_name, debounce)
+	IsReleased : function(key_name, debounce)
 	{
 		var key_code = Engine.KeyboardKeyCodeMap[key_name];
 		var this_buffer = this.key_buffer[this.buffer_idx];
@@ -1106,7 +1106,7 @@ Engine.prototype.Mouse =
 	position           : [[0, 0], [0, 0], [0, 0]],          // tripple-buffered
 	buffer_idx         : 0,                                 // "current" buffer-index
 	wheel_delta        : [0, 0],                            // double-buffered
-	flip_buffers : function()
+	FlipBuffers : function()
 	{
 		this.buffer_idx = this.buffer_idx? 0 : 1;
 		this.pressed[this.buffer_idx]  = Engine.CopyArray(this.pressed[2]);
@@ -1114,7 +1114,7 @@ Engine.prototype.Mouse =
 		this.wheel_delta[0] = this.wheel_delta[1];
 		this.wheel_delta[1] = 0;
 	},
-	is_pressed : function(button, debounce)
+	IsPressed : function(button, debounce)
 	{
 		var button_index = button || Engine.MOUSE_BTN_LEFT;
 		var this_buffer = this.pressed[this.buffer_idx];
@@ -1122,7 +1122,7 @@ Engine.prototype.Mouse =
 		return debounce? this_buffer[button_index] && !prev_buffer[button_index]:
 		                 this_buffer[button_index];
 	},
-	is_released : function(button, debounce)
+	IsReleased : function(button, debounce)
 	{
 		var button_index = button || Engine.MOUSE_BTN_LEFT;
 		var this_buffer = this.pressed[this.buffer_idx];
@@ -1130,34 +1130,34 @@ Engine.prototype.Mouse =
 		return debounce? !this_buffer[button_index] && prev_buffer[button_index]:
 		                 !this_buffer[button_index];
 	},
-	get_position : function()
+	GetPosition : function()
 	{
 		return this.position[this.buffer_idx];
 	},
-	get_x : function()
+	GetX : function()
 	{
-		return this.get_position()[0];
+		return this.GetPosition()[0];
 	},
-	get_y : function()
+	GetY : function()
 	{
-		return this.get_position()[1];
+		return this.GetPosition()[1];
 	},
-	get_position_delta : function()
+	GetDelta : function()
 	{
 		var this_buffer = this.position[this.buffer_idx];
 		var prev_buffer = this.position[this.buffer_idx? 0 : 1];
 		return [ this_buffer[0] - prev_buffer[0],
 		         this_buffer[1] - prev_buffer[1] ];
 	},
-	get_x_delta : function()
+	GetDeltaX : function()
 	{
-		return this.get_position_delta()[0];
+		return this.GetDelta()[0];
 	},
-	get_y_delta : function()
+	GetDeltaY : function()
 	{
-		return this.get_position_delta()[1];
+		return this.GetDelta()[1];
 	},
-	get_wheel_delta : function()
+	GetWheelDelta : function()
 	{
 		return this.wheel_delta[0];
 	}
@@ -1476,13 +1476,13 @@ function EngineCameraHelper_Orbit(user_config)
 EngineCameraHelper_Orbit.prototype.Update = function(camera, info)
 {
 	// Zoom
-	var wheel_delta = info.mouse.get_wheel_delta();
+	var wheel_delta = info.mouse.GetWheelDelta();
 	if(wheel_delta != 0) { this.radius -= wheel_delta * info.delta_s / 3; }
 
 	// Pan
-	if(info.mouse.is_pressed())
+	if(info.mouse.IsPressed())
 	{
-		var mouse_delta = info.mouse.get_position_delta();
+		var mouse_delta = info.mouse.GetDelta();
 		this.angles[0] += mouse_delta[0] * info.delta_s / 3;
 		this.angles[1] = Engine.Clamp(this.angles[1] - mouse_delta[1] * info.delta_s / 3, this.min_y, this.max_y);
 	}
