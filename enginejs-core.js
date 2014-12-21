@@ -1059,6 +1059,9 @@ Engine.KeyboardKeyCodeMap =
 	// Function keys
 	"f9" : 120, "f10" : 121,
 
+	// Letters
+	"r" : 82,
+
 	// Ignored
 	"f5" : 116
 };
