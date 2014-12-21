@@ -39,7 +39,6 @@ Engine2D_Scene.prototype.Render = function(info)
 	var mtx_trans = mat4.create();
 
 	// Render background (or grid if background not setup)
-	this.engine.EnableDepthTest(false);
 	var background_in_use = this.background.hasOwnProperty("colour") ||
 	                        this.background.layers.length > 0;
 	if(background_in_use)
@@ -48,6 +47,7 @@ Engine2D_Scene.prototype.Render = function(info)
 	}
 	else
 	{
+		this.engine.EnableDepthTest(false);
 		mat4.scale(mtx_trans, mtx_trans, [this.engine.GetCanvasWidth(), this.engine.GetCanvasHeight(), 0.0]);
 		this.engine.BindShaderProgram(this.program_grid);
 		this.engine.SetShaderConstant("u_trans_model", mtx_trans, Engine.SC_MATRIX4);
@@ -64,15 +64,18 @@ Engine2D_Scene.prototype.Render = function(info)
 		entity.position[1] += entity.velocity[1];
 	}
 
+	// For now let's depth sort on CPU to avoid issues with alpha sprites with same depth
+	this.engine.EnableDepthTest(false);
+	this.entities.sort(function(a,b){ return a.depth >= b.depth; });
+
 	// Render entities
-	engine.SetDepthTestMode(engine.gl.LESS, true);
 	this.engine.SetBlendMode(this.engine.gl.SRC_ALPHA, this.engine.gl.ONE_MINUS_SRC_ALPHA, true);
 	for(var i = 0; i < this.entities.length; ++i)
 	{
 		var entity = this.entities[i];
 
 		// Setup transforms
-		var entity_trans = [entity.position[0], entity.position[1], entity.depth];
+		var entity_trans = [entity.position[0], entity.position[1], 0];
 		var entity_scale = [entity.size[0] / 2, entity.size[1] / 2, 0]; // half size as DrawQuad is 2x2 clip space
 		mat4.translate(mtx_trans, Engine.IdentityMatrix, entity_trans);
 		mat4.rotate(mtx_trans, mtx_trans, entity.rotation, [0, 0, 1]);
@@ -120,6 +123,9 @@ Engine2D_Background.prototype.Render = function(info)
 		u_config[i * 4 + 2] = (layer.x_offset / (layer_width * layer.x_scale));       // x-offset
 		u_config[i * 4 + 3] = (layer.y_offset / (layer_height * layer.y_scale));      // y-offset
 	}
+
+	// Always draw on top
+	this.engine.EnableDepthTest(false);
 
 	// Draw layers?
 	if(this.layers.length > 0)
