@@ -23,7 +23,18 @@ function Engine2D_Scene(engine)
 
 Engine2D_Scene.prototype.Add = function(entity)
 {
-	this.entities.push(entity);
+	var is_array = (entity.constructor === Array);
+	if(is_array)
+	{
+		for(var i = 0; i < entity.length; ++i)
+		{
+			this.entities.push(entity[i]);
+		}
+	}
+	else
+	{
+		this.entities.push(entity);
+	}
 }
 
 Engine2D_Scene.prototype.Clear = function()
