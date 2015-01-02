@@ -764,6 +764,11 @@ Engine.prototype.GetCanvas = function()
 	return this.canvas;
 }
 
+Engine.prototype.GetCanvasSize = function()
+{
+	return [this.canvas.width, this.canvas.height];
+}
+
 Engine.prototype.GetCanvasWidth = function()
 {
 	return this.canvas.width;
