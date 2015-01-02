@@ -4,21 +4,17 @@ function Engine2D_Scene(engine)
 	this.entities = [];
 
 	// Setup the viewport to match the canvas by default
-	var viewport_size =
-	[
-		engine.GetCanvasWidth(),
-		engine.GetCanvasHeight()
-	];
+	var viewport_size = this.engine.GetCanvasSize();
 
 	// Setup 2D orthographic camera
 	this.camera = new EngineCameraOrtho({ size : viewport_size });
 	this.background = new Engine2D_Background(engine);
 
 	// Setup shader programs
-	this.program_grid    = engine.CreateShaderProgram(Engine.Resources["vs_basic_transformed"],
-	                                                  Engine.Resources["fs_grid"]);
-	this.program_sprite  = engine.CreateShaderProgram(Engine.Resources["vs_basic_transformed"],
-	                                                  Engine.Resources["fs_2d_sprite"]);
+	this.program_grid   = engine.CreateShaderProgram(Engine.Resources["vs_basic_transformed"],
+	                                                 Engine.Resources["fs_grid"]);
+	this.program_sprite = engine.CreateShaderProgram(Engine.Resources["vs_basic_transformed"],
+	                                                 Engine.Resources["fs_2d_sprite"]);
 }
 
 Engine2D_Scene.prototype.Add = function(entity)
