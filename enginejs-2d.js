@@ -19,8 +19,7 @@ function Engine2D_Scene(engine)
 
 Engine2D_Scene.prototype.Add = function(entity)
 {
-	var is_array = (entity.constructor === Array);
-	if(is_array)
+	if(Engine.IsArray(entity))
 	{
 		for(var i = 0; i < entity.length; ++i)
 		{
@@ -88,11 +87,16 @@ Engine2D_Scene.prototype.Render = function(info)
 		mat4.rotate(mtx_trans, mtx_trans, entity.rotation, [0, 0, 1]);
 		mat4.scale(mtx_trans, mtx_trans, entity_scale);
 
-		// Draw
+		// Draw (setup)
 		this.engine.BindShaderProgram(this.program_sprite);
 		this.engine.SetShaderConstant("u_tint", entity.tint, Engine.SC_VEC4);
 		this.engine.SetShaderConstant("u_trans_model", mtx_trans, Engine.SC_MATRIX4);
-		this.engine.BindTexture(entity.texture, 0);
+
+		// Draw (setup texture)
+		var entity_texture = entity.textures[entity.texture_index];
+		this.engine.BindTexture(entity_texture, 0);
+
+		// Draw (finalise)
 		this.engine.DrawQuad();
 	}
 }
@@ -153,16 +157,38 @@ Engine2D_Background.prototype.Render = function(info)
 	}
 }
 
-function Engine2D_Entity(texture, config)
+function Engine2D_Entity(textures, config)
 {
-	this.texture = texture;
-	this.size = [texture.width, texture.height];
+	// Setup defaults
+	this.textures = [];
+	this.texture_index = 0;
+	this.is_texture_animating = false;
+	this.size = [0, 0];
 	this.position = [0, 0];
 	this.velocity = [0, 0];
 	this.rotation = 0;
 	this.depth = 0; // 0 = front
 	this.tint = [1, 1, 1, 1];
 	this.alpha = 1;
+
+	// Setup texture(s)?
+	if(textures)
+	{
+		if(Engine.IsArray(textures))
+		{
+			this.textures = textures;
+		}
+		else
+		{
+			this.textures.push(textures);
+		}
+
+		// Set entity size to match first texture
+		this.size = [this.textures[0].width, this.textures[0].height];
+	}
+
+	// Apply any user overrides
+	$.extend(this, config);
 }
 
 Engine2D_Entity.prototype.SetVelocity = function(x, y)
@@ -204,3 +230,11 @@ Engine2D_Entity.prototype.SetAlpha = function(alpha)
 {
 	this.tint[3] = alpha;
 }
+
+// *************************************************************************************
+// Sprite resource loading
+Engine.RegisterResourceLoadFunction("sprite", function(engine, descriptor, callback)
+{
+	alert("spritely bottom");
+	callback(new EngineResourceBase(descriptor, {}));
+});
