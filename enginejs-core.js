@@ -38,6 +38,28 @@ Engine.Resources =
 };
 
 // *************************************************************************************
+// Resources load functions
+// Note: These are intentionally non-member functions to allow external libs to hook
+//       in their own resource load functions, which get an engine instance passed in.
+//       For convenience, member-function versions of these methods *do* exist and
+//       redirect calls to their global counterpart.
+Engine.ResourceLoadFunctions =
+{
+	png   : function(engine, descriptor, callback) { Engine.LoadTexture(engine, descriptor, callback); },
+	jpg   : function(engine, descriptor, callback) { Engine.LoadTexture(engine, descriptor, callback); },
+	vs    : function(engine, descriptor, callback) { Engine.LoadShader(engine, descriptor, callback);  },
+	fs    : function(engine, descriptor, callback) { Engine.LoadShader(engine, descriptor, callback);  },
+	model : function(engine, descriptor, callback) { Engine.LoadModel(engine, descriptor, callback);   },
+	mp3   : function(engine, descriptor, callback) { Engine.LoadSound(engine, descriptor, callback);   },
+};
+
+// Allow external libs to load in custom resource types (per-extension)
+Engine.RegisterResourceLoadFunction = function(extension, func)
+{
+	Engine.ResourceLoadFunctions[extension] = func;
+}
+
+// *************************************************************************************
 // Cache linked shader programs for performance
 Engine.prototype.ShaderProgramCache = { };
 
@@ -219,6 +241,7 @@ Engine.prototype.LoadCSS = function(url, callback)
 
 // *************************************************************************************
 // Resource loading
+// *************************************************************************************
 Engine.prototype.LoadResources = function(resource_list, on_complete)
 {
 	var _this = this;
@@ -252,24 +275,11 @@ Engine.prototype.LoadResources = function(resource_list, on_complete)
 // Generic resource load (type determined by file extension)
 Engine.prototype.LoadResourceByDescriptor = function(descriptor, on_complete)
 {
-	var _this = this;
-
-	// Supported resource extension --> load handler func
-	var resource_load_functions =
-	{
-		png   : function(descriptor, callback) { _this.LoadTexture(descriptor, callback); },
-		jpg   : function(descriptor, callback) { _this.LoadTexture(descriptor, callback); },
-		vs    : function(descriptor, callback) { _this.LoadShader(descriptor, callback);  },
-		fs    : function(descriptor, callback) { _this.LoadShader(descriptor, callback);  },
-		model : function(descriptor, callback) { _this.LoadModel(descriptor, callback);   },
-		mp3   : function(descriptor, callback) { _this.LoadSound(descriptor, callback);   },
-	}
-
 	// Is this resource type supported?
 	var extension = descriptor.file.split('.').pop();
-	if(extension in resource_load_functions)
+	if(extension in Engine.ResourceLoadFunctions)
 	{
-		resource_load_functions[extension](descriptor, function(resource_object)
+		Engine.ResourceLoadFunctions[extension](this, descriptor, function(resource_object)
 		{
 			on_complete(resource_object);
 		});
@@ -285,7 +295,12 @@ Engine.prototype.LoadResourceByDescriptor = function(descriptor, on_complete)
 // Texture operations
 Engine.prototype.LoadTexture = function(descriptor, callback)
 {
-	var _this = this;
+	// Redirect member-function call to global function (required by global resource load mechanism)
+	return Engine.LoadTexture(this, descriptor, callback);
+}
+
+Engine.LoadTexture = function(engine, descriptor, callback)
+{
 	var img_object = new Image();
 
 	// Handle success
@@ -294,22 +309,22 @@ Engine.prototype.LoadTexture = function(descriptor, callback)
 		// Create gl texture
 		var texture_object =
 		{
-			resource : _this.gl.createTexture(),
+			resource : engine.gl.createTexture(),
 			width    : this.width,
 			height   : this.height
 		};
 
 		// Bind
-		_this.gl.bindTexture(_this.gl.TEXTURE_2D, texture_object.resource);
+		engine.gl.bindTexture(engine.gl.TEXTURE_2D, texture_object.resource);
 
 		// Setup params
-		_this.gl.texImage2D(_this.gl.TEXTURE_2D, 0, _this.gl.RGBA, _this.gl.RGBA, _this.gl.UNSIGNED_BYTE, img_object);
-		_this.gl.texParameteri(_this.gl.TEXTURE_2D, _this.gl.TEXTURE_MAG_FILTER, _this.gl.LINEAR);
-		_this.gl.texParameteri(_this.gl.TEXTURE_2D, _this.gl.TEXTURE_MIN_FILTER, _this.gl.LINEAR_MIPMAP_NEAREST);
-		_this.gl.generateMipmap(_this.gl.TEXTURE_2D);
+		engine.gl.texImage2D(engine.gl.TEXTURE_2D, 0, engine.gl.RGBA, engine.gl.RGBA, engine.gl.UNSIGNED_BYTE, img_object);
+		engine.gl.texParameteri(engine.gl.TEXTURE_2D, engine.gl.TEXTURE_MAG_FILTER, engine.gl.LINEAR);
+		engine.gl.texParameteri(engine.gl.TEXTURE_2D, engine.gl.TEXTURE_MIN_FILTER, engine.gl.LINEAR_MIPMAP_NEAREST);
+		engine.gl.generateMipmap(engine.gl.TEXTURE_2D);
 
 		// Unbind
-		_this.gl.bindTexture(_this.gl.TEXTURE_2D, null);
+		engine.gl.bindTexture(engine.gl.TEXTURE_2D, null);
 
 		// Done
 		if(callback) { callback(new EngineResourceBase(descriptor, texture_object)); }
@@ -370,16 +385,20 @@ Engine.prototype.BindTextureArray = function(texture_array, sampler_name)
 // Shader operations
 Engine.prototype.LoadShader = function(descriptor, callback)
 {
-	var _this = this;
+	// Redirect member-function call to global function (required by global resource load mechanism)
+	return Engine.LoadShader(this, descriptor, callback);
+}
 
+Engine.LoadShader = function(engine, descriptor, callback)
+{
 	// Setup pre-processor defines...
 	var defines = (descriptor.define)? descriptor.define : [];
 
-	_this.FetchResource(descriptor.file, function(shader_code)
+	engine.FetchResource(descriptor.file, function(shader_code)
 	{
 		var extension = descriptor.file.split('.').pop();
-		var shader = (extension == "vs")? _this.CompileVertexShader(shader_code, defines) :
-		                                  _this.CompileFragmentShader(shader_code, defines);
+		var shader = (extension == "vs")? engine.CompileVertexShader(shader_code, defines) :
+		                                  engine.CompileFragmentShader(shader_code, defines);
 
 		if(shader)
 		{
@@ -513,9 +532,13 @@ Engine.prototype.SetShaderConstant = function(constant_name, constant_value, set
 // Model operations
 Engine.prototype.LoadModel = function(descriptor, callback)
 {
-	var _this = this;
+	// Redirect member-function call to global function (required by global resource load mechanism)
+	return Engine.LoadModel(this, descriptor, callback);
+}
 
-	_this.FetchResource(descriptor.file, function(model_json)
+Engine.LoadModel = function(engine, descriptor, callback)
+{
+	engine.FetchResource(descriptor.file, function(model_json)
 	{
 		var model = jQuery.parseJSON(model_json);
 
@@ -528,7 +551,7 @@ Engine.prototype.LoadModel = function(descriptor, callback)
 			for(var j = 0; j < vertex_buffers.length; ++j)
 			{
 				// Place vertex buffer object immediately inside buffer object
-				vertex_buffers[j].vbo = _this.CreateVertexBuffer(vertex_buffers[j]);
+				vertex_buffers[j].vbo = engine.CreateVertexBuffer(vertex_buffers[j]);
 			}
 		}
 
@@ -606,9 +629,17 @@ Engine.prototype.BindVertexBuffer = function(vertex_buffer_object)
 			program.attribute_location_cache[attribute_name] = attribute_location; // Cache for later
 		}
 
-		// Bind vertex buffer to program attribute location
-		this.gl.enableVertexAttribArray(attribute_location);
-		this.gl.vertexAttribPointer(attribute_location, vertex_buffer_object.item_size, this.gl.FLOAT, false, 0, 0);
+		// Bind vertex buffer to program attribute location?
+		// Note: If attribute_location == -1, the attribute was not present in the currently
+		//       bound shader program (or was optimised out if unused etc). For example, this might
+		//       occur if the vertex data being bound contains a uv stream (e.g. "a_uv") which is
+		//       referenced and forwarded by the linked *vertex* shader, but is not referenced within
+		//       the linked *fragment* shader (i.e "a_uv" got deadstripped when the program was linked).
+		if(attribute_location != -1)
+		{
+			this.gl.enableVertexAttribArray(attribute_location);
+			this.gl.vertexAttribPointer(attribute_location, vertex_buffer_object.item_size, this.gl.FLOAT, false, 0, 0);
+		}
 	}
 }
 
@@ -1199,10 +1230,15 @@ Engine.prototype.InitAudio = function()
 
 Engine.prototype.LoadSound = function(descriptor, callback)
 {
-	var _this = this;
-	this.FetchBinaryResource(descriptor.file, function(encoded_audio)
+	// Redirect member-function call to global function (required by global resource load mechanism)
+	return Engine.LoadSound(this, descriptor, callback);
+}
+
+Engine.LoadSound = function(engine, descriptor, callback)
+{
+	engine.FetchBinaryResource(descriptor.file, function(encoded_audio)
 	{
-		_this.audio.context.decodeAudioData(encoded_audio, function(buffer)
+		engine.audio.context.decodeAudioData(encoded_audio, function(buffer)
 		{
 			var sound_object =
 			{
@@ -1342,6 +1378,11 @@ Engine.LogError = function(msg)
 
 // *************************************
 // Misc
+Engine.IsArray = function(object)
+{
+	return (object.constructor === Array);
+}
+
 Engine.CopyArray = function(array)
 {
 	return array.slice(0);
