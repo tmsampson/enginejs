@@ -1,3 +1,5 @@
+//# sourceURL=modules/enginejs-2d.js
+
 function Engine2D_Scene(engine)
 {
 	this.engine = engine;
