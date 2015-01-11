@@ -12,6 +12,24 @@ Engine.Dependencies =
 	"enginejs/css/third_party/jquery-ui/jquery-ui.css",
 ];
 
+Engine.Modules =
+[
+	{ name : "EngineJS-2D", js : "enginejs/enginejs-2d.js" }
+];
+
+Engine.prototype.LoadModules = function(modules, on_complete)
+{
+	var _this = this;
+	ExecuteAsyncLoop(modules, function(module, carry_on)
+	{
+		Engine.Log("Loading module: " + module.name);
+		_this.LoadJS(module.js, function()
+		{
+			carry_on(true); // Load next module
+		});
+	}, on_complete);
+};
+
 // *************************************************************************************
 // Resources
 Engine.Resources =
@@ -64,16 +82,6 @@ Engine.RegisterResourceLoadFunction = function(extension, func)
 Engine.prototype.ShaderProgramCache = { };
 
 // *************************************************************************************
-// Cache gl state to minimise redundant state changes
-Engine.prototype.StateTracking = { };
-Engine.prototype.InitRenderStateTracking = function()
-{
-	// Initialise default state
-	this.StateTracking[engine.gl.BLEND]      = 0;
-	this.StateTracking[engine.gl.DEPTH_TEST] = 0;
-}
-
-// *************************************************************************************
 // Main initialisation
 Engine.prototype.Init = function(on_user_init, user_resources, canvas)
 {
@@ -82,44 +90,47 @@ Engine.prototype.Init = function(on_user_init, user_resources, canvas)
 	// First load in JS dependencies...
 	_this.LoadDependencies(function()
 	{
-		Engine.Log("Initialising WebGL context");
-		try
+		// Initialise WebGL
+		if(!_this.InitWebGL(canvas))
 		{
-			// Try to grab the standard context. If it fails, fallback to experimental
-			canvas = canvas || document.getElementsByTagName("canvas")[0];
-			_this.gl = canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
-			_this.canvas = canvas;
-		}
-		catch(e)
-		{
-			$(canvas).html("EngineJS initialisation failed");
-			Engine.Log("Failed initialising WebGL context");
 			if(on_user_init) { on_user_init(null); }
-			return;
+			return false;
 		}
-
-		// Internal setup
-		Engine.IdentityMatrix = mat4.create();
-		Engine.DrawModeFromString =
-		{
-			triangle        : _this.gl.TRIANGLES,
-			triangles       : _this.gl.TRIANGLES,
-			triangle_strip  : _this.gl.TRIANGLE_STRIP,
-			triangle_strips : _this.gl.TRIANGLE_STRIP,
-			triangle_fan    : _this.gl.TRIANGLE_FAN,
-			triangle_fans   : _this.gl.TRIANGLE_FAN
-		};
 
 		// Initialise components
-		_this.InitRenderStateTracking();
 		_this.InitUserInput();
 		_this.InitAudio();
 
-		// Load internal & user resources
+		// Carry out asynchronous jobs
 		ExecuteAsyncJobQueue(
 		{
-			jobs : [{ first : function(cb) { Engine.LogSection("Loading internal resources"); _this.LoadResources(Engine.Resources, cb); }},
-			        { first : function(cb) { Engine.LogSection("Loading user resources"); _this.LoadResources(user_resources, cb); }}],
+			jobs :
+			[
+				{
+					// 1. Load internal resources
+					first : function(cb)
+					{
+						Engine.LogSection("Loading internal resources");
+						_this.LoadResources(Engine.Resources, cb);
+					}
+				},
+				{
+					// 2. Load internal modules
+					first : function(cb)
+					{
+						Engine.LogSection("Loading internal modules");
+						_this.LoadModules(Engine.Modules, cb);
+					}
+				},
+				{
+					// 3. Load user resources
+					first : function(cb)
+					{
+						Engine.LogSection("Loading user resources");
+						_this.LoadResources(user_resources, cb);
+					}
+				}
+			],
 			finally: function(ok)
 			{
 				Engine.Log(ok? "Initialised successfully" : "Initialised failed");
@@ -129,51 +140,51 @@ Engine.prototype.Init = function(on_user_init, user_resources, canvas)
 				var on_user_render = on_user_init(ok? _this.gl : null);
 				if(on_user_render)
 				{
-					// Setup internal render loop
-					var on_render_internal = function()
-					{
-						// Generate frame stats
-						var elapsed_ms = Engine.GetTime() - first_frame_time;
-						var delta_ms   = Engine.GetTime() - last_frame_time;
-
-						// Request next render frame
-						_this.SetRenderCallback(on_render_internal);
-
-						// Flip input buffers
-						_this.Mouse.FlipBuffers();
-						_this.Keyboard.FlipBuffers();
-
-						// Toggle wireframe mode?
-						if(_this.Keyboard.IsPressed("f9", true))
-						{
-							_this.force_wireframe_mode = !_this.force_wireframe_mode;
-						}
-
-						// Setup per-frame info for client
-						var info =
-						{
-							elapsed_s  : elapsed_ms / 1000,
-							elapsed_ms : elapsed_ms,
-							delta_s    : delta_ms / 1000,
-							delta_ms   : delta_ms,
-							keyboard   : _this.Keyboard,
-							mouse      : _this.Mouse,
-						}
-
-						// Call user render loop
-						last_frame_time = Engine.GetTime();
-						on_user_render(info);
-					};
-
-					// Request first render frame
-					var first_frame_time = Engine.GetTime();
-					var last_frame_time  = Engine.GetTime();
-					_this.SetRenderCallback(on_render_internal);
+					Engine.LogSection("Starting game loop");
+					_this.RunRenderLoop(on_user_render);
 				}
 			}
 		});
 	});
 }
+
+Engine.prototype.InitWebGL = function(canvas)
+{
+	Engine.Log("Initialising WebGL context");
+	try
+	{
+		// Try to grab the standard context. If it fails, fallback to experimental
+		canvas = canvas || document.getElementsByTagName("canvas")[0];
+		this.gl = canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
+		this.canvas = canvas;
+	}
+	catch(e)
+	{
+		$(canvas).html("EngineJS initialisation failed");
+		Engine.Log("Failed initialising WebGL context");
+		return false;
+	}
+
+	// Setup global constants
+	Engine.IdentityMatrix = mat4.create();
+	Engine.DrawModeFromString =
+	{
+		triangle        : this.gl.TRIANGLES,
+		triangles       : this.gl.TRIANGLES,
+		triangle_strip  : this.gl.TRIANGLE_STRIP,
+		triangle_strips : this.gl.TRIANGLE_STRIP,
+		triangle_fan    : this.gl.TRIANGLE_FAN,
+		triangle_fans   : this.gl.TRIANGLE_FAN
+	};
+
+	// Initialise default state
+	this.StateTracking = { };
+	this.StateTracking[this.gl.BLEND] = 0;
+	this.StateTracking[this.gl.DEPTH_TEST] = 0;
+
+	// WebGL initialised successfully
+	return true;
+};
 
 // *************************************************************************************
 // Render callback registration
@@ -237,6 +248,50 @@ Engine.prototype.LoadCSS = function(url, callback)
 {
 	$("<link/>", { rel: "stylesheet", type: "text/css", href: url }).appendTo("head");
 	callback();
+}
+
+Engine.prototype.RunRenderLoop = function(on_user_render)
+{
+	var _this = this;
+	var on_render_internal = function()
+	{
+		// Generate frame stats
+		var elapsed_ms = Engine.GetTime() - first_frame_time;
+		var delta_ms   = Engine.GetTime() - last_frame_time;
+
+		// Request next render frame
+		_this.SetRenderCallback(on_render_internal);
+
+		// Flip input buffers
+		_this.Mouse.FlipBuffers();
+		_this.Keyboard.FlipBuffers();
+
+		// Toggle wireframe mode?
+		if(_this.Keyboard.IsPressed("f9", true))
+		{
+			_this.force_wireframe_mode = !_this.force_wireframe_mode;
+		}
+
+		// Setup per-frame info for client
+		var info =
+		{
+			elapsed_s  : elapsed_ms / 1000,
+			elapsed_ms : elapsed_ms,
+			delta_s    : delta_ms / 1000,
+			delta_ms   : delta_ms,
+			keyboard   : _this.Keyboard,
+			mouse      : _this.Mouse,
+		}
+
+		// Call user render function
+		last_frame_time = Engine.GetTime();
+		on_user_render(info);
+	};
+
+	// Request first render frame
+	var first_frame_time = Engine.GetTime();
+	var last_frame_time  = Engine.GetTime();
+	_this.SetRenderCallback(on_render_internal);
 }
 
 // *************************************************************************************
