@@ -2,6 +2,7 @@ function Engine() { }
 
 // *************************************************************************************
 // External dependencies
+// *************************************************************************************
 Engine.Dependencies =
 [
 	"enginejs/css/engine.css",
@@ -12,9 +13,12 @@ Engine.Dependencies =
 	"enginejs/css/third_party/jquery-ui/jquery-ui.css",
 ];
 
+// *************************************************************************************
+// EngineJS Modules
+// *************************************************************************************
 Engine.Modules =
 [
-	{ name : "EngineJS-2D", js : "enginejs/enginejs-2d.js" }
+	{ name : "EngineJS-2D", js : "enginejs/modules/enginejs-2d.js" }
 ];
 
 Engine.prototype.LoadModules = function(modules, on_complete)
@@ -1458,6 +1462,11 @@ Engine.Sleep = function(milliseconds)
 			break;
 		}
 	}
+}
+
+Engine.DebugBreak = function()
+{
+	debugger;
 }
 
 // *************************************
