@@ -18,16 +18,23 @@ Engine.Dependencies =
 // *************************************************************************************
 Engine.Modules =
 [
-	{ name : "EngineJS-2D", js : "enginejs/modules/enginejs-2d.js" }
+	{ name : "EngineJS-Util",     js : "enginejs/modules/enginejs-util.js"     },
+	{ name : "EngineJS-Array",    js : "enginejs/modules/enginejs-array.js"    },
+	{ name : "EngineJS-Math",     js : "enginejs/modules/enginejs-math.js"     },
+	{ name : "EngineJS-Net",      js : "enginejs/modules/enginejs-net.js"      },
+	{ name : "EngineJS-Resource", js : "enginejs/modules/enginejs-resource.js" },
+	{ name : "EngineJS-Audio",    js : "enginejs/modules/enginejs-audio.js"    },
+	{ name : "EngineJS-Keyboard", js : "enginejs/modules/enginejs-keyboard.js" },
+	{ name : "EngineJS-Mouse",    js : "enginejs/modules/enginejs-mouse.js"    },
+	{ name : "EngineJS-2D",       js : "enginejs/modules/enginejs-2d.js"       },
 ];
 
-Engine.prototype.LoadModules = function(modules, on_complete)
+Engine.LoadModules = function(modules, on_complete)
 {
-	var _this = this;
-	ExecuteAsyncLoop(modules, function(module, carry_on)
+	ExecuteAsyncLoop(modules, function(_module, carry_on)
 	{
-		Engine.Log("Loading module: " + module.name);
-		_this.LoadJS(module.js, function()
+		Engine.Log("Loading module: " + _module.name);
+		Engine.LoadJS(_module.js, function()
 		{
 			carry_on(true); // Load next module
 		});
@@ -60,62 +67,27 @@ Engine.Resources =
 };
 
 // *************************************************************************************
-// Resources load functions
-// Note: These are intentionally non-member functions to allow external libs to hook
-//       in their own resource load functions, which get an engine instance passed in.
-//       For convenience, member-function versions of these methods *do* exist and
-//       redirect calls to their global counterpart.
-Engine.ResourceLoadFunctions =
-{
-	png   : function(engine, descriptor, callback) { Engine.LoadTexture(engine, descriptor, callback); },
-	jpg   : function(engine, descriptor, callback) { Engine.LoadTexture(engine, descriptor, callback); },
-	vs    : function(engine, descriptor, callback) { Engine.LoadShader(engine, descriptor, callback);  },
-	fs    : function(engine, descriptor, callback) { Engine.LoadShader(engine, descriptor, callback);  },
-	model : function(engine, descriptor, callback) { Engine.LoadModel(engine, descriptor, callback);   },
-	mp3   : function(engine, descriptor, callback) { Engine.LoadSound(engine, descriptor, callback);   },
-};
-
-// Allow external libs to load in custom resource types (per-extension)
-Engine.RegisterResourceLoadFunction = function(extension, func)
-{
-	Engine.ResourceLoadFunctions[extension] = func;
-}
-
-// *************************************************************************************
 // Cache linked shader programs for performance
-Engine.prototype.ShaderProgramCache = { };
+Engine.ShaderProgramCache = { };
 
 // *************************************************************************************
 // Main initialisation
-Engine.prototype.Init = function(on_user_init, user_resources, canvas)
+Engine.Init = function(on_user_init, user_resources, canvas)
 {
-	var _this = this;
-
 	// First load in JS dependencies...
-	_this.LoadDependencies(function()
+	Engine.LoadDependencies(function()
 	{
-		// Initialise WebGL
-		if(!_this.InitWebGL(canvas))
-		{
-			if(on_user_init) { on_user_init(null); }
-			return false;
-		}
-
-		// Initialise components
-		_this.InitUserInput();
-		_this.InitAudio();
-
 		// Carry out asynchronous jobs
 		ExecuteAsyncJobQueue(
 		{
 			jobs :
 			[
 				{
-					// 1. Load internal resources
+					// 1. Load internal modules
 					first : function(cb)
 					{
-						Engine.LogSection("Loading internal resources");
-						_this.LoadResources(Engine.Resources, cb);
+						Engine.LogSection("Initialising WebGL");
+						Engine.InitWebGL(canvas, cb)
 					}
 				},
 				{
@@ -123,15 +95,23 @@ Engine.prototype.Init = function(on_user_init, user_resources, canvas)
 					first : function(cb)
 					{
 						Engine.LogSection("Loading internal modules");
-						_this.LoadModules(Engine.Modules, cb);
+						Engine.LoadModules(Engine.Modules, cb);
 					}
 				},
 				{
-					// 3. Load user resources
+					// 3. Load internal resources
+					first : function(cb)
+					{
+						Engine.LogSection("Loading internal resources");
+						Engine.Resource.LoadBatch(Engine.Resources, cb);
+					}
+				},
+				{
+					// 4. Load user resources
 					first : function(cb)
 					{
 						Engine.LogSection("Loading user resources");
-						_this.LoadResources(user_resources, cb);
+						Engine.Resource.LoadBatch(user_resources, cb);
 					}
 				}
 			],
@@ -141,58 +121,63 @@ Engine.prototype.Init = function(on_user_init, user_resources, canvas)
 				if(!on_user_init) { return; }
 
 				// User init handler returns the user render function
-				var on_user_render = on_user_init(ok? _this.gl : null);
+				var on_user_render = on_user_init(ok? Engine.GL : null);
 				if(on_user_render)
 				{
 					Engine.LogSection("Starting game loop");
-					_this.RunRenderLoop(on_user_render);
+					Engine.RunGameLoop(on_user_render);
 				}
 			}
 		});
 	});
 }
 
-Engine.prototype.InitWebGL = function(canvas)
+Engine.InitWebGL = function(canvas, callback)
 {
 	Engine.Log("Initialising WebGL context");
 	try
 	{
 		// Try to grab the standard context. If it fails, fallback to experimental
-		canvas = canvas || document.getElementsByTagName("canvas")[0];
-		this.gl = canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
-		this.canvas = canvas;
+		Engine.Canvas = canvas || document.getElementsByTagName("canvas")[0];
+		Engine.GL = Engine.Canvas.getContext("webgl") || Engine.Canvas.getContext("experimental-webgl");
+
+		// Canvas helper methods
+		Engine.Canvas.GetSize   = function() { return [this.width, this.height] };
+		Engine.Canvas.GetWidth  = function() { return this.width; };
+		Engine.Canvas.GetHeight = function() { return this.height; };
+		Engine.Canvas.GetCentre = function() { return [this.width / 2, this.height / 2, 0] };
+
+		// Setup global constants
+		Engine.IdentityMatrix = mat4.create();
+		Engine.DrawModeFromString =
+		{
+			"triangle"        : Engine.GL.TRIANGLES,
+			"triangles"       : Engine.GL.TRIANGLES,
+			"triangle_strip"  : Engine.GL.TRIANGLE_STRIP,
+			"triangle_strips" : Engine.GL.TRIANGLE_STRIP,
+			"triangle_fan"    : Engine.GL.TRIANGLE_FAN,
+			"triangle_fans"   : Engine.GL.TRIANGLE_FAN
+		};
+
+		// Initialise default state
+		this.StateTracking = { };
+		this.StateTracking[Engine.GL.BLEND] = 0;
+		this.StateTracking[Engine.GL.DEPTH_TEST] = 0;
+
+		// WebGL initialised successfully
+		callback(true);
 	}
 	catch(e)
 	{
 		$(canvas).html("EngineJS initialisation failed");
 		Engine.Log("Failed initialising WebGL context");
-		return false;
+		callback(false);
 	}
-
-	// Setup global constants
-	Engine.IdentityMatrix = mat4.create();
-	Engine.DrawModeFromString =
-	{
-		triangle        : this.gl.TRIANGLES,
-		triangles       : this.gl.TRIANGLES,
-		triangle_strip  : this.gl.TRIANGLE_STRIP,
-		triangle_strips : this.gl.TRIANGLE_STRIP,
-		triangle_fan    : this.gl.TRIANGLE_FAN,
-		triangle_fans   : this.gl.TRIANGLE_FAN
-	};
-
-	// Initialise default state
-	this.StateTracking = { };
-	this.StateTracking[this.gl.BLEND] = 0;
-	this.StateTracking[this.gl.DEPTH_TEST] = 0;
-
-	// WebGL initialised successfully
-	return true;
 };
 
 // *************************************************************************************
 // Render callback registration
-Engine.prototype.SetRenderCallback = function(callback)
+Engine.SetRenderCallback = function(callback)
 {
 	var request_func = window.requestAnimationFrame       ||
 	                   window.webkitRequestAnimationFrame ||
@@ -203,13 +188,12 @@ Engine.prototype.SetRenderCallback = function(callback)
 
 // *************************************************************************************
 // Runtime javascript dependency load & init
-Engine.prototype.LoadDependencies = function(on_complete)
+Engine.LoadDependencies = function(on_complete)
 {
-	var _this = this;
 	var dependency_load_functions =
 	{
-		js  : function(url, callback) { _this.LoadJS(url, callback);  },
-		css : function(url, callback) { _this.LoadCSS(url, callback); },
+		js  : function(url, callback) { Engine.LoadJS(url, callback);  },
+		css : function(url, callback) { Engine.LoadCSS(url, callback); },
 	};
 
 	// 1. Load ajq for better async jobs/loops
@@ -239,24 +223,27 @@ Engine.prototype.LoadDependencies = function(on_complete)
 	});
 }
 
-Engine.prototype.LoadJS = function(url, callback)
+Engine.LoadJS = function(url, callback)
 {
 	$.getScript(url, function(script)
 	{
 		eval(script); // Hotload script
 		callback(script);
+	}).fail(function(jqxhr, settings, exception)
+	{
+		Engine.LogError("Failed to load " + url);
+		Engine.LogError(exception);
 	});
 }
 
-Engine.prototype.LoadCSS = function(url, callback)
+Engine.LoadCSS = function(url, callback)
 {
 	$("<link/>", { rel: "stylesheet", type: "text/css", href: url }).appendTo("head");
 	callback();
 }
 
-Engine.prototype.RunRenderLoop = function(on_user_render)
+Engine.RunGameLoop = function(on_user_render)
 {
-	var _this = this;
 	var on_render_internal = function()
 	{
 		// Generate frame stats
@@ -264,16 +251,16 @@ Engine.prototype.RunRenderLoop = function(on_user_render)
 		var delta_ms   = Engine.GetTime() - last_frame_time;
 
 		// Request next render frame
-		_this.SetRenderCallback(on_render_internal);
+		Engine.SetRenderCallback(on_render_internal);
 
 		// Flip input buffers
-		_this.Mouse.FlipBuffers();
-		_this.Keyboard.FlipBuffers();
+		Engine.Mouse.Update();
+		Engine.Keyboard.Update();
 
 		// Toggle wireframe mode?
-		if(_this.Keyboard.IsPressed("f9", true))
+		if(Engine.Keyboard.IsPressed("f9", true))
 		{
-			_this.force_wireframe_mode = !_this.force_wireframe_mode;
+			Engine.force_wireframe_mode = !Engine.force_wireframe_mode;
 		}
 
 		// Setup per-frame info for client
@@ -283,8 +270,6 @@ Engine.prototype.RunRenderLoop = function(on_user_render)
 			elapsed_ms : elapsed_ms,
 			delta_s    : delta_ms / 1000,
 			delta_ms   : delta_ms,
-			keyboard   : _this.Keyboard,
-			mouse      : _this.Mouse,
 		}
 
 		// Call user render function
@@ -295,70 +280,12 @@ Engine.prototype.RunRenderLoop = function(on_user_render)
 	// Request first render frame
 	var first_frame_time = Engine.GetTime();
 	var last_frame_time  = Engine.GetTime();
-	_this.SetRenderCallback(on_render_internal);
-}
-
-// *************************************************************************************
-// Resource loading
-// *************************************************************************************
-Engine.prototype.LoadResources = function(resource_list, on_complete)
-{
-	var _this = this;
-
-	// Skip null / empty lists
-	if(!resource_list) { return on_complete(); }
-
-	// Extract optional on_loaded callback from list
-	var on_loaded = resource_list["on_loaded"];
-
-	// Process all descriptors in resource list
-	var i = 0; var property_count = Object.keys(resource_list).length - (on_loaded? 1 : 0);
-	ExecuteAsyncLoopProps(resource_list, function(prop_key, descriptor, carry_on)
-	{
-		// Don't try and load the user callback as a resource!
-		if(prop_key == "on_loaded") { return carry_on(true); }
-
-		Engine.Log("Loading resource: " + descriptor.file);
-		descriptor.prop_key = prop_key; // Pass prop_key through closure
-		_this.LoadResourceByDescriptor(descriptor, function(resource_object)
-		{
-			resource_list[descriptor.prop_key] = resource_object;
-			delete descriptor.prop_key; // No use to client
-			if(on_loaded) { on_loaded(descriptor.file, ++i, property_count); }
-			carry_on(true);
-		});
-	}, on_complete);
-}
-
-// *************************************************************************************
-// Generic resource load (type determined by file extension)
-Engine.prototype.LoadResourceByDescriptor = function(descriptor, on_complete)
-{
-	// Is this resource type supported?
-	var extension = descriptor.file.split('.').pop();
-	if(extension in Engine.ResourceLoadFunctions)
-	{
-		Engine.ResourceLoadFunctions[extension](this, descriptor, function(resource_object)
-		{
-			on_complete(resource_object);
-		});
-	}
-	else
-	{
-		Engine.LogError("Resource type with extension '" + extension + "' not supported");
-		on_complete(null);
-	}
+	Engine.SetRenderCallback(on_render_internal);
 }
 
 // *************************************************************************************
 // Texture operations
-Engine.prototype.LoadTexture = function(descriptor, callback)
-{
-	// Redirect member-function call to global function (required by global resource load mechanism)
-	return Engine.LoadTexture(this, descriptor, callback);
-}
-
-Engine.LoadTexture = function(engine, descriptor, callback)
+Engine.LoadTexture = function(descriptor, callback)
 {
 	var img_object = new Image();
 
@@ -368,25 +295,25 @@ Engine.LoadTexture = function(engine, descriptor, callback)
 		// Create gl texture
 		var texture_object =
 		{
-			resource : engine.gl.createTexture(),
+			resource : Engine.GL.createTexture(),
 			width    : this.width,
 			height   : this.height
 		};
 
 		// Bind
-		engine.gl.bindTexture(engine.gl.TEXTURE_2D, texture_object.resource);
+		Engine.GL.bindTexture(Engine.GL.TEXTURE_2D, texture_object.resource);
 
 		// Setup params
-		engine.gl.texImage2D(engine.gl.TEXTURE_2D, 0, engine.gl.RGBA, engine.gl.RGBA, engine.gl.UNSIGNED_BYTE, img_object);
-		engine.gl.texParameteri(engine.gl.TEXTURE_2D, engine.gl.TEXTURE_MAG_FILTER, engine.gl.LINEAR);
-		engine.gl.texParameteri(engine.gl.TEXTURE_2D, engine.gl.TEXTURE_MIN_FILTER, engine.gl.LINEAR_MIPMAP_NEAREST);
-		engine.gl.generateMipmap(engine.gl.TEXTURE_2D);
+		Engine.GL.texImage2D(Engine.GL.TEXTURE_2D, 0, Engine.GL.RGBA, Engine.GL.RGBA, Engine.GL.UNSIGNED_BYTE, img_object);
+		Engine.GL.texParameteri(Engine.GL.TEXTURE_2D, Engine.GL.TEXTURE_MAG_FILTER, Engine.GL.LINEAR);
+		Engine.GL.texParameteri(Engine.GL.TEXTURE_2D, Engine.GL.TEXTURE_MIN_FILTER, Engine.GL.LINEAR_MIPMAP_NEAREST);
+		Engine.GL.generateMipmap(Engine.GL.TEXTURE_2D);
 
 		// Unbind
-		engine.gl.bindTexture(engine.gl.TEXTURE_2D, null);
+		Engine.GL.bindTexture(Engine.GL.TEXTURE_2D, null);
 
 		// Done
-		if(callback) { callback(new EngineResourceBase(descriptor, texture_object)); }
+		if(callback) { callback(new Engine.Resource.Base(descriptor, texture_object)); }
 	};
 
 	// Handle errors
@@ -394,14 +321,14 @@ Engine.LoadTexture = function(engine, descriptor, callback)
 	{
 		var error_msg = "Failed loading texture: " + descriptor.file;
 		Engine.LogError(error_msg);
-		if(callback) { callback(new EngineResourceBase(descriptor, null)); }
+		if(callback) { callback(new Engine.Resource.Base(descriptor, null)); }
 	};
 
 	// Initiate load
 	img_object.src = descriptor.file;
 }
 
-Engine.prototype.BindTexture = function(texture, idx, sampler_name)
+Engine.BindTexture = function(texture, idx, sampler_name)
 {
 	// We support binding by our texture (wrapper) object or raw WebGL texture
 	var tx_resource = texture.hasOwnProperty("resource")? texture.resource :
@@ -411,12 +338,12 @@ Engine.prototype.BindTexture = function(texture, idx, sampler_name)
 	if(sampler_name == undefined) { sampler_name = ("u_tx" + idx); }
 
 	// Bind texture
-	this.gl.activeTexture(this.gl.TEXTURE0 + idx);
-	this.gl.bindTexture(this.gl.TEXTURE_2D, tx_resource);
+	Engine.GL.activeTexture(Engine.GL.TEXTURE0 + idx);
+	Engine.GL.bindTexture(Engine.GL.TEXTURE_2D, tx_resource);
 	this.SetShaderConstant(sampler_name, idx, Engine.SC_SAMPLER);
 }
 
-Engine.prototype.BindTextureArray = function(texture_array, sampler_name)
+Engine.BindTextureArray = function(texture_array, sampler_name)
 {
 	// If no sampler name is specified use default sampler array
 	if(sampler_name == undefined) { sampler_name = ("u_tx"); }
@@ -431,8 +358,8 @@ Engine.prototype.BindTextureArray = function(texture_array, sampler_name)
 		var tx_resource = texture.hasOwnProperty("resource")? texture.resource :
 		                                                      texture;
 
-		this.gl.activeTexture(this.gl.TEXTURE0 + idx);
-		this.gl.bindTexture(this.gl.TEXTURE_2D, tx_resource);
+		Engine.GL.activeTexture(Engine.GL.TEXTURE0 + idx);
+		Engine.GL.bindTexture(Engine.GL.TEXTURE_2D, tx_resource);
 		sampler_indices[idx] = idx;
 	}
 
@@ -442,45 +369,39 @@ Engine.prototype.BindTextureArray = function(texture_array, sampler_name)
 
 // *************************************************************************************
 // Shader operations
-Engine.prototype.LoadShader = function(descriptor, callback)
-{
-	// Redirect member-function call to global function (required by global resource load mechanism)
-	return Engine.LoadShader(this, descriptor, callback);
-}
-
-Engine.LoadShader = function(engine, descriptor, callback)
+Engine.LoadShader = function(descriptor, callback)
 {
 	// Setup pre-processor defines...
 	var defines = (descriptor.define)? descriptor.define : [];
 
-	engine.FetchResource(descriptor.file, function(shader_code)
+	Engine.Net.FetchResource(descriptor.file, function(shader_code)
 	{
 		var extension = descriptor.file.split('.').pop();
-		var shader = (extension == "vs")? engine.CompileVertexShader(shader_code, defines) :
-		                                  engine.CompileFragmentShader(shader_code, defines);
+		var shader = (extension == "vs")? Engine.CompileVertexShader(shader_code, defines) :
+		                                  Engine.CompileFragmentShader(shader_code, defines);
 
 		if(shader)
 		{
 			Engine.Log("Successfully loaded shader: " + descriptor.file);
 		}
 
-		if(callback) { callback(new EngineResourceBase(descriptor, shader)); }
+		if(callback) { callback(new Engine.Resource.Base(descriptor, shader)); }
 	});
 }
 
-Engine.prototype.CompileVertexShader = function(code, defines)
+Engine.CompileVertexShader = function(code, defines)
 {
-	return this.CompileShader(code, this.gl.VERTEX_SHADER, defines);
+	return Engine.CompileShader(code, Engine.GL.VERTEX_SHADER, defines);
 }
 
-Engine.prototype.CompileFragmentShader = function(code, defines)
+Engine.CompileFragmentShader = function(code, defines)
 {
-	return this.CompileShader(code, this.gl.FRAGMENT_SHADER, defines);
+	return Engine.CompileShader(code, Engine.GL.FRAGMENT_SHADER, defines);
 }
 
-Engine.prototype.CompileShader = function(shader_code, shader_type, defines)
+Engine.CompileShader = function(shader_code, shader_type, defines)
 {
-	var shader_resource = this.gl.createShader(shader_type);
+	var shader_resource = Engine.GL.createShader(shader_type);
 
 	// Add pre-processor defines...
 	$.each(defines, function(idx, definition)
@@ -489,9 +410,9 @@ Engine.prototype.CompileShader = function(shader_code, shader_type, defines)
 	});
 
 	// Compile code
-	this.gl.shaderSource(shader_resource, shader_code);
-	this.gl.compileShader(shader_resource);
-	var success = this.gl.getShaderParameter(shader_resource, this.gl.COMPILE_STATUS);
+	Engine.GL.shaderSource(shader_resource, shader_code);
+	Engine.GL.compileShader(shader_resource);
+	var success = Engine.GL.getShaderParameter(shader_resource, Engine.GL.COMPILE_STATUS);
 
 	// Return shader object
 	var shader_object =
@@ -505,25 +426,25 @@ Engine.prototype.CompileShader = function(shader_code, shader_type, defines)
 	// Report errors?
 	if(!success)
 	{
-		var error_msg = "Failed compiling shader: " + this.gl.getShaderInfoLog(shader_resource);
+		var error_msg = "Failed compiling shader: " + Engine.GL.getShaderInfoLog(shader_resource);
 		Engine.LogError(error_msg);
 	}
 
 	return success? shader_object : null;
 }
 
-Engine.prototype.CreateShaderProgram = function(vertex_shader, fragment_shader)
+Engine.CreateShaderProgram = function(vertex_shader, fragment_shader)
 {
 	// Generate a name for this resource based on MD5 of both shaders
-	var uid = this.MD5([vertex_shader, fragment_shader]);
-	if(uid in this.ShaderProgramCache) { return this.ShaderProgramCache[uid]; }
+	var uid = Engine.Util.MD5([vertex_shader, fragment_shader]);
+	if(uid in Engine.ShaderProgramCache) { return Engine.ShaderProgramCache[uid]; }
 
 	// Create new shader program
-	var shader_program = this.gl.createProgram();
-	this.gl.attachShader(shader_program, vertex_shader.resource);
-	this.gl.attachShader(shader_program, fragment_shader.resource);
-	this.gl.linkProgram(shader_program);
-	var success = this.gl.getProgramParameter(shader_program, this.gl.LINK_STATUS);
+	var shader_program = Engine.GL.createProgram();
+	Engine.GL.attachShader(shader_program, vertex_shader.resource);
+	Engine.GL.attachShader(shader_program, fragment_shader.resource);
+	Engine.GL.linkProgram(shader_program);
+	var success = Engine.GL.getProgramParameter(shader_program, Engine.GL.LINK_STATUS);
 
 	// Create shader program object
 	var id_string = uid + " (" + vertex_shader.descriptor.file + " --> " + fragment_shader.descriptor.file + ")";
@@ -542,21 +463,21 @@ Engine.prototype.CreateShaderProgram = function(vertex_shader, fragment_shader)
 	if(success)
 	{
 		Engine.Log("Successfully linked shader program: " + id_string);
-		this.ShaderProgramCache[uid] = shader_program_object;
+		Engine.ShaderProgramCache[uid] = shader_program_object;
 	}
 	else
 	{
 		Engine.LogError(shader_program_object.error_msg);
-		Engine.LogError(this.gl.getProgramInfoLog(shader_program));
+		Engine.LogError(Engine.GL.getProgramInfoLog(shader_program));
 	}
 
 	return shader_program_object;
 }
 
-Engine.prototype.BindShaderProgram = function(program)
+Engine.BindShaderProgram = function(program)
 {
 	this.current_shader_program = program;
-	this.gl.useProgram(program.resource);
+	Engine.GL.useProgram(program.resource);
 
 	// Bind camera?
 	if(this.active_camera)
@@ -566,7 +487,7 @@ Engine.prototype.BindShaderProgram = function(program)
 	}
 }
 
-Engine.prototype.SetShaderConstant = function(constant_name, constant_value, setter_func)
+Engine.SetShaderConstant = function(constant_name, constant_value, setter_func)
 {
 	var uniform_location = null;
 	var program = this.current_shader_program;
@@ -579,25 +500,25 @@ Engine.prototype.SetShaderConstant = function(constant_name, constant_value, set
 	}
 	else
 	{
-		uniform_location = engine.gl.getUniformLocation(program.resource, constant_name);
+		uniform_location = Engine.GL.getUniformLocation(program.resource, constant_name);
 		program.uniform_location_cache[constant_name] = uniform_location; // Cache for later
 	}
 
 	// Set the constant
-	setter_func(this.gl, uniform_location, constant_value);
+	setter_func(Engine.GL, uniform_location, constant_value);
 }
 
 // *************************************************************************************
 // Model operations
-Engine.prototype.LoadModel = function(descriptor, callback)
+Engine.LoadModel = function(descriptor, callback)
 {
 	// Redirect member-function call to global function (required by global resource load mechanism)
 	return Engine.LoadModel(this, descriptor, callback);
 }
 
-Engine.LoadModel = function(engine, descriptor, callback)
+Engine.LoadModel = function(descriptor, callback)
 {
-	engine.FetchResource(descriptor.file, function(model_json)
+	Engine.Net.FetchResource(descriptor.file, function(model_json)
 	{
 		var model = jQuery.parseJSON(model_json);
 
@@ -610,7 +531,7 @@ Engine.LoadModel = function(engine, descriptor, callback)
 			for(var j = 0; j < vertex_buffers.length; ++j)
 			{
 				// Place vertex buffer object immediately inside buffer object
-				vertex_buffers[j].vbo = engine.CreateVertexBuffer(vertex_buffers[j]);
+				vertex_buffers[j].vbo = Engine.CreateVertexBuffer(vertex_buffers[j]);
 			}
 		}
 
@@ -622,21 +543,21 @@ Engine.LoadModel = function(engine, descriptor, callback)
 
 // *************************************************************************************
 // Vertex buffer operations
-Engine.prototype.CreateVertexBuffer = function(vertex_buffer_descriptor)
+Engine.CreateVertexBuffer = function(vertex_buffer_descriptor)
 {
 	// Determine buffer type (normal/index)?
 	var is_index_buffer = (vertex_buffer_descriptor.name == "indices");
-	var vertex_buffer_type = is_index_buffer? this.gl.ELEMENT_ARRAY_BUFFER :
-	                                          this.gl.ARRAY_BUFFER;
+	var vertex_buffer_type = is_index_buffer? Engine.GL.ELEMENT_ARRAY_BUFFER :
+	                                          Engine.GL.ARRAY_BUFFER;
 
 	// Create and bind the new buffer
-	var buffer = this.gl.createBuffer();
-	this.gl.bindBuffer(vertex_buffer_type, buffer);
+	var buffer = Engine.GL.createBuffer();
+	Engine.GL.bindBuffer(vertex_buffer_type, buffer);
 
 	// Bind data stream to buffer
 	var vertex_data_stream = is_index_buffer? new Uint16Array(vertex_buffer_descriptor.stream) :
 	                                          new Float32Array(vertex_buffer_descriptor.stream);
-	this.gl.bufferData(vertex_buffer_type, vertex_data_stream, this.gl.STATIC_DRAW);
+	Engine.GL.bufferData(vertex_buffer_type, vertex_data_stream, Engine.GL.STATIC_DRAW);
 
 	// Use default draw mode?
 	var vertex_draw_mode = Engine.DrawModeFromString["triangles"];
@@ -659,14 +580,14 @@ Engine.prototype.CreateVertexBuffer = function(vertex_buffer_descriptor)
 	return vertex_buffer_object;
 }
 
-Engine.prototype.BindVertexBuffer = function(vertex_buffer_object)
+Engine.BindVertexBuffer = function(vertex_buffer_object)
 {
 	this.current_vertex_buffer_object = vertex_buffer_object;
 
 	// Bind vertex buffer
-	var is_index_buffer = (vertex_buffer_object.buffer_type == this.gl.ELEMENT_ARRAY_BUFFER);
-	this.gl.bindBuffer(is_index_buffer? this.gl.ELEMENT_ARRAY_BUFFER :
-	                                    this.gl.ARRAY_BUFFER,
+	var is_index_buffer = (vertex_buffer_object.buffer_type == Engine.GL.ELEMENT_ARRAY_BUFFER);
+	Engine.GL.bindBuffer(is_index_buffer? Engine.GL.ELEMENT_ARRAY_BUFFER :
+	                                    Engine.GL.ARRAY_BUFFER,
 	                   vertex_buffer_object.resource);
 
 	// Bind to shader attribute (indices not passed to shaders)
@@ -684,7 +605,7 @@ Engine.prototype.BindVertexBuffer = function(vertex_buffer_object)
 		}
 		else
 		{
-			attribute_location = this.gl.getAttribLocation(program.resource, attribute_name);
+			attribute_location = Engine.GL.getAttribLocation(program.resource, attribute_name);
 			program.attribute_location_cache[attribute_name] = attribute_location; // Cache for later
 		}
 
@@ -696,25 +617,25 @@ Engine.prototype.BindVertexBuffer = function(vertex_buffer_object)
 		//       the linked *fragment* shader (i.e "a_uv" got deadstripped when the program was linked).
 		if(attribute_location != -1)
 		{
-			this.gl.enableVertexAttribArray(attribute_location);
-			this.gl.vertexAttribPointer(attribute_location, vertex_buffer_object.item_size, this.gl.FLOAT, false, 0, 0);
+			Engine.GL.enableVertexAttribArray(attribute_location);
+			Engine.GL.vertexAttribPointer(attribute_location, vertex_buffer_object.item_size, Engine.GL.FLOAT, false, 0, 0);
 		}
 	}
 }
 
 // *************************************************************************************
 // Render target operations
-Engine.prototype.CreateRenderTarget = function(rt_name, rt_width, rt_height)
+Engine.CreateRenderTarget = function(rt_name, rt_width, rt_height)
 {
 	// Create texture
 	var rt_texture = this.CreateRenderTargetTexture(rt_width, rt_height);
 
 	// Create buffer
-	var rt_buffer = this.gl.createFramebuffer();
-	this.gl.bindFramebuffer(this.gl.FRAMEBUFFER, rt_buffer);
+	var rt_buffer = Engine.GL.createFramebuffer();
+	Engine.GL.bindFramebuffer(Engine.GL.FRAMEBUFFER, rt_buffer);
 
 	// Bind the two
-	this.gl.framebufferTexture2D(this.gl.FRAMEBUFFER, this.gl.COLOR_ATTACHMENT0, this.gl.TEXTURE_2D, rt_texture, 0);
+	Engine.GL.framebufferTexture2D(Engine.GL.FRAMEBUFFER, Engine.GL.COLOR_ATTACHMENT0, Engine.GL.TEXTURE_2D, rt_texture, 0);
 
 	// Setup render target object
 	var rt_object =
@@ -731,65 +652,65 @@ Engine.prototype.CreateRenderTarget = function(rt_name, rt_width, rt_height)
 	return rt_object;
 }
 
-Engine.prototype.CreateRenderTargetTexture = function(width, height)
+Engine.CreateRenderTargetTexture = function(width, height)
 {
 	// Create
-	var texture = this.gl.createTexture();
+	var texture = Engine.GL.createTexture();
 
 	// Set params
-	this.gl.bindTexture(this.gl.TEXTURE_2D, texture);
-	this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_WRAP_S, this.gl.CLAMP_TO_EDGE);
-	this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_WRAP_T, this.gl.CLAMP_TO_EDGE);
-	this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_MIN_FILTER, this.gl.NEAREST);
-	this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_MAG_FILTER, this.gl.NEAREST);
-	this.gl.texImage2D(this.gl.TEXTURE_2D, 0, this.gl.RGBA, width, height, 0, this.gl.RGBA, this.gl.UNSIGNED_BYTE, null);
+	Engine.GL.bindTexture(Engine.GL.TEXTURE_2D, texture);
+	Engine.GL.texParameteri(Engine.GL.TEXTURE_2D, Engine.GL.TEXTURE_WRAP_S, Engine.GL.CLAMP_TO_EDGE);
+	Engine.GL.texParameteri(Engine.GL.TEXTURE_2D, Engine.GL.TEXTURE_WRAP_T, Engine.GL.CLAMP_TO_EDGE);
+	Engine.GL.texParameteri(Engine.GL.TEXTURE_2D, Engine.GL.TEXTURE_MIN_FILTER, Engine.GL.NEAREST);
+	Engine.GL.texParameteri(Engine.GL.TEXTURE_2D, Engine.GL.TEXTURE_MAG_FILTER, Engine.GL.NEAREST);
+	Engine.GL.texImage2D(Engine.GL.TEXTURE_2D, 0, Engine.GL.RGBA, width, height, 0, Engine.GL.RGBA, Engine.GL.UNSIGNED_BYTE, null);
 	return texture;
 }
 
-Engine.prototype.BindRenderTarget = function(render_target)
+Engine.BindRenderTarget = function(render_target)
 {
-	this.gl.bindFramebuffer(this.gl.FRAMEBUFFER, render_target.resource);
+	Engine.GL.bindFramebuffer(Engine.GL.FRAMEBUFFER, render_target.resource);
 }
 
-Engine.prototype.UnBindRenderTarget = function(render_target)
+Engine.UnBindRenderTarget = function(render_target)
 {
-	this.gl.bindFramebuffer(this.gl.FRAMEBUFFER, null);
+	Engine.GL.bindFramebuffer(Engine.GL.FRAMEBUFFER, null);
 }
 
 // *************************************************************************************
 // Camera
-Engine.prototype.BindCamera = function(cam)
+Engine.BindCamera = function(cam)
 {
 	this.active_camera = cam;
 }
 
 // *************************************************************************************
 // Drawing
-Engine.prototype.Clear = function(colour)
+Engine.Clear = function(colour)
 {
-	this.gl.clearColor(colour.r, colour.g, colour.b, colour.a);
-	this.gl.clear(this.gl.COLOR_BUFFER_BIT);
+	Engine.GL.clearColor(colour.r, colour.g, colour.b, colour.a);
+	Engine.GL.clear(Engine.GL.COLOR_BUFFER_BIT);
 }
 
-Engine.prototype.DrawArray = function()
+Engine.DrawArray = function()
 {
 	var wireframe = (this.wireframe_mode || this.force_wireframe_mode);
-	var draw_mode = wireframe? this.gl.LINE_LOOP : this.current_vertex_buffer_object.draw_mode;
+	var draw_mode = wireframe? Engine.GL.LINE_LOOP : this.current_vertex_buffer_object.draw_mode;
 	var item_count = this.current_vertex_buffer_object.item_count;
-	var is_index_buffer = (this.current_vertex_buffer_object.buffer_type  == this.gl.ELEMENT_ARRAY_BUFFER);
+	var is_index_buffer = (this.current_vertex_buffer_object.buffer_type  == Engine.GL.ELEMENT_ARRAY_BUFFER);
 	if(is_index_buffer)
 	{
 		// Draw indexed
-		this.gl.drawElements(draw_mode, item_count, this.gl.UNSIGNED_SHORT, 0);
+		Engine.GL.drawElements(draw_mode, item_count, Engine.GL.UNSIGNED_SHORT, 0);
 	}
 	else
 	{
 		// Draw non-indexed
-		this.gl.drawArrays(draw_mode, 0, item_count);
+		Engine.GL.drawArrays(draw_mode, 0, item_count);
 	}
 }
 
-Engine.prototype.DrawModel = function(model)
+Engine.DrawModel = function(model)
 {
 	// Make sure model has been "loaded" (vertex buffer objects have been created)
 	if(!model.hasOwnProperty("is_loaded"))
@@ -809,7 +730,7 @@ Engine.prototype.DrawModel = function(model)
 		for(var j = 0; j < vertex_buffers.length; ++j)
 		{
 			// Is this an index buffer?
-			if(vertex_buffers[j].vbo.buffer_type == this.gl.ELEMENT_ARRAY_BUFFER)
+			if(vertex_buffers[j].vbo.buffer_type == Engine.GL.ELEMENT_ARRAY_BUFFER)
 			{
 				// Only allow a single index buffer per-prim
 				if(index_buffer)
@@ -836,47 +757,20 @@ Engine.prototype.DrawModel = function(model)
 	return true;
 }
 
-Engine.prototype.DrawQuad = function()
+Engine.DrawQuad = function()
 {
 	// Draw full-screen quad
 	this.DrawModel(Engine.Resources["ml_quad"]);
 }
 
-Engine.prototype.EnableWireframeMode = function(do_enable)
+Engine.EnableWireframeMode = function(do_enable)
 {
 	this.wireframe_mode = do_enable;
 }
 
 // *************************************************************************************
-// Canvas
-Engine.prototype.GetCanvas = function()
-{
-	return this.canvas;
-}
-
-Engine.prototype.GetCanvasSize = function()
-{
-	return [this.canvas.width, this.canvas.height];
-}
-
-Engine.prototype.GetCanvasWidth = function()
-{
-	return this.canvas.width;
-}
-
-Engine.prototype.GetCanvasHeight = function()
-{
-	return this.canvas.height;
-}
-
-Engine.prototype.GetCanvasCentre = function()
-{
-	return [this.canvas.width / 2, this.canvas.height / 2, 0];
-}
-
-// *************************************************************************************
 // Geometry
-Engine.prototype.GenerateCircleModel = function(params)
+Engine.GenerateCircleModel = function(params)
 {
 	// Setup empty model with 1 prim
 	var prim = { vertex_buffers : [] }
@@ -915,55 +809,6 @@ Engine.prototype.GenerateCircleModel = function(params)
 	return model;
 }
 
-// *************************************************************************************
-// Misc
-Engine.prototype.FetchResource = function(resource_url, callback)
-{
-	callback = callback || false;
-	jQuery.ajax(
-	{
-		url     : resource_url,
-		async   : callback,
-		cache   : false,
-		success : function(data)
-		{
-			if(callback) { callback(data); }
-		},
-		error   : function(err)
-		{
-			Engine.LogError("Failed fetching resource: " + resource_url);
-		}
-	});
-}
-
-Engine.prototype.FetchBinaryResource = function(resource_url, callback)
-{
-	// No support for binary ajax calls in jQuery, using XHTML Request Level 2 instead
-	// see: http://bugs.jquery.com/ticket/11461
-	callback = callback || false;
-	var xhr = new XMLHttpRequest();
-	var no_cache = "?timestamp=" + new Date().getTime();
-	xhr.open("GET", resource_url + no_cache, true);
-	xhr.responseType = 'arraybuffer';
-	xhr.onload = function(e)
-	{
-		if(this.status == 200)
-		{
-			if(callback) { callback(xhr.response); }
-		}
-		else
-		{
-			Engine.LogError("Failed fetching resource: " + resource_url);
-		}
-	};
-	xhr.send();
-}
-
-Engine.prototype.MD5 = function(data)
-{
-	return HashCode.value(data);
-}
-
 // *************************************
 // Constants
 Engine.DefaultVertexSize = 3;
@@ -982,11 +827,7 @@ Engine.Colour =
 
 // *************************************
 // Matrix
-Engine.prototype.IdentityMatrix = null; // Set on init
-
-// *************************************
-// Draw mode lookup
-Engine.DrawModeFromString = { };
+Engine.IdentityMatrix = null; // Set on init
 
 // *************************************
 // Uniform setter functions (passed to SetShaderConstant)
@@ -1007,7 +848,7 @@ Engine.SC_MATRIX4       = function(gl, uniform_location, new_value) { gl.uniform
 
 // *************************************
 // State management
-Engine.prototype.SetStateBool = function(state, new_value)
+Engine.SetStateBool = function(state, new_value)
 {
 	if(new_value == this.StateTracking[state]) { return; }
 
@@ -1015,39 +856,39 @@ Engine.prototype.SetStateBool = function(state, new_value)
 	this.StateTracking[state] = new_value;
 	if(new_value)
 	{
-		this.gl.enable(state);
+		Engine.GL.enable(state);
 	}
 	else
 	{
-		this.gl.disable(state)
+		Engine.GL.disable(state)
 	}
 }
 
-Engine.prototype.EnableBlend = function(new_value)
+Engine.EnableBlend = function(new_value)
 {
-	this.SetStateBool(this.gl.BLEND, new_value);
+	this.SetStateBool(Engine.GL.BLEND, new_value);
 }
 
-Engine.prototype.SetBlendMode = function(a, b, also_enable)
+Engine.SetBlendMode = function(a, b, also_enable)
 {
-	this.gl.blendFunc(a, b);
+	Engine.GL.blendFunc(a, b);
 	if(also_enable) { this.EnableBlend(true); }
 }
 
-Engine.prototype.EnableDepthTest = function(new_value)
+Engine.EnableDepthTest = function(new_value)
 {
-	this.SetStateBool(this.gl.DEPTH_TEST, new_value);
+	this.SetStateBool(Engine.GL.DEPTH_TEST, new_value);
 }
 
-Engine.prototype.SetDepthTestMode = function(mode, also_enable)
+Engine.SetDepthTestMode = function(mode, also_enable)
 {
-	this.gl.depthFunc(mode);
+	Engine.GL.depthFunc(mode);
 	if(also_enable) { this.EnableDepthTest(true); }
 }
 
 // *************************************
 // Param editor
-Engine.prototype.BuildParamEditor = function(shader_object)
+Engine.BuildParamEditor = function(shader_object)
 {
 	// Parse shader for [EDITOR] blocks
 	var shader_params = { }; var match;
@@ -1077,7 +918,7 @@ Engine.prototype.BuildParamEditor = function(shader_object)
 	return editor;
 }
 
-Engine.prototype.BindParamEditor = function(param_editor)
+Engine.BindParamEditor = function(param_editor)
 {
 	var _this = this;
 	param_editor.find("td div").each(function()
@@ -1087,275 +928,14 @@ Engine.prototype.BindParamEditor = function(param_editor)
 }
 
 // *************************************
-// User input
-Engine.prototype.InitUserInput = function()
-{
-	// Keyboard update
-	var _this = this;
-	document.onkeydown = function(e)
-	{
-		_this.Keyboard.key_buffer[2][e.keyCode] = 1;
-
-		// Enable full-screen mode?
-		// Note: This *must* be done from event handler for security reasons!
-		if(e.keyCode == Engine.KeyboardKeyCodeMap["f10"] && !_this.IsFullScreen())
-		{
-			_this.FullScreen();
-		}
-
-		return _this.Keyboard.IsIgnored(e.keyCode);
-	};
-	document.onkeyup = function(e)
-	{
-		_this.Keyboard.key_buffer[2][e.keyCode] = 0;
-		return _this.Keyboard.IsIgnored(e.keyCode);
-	};
-
-	// Mouse update
-	_this.canvas.onmousedown = function(e) { _this.Mouse.pressed[2][e.button] = true;  };
-	document.onmouseup       = function(e) { _this.Mouse.pressed[2][e.button] = false; };
-	document.onmousemove     = function(e)
-	{
-		_this.Mouse.position[2] = [e.clientX - _this.canvas.getBoundingClientRect().left,
-		                           _this.canvas.getBoundingClientRect().bottom - e.clientY];
-	};
-
-	// Mouse wheel update
-	var on_mousewheel = function(e)
-	{
-		var e = window.event || e;
-		var delta = e.wheelDelta || (-e.detail * 40);
-		_this.Mouse.wheel_delta[1] = delta;
-	}
-	if(document.addEventListener)
-	{
-		document.addEventListener("mousewheel", on_mousewheel, false);
-		document.addEventListener("DOMMouseScroll", on_mousewheel, false);
-	}
-	else
-	{
-		sq.attachEvent("onmousewheel", on_mousewheel);
-	}
-}
-
-// *************************************
-// Keyboard
-Engine.KeyboardKeyCodeMap =
-{
-	// Common
-	"left" : 37, "right" : 39, "up"    : 38, "down"  : 40,
-	"w"    : 87, "a"     : 65, "s"     : 83, "d"     : 68,
-	"ctrl" : 17, "alt"   : 18, "shift" : 16, "space" : 32,
-
-	// Numeric (default)
-	"0" : 48, "1" : 49, "2" : 50, "3" : 51, "4" : 52,
-	"5" : 53, "6" : 54, "7" : 55, "8" : 56, "9" : 57,
-
-	// Function keys
-	"f9" : 120, "f10" : 121,
-
-	// Letters
-	"r" : 82,
-
-	// Ignored
-	"f5" : 116
-};
-
-Engine.prototype.Keyboard =
-{
-	key_buffer   : [[], [], []], // tripple-buffered
-	buffer_idx   : 0,            // "current" buffer-index
-	FlipBuffers : function()
-	{
-		this.buffer_idx = this.buffer_idx? 0 : 1;
-		this.key_buffer[this.buffer_idx] = Engine.CopyArray(this.key_buffer[2]);
-	},
-	IsIgnored : function(key_code)
-	{
-		return key_code == Engine.KeyboardKeyCodeMap["f5"];
-	},
-	IsPressed : function(key_name, debounce)
-	{
-		var key_code = Engine.KeyboardKeyCodeMap[key_name];
-		var this_buffer = this.key_buffer[this.buffer_idx];
-		var prev_buffer = this.key_buffer[this.buffer_idx? 0 : 1];
-		return debounce? this_buffer[key_code] && !prev_buffer[key_code] :
-		                 this_buffer[key_code]
-	},
-	IsReleased : function(key_name, debounce)
-	{
-		var key_code = Engine.KeyboardKeyCodeMap[key_name];
-		var this_buffer = this.key_buffer[this.buffer_idx];
-		var prev_buffer = this.key_buffer[this.buffer_idx? 0 : 1];
-		return debounce? !this_buffer[key_code] && prev_buffer[key_code] :
-		                 !this_buffer[key_code]
-	}
-};
-
-// *************************************
-// Mouse
-Engine.MOUSE_BTN_LEFT   = 0;
-Engine.MOUSE_BTN_MIDDLE = 1;
-Engine.MOUSE_BTN_RIGHT  = 2;
-
-Engine.prototype.Mouse =
-{
-	pressed            : [[0, 0, 0], [0, 0, 0], [0, 0, 0]], // tripple-buffered (L M R)
-	position           : [[0, 0], [0, 0], [0, 0]],          // tripple-buffered
-	buffer_idx         : 0,                                 // "current" buffer-index
-	wheel_delta        : [0, 0],                            // double-buffered
-	FlipBuffers : function()
-	{
-		this.buffer_idx = this.buffer_idx? 0 : 1;
-		this.pressed[this.buffer_idx]  = Engine.CopyArray(this.pressed[2]);
-		this.position[this.buffer_idx] = Engine.CopyArray(this.position[2]);
-		this.wheel_delta[0] = this.wheel_delta[1];
-		this.wheel_delta[1] = 0;
-	},
-	IsPressed : function(button, debounce)
-	{
-		var button_index = button || Engine.MOUSE_BTN_LEFT;
-		var this_buffer = this.pressed[this.buffer_idx];
-		var prev_buffer = this.pressed[this.buffer_idx? 0 : 1];
-		return debounce? this_buffer[button_index] && !prev_buffer[button_index]:
-		                 this_buffer[button_index];
-	},
-	IsReleased : function(button, debounce)
-	{
-		var button_index = button || Engine.MOUSE_BTN_LEFT;
-		var this_buffer = this.pressed[this.buffer_idx];
-		var prev_buffer = this.pressed[this.buffer_idx? 0 : 1];
-		return debounce? !this_buffer[button_index] && prev_buffer[button_index]:
-		                 !this_buffer[button_index];
-	},
-	GetPosition : function()
-	{
-		return this.position[this.buffer_idx];
-	},
-	GetX : function()
-	{
-		return this.GetPosition()[0];
-	},
-	GetY : function()
-	{
-		return this.GetPosition()[1];
-	},
-	GetDelta : function()
-	{
-		var this_buffer = this.position[this.buffer_idx];
-		var prev_buffer = this.position[this.buffer_idx? 0 : 1];
-		return [ this_buffer[0] - prev_buffer[0],
-		         this_buffer[1] - prev_buffer[1] ];
-	},
-	GetDeltaX : function()
-	{
-		return this.GetDelta()[0];
-	},
-	GetDeltaY : function()
-	{
-		return this.GetDelta()[1];
-	},
-	GetWheelDelta : function()
-	{
-		return this.wheel_delta[0];
-	}
-};
-
-Engine.prototype.EnableContextMenu = function(do_enable)
-{
-	// Suppress canvas right-click context menu?
-	this.canvas.oncontextmenu = do_enable? null : function(e)
-	{
-		e.preventDefault();
-	};
-}
-
-// *************************************
-// Audio
-Engine.prototype.InitAudio = function()
-{
-	window.AudioContext = window.AudioContext || window.webkitAudioContext;
-	var audio_context = new AudioContext();
-	this.audio =
-	{
-		context         : audio_context,
-		volume_nodes    :
-		{
-			"bgm" : audio_context.createGain(),
-			"sfx" : audio_context.createGain()
-		}
-	};
-}
-
-Engine.prototype.LoadSound = function(descriptor, callback)
-{
-	// Redirect member-function call to global function (required by global resource load mechanism)
-	return Engine.LoadSound(this, descriptor, callback);
-}
-
-Engine.LoadSound = function(engine, descriptor, callback)
-{
-	engine.FetchBinaryResource(descriptor.file, function(encoded_audio)
-	{
-		engine.audio.context.decodeAudioData(encoded_audio, function(buffer)
-		{
-			var sound_object =
-			{
-				url        : descriptor.file,
-				pcm_buffer : buffer
-			}
-			callback(sound_object);
-		});
-	});
-}
-
-Engine.prototype.PlayBGM = function(sound_object, params)
-{
-	this.PlaySound(sound_object, params, this.audio.volume_nodes["bgm"]);
-}
-
-Engine.prototype.PlaySFX = function(sound_object, params)
-{
-	this.PlaySound(sound_object, params, this.audio.volume_nodes["sfx"]);
-}
-
-Engine.prototype.PlaySound = function(sound_object, params, volume_node)
-{
-	var source = this.audio.context.createBufferSource();
-	source.loop = (params && params["loop"])? params["loop"] : false;
-	source.buffer = sound_object.pcm_buffer;
-
-	// sound --> volume node --> speakers
-	source.connect(volume_node);
-	volume_node.connect(this.audio.context.destination);
-	source.start(0);
-}
-
-Engine.prototype.SetVolumeBGM = function(volume)
-{
-	this.SetVolume("bgm", volume);
-}
-
-Engine.prototype.SetVolumeSFX = function(volume)
-{
-	this.SetVolume("sfx", volume);
-}
-
-Engine.prototype.SetVolume = function(volume_node_name, volume)
-{
-	this.audio.volume_nodes[volume_node_name].gain.value = volume;
-}
-
-// *************************************
 // Fullscreen mode
-Engine.prototype.FullScreen = function()
+Engine.EnableFullScreen = function()
 {
 	var _this = this;
-	var canvas = this.canvas;
+	var canvas = Engine.Canvas;
 
 	// Cache the original size of the canvas
-	var canvas_original_width  = canvas.width;
-	var canvas_original_height = canvas.height;
+	var original_canvas_size  = Engine.Canvas.GetSize();
 
 	// Handle transition between windowed / fullscreen
 	var toggle_fullscreen = function(is_fullscreen)
@@ -1365,16 +945,16 @@ Engine.prototype.FullScreen = function()
 		                          "Going into windowed mode...");
 
 		// Update canvas size accordingly
-		canvas.width  = is_fullscreen? screen.width  : canvas_original_width;
-		canvas.height = is_fullscreen? screen.height : canvas_original_height;
+		canvas.width  = is_fullscreen? screen.width  : original_canvas_size[0];
+		canvas.height = is_fullscreen? screen.height : original_canvas_size[1];
 
 		// Update gl viewport to match canvas
-		_this.gl.viewport(0, 0, canvas.width, canvas.height);
+		Engine.GL.viewport(0, 0, canvas.width, canvas.height);
 
 		// If we have an active camera, let's update this to cope with the new canvas size
 		if(_this.active_camera)
 		{
-			_this.active_camera.ResizeViewport(canvas.width, canvas.height);
+			_this.active_camera.ResizeViewport(Engine.Canvas.GetSize());
 		}
 	};
 
@@ -1394,26 +974,9 @@ Engine.prototype.FullScreen = function()
 	}
 }
 
-Engine.prototype.IsFullScreen = function()
+Engine.IsFullScreen = function()
 {
 	return this.is_full_screen;
-}
-
-// *************************************
-// Math
-Engine.Clamp = function(x, min, max)
-{
-	return Math.min(Math.max(x, min), max);
-}
-
-Engine.Random = function(min, max)
-{
-	return Math.random() * (max - min) + min;
-}
-
-Engine.RandomInteger = function(min, max)
-{
-	return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
 // *************************************
@@ -1437,14 +1000,13 @@ Engine.LogError = function(msg)
 
 // *************************************
 // Misc
-Engine.IsArray = function(object)
+Engine.EnableContextMenu = function(do_enable)
 {
-	return (object.constructor === Array);
-}
-
-Engine.CopyArray = function(array)
-{
-	return array.slice(0);
+	// Suppress canvas right-click context menu?
+	Engine.Canvas.oncontextmenu = do_enable? null : function(e)
+	{
+		e.preventDefault();
+	};
 }
 
 Engine.GetTime = function()
@@ -1467,19 +1029,6 @@ Engine.Sleep = function(milliseconds)
 Engine.DebugBreak = function()
 {
 	debugger;
-}
-
-// *************************************
-// EngineResourceBase
-function EngineResourceBase(descriptor, resource_object)
-{
-	$.extend(this, resource_object);
-	this.descriptor = descriptor;
-}
-
-EngineResourceBase.prototype.IsValid = function()
-{
-	return !(typeof this.resource === 'undefined') && (this.resource != null);
 }
 
 // *************************************
@@ -1534,9 +1083,9 @@ EngineCameraOrtho.prototype.UpdateMatrices = function()
 	           -1000.0, 1000.0);
 }
 
-EngineCameraOrtho.prototype.ResizeViewport = function(width, height)
+EngineCameraOrtho.prototype.ResizeViewport = function(new_size)
 {
-	this.size = [width, height];
+	this.size = new_size;
 }
 
 // *************************************
@@ -1565,9 +1114,9 @@ EngineCameraPersp.prototype.UpdateMatrices = function()
 	mat4.perspective(this.mtx_proj, this.fov, this.aspect, this.near, this.far);
 }
 
-EngineCameraPersp.prototype.ResizeViewport = function(width, height)
+EngineCameraPersp.prototype.ResizeViewport = function(new_size)
 {
-	this.aspect = width / height;
+	this.aspect = new_size[0] / new_size[1];
 }
 
 // *************************************
