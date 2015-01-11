@@ -1,4 +1,6 @@
+// *******************************************
 //# sourceURL=modules/enginejs-2d.js
+// *******************************************
 
 function Engine2D_Scene(engine)
 {
@@ -235,7 +237,7 @@ Engine2D_Entity.prototype.SetAlpha = function(alpha)
 
 // *************************************************************************************
 // Sprite resource loading
-Engine.RegisterResourceLoadFunction("sprite", function(engine, descriptor, callback)
+Engine.Resource.RegisterLoadFunction("sprite", function(engine, descriptor, callback)
 {
 	alert("spritely bottom");
 	callback(new EngineResourceBase(descriptor, {}));
