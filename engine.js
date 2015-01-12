@@ -21,6 +21,7 @@ Engine.Modules =
 	{ name : "EngineJS-Util",     js : "enginejs/modules/enginejs-util.js"     },
 	{ name : "EngineJS-Time",     js : "enginejs/modules/enginejs-time.js"     },
 	{ name : "EngineJS-Colour",   js : "enginejs/modules/enginejs-colour.js"   },
+	{ name : "EngineJS-Debug",    js : "enginejs/modules/enginejs-debug.js"    },
 	{ name : "EngineJS-Array",    js : "enginejs/modules/enginejs-array.js"    },
 	{ name : "EngineJS-Math",     js : "enginejs/modules/enginejs-math.js"     },
 	{ name : "EngineJS-Net",      js : "enginejs/modules/enginejs-net.js"      },
@@ -997,11 +998,6 @@ Engine.EnableContextMenu = function(do_enable)
 	{
 		e.preventDefault();
 	};
-}
-
-Engine.DebugBreak = function()
-{
-	debugger;
 }
 
 // *************************************
