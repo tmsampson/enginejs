@@ -19,6 +19,7 @@ Engine.Dependencies =
 Engine.Modules =
 [
 	{ name : "EngineJS-Util",     js : "enginejs/modules/enginejs-util.js"     },
+	{ name : "EngineJS-Time",     js : "enginejs/modules/enginejs-time.js"     },
 	{ name : "EngineJS-Array",    js : "enginejs/modules/enginejs-array.js"    },
 	{ name : "EngineJS-Math",     js : "enginejs/modules/enginejs-math.js"     },
 	{ name : "EngineJS-Net",      js : "enginejs/modules/enginejs-net.js"      },
@@ -247,8 +248,8 @@ Engine.RunGameLoop = function(on_user_render)
 	var on_render_internal = function()
 	{
 		// Generate frame stats
-		var elapsed_ms = Engine.GetTime() - first_frame_time;
-		var delta_ms   = Engine.GetTime() - last_frame_time;
+		var elapsed_ms = Engine.Time.Now() - first_frame_time;
+		var delta_ms   = Engine.Time.Now() - last_frame_time;
 
 		// Request next render frame
 		Engine.SetRenderCallback(on_render_internal);
@@ -273,13 +274,13 @@ Engine.RunGameLoop = function(on_user_render)
 		}
 
 		// Call user render function
-		last_frame_time = Engine.GetTime();
+		last_frame_time = Engine.Time.Now();
 		on_user_render(info);
 	};
 
 	// Request first render frame
-	var first_frame_time = Engine.GetTime();
-	var last_frame_time  = Engine.GetTime();
+	var first_frame_time = Engine.Time.Now();
+	var last_frame_time  = Engine.Time.Now();
 	Engine.SetRenderCallback(on_render_internal);
 }
 
@@ -1007,23 +1008,6 @@ Engine.EnableContextMenu = function(do_enable)
 	{
 		e.preventDefault();
 	};
-}
-
-Engine.GetTime = function()
-{
-	return (new Date).getTime();
-}
-
-Engine.Sleep = function(milliseconds)
-{
-	var start = new Date().getTime();
-	for(var i = 0; i < 1e7; i++)
-	{
-		if((new Date().getTime() - start) > milliseconds)
-		{
-			break;
-		}
-	}
 }
 
 Engine.DebugBreak = function()
