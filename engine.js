@@ -149,6 +149,14 @@ Engine.InitWebGL = function(canvas, callback)
 		Engine.Canvas.GetWidth  = function() { return this.width; };
 		Engine.Canvas.GetHeight = function() { return this.height; };
 		Engine.Canvas.GetCentre = function() { return [this.width / 2, this.height / 2, 0] };
+		Engine.Canvas.EnableContextMenu = function(do_enable)
+		{
+			// Suppress canvas right-click context menu?
+			Engine.Canvas.oncontextmenu = do_enable? null : function(e)
+			{
+				e.preventDefault();
+			};
+		};
 
 		// Setup global constants
 		Engine.IdentityMatrix = mat4.create();
@@ -984,17 +992,6 @@ Engine.LogError = function(msg)
 {
 	console.error("[engine] ERROR: " + msg);
 };
-
-// *************************************
-// Misc
-Engine.EnableContextMenu = function(do_enable)
-{
-	// Suppress canvas right-click context menu?
-	Engine.Canvas.oncontextmenu = do_enable? null : function(e)
-	{
-		e.preventDefault();
-	};
-}
 
 // *************************************
 // EngineCameraBase
