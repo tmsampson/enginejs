@@ -20,6 +20,7 @@ Engine.Modules =
 [
 	{ name : "EngineJS-Util",     js : "enginejs/modules/enginejs-util.js"     },
 	{ name : "EngineJS-Time",     js : "enginejs/modules/enginejs-time.js"     },
+	{ name : "EngineJS-Colour",   js : "enginejs/modules/enginejs-colour.js"   },
 	{ name : "EngineJS-Array",    js : "enginejs/modules/enginejs-array.js"    },
 	{ name : "EngineJS-Math",     js : "enginejs/modules/enginejs-math.js"     },
 	{ name : "EngineJS-Net",      js : "enginejs/modules/enginejs-net.js"      },
@@ -813,18 +814,6 @@ Engine.GenerateCircleModel = function(params)
 // *************************************
 // Constants
 Engine.DefaultVertexSize = 3;
-
-// *************************************
-// Basic colours
-Engine.Colour =
-{
-	Black     : { r : 0.0, g : 0.0, b : 0.0, a : 1.0 },
-	White     : { r : 1.0, g : 1.0, b : 1.0, a : 1.0 },
-	Red       : { r : 1.0, g : 0.0, b : 0.0, a : 1.0 },
-	Green     : { r : 0.0, g : 1.0, b : 0.0, a : 1.0 },
-	DarkGreen : { r : 0.0, g : 0.4, b : 0.0, a : 1.0 },
-	Blue      : { r : 0.0, g : 0.0, b : 1.0, a : 1.0 }
-};
 
 // *************************************
 // Matrix
