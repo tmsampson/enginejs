@@ -813,10 +813,6 @@ Engine.GenerateCircleModel = function(params)
 }
 
 // *************************************
-// Constants
-Engine.DefaultVertexSize = 3;
-
-// *************************************
 // Matrix
 Engine.IdentityMatrix = null; // Set on init
 
