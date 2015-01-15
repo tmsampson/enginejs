@@ -4,15 +4,7 @@
 
 Engine.Resource =
 {
-	LoadFunctions :
-	{
-		// TODO: Move into relevant modules
-		png   : function(descriptor, callback) { Engine.LoadTexture(descriptor, callback); },
-		jpg   : function(descriptor, callback) { Engine.LoadTexture(descriptor, callback); },
-		vs    : function(descriptor, callback) { Engine.LoadShader(descriptor, callback);  },
-		fs    : function(descriptor, callback) { Engine.LoadShader(descriptor, callback);  },
-		model : function(descriptor, callback) { Engine.LoadModel(descriptor, callback);   },
-	},
+	LoadFunctions : { }, // Registered by relevant modules
 
 	LoadBatch : function(descriptor_list, on_complete)
 	{

@@ -64,7 +64,7 @@ document.onkeydown = function(e)
 
 	// Enable full-screen mode?
 	// Note: This *must* be done from event handler for security reasons!
-	if(e.keyCode == Engine.KeyboardKeyCodeMap["f10"] && !Engine.IsFullScreen())
+	if(e.keyCode == Engine.KeyboardKeyCodeMap["f10"] && !Engine.Canvas.IsFullScreen())
 	{
 		Engine.EnableFullScreen();
 	}
