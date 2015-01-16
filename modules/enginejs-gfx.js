@@ -98,15 +98,15 @@ Engine.Gfx =
 		Engine.Net.FetchResource(descriptor.file, function(shader_code)
 		{
 			var extension = descriptor.file.split('.').pop();
-			var shader = (extension == "vs")? Engine.Gfx.CompileVertexShader(shader_code, defines) :
-			                                  Engine.Gfx.CompileFragmentShader(shader_code, defines);
+			var shader_object = (extension == "vs")? Engine.Gfx.CompileVertexShader(shader_code, defines) :
+			                                           Engine.Gfx.CompileFragmentShader(shader_code, defines);
 
-			if(shader)
+			if(shader_object)
 			{
 				Engine.Log("Successfully loaded shader: " + descriptor.file);
 			}
 
-			if(callback) { callback(new Engine.Resource.Base(descriptor, shader)); }
+			callback(shader_object);
 		});
 	},
 
@@ -260,7 +260,7 @@ Engine.Gfx =
 			Engine.GL.bindTexture(Engine.GL.TEXTURE_2D, null);
 
 			// Done
-			if(callback) { callback(new Engine.Resource.Base(descriptor, texture_object)); }
+			callback(texture_object);
 		};
 
 		// Handle errors
@@ -268,7 +268,7 @@ Engine.Gfx =
 		{
 			var error_msg = "Failed loading texture: " + descriptor.file;
 			Engine.LogError(error_msg);
-			if(callback) { callback(new Engine.Resource.Base(descriptor, null)); }
+			callback({});
 		};
 
 		// Initiate load
