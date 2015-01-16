@@ -15,7 +15,7 @@ Engine.Audio =
 					url        : descriptor.file,
 					pcm_buffer : buffer
 				}
-				callback(new Engine.Resource.Base(descriptor, sound_object));
+				callback(sound_object);
 			});
 		});
 	},

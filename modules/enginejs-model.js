@@ -8,10 +8,10 @@ Engine.Model =
 	{
 		Engine.Net.FetchResource(descriptor.file, function(model_json)
 		{
-			var model = jQuery.parseJSON(model_json);
+			var model_object = jQuery.parseJSON(model_json);
 
 			// For each primitive...
-			var prims = model.model_data.primitives;
+			var prims = model_object.model_data.primitives;
 			for(var i = 0; i < prims.length; ++i)
 			{
 				// Build vertex buffers
@@ -24,8 +24,8 @@ Engine.Model =
 			}
 
 			// Finalise
-			model.is_loaded = true;
-			callback(model);
+			model_object.is_loaded = true;
+			callback(model_object);
 		});
 	},
 };

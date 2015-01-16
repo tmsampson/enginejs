@@ -4,10 +4,9 @@
 
 Engine.Game2D =
 {
-	Entity : function(textures, config)
+	Entity : function(texture_or_sprite, config)
 	{
-		//Setup defaults
-		this.textures = [];
+		// Setup defaults
 		this.size = [0, 0];
 		this.position = [0, 0];
 		this.velocity = [0, 0];
@@ -16,29 +15,59 @@ Engine.Game2D =
 		this.tint = [1, 1, 1, 1];
 		this.alpha = 1;
 
-		// Setup texture(s)?
-		if(textures)
+		// Apply any user overrides
+		$.extend(this, config);
+
+		// Setup sprite?
+		this.sprite = null;
+		if(texture_or_sprite)
 		{
-			if(Engine.Array.IsArray(textures))
+			var is_sprite = texture_or_sprite.descriptor.extension == "sprite";
+			if(is_sprite)
 			{
-				this.textures = textures;
+				// Use sprite directly and set entity size to match first texture
+				// grid size
+				this.sprite = texture_or_sprite;
+				var first_texture = Engine.Array.GetFirstValue(this.sprite.textures);
+				this.size = [first_texture.width  / first_texture.descriptor.cols,
+				             first_texture.height / first_texture.descriptor.rows];
 			}
 			else
 			{
-				this.textures.push(textures);
+				// Create a basic sprite from texture and set entity size to
+				// match texture size
+				this.sprite = new Engine.Game2D.Sprite();
+				this.sprite.textures["default"] = texture_or_sprite;
+				this.sprite.textures["default"].descriptor.rows = 1;
+				this.sprite.textures["default"].descriptor.cols = 1;
+				this.sprite.active_texture = this.sprite.textures["default"];
+				this.size = [texture_or_sprite.width, texture_or_sprite.height];
 			}
-
-			// Set entity size to match first texture
-			this.size = [this.textures[0].width, this.textures[0].height];
 		}
 
-		// Apply any user overrides
-		$.extend(this, config);
+		this.Update = function(info)
+		{
+			// Integrate linear velocity
+			this.position[0] += this.velocity[0] * info.delta_s;
+			this.position[1] += this.velocity[1] * info.delta_s;
+
+			// Update sprite?
+			if(this.sprite.active_sequence)
+			{
+				this.sprite.Update(info);
+			}
+		};
 
 		this.SetVelocity = function(x, y)
 		{
 			this.velocity[0] = x;
 			this.velocity[1] = y;
+		};
+
+		this.Move = function(x, y)
+		{
+			this.position[0] += x;
+			this.position[1] += y;
 		};
 
 		this.MoveTo = function(x, y)
@@ -139,19 +168,20 @@ Engine.Game2D =
 			// Update entities
 			for(var i = 0; i < this.entities.length; ++i)
 			{
-				var entity = this.entities[i];
-
-				// Integrate linear velocity
-				entity.position[0] += entity.velocity[0];
-				entity.position[1] += entity.velocity[1];
+				this.entities[i].Update(info);
 			}
 
 			// For now let's depth sort on CPU to avoid issues with alpha sprites with same depth
 			Engine.Gfx.EnableDepthTest(false);
 			this.entities.sort(function(a,b){ return a.depth >= b.depth; });
 
-			// Render entities
+			// Render setup
 			Engine.Gfx.SetBlendMode(Engine.GL.SRC_ALPHA, Engine.GL.ONE_MINUS_SRC_ALPHA, true);
+			Engine.Gfx.BindShaderProgram(this.program_sprite);
+			var last_bound_texture = null;
+			var last_bound_tint = null;
+
+			// Render entities
 			for(var i = 0; i < this.entities.length; ++i)
 			{
 				var entity = this.entities[i];
@@ -162,17 +192,29 @@ Engine.Game2D =
 				mat4.translate(mtx_trans, Engine.Math.IdentityMatrix, entity_trans);
 				mat4.rotate(mtx_trans, mtx_trans, entity.rotation, [0, 0, 1]);
 				mat4.scale(mtx_trans, mtx_trans, entity_scale);
-
-				// Draw (setup)
-				Engine.Gfx.BindShaderProgram(this.program_sprite);
-				Engine.Gfx.SetShaderConstant("u_tint", entity.tint, Engine.Gfx.SC_VEC4);
 				Engine.Gfx.SetShaderConstant("u_trans_model", mtx_trans, Engine.Gfx.SC_MATRIX4);
 
-				// Draw (setup texture)
-				var entity_texture = entity.textures[0];
-				Engine.Gfx.BindTexture(entity_texture, 0);
+				// Setup tint
+				if(entity.tint != last_bound_tint)
+				{
+					Engine.Gfx.SetShaderConstant("u_tint", entity.tint, Engine.Gfx.SC_VEC4);
+					last_bound_tint = entity.tint;
+				}
 
-				// Draw (finalise)
+				// Setup anim frame
+				var anim_config = [entity.sprite.active_texture.descriptor.rows,
+				                   entity.sprite.active_texture.descriptor.cols,
+				                   entity.sprite.current_anim_frame];
+				Engine.Gfx.SetShaderConstant("u_anim_config", anim_config, Engine.Gfx.SC_VEC3);
+
+				// Setup texture
+				if(entity.sprite.active_texture != last_bound_texture)
+				{
+					Engine.Gfx.BindTexture(entity.sprite.active_texture, 0);
+					last_bound_texture = entity.sprite.active_texture;
+				}
+
+				// Draw
 				Engine.Gfx.DrawQuad();
 			}
 		}
@@ -232,12 +274,101 @@ Engine.Game2D =
 			}
 		};
 	},
+
+	Sprite : function()
+	{
+		this.name = ""
+		this.textures  = {};
+		this.sequences = {};
+
+		// For update
+		this.active_sequence = null;
+		this.anim_time = 0.0;
+
+		// For rendering
+		this.active_texture = null;
+		this.current_anim_frame = 0;
+
+		this.SetSequence = function(sequence_name)
+		{
+			if(sequence_name in this.sequences)
+			{
+				this.anim_time = 0.0; // reset animation
+				this.active_sequence = this.sequences[sequence_name];
+				this.active_texture = this.active_sequence.texture;
+			}
+			else
+			{
+				Engine.LogError("Invalid sprite sequence name '" + sequence_name + "'");
+			}
+		};
+
+		this.Update = function(info)
+		{
+			var sequence = this.active_sequence;
+
+			// *************************************************************************************
+			// CACHE THIS!
+			var anim_start_frame = (sequence.begin[0] * sequence.texture.descriptor.cols) + sequence.begin[1];
+			var anim_end_frame = (sequence.end[0] * sequence.texture.descriptor.cols) + sequence.end[1];
+			var anim_max_frames = sequence.texture.descriptor.rows * sequence.texture.descriptor.cols;
+			var anim_frame_count = Math.abs(anim_end_frame - anim_start_frame);
+			var frame_length = (sequence.speed == 0)? 1 : 1.0 / sequence.speed;
+			// *************************************************************************************
+
+			this.anim_time += info.delta_s;
+			var current_frame = Math.floor(this.anim_time / frame_length);
+
+			// Wrap / clamp based on loop settings
+			current_frame = sequence.loop? current_frame % (anim_frame_count + 1) :
+			                               Math.min(current_frame, anim_frame_count);
+
+			// Offset from anim start
+			this.current_anim_frame = (anim_start_frame + current_frame) % anim_max_frames;
+		};
+	},
 };
 
 // *************************************************************************************
 // Sprite resource loading
 Engine.Resource.RegisterLoadFunction("sprite", function(descriptor, callback)
 {
-	// TODO: Implement sprites!
-	callback(new Engine.Resource.Base(descriptor, {}));
+	Engine.Net.FetchResource(descriptor.file, function(sprite_json)
+	{
+		var json = jQuery.parseJSON(sprite_json);
+		var sprite_object = new Engine.Game2D.Sprite();
+		$.extend(sprite_object, json);
+
+		// Load in textures
+		Engine.Resource.LoadBatch(sprite_object.textures, function()
+		{
+			// Process sequences
+			for(var sequence_name in sprite_object.sequences)
+			{
+				var sequence = sprite_object.sequences[sequence_name];
+				Engine.Log("    Validating sprite sequence " + sequence_name);
+
+				// Hookup texture references
+				if(sequence.texture in sprite_object.textures)
+				{
+					sequence.texture = sprite_object.textures[sequence.texture];
+				}
+				else
+				{
+					// Broken reference
+					var msg = "    Unknown texture '" + sequence.texture +
+					          "' referenced in sprite sequence '" + sequence_name + "'";
+					Engine.LogError(msg);
+				}
+
+				// Set first sequence as active
+				if(!sprite_object.active_sequence)
+				{
+					sprite_object.SetSequence(sequence_name);
+				}
+			}
+
+			callback(sprite_object);
+		});
+	});
 });

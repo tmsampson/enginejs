@@ -41,6 +41,8 @@ Engine.Resource =
 		{
 			Engine.Resource.LoadFunctions[extension](descriptor, function(resource_object)
 			{
+				descriptor.extension = extension;
+				resource_object.descriptor = descriptor;
 				on_complete(resource_object);
 			});
 		}
@@ -55,10 +57,4 @@ Engine.Resource =
 	{
 		Engine.Resource.LoadFunctions[extension] = func;
 	},
-
-	Base : function(descriptor, resource_object)
-	{
-		$.extend(this, resource_object);
-		this.descriptor = descriptor;
-	}
 };
