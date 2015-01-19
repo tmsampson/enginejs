@@ -52,7 +52,7 @@ Engine.Game2D =
 			this.position[1] += this.velocity[1] * info.delta_s;
 
 			// Update sprite?
-			if(this.sprite.active_sequence)
+			if(this.sprite)
 			{
 				this.sprite.Update(info);
 			}
@@ -201,17 +201,32 @@ Engine.Game2D =
 					last_bound_tint = entity.tint;
 				}
 
-				// Setup anim frame
-				var anim_config = [entity.sprite.active_texture.descriptor.rows,
-				                   entity.sprite.active_texture.descriptor.cols,
-				                   entity.sprite.current_anim_frame];
-				Engine.Gfx.SetShaderConstant("u_anim_config", anim_config, Engine.Gfx.SC_VEC3);
-
-				// Setup texture
-				if(entity.sprite.active_texture != last_bound_texture)
+				// Setup sprite?
+				if(entity.sprite)
 				{
-					Engine.Gfx.BindTexture(entity.sprite.active_texture, 0);
-					last_bound_texture = entity.sprite.active_texture;
+					// Setup anim frame
+					var anim_config = [entity.sprite.active_texture.descriptor.rows,
+					                   entity.sprite.active_texture.descriptor.cols,
+					                   entity.sprite.current_anim_frame];
+					Engine.Gfx.SetShaderConstant("u_anim_config", anim_config, Engine.Gfx.SC_VEC3);
+
+					// Setup mirror config
+					var sequence = entity.sprite.active_sequence;
+					Engine.Gfx.SetShaderConstant("u_mirror_config", sequence? sequence.mirror : [0, 0], Engine.Gfx.SC_VEC2);
+
+					// Setup texture
+					if(entity.sprite.active_texture != last_bound_texture)
+					{
+						Engine.Gfx.BindTexture(entity.sprite.active_texture, 0);
+						last_bound_texture = entity.sprite.active_texture;
+					}
+				}
+				else
+				{
+					// Fill with tint colour
+					var dummy_texture = Engine.Resources["tx_white"];
+					Engine.Gfx.BindTexture(dummy_texture, 0);
+					last_bound_texture = dummy_texture;
 				}
 
 				// Draw
@@ -282,6 +297,7 @@ Engine.Game2D =
 		this.sequences = {};
 
 		// For update
+		this.requires_update = false;
 		this.active_sequence = null;
 		this.anim_time = 0.0;
 
@@ -293,9 +309,26 @@ Engine.Game2D =
 		{
 			if(sequence_name in this.sequences)
 			{
-				this.anim_time = 0.0; // reset animation
-				this.active_sequence = this.sequences[sequence_name];
-				this.active_texture = this.active_sequence.texture;
+				var sequence = this.sequences[sequence_name];
+				this.active_sequence = sequence;
+				this.active_texture = sequence.texture;
+
+				// Calculate frame duration and reset animation
+				this.anim_frame_length = (sequence.speed == 0)? 1 : 1.0 / sequence.speed;
+				this.anim_time = 0.0;
+
+				// Calculate start, end and max frame indices (linear, left-to-right)
+				this.anim_start_frame_index = (sequence.begin[0] * sequence.texture.descriptor.cols) + sequence.begin[1];
+				this.anim_end_frame_index   = (  sequence.end[0] * sequence.texture.descriptor.cols) + sequence.end[1];
+				this.anim_max_frame_index   = sequence.texture.descriptor.rows * sequence.texture.descriptor.cols;
+
+				// Calculate how many frames belong to this sequence
+				var wrap_around = this.anim_start_frame_index > this.anim_end_frame_index;
+				this.anim_frame_count = wrap_around? (this.anim_max_frame_index + this.anim_start_frame_index) - this.anim_end_frame_index :
+				                                      this.anim_end_frame_index - this.anim_start_frame_index;
+
+				// Will the sprite need updating?
+				this.requires_update = (this.active_sequence.speed != 0 && this.anim_frame_count != 0);
 			}
 			else
 			{
@@ -305,27 +338,35 @@ Engine.Game2D =
 
 		this.Update = function(info)
 		{
-			var sequence = this.active_sequence;
+			if(!this.requires_update)
+				return;
 
-			// *************************************************************************************
-			// CACHE THIS!
-			var anim_start_frame = (sequence.begin[0] * sequence.texture.descriptor.cols) + sequence.begin[1];
-			var anim_end_frame = (sequence.end[0] * sequence.texture.descriptor.cols) + sequence.end[1];
-			var anim_max_frames = sequence.texture.descriptor.rows * sequence.texture.descriptor.cols;
-			var anim_frame_count = Math.abs(anim_end_frame - anim_start_frame);
-			var frame_length = (sequence.speed == 0)? 1 : 1.0 / sequence.speed;
-			// *************************************************************************************
-
+			// Progress anim time and calculate which frame to display
 			this.anim_time += info.delta_s;
-			var current_frame = Math.floor(this.anim_time / frame_length);
+			var current_frame = Math.floor(this.anim_time / this.anim_frame_length);
 
-			// Wrap / clamp based on loop settings
-			current_frame = sequence.loop? current_frame % (anim_frame_count + 1) :
-			                               Math.min(current_frame, anim_frame_count);
+			// Deal with animation loop / end
+			if(current_frame >= this.anim_frame_count)
+			{
+				if(this.active_sequence.loop)
+				{
+					current_frame = current_frame % (this.anim_frame_count + 1);
+				}
+				else
+				{
+					current_frame = this.anim_frame_count;
+					this.requires_update = false;
+				}
+			}
 
-			// Offset from anim start
-			this.current_anim_frame = (anim_start_frame + current_frame) % anim_max_frames;
+			// Offset current_frame from anim start frame
+			this.current_anim_frame = (this.anim_start_frame_index + current_frame) % this.anim_max_frame_index;
 		};
+
+		this.GetSequenceName = function()
+		{
+			return this.active_sequence.name;
+		}
 	},
 };
 
@@ -346,7 +387,8 @@ Engine.Resource.RegisterLoadFunction("sprite", function(descriptor, callback)
 			for(var sequence_name in sprite_object.sequences)
 			{
 				var sequence = sprite_object.sequences[sequence_name];
-				Engine.Log("    Validating sprite sequence " + sequence_name);
+				sequence.name = sequence_name; // Add key-name as member
+				Engine.Log("    Validating sprite sequence " + sequence.name);
 
 				// Hookup texture references
 				if(sequence.texture in sprite_object.textures)
