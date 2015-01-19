@@ -53,6 +53,8 @@ Engine =
 		fs_grid              : { file: "enginejs/shaders/grid.fs" },
 		fs_grid_3d           : { file: "enginejs/shaders/grid-3d.fs" },
 		fs_grid_3d_fog       : { file: "enginejs/shaders/grid-3d-fog.fs" },
+
+		// Game-2D shaders
 		fs_2d_background     : { file: "enginejs/shaders/2d/background.fs" },
 		fs_2d_sprite         : { file: "enginejs/shaders/2d/sprite.fs" },
 
@@ -61,6 +63,9 @@ Engine =
 		ml_floor_tile        : { file: "enginejs/models/floor_tile.model" },
 		ml_tri               : { file: "enginejs/models/tri.model"        },
 		ml_cube              : { file: "enginejs/models/cube.model"       },
+
+		// Misc
+		tx_white             : { file: "enginejs/img/white.png" },
 	},
 
 	// *************************************************************************************
