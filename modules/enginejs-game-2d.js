@@ -103,7 +103,7 @@ Engine.Game2D =
 		};
 	},
 
-	Scene : function()
+	Scene : function(background_object)
 	{
 		this.entities = [];
 
@@ -112,7 +112,7 @@ Engine.Game2D =
 
 		// Setup 2D orthographic camera
 		this.camera = new Engine.Camera.Orthographic({ size : viewport_size });
-		this.background = new Engine.Game2D.Background();
+		this.background = background_object? background_object : new Engine.Game2D.Background();
 
 		// Setup shader programs
 		this.program_grid   = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_basic_transformed"],
@@ -375,6 +375,53 @@ Engine.Game2D =
 		}
 	},
 };
+
+// *************************************************************************************
+// Background resource loading
+Engine.Resource.RegisterLoadFunction("background", function(descriptor, callback)
+{
+	Engine.Net.FetchResource(descriptor.file, function(background_json)
+	{
+		var json = jQuery.parseJSON(background_json);
+		var background_object = new Engine.Game2D.Background();
+		$.extend(background_object, json);
+
+		// Load in textures
+		Engine.Resource.LoadBatch(background_object.textures, function()
+		{
+			// Validate background
+			var layer_count = background_object.layers.length;
+			if(background_object.layers.length > background_object.MAX_LAYERS)
+			{
+				Engine.LogError("Background '" + descriptor.file +
+				                "' exceeds maximum layer count of " + background_object.MAX_LAYERS);
+				return;
+			}
+
+			// Process layers
+			for(var i = 0; i < layer_count; ++i)
+			{
+				Engine.Log("    Validating background layer " + i);
+				var layer = background_object.layers[i];
+
+				// Hookup texture references
+				if(layer.texture in background_object.textures)
+				{
+					layer.texture = background_object.textures[layer.texture];
+				}
+				else
+				{
+					// Broken reference
+					var msg = "    Unknown texture '" + layer.texture +
+					          "' referenced in background '" + descriptor.file + "' layer " + i;
+					Engine.LogError(msg);
+				}
+			}
+
+			callback(background_object);
+		});
+	});
+});
 
 // *************************************************************************************
 // Sprite resource loading
