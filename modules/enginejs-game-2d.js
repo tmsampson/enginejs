@@ -58,22 +58,20 @@ Engine.Game2D =
 			}
 		};
 
-		this.SetVelocity = function(x, y)
+		this.SetVelocity = function(velocity)
 		{
-			this.velocity[0] = x;
-			this.velocity[1] = y;
+			this.velocity = velocity;
 		};
 
-		this.Move = function(x, y)
+		this.Move = function(delta)
 		{
-			this.position[0] += x;
-			this.position[1] += y;
+			this.position[0] += delta[0];
+			this.position[1] += delta[1];
 		};
 
-		this.MoveTo = function(x, y)
+		this.MoveTo = function(new_pos)
 		{
-			this.position[0] = x;
-			this.position[1] = y;
+			this.position = new_pos;
 		};
 
 		this.SetDepth = function(depth)
@@ -92,11 +90,11 @@ Engine.Game2D =
 			this.size[1] = size;
 		};
 
-		this.SetTint = function(r, g, b)
+		this.SetTint = function(colour)
 		{
-			this.tint[0] = r;
-			this.tint[1] = g;
-			this.tint[2] = b;
+			this.tint[0] = colour[0];
+			this.tint[1] = colour[1];
+			this.tint[2] = colour[2];
 		};
 
 		this.SetAlpha = function(alpha)
@@ -211,8 +209,7 @@ Engine.Game2D =
 					Engine.Gfx.SetShaderConstant("u_anim_config", anim_config, Engine.Gfx.SC_VEC3);
 
 					// Setup mirror config
-					var sequence = entity.sprite.active_sequence;
-					Engine.Gfx.SetShaderConstant("u_mirror_config", sequence? sequence.mirror : [0, 0], Engine.Gfx.SC_VEC2);
+					Engine.Gfx.SetShaderConstant("u_mirror_config", entity.sprite.mirror, Engine.Gfx.SC_VEC2);
 
 					// Setup texture
 					if(entity.sprite.active_texture != last_bound_texture)
@@ -304,6 +301,7 @@ Engine.Game2D =
 		// For rendering
 		this.active_texture = null;
 		this.current_anim_frame = 0;
+		this.mirror = [0, 0];
 
 		this.SetSequence = function(sequence_name)
 		{
@@ -312,6 +310,7 @@ Engine.Game2D =
 				var sequence = this.sequences[sequence_name];
 				this.active_sequence = sequence;
 				this.active_texture = sequence.texture;
+				this.mirror = this.active_sequence.mirror;
 
 				// Calculate frame duration and reset animation
 				this.anim_frame_length = (sequence.speed == 0)? 1 : 1.0 / sequence.speed;
@@ -321,6 +320,7 @@ Engine.Game2D =
 				this.anim_start_frame_index = (sequence.begin[0] * sequence.texture.descriptor.cols) + sequence.begin[1];
 				this.anim_end_frame_index   = (  sequence.end[0] * sequence.texture.descriptor.cols) + sequence.end[1];
 				this.anim_max_frame_index   = sequence.texture.descriptor.rows * sequence.texture.descriptor.cols;
+				this.current_anim_frame = this.anim_start_frame_index; // Begin at first frame incase we set requires_update = false
 
 				// Calculate how many frames belong to this sequence
 				var wrap_around = this.anim_start_frame_index > this.anim_end_frame_index;
@@ -366,6 +366,12 @@ Engine.Game2D =
 		this.GetSequenceName = function()
 		{
 			return this.active_sequence.name;
+		}
+
+		this.SetMirror = function(horizontal, vertical)
+		{
+			this.mirror[0] = horizontal? 1 : 0;
+			this.mirror[1] = vertical?   1 : 0;
 		}
 	},
 };
