@@ -37,21 +37,51 @@ Engine.Keyboard =
 	{
 		return key_code == Engine.KeyboardKeyCodeMap["f5"];
 	},
-	IsPressed : function(key_name, debounce)
+	IsPressed : function(key_name_or_list, debounce)
 	{
-		var key_code = Engine.KeyboardKeyCodeMap[key_name];
+		// 'key_name_or_list' could be single value or list of keys to check, either
+		// way we want a list (even if it only has a single key entry)
+		var key_names = Engine.Array.IsArray(key_name_or_list)? key_name_or_list :
+		                                                        [ key_name_or_list ];
+
+		// Check if any of the keys are pressed
 		var this_buffer = this.key_buffer[this.buffer_idx];
 		var prev_buffer = this.key_buffer[this.buffer_idx? 0 : 1];
-		return debounce? this_buffer[key_code] && !prev_buffer[key_code] :
-		                 this_buffer[key_code]
+		for(var i = 0; i < key_names.length; ++i)
+		{
+			var key_name = key_names[i];
+			var key_code = Engine.KeyboardKeyCodeMap[key_name];
+			if(debounce && this_buffer[key_code] && !prev_buffer[key_code] ||
+			  !debounce && this_buffer[key_code])
+			{
+				return true;
+			}
+		}
+
+		return false;
 	},
-	IsReleased : function(key_name, debounce)
+	IsReleased : function(key_name_or_list, debounce)
 	{
-		var key_code = Engine.KeyboardKeyCodeMap[key_name];
+		// 'key_name_or_list' could be single value or list of keys to check, either
+		// way we want a list (even if it only has a single key entry)
+		var key_names = Engine.Array.IsArray(key_name_or_list)? key_name_or_list :
+		                                                        [ key_name_or_list ];
+
+		// Check if any of the keys are pressed
 		var this_buffer = this.key_buffer[this.buffer_idx];
 		var prev_buffer = this.key_buffer[this.buffer_idx? 0 : 1];
-		return debounce? !this_buffer[key_code] && prev_buffer[key_code] :
-		                 !this_buffer[key_code]
+		for(var i = 0; i < key_names.length; ++i)
+		{
+			var key_name = key_names[i];
+			var key_code = Engine.KeyboardKeyCodeMap[key_name];
+			if(debounce && !this_buffer[key_code] && prev_buffer[key_code] ||
+			  !debounce && !this_buffer[key_code])
+			{
+				return true;
+			}
+		}
+
+		return false;
 	}
 };
 
