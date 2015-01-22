@@ -18,23 +18,24 @@ Engine =
 	// *************************************************************************************
 	Modules :
 	[
-		{ name : "EngineJS-Util",        js : "enginejs/modules/enginejs-util.js"        },
-		{ name : "EngineJS-Time",        js : "enginejs/modules/enginejs-time.js"        },
-		{ name : "EngineJS-Colour",      js : "enginejs/modules/enginejs-colour.js"      },
-		{ name : "EngineJS-Debug",       js : "enginejs/modules/enginejs-debug.js"       },
-		{ name : "EngineJS-Array",       js : "enginejs/modules/enginejs-array.js"       },
-		{ name : "EngineJS-Math",        js : "enginejs/modules/enginejs-math.js"        },
-		{ name : "EngineJS-Camera",      js : "enginejs/modules/enginejs-camera.js"      },
-		{ name : "EngineJS-Net",         js : "enginejs/modules/enginejs-net.js"         },
-		{ name : "EngineJS-Resource",    js : "enginejs/modules/enginejs-resource.js"    },
-		{ name : "EngineJS-Audio",       js : "enginejs/modules/enginejs-audio.js"       },
-		{ name : "EngineJS-Keyboard",    js : "enginejs/modules/enginejs-keyboard.js"    },
-		{ name : "EngineJS-Mouse",       js : "enginejs/modules/enginejs-mouse.js"       },
-		{ name : "EngineJS-Gfx",         js : "enginejs/modules/enginejs-gfx.js"         },
-		{ name : "EngineJS-Geometry",    js : "enginejs/modules/enginejs-geometry.js"    },
-		{ name : "EngineJS-Model",       js : "enginejs/modules/enginejs-model.js"       },
-		{ name : "EngineJS-Game-2D",     js : "enginejs/modules/enginejs-game-2d.js"     },
-		{ name : "EngineJS-Editor",      js : "enginejs/modules/enginejs-editor.js"      },
+		{ name : "EngineJS-Util",     js : "enginejs/modules/enginejs-util.js"        },
+		{ name : "EngineJS-Time",     js : "enginejs/modules/enginejs-time.js"        },
+		{ name : "EngineJS-Colour",   js : "enginejs/modules/enginejs-colour.js"      },
+		{ name : "EngineJS-Debug",    js : "enginejs/modules/enginejs-debug.js"       },
+		{ name : "EngineJS-Array",    js : "enginejs/modules/enginejs-array.js"       },
+		{ name : "EngineJS-Math",     js : "enginejs/modules/enginejs-math.js"        },
+		{ name : "EngineJS-Camera",   js : "enginejs/modules/enginejs-camera.js"      },
+		{ name : "EngineJS-Net",      js : "enginejs/modules/enginejs-net.js"         },
+		{ name : "EngineJS-Resource", js : "enginejs/modules/enginejs-resource.js"    },
+		{ name : "EngineJS-Audio",    js : "enginejs/modules/enginejs-audio.js"       },
+		{ name : "EngineJS-Keyboard", js : "enginejs/modules/enginejs-keyboard.js"    },
+		{ name : "EngineJS-Mouse",    js : "enginejs/modules/enginejs-mouse.js"       },
+		{ name : "EngineJS-Gamepad",  js : "enginejs/modules/enginejs-gamepad.js"     },
+		{ name : "EngineJS-Gfx",      js : "enginejs/modules/enginejs-gfx.js"         },
+		{ name : "EngineJS-Geometry", js : "enginejs/modules/enginejs-geometry.js"    },
+		{ name : "EngineJS-Model",    js : "enginejs/modules/enginejs-model.js"       },
+		{ name : "EngineJS-Game-2D",  js : "enginejs/modules/enginejs-game-2d.js"     },
+		{ name : "EngineJS-Editor",   js : "enginejs/modules/enginejs-editor.js"      },
 	],
 
 	// *************************************************************************************
@@ -180,6 +181,7 @@ Engine =
 			// Flip input buffers
 			Engine.Mouse.Update();
 			Engine.Keyboard.Update();
+			Engine.Gamepad.Update();
 			Engine.Gfx.Update();
 
 			// Setup per-frame info for client
