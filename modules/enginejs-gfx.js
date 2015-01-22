@@ -424,7 +424,7 @@ Engine.Gfx =
 	// **********************************************
 	Clear : function(colour)
 	{
-		Engine.GL.clearColor(colour.r, colour.g, colour.b, colour.a);
+		Engine.GL.clearColor(colour[0], colour[1], colour[2], colour[3]);
 		Engine.GL.clear(Engine.GL.COLOR_BUFFER_BIT);
 	},
 

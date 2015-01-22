@@ -325,8 +325,7 @@ Engine.Game2D =
 
 				// Bind background data
 				var bg_colour = this.colour? this.colour : Engine.Colour.Black;
-				var packed_colour = [bg_colour.r, bg_colour.g, bg_colour.b, bg_colour.a];
-				Engine.Gfx.SetShaderConstant("u_background_color", packed_colour, Engine.Gfx.SC_VEC4);
+				Engine.Gfx.SetShaderConstant("u_background_color", bg_colour, Engine.Gfx.SC_VEC4);
 				Engine.Gfx.SetShaderConstant("u_time", info.elapsed_s, Engine.Gfx.SC_FLOAT);
 
 				// Bind per-layer textures
