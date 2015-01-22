@@ -269,7 +269,6 @@ Engine.Game2D =
 					                                  Engine.Resources["fs_2d_background"]);
 		this.layers = [];
 		this.repeat = [false, false];
-		this.colour = Engine.Colour.Black;
 
 		this.Render = function(info)
 		{
@@ -325,7 +324,8 @@ Engine.Game2D =
 				Engine.Gfx.BindShaderProgram(this.program);
 
 				// Bind background data
-				var packed_colour = [this.colour.r, this.colour.g, this.colour.b, this.colour.a];
+				var bg_colour = this.colour? this.colour : Engine.Colour.Black;
+				var packed_colour = [bg_colour.r, bg_colour.g, bg_colour.b, bg_colour.a];
 				Engine.Gfx.SetShaderConstant("u_background_color", packed_colour, Engine.Gfx.SC_VEC4);
 				Engine.Gfx.SetShaderConstant("u_time", info.elapsed_s, Engine.Gfx.SC_FLOAT);
 
@@ -342,7 +342,7 @@ Engine.Game2D =
 			}
 			else
 			{
-				Engine.Gfx.Clear(this.colour);
+				Engine.Gfx.Clear(this.colour? this.colour : Engine.Colour.Black);
 			}
 		};
 	},
