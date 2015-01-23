@@ -89,38 +89,50 @@ Engine.Gamepad =
 			this.gamepad_this_frame = Engine.Util.Clone(gamepad_snapshot);
 		};
 
-		this.IsPressed = function(button_name, debounce)
+		this.IsPressed = function(button_name_or_list, debounce)
 		{
-			// Grab button from this frame
-			var pressed_this_frame = this.gamepad_this_frame.buttons[button_name];
+			// 'button_name_or_list' could be single value or list of buttons to check, either
+			// way we want a list (even if it only has a single button name entry)
+			var button_names = Engine.Array.IsArray(button_name_or_list)? button_name_or_list :
+			                                                            [ button_name_or_list ];
 
-			// Handle debounce on first ever frame
-			if(!this.gamepad_prev_frame)
+			var pressed_this_frame = this.gamepad_this_frame.buttons;
+			var pressed_prev_frame = this.gamepad_prev_frame? this.gamepad_prev_frame.buttons : null;
+			for(var i = 0; i < button_names.length; ++i)
 			{
-				return pressed_this_frame;
-			}
+				var button_name = button_names[i];
 
-			// Grab button from previous frame (used only for debounce)
-			var pressed_prev_frame = this.gamepad_prev_frame.buttons[button_name];
-			var just_pressed = pressed_this_frame && !pressed_prev_frame;
-			return debounce? just_pressed : pressed_this_frame;
+				// Handle debounce on first ever frame
+				if(!pressed_prev_frame && pressed_this_frame[button_name])
+					return true;
+
+				var just_pressed = pressed_this_frame[button_name] && !pressed_prev_frame[button_name];
+				if(debounce && just_pressed || !debounce && pressed_this_frame[button_name])
+					return true;
+			}
 		};
 
-		this.IsReleased = function(button_name, debounce)
+		this.IsReleased = function(button_name_or_list, debounce)
 		{
-			// Grab button from this frame
-			var pressed_this_frame = this.gamepad_this_frame.buttons[button_name];
+			// 'button_name_or_list' could be single value or list of buttons to check, either
+			// way we want a list (even if it only has a single button name entry)
+			var button_names = Engine.Array.IsArray(button_name_or_list)? button_name_or_list :
+			                                                            [ button_name_or_list ];
 
-			// Handle debounce on first ever frame
-			if(!this.gamepad_prev_frame)
+			var pressed_this_frame = this.gamepad_this_frame.buttons;
+			var pressed_prev_frame = this.gamepad_prev_frame? this.gamepad_prev_frame.buttons : null;
+			for(var i = 0; i < button_names.length; ++i)
 			{
-				return false;
-			}
+				var button_name = button_names[i];
 
-			// Grab button from previous frame (used only for debounce)
-			var pressed_prev_frame = this.gamepad_prev_frame.buttons[button_name];
-			var just_released = !pressed_this_frame && pressed_prev_frame;
-			return debounce? just_released : pressed_this_frame;
+				// Handle debounce on first ever frame
+				if(!pressed_prev_frame)
+					return false;
+
+				var just_released = !pressed_this_frame[button_name] && pressed_prev_frame[button_name];
+				if(debounce && just_released || !debounce && !pressed_this_frame[button_name])
+					return true;
+			}
 		};
 
 		this.GetID = function()
