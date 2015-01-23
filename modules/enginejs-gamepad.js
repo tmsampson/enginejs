@@ -12,49 +12,55 @@ Engine.GamepadButtonNameMap =
 
 Engine.Gamepad =
 {
-	Pads : [null, null, null, null], // Array of PadInstance objects
+	Pads : [], // Array of PadInstance objects
 	Update : function()
 	{
-		// Grab gamepads
-		var gamepads = navigator.getGamepads ? navigator.getGamepads() :
+		// Grab raw gamepads
+		var raw_gamepads = navigator.getGamepads ? navigator.getGamepads() :
 		              (navigator.webkitGetGamepads ? navigator.webkitGetGamepads : []);
 
-		// Process all connected gamepads
-		for(var i = 0; i < gamepads.length; ++i)
+		// Process raw gamepads
+		for(var i = 0; i < raw_gamepads.length; ++i)
 		{
-			var gamepad = gamepads[i];
-			if(gamepad)
+			var raw_gamepad = raw_gamepads[i];
+			if(!raw_gamepad) { continue; }
+			var existing = Engine.Array.Find(Engine.Gamepad.Pads, function(pad)
 			{
-				// Add new pad?
-				if(!Engine.Gamepad.Pads[i])
-				{
-					Engine.Log("Adding connected gamepad " + i + " " + gamepad.id);
-					Engine.Gamepad.Pads[i] = new Engine.Gamepad.PadInstance();
-				}
+				return (pad.GetIndex() == raw_gamepad.index);
+			});
 
-				// Copy gamepad snapshot into our own structure
-				// NOTE: Have to do this because on firefox, button array is live data
-				//       from pad rather than a snapshot of the gamepad state
-				var gamepad_snapshot = { buttons : { } };
-				for (var button_name in Engine.GamepadButtonNameMap)
-				{
-					var button_index = Engine.GamepadButtonNameMap[button_name];
-					gamepad_snapshot.buttons[button_name] = gamepad.buttons[button_index].pressed;
-				}
-
-				// Update instance
-				Engine.Gamepad.Pads[i].Update(gamepad_snapshot);
-			}
-			else
+			if(!existing)
 			{
-				// Remove disconnected pads?
-				if(Engine.Gamepad.Pads[i])
-				{
-					Engine.Log("Removing disconnected gamepad " + i + " " + Engine.Gamepad.Pads[i].GetID());
-					Engine.Gamepad.Pads[i] = null;
-				}
+				// Add new pad
+				Engine.Log("Adding connected gamepad " + raw_gamepad.index + " " + raw_gamepad.id);
+				existing = new Engine.Gamepad.PadInstance();
+				Engine.Gamepad.Pads.push(existing);
 			}
+
+			// Copy gamepad snapshot into our own structure
+			// NOTE: Have to do this because on firefox, button array is live data
+			//       from pad rather than a snapshot of the gamepad state
+			var gamepad_snapshot = { index : raw_gamepad.index, id : raw_gamepad.id, buttons : { } };
+			for (var button_name in Engine.GamepadButtonNameMap)
+			{
+				var button_index = Engine.GamepadButtonNameMap[button_name];
+				gamepad_snapshot.buttons[button_name] = raw_gamepad.buttons[button_index].pressed;
+			}
+			existing.Update(gamepad_snapshot);
 		}
+
+		// Remove disconnected pads
+		Engine.Gamepad.Pads = Engine.Array.Filter(Engine.Gamepad.Pads, function(pad)
+		{
+			var is_attached = function(raw_gamepad) { return raw_gamepad && raw_gamepad.index == pad.GetIndex(); };
+			if(Engine.Array.Find(raw_gamepads, is_attached))
+			{
+				return true;
+			}
+
+			Engine.Log("Removing disconnected gamepad " + pad.GetIndex() + " " + pad.GetID());
+			return false;
+		});
 	},
 
 	// Pad object
@@ -86,7 +92,7 @@ Engine.Gamepad =
 			var pressed_prev_frame = this.gamepad_prev_frame.buttons[button_name];
 			var just_pressed = pressed_this_frame && !pressed_prev_frame;
 			return debounce? just_pressed : pressed_this_frame;
-		}
+		};
 
 		this.IsReleased = function(button_name, debounce)
 		{
@@ -103,11 +109,16 @@ Engine.Gamepad =
 			var pressed_prev_frame = this.gamepad_prev_frame.buttons[button_name];
 			var just_released = !pressed_this_frame && pressed_prev_frame;
 			return debounce? just_released : pressed_this_frame;
-		}
+		};
 
 		this.GetID = function()
 		{
-			return this.gamepad.id;
-		}
+			return this.gamepad_this_frame.id;
+		};
+
+		this.GetIndex = function()
+		{
+			return this.gamepad_this_frame.index;
+		};
 	}
 };
