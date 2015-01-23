@@ -52,7 +52,7 @@ Engine.Gamepad =
 			// Copy gamepad snapshot into our own structure
 			// NOTE: Have to do this because on firefox, button array is live data
 			//       from pad rather than a snapshot of the gamepad state
-			var gamepad_snapshot = { index : raw_gamepad.index, id : raw_gamepad.id, buttons : { } };
+			var gamepad_snapshot = { index : raw_gamepad.index, id : raw_gamepad.id, axes : raw_gamepad.axes, buttons : { } };
 			for (var button_name in Engine.GamepadButtonNameMap)
 			{
 				var button_index = Engine.GamepadButtonNameMap[button_name];
@@ -133,6 +133,20 @@ Engine.Gamepad =
 				if(debounce && just_released || !debounce && !pressed_this_frame[button_name])
 					return true;
 			}
+		};
+
+		this.GetLeftStick = function()
+		{
+			var axes_data = this.gamepad_this_frame.axes;
+			return [ (Math.abs(axes_data[0]) < 0.26)? 0 : axes_data[0],
+			         (Math.abs(axes_data[1]) < 0.26)? 0 : -axes_data[1] ];
+		};
+
+		this.GetRightStick = function()
+		{
+			var axes_data = this.gamepad_this_frame.axes;
+			return [ (Math.abs(axes_data[2]) < 0.26)? 0 : axes_data[2],
+			         (Math.abs(axes_data[3]) < 0.26)? 0 : -axes_data[3] ];
 		};
 
 		this.GetID = function()
