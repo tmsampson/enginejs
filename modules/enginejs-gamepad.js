@@ -4,22 +4,14 @@
 
 Engine.GamepadButtonNameMap =
 {
-	"a"     : 0,
-	"b"     : 1,
-	"x"     : 2,
-	"y"     : 3,
-	"lb"    : 4,
-	"rb"    : 5,
-	"lt"    : 6,
-	"rt"    : 7,
-	"back"  : 8,
-	"start" : 9,
-	"l3"    : 10,
-	"r3"    : 11,
-	"up"    : 12,
-	"down"  : 13,
-	"left"  : 14,
-	"right" : 15,
+	"a"    : 0, "b"      : 1,  // Main AB buttons
+	"x"    : 2, "y"      : 3,  // Main XY buttons
+	"lb"   : 4, "rb"     : 5,  // Bumpers
+	"lt"   : 6, "rt"     : 7,  // Triggers
+	"back" : 8, "start"  : 9,  // Back/Start (Share/Options on DualShock4)
+	"l3"   : 10, "r3"    : 11, // Analogue stick presses
+	"up"   : 12, "down"  : 13, // D-pad Y
+	"left" : 14, "right" : 15, // D-pad X
 };
 
 Engine.Gamepad =
@@ -65,11 +57,7 @@ Engine.Gamepad =
 		Engine.Gamepad.Pads = Engine.Array.Filter(Engine.Gamepad.Pads, function(pad)
 		{
 			var is_attached = function(raw_gamepad) { return raw_gamepad && raw_gamepad.index == pad.GetIndex(); };
-			if(Engine.Array.Find(raw_gamepads, is_attached))
-			{
-				return true;
-			}
-
+			if(Engine.Array.Find(raw_gamepads, is_attached)) { return true; }
 			Engine.Log("Removing disconnected gamepad " + pad.GetIndex() + " " + pad.GetID());
 			return false;
 		});
