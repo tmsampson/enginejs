@@ -4,6 +4,7 @@
 
 Engine.Audio =
 {
+	sounds : [],
 	LoadSound : function(descriptor, callback)
 	{
 		Engine.Net.FetchBinaryResource(descriptor.file, function(encoded_audio)
@@ -32,14 +33,26 @@ Engine.Audio =
 
 	PlaySound : function(sound_object, params, volume_node)
 	{
-		var source = Engine.Audio.context.createBufferSource();
-		source.loop = (params && params["loop"])? params["loop"] : false;
-		source.buffer = sound_object.pcm_buffer;
+		var sound = Engine.Audio.context.createBufferSource();
+		sound.loop = (params && params["loop"])? params["loop"] : false;
+		sound.buffer = sound_object.pcm_buffer;
 
 		// sound --> volume node --> speakers
-		source.connect(volume_node);
+		sound.connect(volume_node);
 		volume_node.connect(Engine.Audio.context.destination);
-		source.start(0);
+		sound.start(0);
+		this.sounds.push(sound);
+	},
+
+	Stop : function(sound_object)
+	{
+		for(var i = 0; i < this.sounds.length; ++i)
+		{
+			if(this.sounds[i].buffer == sound_object.pcm_buffer)
+			{
+				this.sounds[i].stop();
+			}
+		}
 	},
 
 	SetVolume : function(volume_node_name, volume)
