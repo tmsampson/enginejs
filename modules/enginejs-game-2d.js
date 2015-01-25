@@ -14,6 +14,7 @@ Engine.Game2D =
 		this.depth = 0; // 0 = front
 		this.tint = [1, 1, 1, 1];
 		this.alpha = 1;
+		this.is_visible = true;
 
 		// Apply any user overrides
 		$.extend(this, config);
@@ -60,7 +61,7 @@ Engine.Game2D =
 
 		this.SetVelocity = function(velocity)
 		{
-			this.velocity = velocity;
+			this.velocity = Engine.Array.Copy(velocity);
 		};
 
 		this.Move = function(delta)
@@ -71,7 +72,7 @@ Engine.Game2D =
 
 		this.MoveTo = function(new_pos)
 		{
-			this.position = new_pos;
+			this.position = Engine.Array.Copy(new_pos);
 		};
 
 		this.SetDepth = function(depth)
@@ -100,6 +101,16 @@ Engine.Game2D =
 		this.SetAlpha = function(alpha)
 		{
 			this.tint[3] = alpha;
+		};
+
+		this.SetVisible = function(is_visible)
+		{
+			this.is_visible = is_visible;
+		};
+
+		this.IsVisible = function()
+		{
+			return this.is_visible;
 		};
 	},
 
@@ -213,6 +224,7 @@ Engine.Game2D =
 			for(var i = 0; i < this.entities.length; ++i)
 			{
 				var entity = this.entities[i];
+				if(!entity.IsVisible()) { continue; }
 
 				// Setup transforms
 				var entity_trans = [entity.position[0], entity.position[1], 0];
