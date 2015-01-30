@@ -28,7 +28,7 @@ vec4 sample_layer(const vec2 uv, const sampler2D tx, const vec4 layer_config_1, 
 
 	// Emulate CLAMP_TO_BORDER (not available in WebGL) where border is fully transparent
 	vec2 half_texel_size = vec2(1.0 / layer_config_2.xy) / 2.0;
-	vec2 mixer = floor(abs(result * (2.0) - 1.0 - half_texel_size)) * layer_config_3.xy;
+	vec2 mixer = floor(abs(result * 2.0 - 1.0 - half_texel_size)) * layer_config_3.xy;
 	return mix(texture2D(tx, scrolled_result), TRANSPARENT, min(mixer.x + mixer.y, 1.0));
 }
 
