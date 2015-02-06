@@ -21,24 +21,23 @@ Engine.Vec2 =
 
 	Length : function(v)
 	{
-		Math.sqrt((v[0] * v[0]) + (v[1] * v[1]));
+		return Math.sqrt((v[0] * v[0]) + (v[1] * v[1]));
 	},
 
 	LengthSquared : function(v)
 	{
-		(v[0] * v[0]) + (v[1] * v[1]);
+		return (v[0] * v[0]) + (v[1] * v[1]);
 	},
 
 	Normalise : function(v)
 	{
 		var len = Engine.Vec2.Length(v);
-		return Engine.Vec2.Divide(v, [len, len]);
+		return Engine.Vec2.DivideScalar(v, len);
 	},
 
 	IsNormalised : function(v)
 	{
-		var len = Engine.Vec2.Length(v);
-		return len == 1;
+		return Engine.Vec2.Length(v) == 1;
 	},
 
 	Gradient : function(v)
@@ -48,7 +47,7 @@ Engine.Vec2 =
 
 	Negate : function(v)
 	{
-		return [-v[0], -v[1]];
+		return [ -v[0], -v[1] ];
 	},
 
 	Tangent : function(v)
@@ -79,42 +78,42 @@ Engine.Vec2 =
 
 	Add : function(v1, v2)
 	{
-		return [v1[0] + v2[0], v1[1] + v2[1]];
+		return [ v1[0] + v2[0], v1[1] + v2[1] ];
 	},
 
 	AddScalar : function(v, s)
 	{
-		return [v[0] + s, v[1] + s];
+		return [ v[0] + s, v[1] + s ];
 	},
 
 	Subtract : function(v1, v2)
 	{
-		return [v1[0] - v2[0], v1[1] - v2[1]];
+		return [ v1[0] - v2[0], v1[1] - v2[1] ];
 	},
 
 	SubtractScalar : function(v, s)
 	{
-		return [v[0] - s, v[1] - s];
+		return [ v[0] - s, v[1] - s ];
 	},
 
 	Multiply : function(v1, v2)
 	{
-		return [v1[0] * v2[0], v1[1] * v2[1]];
+		return [ v1[0] * v2[0], v1[1] * v2[1] ];
 	},
 
 	MultiplyScalar : function(v, s)
 	{
-		return [v[0] * s, v[1] * s];
+		return [ v[0] * s, v[1] * s ];
 	},
 
 	Divide : function(v1, v2)
 	{
-		return [v1[0] / v2[0], v1[1] / v2[1]];
+		return [ v1[0] / v2[0], v1[1] / v2[1] ];
 	},
 
 	DivideScalar : function(v, s)
 	{
-		return [v[0] / s, v[1] / s];
+		return [ v[0] / s, v[1] / s ];
 	},
 
 	Min : function(v1, v2)
