@@ -137,11 +137,17 @@ Engine.Vec2 =
 		return (v1[0] * v2[0]) + (v1[1] * v2[1]);
 	},
 
-	Angle : function(v1, v2)
+	AngleBetween : function(v1, v2)
 	{
 		var numerator = Engine.Vec2.DotProduct(v1, v2);
 		var denominator = Engine.Vec2.Length(v1) * Engine.Vec2.Length(v2);
 		return Math.acos(numerator / denominator);
+	},
+
+	Angle : function(v)
+	{
+		// Calculate angle between positive x-axis and v
+		return Math.atan2(v[1], v[0]);
 	},
 
 	Distance : function(v1, v2)
