@@ -14,6 +14,11 @@ Engine.Vec3 =
 		return Engine.Array.Copy(v);
 	},
 
+	FromVec2 : function(v, z)
+	{
+		return [ v[0], v[1], (z == undefined)? 0 : z ];
+	},
+
 	IsZero : function(v)
 	{
 		return (v[0] == 0) && (v[1] == 0) && (v[2] == 0);
