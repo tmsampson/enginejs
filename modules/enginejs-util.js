@@ -16,3 +16,8 @@ Engine.Util =
 		return copiedObject;
 	}
 };
+
+// Make 'Web App Capable' on mobile devices. This allows the app
+// to runs in fullscreen when launched from a mobile device's home screen.
+$('head').append("<meta name='mobile-web-app-capable' content='yes'>");
+$('head').append("<meta name='apple-mobile-web-app-capable' content='yes'>");
