@@ -584,6 +584,7 @@ Engine.Gfx =
 // **********************************************
 Engine.Gfx.StateTracking[Engine.GL.BLEND]      = 0;
 Engine.Gfx.StateTracking[Engine.GL.DEPTH_TEST] = 0;
+Engine.Gfx.ResizeViewport();
 
 // Resource loading
 Engine.Resource.RegisterLoadFunction("png", Engine.Gfx.LoadTexture);
