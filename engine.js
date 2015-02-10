@@ -154,6 +154,17 @@ Engine =
 				};
 			};
 
+			// var mobile=true;
+			// if(mobile)
+			// {
+			// 	Engine.Canvas.width = window.innerWidth;
+			// 	Engine.Canvas.height = window.innerHeight;
+			// 	$("*").css("margin", "0").css("padding", "0");
+			// 	$("html,body").css("width", "100%").css("height", "100%");
+			// 	$(Engine.Canvas).css("display", "block");
+			// 	$(document).bind("touchstart", function (event) { event.preventDefault(); });
+			// }
+
 			// WebGL initialised successfully
 			Engine.Log("WebGL context created");
 			callback(true);
