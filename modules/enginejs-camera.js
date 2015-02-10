@@ -71,7 +71,7 @@ Engine.Camera =
 		this.look_at  = [0.0, 0.0, 1.0]; // Looking down z-axis
 		this.up       = [0.0, 1.0, 0.0]; // Default up
 		this.fov      = 45.0;
-		this.aspect   = 1.0;
+		this.aspect   = Engine.Canvas.GetAspectRatio();
 		this.near     = 0.1;
 		this.far      = 100;
 		$.extend(this, user_config); // Override defaults
