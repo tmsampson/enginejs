@@ -319,19 +319,27 @@ Engine =
 
 	EnableFullScreen : function()
 	{
+		// Make sure we're not already full-screen
+		if(Engine.Canvas.IsFullScreen())
+			return;
+
 		// Cache the original size of the canvas
 		var original_canvas_size  = Engine.Canvas.GetSize();
 
 		// Handle transition between windowed / fullscreen
 		var toggle_fullscreen = function(is_fullscreen)
 		{
-			Engine.is_full_screen = is_fullscreen;
+			Engine.Canvas.is_full_screen = is_fullscreen;
 			Engine.Log(is_fullscreen? "Going full screen..." :
 			                          "Going into windowed mode...");
 
 			// Update canvas size accordingly
-			Engine.Canvas.width  = is_fullscreen? screen.width  : original_canvas_size[0];
-			Engine.Canvas.height = is_fullscreen? screen.height : original_canvas_size[1];
+			if(!is_fullscreen)
+			{
+				Engine.Canvas.width  = original_canvas_size[0];
+				Engine.Canvas.height = original_canvas_size[1];
+			}
+
 			Engine.Gfx.ResizeViewport();
 		};
 
@@ -339,10 +347,13 @@ Engine =
 		document.onwebkitfullscreenchange = function() { toggle_fullscreen(document.webkitIsFullScreen); };
 		document.onmozfullscreenchange = function() { toggle_fullscreen(document.mozFullScreenElement != null); };
 
+		// Maximise canvas
+		Engine.Canvas.width  = screen.width;
+		Engine.Canvas.height = screen.height;
+
 		// Initiate transition to fullscreen mode
 		if(Engine.Canvas.webkitRequestFullScreen)
 		{
-			toggle_fullscreen(true); // Needed as Chrome doesn't fire first event
 			Engine.Canvas.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);
 		}
 		else
