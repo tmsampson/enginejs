@@ -66,9 +66,9 @@ Engine.Gamepad =
 	// Pad object
 	PadInstance : function()
 	{
-		// Double-buffered input
-		this.gamepad_prev_frame = null;
-		this.gamepad_this_frame = null;
+		this.gamepad_prev_frame = null; // Double-buffered
+		this.gamepad_this_frame = null; // Double-buffered
+		this.analogue_deadzone  = 0.26;
 
 		this.Update = function(gamepad_snapshot)
 		{
@@ -125,16 +125,18 @@ Engine.Gamepad =
 
 		this.GetLeftStick = function()
 		{
-			var axes_data = this.gamepad_this_frame.axes;
-			return [ (Math.abs(axes_data[0]) < 0.26)? 0 : axes_data[0],
-			         (Math.abs(axes_data[1]) < 0.26)? 0 : -axes_data[1] ];
+			var gamepad_data = this.gamepad_this_frame;
+			var axes_data = [gamepad_data.axes[0], -gamepad_data.axes[1]];
+			var dist_from_centre = Engine.Vec2.Length(axes_data);
+			return (dist_from_centre <= this.analogue_deadzone)? [0, 0] : axes_data;
 		};
 
 		this.GetRightStick = function()
 		{
-			var axes_data = this.gamepad_this_frame.axes;
-			return [ (Math.abs(axes_data[2]) < 0.26)? 0 : axes_data[2],
-			         (Math.abs(axes_data[3]) < 0.26)? 0 : -axes_data[3] ];
+			var gamepad_data = this.gamepad_this_frame;
+			var axes_data = [gamepad_data.axes[2], -gamepad_data.axes[3]];
+			var dist_from_centre = Engine.Vec2.Length(axes_data);
+			return (dist_from_centre <= this.analogue_deadzone)? [0, 0] : axes_data;
 		};
 
 		this.GetID = function()
