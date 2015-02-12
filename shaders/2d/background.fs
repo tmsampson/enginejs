@@ -1,4 +1,4 @@
-precision mediump float;
+precision highp float;
 #define MAX_LAYERS 7
 #define TRANSPARENT vec4(0.0)
 

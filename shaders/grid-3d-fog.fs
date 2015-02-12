@@ -1,4 +1,4 @@
-precision mediump float;
+precision highp float;
 
 // Input
 varying vec4 v_world_pos;

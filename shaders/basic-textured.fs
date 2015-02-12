@@ -1,4 +1,4 @@
-precision mediump float;
+precision highp float;
 
 // Input
 varying vec2 v_uv;
