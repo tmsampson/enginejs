@@ -1,4 +1,4 @@
-precision mediump float;
+precision highp float;
 
 // Input
 attribute vec3 a_pos;
