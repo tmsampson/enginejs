@@ -25,6 +25,7 @@ Engine =
 		{ name : "EngineJS-Debug",    js : "enginejs/modules/enginejs-debug.js"       },
 		{ name : "EngineJS-Array",    js : "enginejs/modules/enginejs-array.js"       },
 		{ name : "EngineJS-Math",     js : "enginejs/modules/enginejs-math.js"        },
+		{ name : "EngineJS-Easing",   js : "enginejs/modules/enginejs-easing.js"      },
 		{ name : "EngineJS-Vec2",     js : "enginejs/modules/enginejs-vec2.js"        },
 		{ name : "EngineJS-Vec3",     js : "enginejs/modules/enginejs-vec3.js"        },
 		{ name : "EngineJS-Camera",   js : "enginejs/modules/enginejs-camera.js"      },
