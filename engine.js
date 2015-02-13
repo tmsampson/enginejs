@@ -294,7 +294,6 @@ Engine =
 	{
 		$.getScript(url, function(script)
 		{
-			eval(script); // Hotload script
 			callback(script);
 		}).fail(function(jqxhr, settings, exception)
 		{

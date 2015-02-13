@@ -58,3 +58,13 @@ Engine.Resource =
 		Engine.Resource.LoadFunctions[extension] = func;
 	},
 };
+
+// Register handler for hot-loading javascript source files as resources
+Engine.Resource.RegisterLoadFunction("js", function(descriptor, callback)
+{
+	Engine.LoadJS(descriptor.file, function(source)
+	{
+		var script_object = { url : descriptor.file, code : source };
+		callback(script_object);
+	});
+});
