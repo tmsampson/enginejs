@@ -4,6 +4,15 @@
 
 Engine.Device =
 {
+	is_maximised  : false,
+	is_fullscreen : false,
+	original_canvas_size : [],
+
+	IsMaximised : function()
+	{
+		return Engine.Device.is_maximised;
+	},
+
 	IsMobile : function()
 	{
 		var check = false;
@@ -11,28 +20,105 @@ Engine.Device =
 		return check;
 	},
 
+	IsFullScreen : function()
+	{
+		return Engine.Device.is_fullscreen;
+	},
+
 	GetQueryString : function(name)
 	{
 		var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
 		return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
-	}
+	},
+
+	OnResize : function()
+	{
+		// Ignore if canvas is not maximised
+		if(!Engine.Device.IsMaximised())
+			return;
+
+		// Resize maximised canvas accordingly
+		Engine.Canvas.width = window.innerWidth;
+		Engine.Canvas.height = window.innerHeight;
+		Engine.Gfx.ResizeViewport();
+	},
+
+	OnFullScreen : function(is_fullscreen)
+	{
+		Engine.Device.is_full_screen = is_fullscreen;
+		Engine.Log(is_fullscreen? "Going full screen..." :
+		                          "Going into windowed mode...");
+
+		// Update canvas size accordingly
+		if(!is_fullscreen)
+		{
+			Engine.Canvas.width  = Engine.Device.original_canvas_size[0];
+			Engine.Canvas.height = Engine.Device.original_canvas_size[1];
+		}
+
+		// Make sure viewport is always resized
+		Engine.Gfx.ResizeViewport();
+	},
+
+	Maximise : function()
+	{
+		// Remove margin, padding and hide all other elements
+		$("*").css("margin", "0").css("padding", "0");
+		$("html, body").css("width", "100%").css("height", "100%");
+		$("body > *").hide();
+
+		// Make background black to disguise white page background which
+		// appears momentarily when changing device orientation
+		$("body").css("background-color", "black");
+
+		// Move canvas directly into page body and resize to fit
+		$(Engine.Canvas).appendTo('body');
+		$(Engine.Canvas).css("display", "block");
+		$(Engine.Canvas).show();
+		Engine.Canvas.width = window.innerWidth;
+		Engine.Canvas.height = window.innerHeight;
+		Engine.Device.is_maximised = true;
+		Engine.Gfx.ResizeViewport();
+	},
+
+	Restore : function()
+	{
+		// TODO: Implement
+	},
+
+	EnableFullScreen : function()
+	{
+		// Make sure we're not already full-screen
+		if(Engine.Device.IsFullScreen())
+			return;
+
+		// Cache the original size of the canvas and maximise
+		Engine.Device.original_canvas_size  = Engine.Canvas.GetSize();
+		Engine.Canvas.width  = screen.width;
+		Engine.Canvas.height = screen.height;
+
+		// Initiate transition to fullscreen mode
+		if(Engine.Canvas.webkitRequestFullScreen)
+		{
+			Engine.Canvas.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);
+		}
+		else
+		{
+			Engine.Canvas.mozRequestFullScreen();
+		}
+	},
 };
 
 // Run in maximised canvas mode?
-if(Engine.Device.GetQueryString("max"))
-{
-	// Remove margin, padding and hide all other elements
-	$("*").css("margin", "0").css("padding", "0");
-	$("html, body").css("width", "100%").css("height", "100%");
-	$('body > *').hide();
+if(Engine.Device.GetQueryString("max")) { Engine.Device.Maximise(); }
 
-	// Move canvas directly into page body and resize to fit
-	$(Engine.Canvas).appendTo('body');
-	$(Engine.Canvas).css("display", "block");
-	$(Engine.Canvas).show();
-	Engine.Canvas.width = window.innerWidth;
-	Engine.Canvas.height = window.innerHeight;
-}
+// Listen for resize / orientation-change events
+window.addEventListener('orientationchange', Engine.Device.OnResize);
+window.addEventListener('resize', Engine.Device.OnResize);
+
+// Listen for full-screen toggle events
+document.onwebkitfullscreenchange = function() { Engine.Device.OnFullScreen(document.webkitIsFullScreen); };
+document.onmozfullscreenchange = function() { Engine.Device.OnFullScreen(document.mozFullScreenElement != null); };
 
 // Make 'Web App Capable' on mobile devices. This allows the app
 // to runs in fullscreen when launched from a mobile device's home screen.
