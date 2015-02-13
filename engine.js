@@ -19,7 +19,6 @@ Engine =
 	Modules :
 	[
 		{ name : "EngineJS-Util",     js : "enginejs/modules/enginejs-util.js"        },
-		{ name : "EngineJS-Device",   js : "enginejs/modules/enginejs-device.js"      },
 		{ name : "EngineJS-Time",     js : "enginejs/modules/enginejs-time.js"        },
 		{ name : "EngineJS-Colour",   js : "enginejs/modules/enginejs-colour.js"      },
 		{ name : "EngineJS-Debug",    js : "enginejs/modules/enginejs-debug.js"       },
@@ -41,6 +40,7 @@ Engine =
 		{ name : "EngineJS-Model",    js : "enginejs/modules/enginejs-model.js"       },
 		{ name : "EngineJS-Game-2D",  js : "enginejs/modules/enginejs-game-2d.js"     },
 		{ name : "EngineJS-Editor",   js : "enginejs/modules/enginejs-editor.js"      },
+		{ name : "EngineJS-Device",   js : "enginejs/modules/enginejs-device.js"      },
 	],
 
 	// *************************************************************************************
@@ -148,7 +148,6 @@ Engine =
 			Engine.Canvas.GetHeight = function()      { return this.height; };
 			Engine.Canvas.GetCentre = function()      { return [this.width / 2, this.height / 2, 0] };
 			Engine.Canvas.GetAspectRatio = function() { return this.width / this.height; };
-			Engine.Canvas.IsFullScreen = function()   { return this.is_full_screen; }
 			Engine.Canvas.EnableContextMenu = function(do_enable)
 			{
 				// Suppress canvas right-click context menu?
@@ -168,6 +167,15 @@ Engine =
 			Engine.Log("Failed initialising WebGL context");
 			callback(false);
 		}
+	},
+
+	SetRenderCallback : function(callback)
+	{
+		var request_func = window.requestAnimationFrame       ||
+		                   window.webkitRequestAnimationFrame ||
+		                   window.mozRequestAnimationFrame    ||
+		                   function(callback) { window.setTimeout(callback, 1000 / 60); };
+		request_func(callback, this.canvas);
 	},
 
 	// *************************************************************************************
@@ -299,59 +307,5 @@ Engine =
 	{
 		$("<link/>", { rel: "stylesheet", type: "text/css", href: url }).appendTo("head");
 		callback();
-	},
-
-	SetRenderCallback : function(callback)
-	{
-		var request_func = window.requestAnimationFrame       ||
-		                   window.webkitRequestAnimationFrame ||
-		                   window.mozRequestAnimationFrame    ||
-		                   function(callback) { window.setTimeout(callback, 1000 / 60); };
-		request_func(callback, this.canvas);
-	},
-
-	EnableFullScreen : function()
-	{
-		// Make sure we're not already full-screen
-		if(Engine.Canvas.IsFullScreen())
-			return;
-
-		// Cache the original size of the canvas
-		var original_canvas_size  = Engine.Canvas.GetSize();
-
-		// Handle transition between windowed / fullscreen
-		var toggle_fullscreen = function(is_fullscreen)
-		{
-			Engine.Canvas.is_full_screen = is_fullscreen;
-			Engine.Log(is_fullscreen? "Going full screen..." :
-			                          "Going into windowed mode...");
-
-			// Update canvas size accordingly
-			if(!is_fullscreen)
-			{
-				Engine.Canvas.width  = original_canvas_size[0];
-				Engine.Canvas.height = original_canvas_size[1];
-			}
-
-			Engine.Gfx.ResizeViewport();
-		};
-
-		// Hookup event handlers
-		document.onwebkitfullscreenchange = function() { toggle_fullscreen(document.webkitIsFullScreen); };
-		document.onmozfullscreenchange = function() { toggle_fullscreen(document.mozFullScreenElement != null); };
-
-		// Maximise canvas
-		Engine.Canvas.width  = screen.width;
-		Engine.Canvas.height = screen.height;
-
-		// Initiate transition to fullscreen mode
-		if(Engine.Canvas.webkitRequestFullScreen)
-		{
-			Engine.Canvas.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);
-		}
-		else
-		{
-			Engine.Canvas.mozRequestFullScreen();
-		}
-	},
+	}
 };
