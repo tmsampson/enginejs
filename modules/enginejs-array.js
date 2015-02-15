@@ -16,7 +16,12 @@ Engine.Array =
 
 	GetFirstValue : function(array)
 	{
-		return array[Object.keys(array)[0]]
+		return array[Object.keys(array)[0]];
+	},
+
+	GetLastValue : function(array)
+	{
+		return array[array.length - 1];
 	},
 
 	Find : function(array, predicate)
@@ -26,7 +31,7 @@ Engine.Array =
 			if(predicate(array[i]))
 				return array[i];
 		}
-		return undefined;
+		return null;
 	},
 
 	Filter : function(array, predicate)
@@ -38,5 +43,13 @@ Engine.Array =
 				filtered.push(array[i]);
 		}
 		return filtered;
+	},
+
+	Clear : function(array)
+	{
+		while(array.length > 0)
+		{
+			array.pop();
+		}
 	}
 };
