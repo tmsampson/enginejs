@@ -9,6 +9,7 @@ Engine.Mouse =
 	pressed      : [[0, 0, 0], [0, 0, 0], [0, 0, 0]], // tripple-buffered (L M R)
 	position     : [[0, 0], [0, 0], [0, 0]],          // tripple-buffered
 	wheel_delta  : [0, 0],                            // double-buffered
+
 	Update : function()
 	{
 		// Flip buffers
@@ -18,6 +19,7 @@ Engine.Mouse =
 		this.wheel_delta[0] = this.wheel_delta[1];
 		this.wheel_delta[1] = 0;
 	},
+
 	IsPressed : function(button_name, debounce)
 	{
 		button_name = button_name || "left";
@@ -27,6 +29,7 @@ Engine.Mouse =
 		return debounce? this_buffer[button_index] && !prev_buffer[button_index]:
 		                 this_buffer[button_index];
 	},
+
 	IsReleased : function(button_name, debounce)
 	{
 		button_name = button_name || "left";
@@ -36,18 +39,22 @@ Engine.Mouse =
 		return debounce? !this_buffer[button_index] && prev_buffer[button_index]:
 		                 !this_buffer[button_index];
 	},
+
 	GetPosition : function()
 	{
 		return this.position[this.buffer_idx];
 	},
+
 	GetX : function()
 	{
 		return this.GetPosition()[0];
 	},
+
 	GetY : function()
 	{
 		return this.GetPosition()[1];
 	},
+
 	GetDelta : function()
 	{
 		var this_buffer = this.position[this.buffer_idx];
@@ -55,14 +62,17 @@ Engine.Mouse =
 		return [ this_buffer[0] - prev_buffer[0],
 		         this_buffer[1] - prev_buffer[1] ];
 	},
+
 	GetDeltaX : function()
 	{
 		return this.GetDelta()[0];
 	},
+
 	GetDeltaY : function()
 	{
 		return this.GetDelta()[1];
 	},
+
 	GetWheelDelta : function()
 	{
 		return this.wheel_delta[0];
