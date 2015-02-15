@@ -230,7 +230,12 @@ Engine =
 
 	Log : function(msg)
 	{
-		console.log("[engine]  INFO: " + msg)
+		console.log("[engine]  INFO: " + msg);
+	},
+
+	LogObject : function(obj)
+	{
+		console.log("[engine]  INFO: " + JSON.stringify(obj));
 	},
 
 	LogError : function(msg)
