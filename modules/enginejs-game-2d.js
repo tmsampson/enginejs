@@ -118,11 +118,8 @@ Engine.Game2D =
 	{
 		this.entities = [];
 
-		// Setup the viewport to match the canvas by default
-		var viewport_size = Engine.Canvas.GetSize();
-
 		// Setup 2D orthographic camera
-		this.camera = new Engine.Camera.Orthographic({ size : viewport_size });
+		this.camera = new Engine.Camera.Orthographic();
 
 		// Setup background
 		if(background_texture_or_object)
