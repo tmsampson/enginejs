@@ -39,7 +39,7 @@ Engine.Camera =
 
 		// Set defaults
 		this.position = [0, 0];
-		this.size     = [512, 512];
+		this.size     = Engine.Canvas.GetSize();
 		$.extend(this, user_config); // Override defaults
 
 		this.UpdateMatrices = function()
