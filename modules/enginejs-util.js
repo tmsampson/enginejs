@@ -11,8 +11,8 @@ Engine.Util =
 
 	Clone : function(obj)
 	{
-		var copiedObject = {};
-		jQuery.extend(copiedObject,obj);
+		var copiedObject = { };
+		jQuery.extend(copiedObject, obj);
 		return copiedObject;
 	}
 };

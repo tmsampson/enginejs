@@ -25,18 +25,21 @@ Engine.KeyboardKeyCodeMap =
 
 Engine.Keyboard =
 {
-	buffer_idx   : 0,            // "current" buffer-index
-	key_buffer   : [[], [], []], // tripple-buffered
+	buffer_idx : 0,            // "current" buffer-index
+	key_buffer : [[], [], []], // tripple-buffered
+
 	Update : function()
 	{
 		// Flip buffers
 		this.buffer_idx = this.buffer_idx? 0 : 1;
 		this.key_buffer[this.buffer_idx] = Engine.Array.Copy(this.key_buffer[2]);
 	},
+
 	IsIgnored : function(key_code)
 	{
 		return key_code == Engine.KeyboardKeyCodeMap["f5"];
 	},
+
 	IsPressed : function(key_name_or_list, debounce)
 	{
 		// 'key_name_or_list' could be single value or list of keys to check, either
@@ -60,6 +63,7 @@ Engine.Keyboard =
 
 		return false;
 	},
+
 	IsReleased : function(key_name_or_list, debounce)
 	{
 		// 'key_name_or_list' could be single value or list of keys to check, either

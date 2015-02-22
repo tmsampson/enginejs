@@ -7,13 +7,13 @@ Engine.Game2D =
 	Entity : function(texture_or_sprite, config)
 	{
 		// Setup defaults
-		this.size = [0, 0];
-		this.position = [0, 0];
-		this.velocity = [0, 0];
-		this.rotation = 0;
-		this.depth = 0; // 0 = front
-		this.tint = [1, 1, 1, 1];
-		this.alpha = 1;
+		this.size       = [0, 0];
+		this.position   = [0, 0];
+		this.velocity   = [0, 0];
+		this.rotation   = 0;
+		this.depth      = 0; // 0 = front
+		this.tint       = [1, 1, 1, 1];
+		this.alpha      = 1;
 		this.is_visible = true;
 
 		// Apply any user overrides

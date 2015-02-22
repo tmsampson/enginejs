@@ -17,6 +17,7 @@ Engine.GamepadButtonNameMap =
 Engine.Gamepad =
 {
 	Pads : [], // Array of PadInstance objects
+
 	Update : function()
 	{
 		// Grab raw gamepads
