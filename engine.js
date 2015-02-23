@@ -147,6 +147,7 @@ Engine =
 			Engine.Canvas.GetWidth  = function()      { return this.width; };
 			Engine.Canvas.GetHeight = function()      { return this.height; };
 			Engine.Canvas.GetCentre = function()      { return [this.width / 2, this.height / 2, 0] };
+			Engine.Canvas.GetCenter = function()      { return Engine.Canvas.GetCentre(); };
 			Engine.Canvas.GetAspectRatio = function() { return this.width / this.height; };
 			Engine.Canvas.EnableContextMenu = function(do_enable)
 			{
