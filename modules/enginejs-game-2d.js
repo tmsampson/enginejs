@@ -72,7 +72,8 @@ Engine.Game2D =
 
 		this.MoveTo = function(new_pos)
 		{
-			this.position = Engine.Array.Copy(new_pos);
+			this.position[0] = new_pos[0];
+			this.position[1] = new_pos[1];
 		};
 
 		this.SetDepth = function(depth)
@@ -111,6 +112,21 @@ Engine.Game2D =
 		this.IsVisible = function()
 		{
 			return this.is_visible;
+		};
+
+		this.GetPosition = function()
+		{
+			return this.position;
+		};
+
+		this.GetRotation = function()
+		{
+			return this.rotation;
+		};
+
+		this.GetSize = function()
+		{
+			return this.size[0];
 		};
 	},
 
