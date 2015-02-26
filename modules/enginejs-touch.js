@@ -4,7 +4,8 @@
 
 Engine.Touch =
 {
-	streams : [],
+	streams       : [], // Event stream per-finger
+	just_released : [], // Index of stream just released (lifetime = 1 frame)
 
 	IsPressed : function(index, debounce)
 	{
@@ -13,6 +14,14 @@ Engine.Touch =
 		if(!have_stream) { return false; }
 		return debounce? Engine.Array.GetLastValue(Engine.Touch.streams[i]).just_pressed :
 		                 true;
+	},
+
+	IsReleased : function(index, debounce)
+	{
+		var i = index || 0;
+		var have_stream = Engine.Touch.streams.length > i;
+		return debounce? Engine.Touch.just_released.indexOf(i) != -1 :
+		                 !have_stream;
 	},
 
 	GetPosition : function(index)
@@ -32,6 +41,9 @@ Engine.Touch =
 				Engine.Touch.streams[i][0].just_pressed = false;
 			}
 		}
+
+		// Clear out release events
+		Engine.Touch.just_released = [];
 	},
 
 	// Internal event handling
@@ -69,6 +81,8 @@ Engine.Touch =
 				if(Engine.Touch.streams[i].length && Engine.Touch.streams[i][0].identifier == touch.identifier)
 				{
 					Engine.Touch.streams.splice(i, 1);
+					Engine.Touch.just_released.push(i);
+					break;
 				}
 			}
 		}
