@@ -17,6 +17,10 @@ Engine.Math =
 		return Math.random() * (max - min) + min;
 	},
 
+	Midpoint : function(min, max)
+	{
+		return min + (max - min) / 2;
+	},
 
 	RandomInteger : function(min, max)
 	{
