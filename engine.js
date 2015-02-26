@@ -211,6 +211,9 @@ Engine =
 			// Call user render function
 			last_frame_time = Engine.Time.Now();
 			on_user_render(info);
+
+			// Kick touch input
+			Engine.Touch.Kick();
 		};
 
 		// Request first render frame
