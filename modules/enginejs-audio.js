@@ -40,7 +40,11 @@ Engine.Audio =
 		{
 			// NOTE: Always have to do this before calling play()
 			// as play() can only be called once per buffer source instance
-			if(this.source && this.playback_state == "playing") { this.source.stop(); }
+			if(this.source && this.playback_state == "playing")
+			{
+				this.source.noteOff? this.source.noteOff(0) :
+				                     this.source.stop();
+			}
 
 			// Re-create buffer from existing properties
 			this.source = Engine.Audio.context.createBufferSource();
@@ -56,7 +60,8 @@ Engine.Audio =
 
 			// Store off timestamp and play / resume
 			this.play_timestamp = Engine.Time.Now();
-			this.source.start(0, (this.playback_state == "stopped") ? 0 : this.play_position);
+			this.source.noteOn? this.source.noteOn(0) :
+			                    this.source.start(0, (this.playback_state == "stopped") ? 0 : this.play_position);
 			this.playback_state = "playing";
 		};
 
@@ -141,3 +146,12 @@ Engine.Audio.volume_nodes["sfx"].connect(Engine.Audio.context.destination);
 
 // Register handler for mp3 files
 Engine.Resource.RegisterLoadFunction("mp3", Engine.Audio.LoadSound);
+
+// For some mobile devices (including iPhone/iPad), the very first sound
+// has to be triggered via touch event to unmute the audio system. This is
+// achieved below by playing a blank 100ms mp3 on the very first touch event.
+Engine.Touch.OnFirstTouch(function()
+{
+	var blank_sfx = new Engine.Audio.SoundEffect2D(Engine.Resources["sfx_blank"]);
+	blank_sfx.Play();
+});
