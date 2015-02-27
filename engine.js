@@ -30,7 +30,6 @@ Engine =
 		{ name : "EngineJS-Camera",   js : "enginejs/modules/enginejs-camera.js"      },
 		{ name : "EngineJS-Net",      js : "enginejs/modules/enginejs-net.js"         },
 		{ name : "EngineJS-Resource", js : "enginejs/modules/enginejs-resource.js"    },
-		{ name : "EngineJS-Audio",    js : "enginejs/modules/enginejs-audio.js"       },
 		{ name : "EngineJS-Keyboard", js : "enginejs/modules/enginejs-keyboard.js"    },
 		{ name : "EngineJS-Mouse",    js : "enginejs/modules/enginejs-mouse.js"       },
 		{ name : "EngineJS-Gamepad",  js : "enginejs/modules/enginejs-gamepad.js"     },
@@ -39,6 +38,7 @@ Engine =
 		{ name : "EngineJS-Geometry", js : "enginejs/modules/enginejs-geometry.js"    },
 		{ name : "EngineJS-Model",    js : "enginejs/modules/enginejs-model.js"       },
 		{ name : "EngineJS-Game-2D",  js : "enginejs/modules/enginejs-game-2d.js"     },
+		{ name : "EngineJS-Audio",    js : "enginejs/modules/enginejs-audio.js"       },
 		{ name : "EngineJS-Editor",   js : "enginejs/modules/enginejs-editor.js"      },
 		{ name : "EngineJS-Device",   js : "enginejs/modules/enginejs-device.js"      },
 	],
@@ -71,7 +71,8 @@ Engine =
 		ml_cube              : { file: "enginejs/models/cube.model"       },
 
 		// Misc
-		tx_white             : { file: "enginejs/img/white.png" },
+		tx_white             : { file: "enginejs/img/white.png"   },
+		sfx_blank            : { file: "enginejs/audio/blank.mp3" }
 	},
 
 	// *************************************************************************************
