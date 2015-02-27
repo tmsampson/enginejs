@@ -97,7 +97,6 @@ Engine.Touch =
 
 	_event_register : function(touch)
 	{
-		Engine.Log("event");
 		if(Engine.Touch.streams.length == 2) { return; } // Only support 2 fingers
 
 		if(Engine.Touch.is_first_touch)
