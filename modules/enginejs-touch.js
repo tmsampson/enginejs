@@ -4,8 +4,10 @@
 
 Engine.Touch =
 {
-	streams       : [], // Event stream per-finger
-	just_released : [], // Index of stream just released (lifetime = 1 frame)
+	streams              : [],   // Event stream per-finger
+	just_released        : [],   // Index of stream just released (lifetime = 1 frame)
+	is_first_touch       : true, // Flag used to detect first ever touch
+	first_touch_handlers : [],   // Collection of registered handler functions for "first-touch" event
 
 	IsPressed : function(index, debounce)
 	{
@@ -29,6 +31,11 @@ Engine.Touch =
 		var i = index || 0;
 		if(!Engine.Touch.IsPressed(i)) { return null; }
 		return Engine.Array.GetLastValue(Engine.Touch.streams[i]).position;
+	},
+
+	OnFirstTouch : function(handler)
+	{
+		Engine.Touch.first_touch_handlers.push(handler);
 	},
 
 	Kick : function()
@@ -92,6 +99,17 @@ Engine.Touch =
 	{
 		Engine.Log("event");
 		if(Engine.Touch.streams.length == 2) { return; } // Only support 2 fingers
+
+		if(Engine.Touch.is_first_touch)
+		{
+			// If first ever touch, fire any "first touch" callbacks registered with this module
+			Engine.Touch.is_first_touch = false;
+			for(var i = 0; i < Engine.Touch.first_touch_handlers.length; ++i)
+			{
+				// Fire user callback
+				Engine.Touch.first_touch_handlers[i](touch);
+			}
+		}
 
 		var touch_event =
 		{
