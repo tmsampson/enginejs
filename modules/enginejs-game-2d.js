@@ -109,6 +109,11 @@ Engine.Game2D =
 			this.is_visible = is_visible;
 		};
 
+		this.GetAlpha = function()
+		{
+			return this.tint[3];
+		};
+
 		this.IsVisible = function()
 		{
 			return this.is_visible;
