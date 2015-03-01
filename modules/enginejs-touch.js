@@ -33,12 +33,42 @@ Engine.Touch =
 		return Engine.Array.GetLastValue(Engine.Touch.streams[i]).position;
 	},
 
+	IsSwiped : function(index, dir, min_length, max_time)
+	{
+		var stream = (Engine.Touch.streams.length > index)? Engine.Touch.streams[index] : 0;
+		if(!stream) { return false; }
+
+		// Grab events
+		var first_event = stream[0];
+		var last_event  = stream[stream.length - 1];
+
+		// Calculate ongoing swipe info
+		var swipe_vector = Engine.Vec2.Subtract(last_event.position, first_event.position);
+		var swipe_angle = Engine.Vec2.AngleBetween(swipe_vector, dir) * (180 / Math.PI);
+		var swipe_length = Engine.Vec2.Length(swipe_vector);
+		var swipe_duration = last_event.time - first_event.time;
+
+		var tollerance = 3;
+		return swipe_length   >= min_length &&
+		       swipe_duration <= max_time &&
+		       swipe_angle    <  tollerance;
+	},
+
+	IsSwipedLeft : function(override_params)
+	{
+		// return Engine.Touch.IsSwiped(0,
+		// {
+		// 	direction  : [-1, 0, 0],
+		// 	min_length : 
+		// });
+	},
+
 	OnFirstTouch : function(handler)
 	{
 		Engine.Touch.first_touch_handlers.push(handler);
 	},
 
-	Kick : function()
+	Update : function()
 	{
 		// Clear just_pressed flag where set
 		for(var i = 0; i < Engine.Touch.streams.length; ++i)
@@ -97,7 +127,6 @@ Engine.Touch =
 
 	_event_register : function(touch)
 	{
-		Engine.Log("event");
 		if(Engine.Touch.streams.length == 2) { return; } // Only support 2 fingers
 
 		if(Engine.Touch.is_first_touch)
