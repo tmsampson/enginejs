@@ -216,7 +216,7 @@ Engine =
 			on_user_render(info);
 
 			// Kick touch input
-			Engine.Touch.Kick();
+			Engine.Touch.Update();
 		};
 
 		// Request first render frame
