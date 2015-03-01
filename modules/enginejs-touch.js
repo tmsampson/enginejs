@@ -33,34 +33,67 @@ Engine.Touch =
 		return Engine.Array.GetLastValue(Engine.Touch.streams[i]).position;
 	},
 
-	IsSwiped : function(index, dir, min_length, max_time)
+	GetOngoingSwipe : function(index)
 	{
 		var stream = (Engine.Touch.streams.length > index)? Engine.Touch.streams[index] : 0;
-		if(!stream) { return false; }
+		if(!stream) { return null; }
 
 		// Grab events
 		var first_event = stream[0];
 		var last_event  = stream[stream.length - 1];
 
-		// Calculate ongoing swipe info
+		// Return ongoing swipe info
 		var swipe_vector = Engine.Vec2.Subtract(last_event.position, first_event.position);
-		var swipe_angle = Engine.Vec2.AngleBetween(swipe_vector, dir) * (180 / Math.PI);
-		var swipe_length = Engine.Vec2.Length(swipe_vector);
-		var swipe_duration = last_event.time - first_event.time;
+		var ongoing =
+		{
+			start_position : first_event.position,
+			end_position   : last_event.position,
+			vector         : swipe_vector,
+			_length         : Engine.Vec2.Length(swipe_vector),
+			duration       : last_event.time - first_event.time
+		};
+		return ongoing;
+	},
 
-		var tollerance = 3;
-		return swipe_length   >= min_length &&
-		       swipe_duration <= max_time &&
-		       swipe_angle    <  tollerance;
+	IsSwiped : function(index, user_config)
+	{
+		var swipe = Engine.Touch.GetOngoingSwipe(index);
+		if(swipe == null) { return false; }
+
+		// Setup & override defaults?
+		var config =
+		{
+			min_length : 20,
+			max_time   : 500,
+			tollerance : Math.PI / 3
+		};
+		$.extend(config, user_config);
+
+		// Swipe match?
+		var swipe_angle = Engine.Vec2.AngleBetween(swipe.vector, config.direction);
+		return swipe._length   >= config.min_length &&
+		       swipe.duration <= config.max_time &&
+		       swipe_angle    <  config.tollerance;
 	},
 
 	IsSwipedLeft : function(override_params)
 	{
-		// return Engine.Touch.IsSwiped(0,
-		// {
-		// 	direction  : [-1, 0, 0],
-		// 	min_length : 
-		// });
+		return Engine.Touch.IsSwiped(0, { direction  : [-1, 0, 0] });
+	},
+
+	IsSwipedRight : function(override_params)
+	{
+		return Engine.Touch.IsSwiped(0, { direction  : [1, 0, 0] });
+	},
+
+	IsSwipedUp : function(override_params)
+	{
+		return Engine.Touch.IsSwiped(0, { direction  : [0, 1, 0] });
+	},
+
+	IsSwipedDown : function(override_params)
+	{
+		return Engine.Touch.IsSwiped(0, { direction  : [0, -1, 0] });
 	},
 
 	OnFirstTouch : function(handler)
