@@ -49,16 +49,21 @@ Engine.Touch =
 			start_position : first_event.position,
 			end_position   : last_event.position,
 			vector         : swipe_vector,
-			_length         : Engine.Vec2.Length(swipe_vector),
-			duration       : last_event.time - first_event.time
+			length         : Engine.Vec2.Length(swipe_vector),
+			duration       : Engine.Time.Now() - first_event.time,
+			first_event    : first_event,
+			last_event     : last_event,
 		};
 		return ongoing;
 	},
 
-	IsSwiped : function(index, user_config)
+	IsSwiped : function(index, debounce, user_config)
 	{
 		var swipe = Engine.Touch.GetOngoingSwipe(index);
-		if(swipe == null) { return false; }
+		if(swipe == null || swipe.first_event.swipe_detected)
+		{
+			return false;
+		}
 
 		// Setup & override defaults?
 		var config =
@@ -71,29 +76,37 @@ Engine.Touch =
 
 		// Swipe match?
 		var swipe_angle = Engine.Vec2.AngleBetween(swipe.vector, config.direction);
-		return swipe._length   >= config.min_length &&
-		       swipe.duration <= config.max_time &&
-		       swipe_angle    <  config.tollerance;
+		var swipe_match = swipe.length   >= config.min_length &&
+		                  swipe.duration <= config.max_time &&
+		                  swipe_angle    <  config.tollerance;
+
+		// Set detected flag so we don't detect this stream again?
+		if(swipe_match && debounce)
+		{
+			swipe.first_event.swipe_detected = true;
+		}
+
+		return swipe_match;
 	},
 
 	IsSwipedLeft : function(override_params)
 	{
-		return Engine.Touch.IsSwiped(0, { direction  : [-1, 0, 0] });
+		return Engine.Touch.IsSwiped(0, true, { direction  : [-1, 0, 0] });
 	},
 
 	IsSwipedRight : function(override_params)
 	{
-		return Engine.Touch.IsSwiped(0, { direction  : [1, 0, 0] });
+		return Engine.Touch.IsSwiped(0, true, { direction  : [1, 0, 0] });
 	},
 
 	IsSwipedUp : function(override_params)
 	{
-		return Engine.Touch.IsSwiped(0, { direction  : [0, 1, 0] });
+		return Engine.Touch.IsSwiped(0, true, { direction  : [0, 1, 0] });
 	},
 
 	IsSwipedDown : function(override_params)
 	{
-		return Engine.Touch.IsSwiped(0, { direction  : [0, -1, 0] });
+		return Engine.Touch.IsSwiped(0, true, { direction  : [0, -1, 0] });
 	},
 
 	OnFirstTouch : function(handler)
@@ -175,11 +188,12 @@ Engine.Touch =
 
 		var touch_event =
 		{
-			identifier   : touch.identifier,
-			time         : Engine.Time.Now(),
-			position     : [ touch.pageX - Engine.Canvas.getBoundingClientRect().left,
+			identifier     : touch.identifier,
+			time           : Engine.Time.Now(),
+			position       : [ touch.pageX - Engine.Canvas.getBoundingClientRect().left,
 			                 Engine.Canvas.getBoundingClientRect().bottom - touch.pageY ],
-			just_pressed : false
+			just_pressed   : false,
+			swipe_detected : false
 		};
 
 		// Find existing stream
