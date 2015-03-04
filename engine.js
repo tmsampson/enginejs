@@ -121,6 +121,9 @@ Engine =
 					Engine.Log(ok? "Initialised successfully" : "Initialised failed");
 					if(!on_user_init) { return; }
 
+					// Run any pre-game initialisation routines
+					Engine.PreGameLoopInit();
+
 					// User init handler returns the user render function
 					var on_user_render = on_user_init(ok? Engine.GL : null);
 					if(on_user_render)
@@ -182,6 +185,11 @@ Engine =
 		request_func(callback, this.canvas);
 	},
 
+	PreGameLoopInit : function()
+	{
+		Engine.Debug.PreGameLoopInit();
+	},
+
 	// *************************************************************************************
 	// Main Game Loop
 	// *************************************************************************************
@@ -202,6 +210,9 @@ Engine =
 			Engine.Gamepad.Update();
 			Engine.Gfx.Update();
 
+			// Flush debug draw
+			Engine.Debug.Update();
+
 			// Setup per-frame info for client
 			var info =
 			{
@@ -214,6 +225,9 @@ Engine =
 			// Call user render function
 			last_frame_time = Engine.Time.Now();
 			on_user_render(info);
+
+			// Debug draw
+			Engine.Debug.Render();
 
 			// Kick touch input
 			Engine.Touch.Update();
