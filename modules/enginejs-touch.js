@@ -35,7 +35,8 @@ Engine.Touch =
 
 	GetOngoingSwipe : function(index)
 	{
-		var stream = (Engine.Touch.streams.length > index)? Engine.Touch.streams[index] : 0;
+		var i = index || 0;
+		var stream = (Engine.Touch.streams.length > i)? Engine.Touch.streams[i] : 0;
 		if(!stream) { return null; }
 
 		// Grab events
