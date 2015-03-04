@@ -51,8 +51,8 @@ Engine.Gfx =
 		// Bind vertex buffer
 		var is_index_buffer = (vertex_buffer_object.buffer_type == Engine.GL.ELEMENT_ARRAY_BUFFER);
 		Engine.GL.bindBuffer(is_index_buffer? Engine.GL.ELEMENT_ARRAY_BUFFER :
-		                                    Engine.GL.ARRAY_BUFFER,
-		                   vertex_buffer_object.resource);
+		                                      Engine.GL.ARRAY_BUFFER,
+		                     vertex_buffer_object.resource);
 
 		// Bind to shader attribute (indices not passed to shaders)
 		if(!is_index_buffer)
@@ -553,7 +553,8 @@ Engine.Gfx =
 		"triangle_strip"  : Engine.GL.TRIANGLE_STRIP,
 		"triangle_strips" : Engine.GL.TRIANGLE_STRIP,
 		"triangle_fan"    : Engine.GL.TRIANGLE_FAN,
-		"triangle_fans"   : Engine.GL.TRIANGLE_FAN
+		"triangle_fans"   : Engine.GL.TRIANGLE_FAN,
+		"lines"           : Engine.GL.LINES
 	},
 
 	// *************************************
