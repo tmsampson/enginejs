@@ -1,7 +1,7 @@
 // Dependencies
 var path          = require('path')
 var http          = require('http');
-var final_handler = require('finalHandler');
+var final_handler = require('finalhandler');
 var serve_static  = require('serve-static');
 
 // Config
