@@ -146,8 +146,8 @@ Engine.Vec2 =
 
 	Angle : function(v)
 	{
-		// Calculate angle between positive x-axis and v
-		return Math.atan2(v[1], v[0]);
+		// Calculate angle between positive y-axis and v
+		return Math.atan2(-v[0], v[1]);
 	},
 
 	Distance : function(v1, v2)
