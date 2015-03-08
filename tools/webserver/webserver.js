@@ -13,6 +13,7 @@ var enginejs_root = path.join(game_root, "enginejs");
 var serve = serve_static(game_root);
 var server = http.createServer(function(req, res)
 {
+	if(req.url == "/") { req.url = "/index.htm"; }
 	var done = final_handler(req, res);
 	serve(req, res, done);
 });
