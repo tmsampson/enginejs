@@ -20,6 +20,14 @@ Engine.Audio =
 		});
 	},
 
+	PlaySFX : function(sound_object)
+	{
+		// This is just a helper method, intended for use when the user wants
+		// to fire-and-forget sounds without holding on to the sound effect instance
+		var sfx = new Engine.Audio.SoundEffect2D(sound_object);
+		sfx.Play();
+	},
+
 	Sound : function(sound_object, global_volume_node, loop)
 	{
 		this.resource = sound_object;
