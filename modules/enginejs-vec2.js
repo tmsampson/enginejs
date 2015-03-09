@@ -45,6 +45,11 @@ Engine.Vec2 =
 		return v[1] / v[0];
 	},
 
+	Normal : function(v)
+	{
+		return Engine.Vec2.Normalise([ -v[1], v[0] ]);
+	},
+
 	Negate : function(v)
 	{
 		return [ -v[0], -v[1] ];
