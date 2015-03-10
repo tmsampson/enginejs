@@ -7,14 +7,16 @@ Engine.Game2D =
 	Entity : function(texture_or_sprite, config)
 	{
 		// Setup defaults
-		this.size       = [0, 0];
-		this.position   = [0, 0];
-		this.velocity   = [0, 0];
-		this.rotation   = 0;
-		this.depth      = 0; // 0 = front
-		this.tint       = [1, 1, 1, 1];
-		this.alpha      = 1;
-		this.is_visible = true;
+		this.original_size       = [0, 0];
+		this.size                = [0, 0];
+		this.position            = [0, 0];
+		this.velocity            = [0, 0];
+		this.rotation            = 0;
+		this.depth               = 0; // 0 = front
+		this.tint                = [1, 1, 1, 1];
+		this.alpha               = 1;
+		this.is_visible          = true;
+		this.enable_debug_render = false;
 
 		// Apply any user overrides
 		$.extend(this, config);
@@ -30,8 +32,9 @@ Engine.Game2D =
 				// grid size of first texture
 				this.sprite = texture_or_sprite;
 				var first_texture = Engine.Array.GetFirstValue(this.sprite.textures);
-				this.size = [first_texture.width  / first_texture.descriptor.cols,
-				             first_texture.height / first_texture.descriptor.rows];
+				this.original_size = [first_texture.width  / first_texture.descriptor.cols,
+				                      first_texture.height / first_texture.descriptor.rows];
+				this.size = Engine.Array.Copy(this.original_size);
 			}
 			else
 			{
@@ -42,7 +45,8 @@ Engine.Game2D =
 				this.sprite.textures["default"].descriptor.rows = 1;
 				this.sprite.textures["default"].descriptor.cols = 1;
 				this.sprite.active_texture = this.sprite.textures["default"];
-				this.size = [texture_or_sprite.width, texture_or_sprite.height];
+				this.original_size = [texture_or_sprite.width, texture_or_sprite.height];
+				this.size = Engine.Array.Copy(this.original_size);
 			}
 		}
 
@@ -132,6 +136,11 @@ Engine.Game2D =
 		this.GetSize = function()
 		{
 			return this.size[0];
+		};
+
+		this.EnableDebugRender = function(state)
+		{
+			this.enable_debug_render = state;
 		};
 	},
 
@@ -245,11 +254,21 @@ Engine.Game2D =
 				if(!entity.IsVisible()) { continue; }
 
 				// Setup transforms
-				var entity_trans = [entity.position[0], entity.position[1], 0];
-				var entity_scale = [entity.size[0] / 2, entity.size[1] / 2, 0]; // half size as DrawQuad is 2x2 clip space
+				var entity_scale = [entity.size[0] / 2, entity.size[1] / 2, 0]; // Half size as DrawQuad is 2x2 clip space
+				var entity_trans = Engine.Vec3.FromVec2(entity.position)
+				var entity_origin = entity.sprite? entity.sprite.origin : [0, 0];
+
+				// Build model transform matrix
 				mat4.translate(mtx_trans, Engine.Math.IdentityMatrix, entity_trans);
-				mat4.rotate(mtx_trans, mtx_trans, entity.rotation, [0, 0, 1]);
 				mat4.scale(mtx_trans, mtx_trans, entity_scale);
+				if(entity.sprite)
+				{
+					// If we have a sprite, need to shift based on sprite origin before
+					// subsequent scaling / translating
+					var origin_as_fraction = Engine.Vec2.Divide(entity_origin, entity.original_size);
+					mat4.translate(mtx_trans, mtx_trans, [-origin_as_fraction[0] * 2, -origin_as_fraction[1] * 2, 0]);
+				}
+				mat4.rotate(mtx_trans, mtx_trans, entity.rotation, [0, 0, 1]);
 				Engine.Gfx.SetShaderConstant("u_trans_model", mtx_trans, Engine.Gfx.SC_MATRIX4);
 
 				// Setup tint
@@ -288,6 +307,53 @@ Engine.Game2D =
 
 				// Draw
 				Engine.Gfx.DrawQuad();
+
+				// Debug render?
+				if(entity.enable_debug_render)
+				{
+					// Draw entity AABB quad
+					var colour = [0.2, 0.2, 0.2, 0.3];
+					var pos = Engine.Vec3.Subtract(entity.position, entity_scale);
+					var sprite_scale_factor = [1, 1];
+					var entity_origin_scaled = entity_origin;
+					if(entity.sprite)
+					{
+						sprite_scale_factor = Engine.Vec2.Divide(entity.size, entity.original_size);
+						entity_origin_scaled = Engine.Vec2.Multiply(entity_origin, sprite_scale_factor);
+						pos = Engine.Vec3.Subtract(pos, entity_origin_scaled);
+					}
+					Engine.Debug.DrawRect(pos, entity.size[0], entity.size[1], colour);
+
+					// Draw collision shapes?
+					if(entity.sprite)
+					{
+						var colour = [1.0, 0.0, 0.0, 0.5];
+						for(var j = 0; j < entity.sprite.collision_shapes.length; ++j)
+						{
+							var shape = entity.sprite.collision_shapes[j];
+							var x = entity.position[0] - entity_scale[0] - entity_origin_scaled[0] + (shape.offset[0] * sprite_scale_factor[0]);
+							var y = entity.position[1] - entity_scale[1] - entity_origin_scaled[1] + (shape.offset[1] * sprite_scale_factor[1]);
+							switch(shape.type)
+							{
+								case "rect":
+									Engine.Debug.DrawRect([x, y], shape.width * sprite_scale_factor[0], shape.height * sprite_scale_factor[1], colour);
+									break;
+								case "circle":
+									Engine.Debug.DrawCircle([x, y], shape.radius * Engine.Vec2.MaxElement(sprite_scale_factor), colour);
+									break;
+							}
+						}
+					}
+
+					// Draw origin
+					var line_length = 10;
+					Engine.Debug.DrawLine(Engine.Vec2.Subtract(entity.position, [line_length, 0]),
+					                      Engine.Vec2.Add(entity.position, [line_length, 0]),
+					                      Engine.Colour.Blue, 3);
+					Engine.Debug.DrawLine(Engine.Vec2.Subtract(entity.position, [0, line_length]),
+					                      Engine.Vec2.Add(entity.position, [0, line_length]),
+					                      Engine.Colour.Blue, 3);
+				}
 			}
 		}
 	},
@@ -378,9 +444,11 @@ Engine.Game2D =
 
 	Sprite : function()
 	{
-		this.name = ""
+		this.name = "";
+		this.origin = [0, 0];
 		this.textures  = {};
 		this.sequences = {};
+		this.collision_shapes = [];
 
 		// For update
 		this.requires_update = false;
