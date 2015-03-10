@@ -34,6 +34,22 @@ Engine.Debug =
 		});
 	},
 
+	DrawRect : function(position, width, height, colour, camera)
+	{
+		draw_commands.push(
+		{
+			func   : Engine.Debug.debug_draw_func_rect,
+			config :
+			{
+				position : position,
+				width    : width,
+				height   : height,
+				colour   : colour || Engine.Colour.Red,
+				camera   : camera
+			}
+		});
+	},
+
 	DrawCircle : function(position, radius, colour, camera)
 	{
 		draw_commands.push(
@@ -146,6 +162,31 @@ Engine.Debug =
 
 		// Draw circle
 		Engine.Gfx.DrawModel(Engine.Debug.debug_draw_circle_model);
+	},
+
+	debug_draw_func_rect : function(config)
+	{
+		// Bind shader
+		Engine.Gfx.BindShaderProgram(Engine.Debug.debug_draw_program_basic);
+
+		// Setup transform (canvas space)
+		var mtx_trans = mat4.create();
+		var x = config.position[0] + (config.width / 2); // DrawRect is centered by default
+		var y = config.position[1] + (config.height / 2); // DrawRect is centered by default
+		mat4.translate(mtx_trans, Engine.Math.IdentityMatrix, [x, y, 0]);
+		mat4.scale(mtx_trans, mtx_trans, [config.width / 2, config.height / 2, 0.0]);
+		var mtx_proj = mat4.create(); mat4.identity(mtx_proj);
+		var canvas_size = Engine.Canvas.GetSize();
+		mat4.ortho(mtx_proj, 0, canvas_size[0], 0, canvas_size[1], -1, 1);
+		Engine.Gfx.SetShaderConstant("u_trans_model", mtx_trans, Engine.Gfx.SC_MATRIX4);
+		Engine.Gfx.SetShaderConstant("u_trans_view",  Engine.Math.IdentityMatrix, Engine.Gfx.SC_MATRIX4);
+		Engine.Gfx.SetShaderConstant("u_trans_proj",  mtx_proj, Engine.Gfx.SC_MATRIX4);
+
+		// Set colour
+		Engine.Gfx.SetShaderConstant("u_colour", config.colour, Engine.Gfx.SC_COLOUR);
+
+		// Draw rectangle
+		Engine.Gfx.DrawQuad();
 	},
 
 	Break : function()
