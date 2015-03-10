@@ -122,6 +122,16 @@ Engine.Vec3 =
 		return [ Math.max(v1[0], v2[0]), Math.max(v1[1], v2[1]), Math.max(v1[2], v2[2]) ];
 	},
 
+	MinElement : function(v)
+	{
+		return Math.min(v[0], v[1], v[2]);
+	},
+
+	MaxElement : function(v)
+	{
+		return Math.max(v[0], v[1], v[2]);
+	},
+
 	Clamp : function(v, vMin, vMax)
 	{
 		return [ Engine.Math.Clamp(v[0], vMin[0], vMax[0]),
