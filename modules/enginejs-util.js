@@ -16,9 +16,19 @@ Engine.Util =
 		return copiedObject;
 	},
 
-	IsFunction : function(x)
+	IsFunction : function(obj)
 	{
 		var getType = { };
-		return x && getType.toString.call(x) === '[object Function]';
+		return obj && getType.toString.call(obj) === '[object Function]';
+	},
+
+	IsArray : function(obj)
+	{
+		return (obj.constructor === Array);
+	},
+
+	IsString : function(obj)
+	{
+		return typeof obj == 'string' || obj instanceof String;
 	}
 };

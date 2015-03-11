@@ -263,7 +263,7 @@ Engine.Game2D =
 
 		this.Add = function(entity)
 		{
-			if(Engine.Array.IsArray(entity))
+			if(Engine.Util.IsArray(entity))
 			{
 				for(var i = 0; i < entity.length; ++i)
 				{

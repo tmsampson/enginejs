@@ -82,8 +82,8 @@ Engine.Gamepad =
 		{
 			// 'button_name_or_list' could be single value or list of buttons to check, either
 			// way we want a list (even if it only has a single button name entry)
-			var button_names = Engine.Array.IsArray(button_name_or_list)? button_name_or_list :
-			                                                            [ button_name_or_list ];
+			var button_names = Engine.Util.IsArray(button_name_or_list)? button_name_or_list :
+			                                                           [ button_name_or_list ];
 
 			var pressed_this_frame = this.gamepad_this_frame.buttons;
 			var pressed_prev_frame = this.gamepad_prev_frame? this.gamepad_prev_frame.buttons : null;
@@ -105,8 +105,8 @@ Engine.Gamepad =
 		{
 			// 'button_name_or_list' could be single value or list of buttons to check, either
 			// way we want a list (even if it only has a single button name entry)
-			var button_names = Engine.Array.IsArray(button_name_or_list)? button_name_or_list :
-			                                                            [ button_name_or_list ];
+			var button_names = Engine.Util.IsArray(button_name_or_list)? button_name_or_list :
+			                                                           [ button_name_or_list ];
 
 			var pressed_this_frame = this.gamepad_this_frame.buttons;
 			var pressed_prev_frame = this.gamepad_prev_frame? this.gamepad_prev_frame.buttons : null;
