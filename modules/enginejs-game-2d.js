@@ -123,6 +123,11 @@ Engine.Game2D =
 			return this.is_visible;
 		};
 
+		this.GetOrigin = function()
+		{
+			return this.origin;
+		};
+
 		this.GetPosition = function()
 		{
 			return this.position;
@@ -136,6 +141,74 @@ Engine.Game2D =
 		this.GetSize = function()
 		{
 			return this.size[0];
+		};
+
+		this.GetAABB = function()
+		{
+			var min_x = this.position[0] - (this.size[0] / 2); // Origin is centred by default
+			var min_y = this.position[1] - (this.size[1] / 2); // Origin is centred by default
+			if(this.sprite)
+			{
+				// If we have a sprite, need to apply origin translation. As this is specified with respect to
+				// the original (native) size of the sprite, we need to scale based on the entity size
+				var sprite_scale_factor = this.GetSpriteScaleFactor();
+				min_x -= this.sprite.origin[0] * sprite_scale_factor[0];
+				min_y -= this.sprite.origin[1] * sprite_scale_factor[1];
+			}
+			return { min : [min_x, min_y], max : [min_x + this.size[0], min_y + this.size[1]] };
+		};
+
+		this.GetSpriteScaleFactor = function()
+		{
+			// This is the scale applied to the original sprite texture to fit the current entity size
+			// Note: native = 1
+			return this.sprite? Engine.Vec2.Divide(this.size, this.original_size) : [1, 1];
+		};
+
+		this.GetTransformedCollisionShapes = function(pre_calculated_aabb, pre_calculated_sprite_scale_factor)
+		{
+			// This returns any collision shapes belonging to the sprite, after
+			// applying correct position/offset translation & scaling for this entity instance
+			if(!this.sprite || this.sprite.collision_shapes.length == 0) { return []; }
+
+			// If we're using the default origin [0, 0] and no scaling is applied, we can
+			// skip the transform process
+			if(this.sprite.origin[0] == 0 && this.sprite.origin[0] &&
+			   this.size[0] == this.original_size[0] && this.size[0] == this.original_size[1])
+			{
+				return this.sprite.collision_shapes;
+			}
+
+			var aabb = pre_calculated_aabb || this.GetAABB();
+			var sprite_scale_factor = pre_calculated_sprite_scale_factor || this.GetSpriteScaleFactor();
+			var results = [];
+			for(var i = 0; i < this.sprite.collision_shapes.length; ++i)
+			{
+				var shape = this.sprite.collision_shapes[i];
+				var transformed_x_offset = aabb.min[0] + (shape.offset[0] * sprite_scale_factor[0]);
+				var transformed_y_offset = aabb.min[1] + (shape.offset[1] * sprite_scale_factor[1]);
+				switch(shape.type)
+				{
+					case "rect":
+						results.push(
+						{
+							type   : "rect",
+							offset : [transformed_x_offset, transformed_y_offset],
+							width  : shape.width  * sprite_scale_factor[0],
+							height : shape.height * sprite_scale_factor[1]
+						});
+						break;
+					case "circle":
+						results.push(
+						{
+							type   : "circle",
+							offset : [transformed_x_offset, transformed_y_offset],
+							radius : shape.radius * Engine.Vec2.MaxElement(sprite_scale_factor)
+						});
+						break;
+				}
+			}
+			return results;
 		};
 
 		this.EnableDebugRender = function(state)
@@ -313,46 +386,33 @@ Engine.Game2D =
 				{
 					// Draw entity AABB quad
 					var colour = [0.2, 0.2, 0.2, 0.3];
-					var pos = Engine.Vec3.Subtract(entity.position, entity_scale);
-					var sprite_scale_factor = [1, 1];
-					var entity_origin_scaled = entity_origin;
-					if(entity.sprite)
-					{
-						sprite_scale_factor = Engine.Vec2.Divide(entity.size, entity.original_size);
-						entity_origin_scaled = Engine.Vec2.Multiply(entity_origin, sprite_scale_factor);
-						pos = Engine.Vec3.Subtract(pos, entity_origin_scaled);
-					}
-					Engine.Debug.DrawRect(pos, entity.size[0], entity.size[1], colour);
+					var aabb   = entity.GetAABB();
+					var width  = aabb.max[0] - aabb.min[0], height = aabb.max[1] - aabb.min[1];
+					Engine.Debug.DrawRect(aabb.min, width, height, colour);
 
 					// Draw collision shapes?
-					if(entity.sprite)
+					colour = [1.0, 0.0, 0.0, 0.5];
+					var collision_shapes = entity.GetTransformedCollisionShapes(aabb);
+					for(var j = 0; j < collision_shapes.length; ++j)
 					{
-						var colour = [1.0, 0.0, 0.0, 0.5];
-						for(var j = 0; j < entity.sprite.collision_shapes.length; ++j)
+						var shape = collision_shapes[j];
+						switch(shape.type)
 						{
-							var shape = entity.sprite.collision_shapes[j];
-							var x = entity.position[0] - entity_scale[0] - entity_origin_scaled[0] + (shape.offset[0] * sprite_scale_factor[0]);
-							var y = entity.position[1] - entity_scale[1] - entity_origin_scaled[1] + (shape.offset[1] * sprite_scale_factor[1]);
-							switch(shape.type)
-							{
-								case "rect":
-									Engine.Debug.DrawRect([x, y], shape.width * sprite_scale_factor[0], shape.height * sprite_scale_factor[1], colour);
-									break;
-								case "circle":
-									Engine.Debug.DrawCircle([x, y], shape.radius * Engine.Vec2.MaxElement(sprite_scale_factor), colour);
-									break;
-							}
+							case "rect":
+								Engine.Debug.DrawRect(shape.offset, shape.width, shape.height, colour);
+								break;
+							case "circle":
+								Engine.Debug.DrawCircle(shape.offset, shape.radius, colour);
+								break;
 						}
 					}
 
 					// Draw origin
 					var line_length = 10;
 					Engine.Debug.DrawLine(Engine.Vec2.Subtract(entity.position, [line_length, 0]),
-					                      Engine.Vec2.Add(entity.position, [line_length, 0]),
-					                      Engine.Colour.Blue, 3);
+					                      Engine.Vec2.Add(entity.position, [line_length, 0]), Engine.Colour.Blue, 3);
 					Engine.Debug.DrawLine(Engine.Vec2.Subtract(entity.position, [0, line_length]),
-					                      Engine.Vec2.Add(entity.position, [0, line_length]),
-					                      Engine.Colour.Blue, 3);
+					                      Engine.Vec2.Add(entity.position, [0, line_length]), Engine.Colour.Blue, 3);
 				}
 			}
 		}
