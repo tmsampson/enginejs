@@ -44,8 +44,8 @@ Engine.Keyboard =
 	{
 		// 'key_name_or_list' could be single value or list of keys to check, either
 		// way we want a list (even if it only has a single key entry)
-		var key_names = Engine.Array.IsArray(key_name_or_list)? key_name_or_list :
-		                                                        [ key_name_or_list ];
+		var key_names = Engine.Util.IsArray(key_name_or_list)? key_name_or_list :
+		                                                     [ key_name_or_list ];
 
 		// Check if any of the keys are pressed
 		var this_buffer = this.key_buffer[this.buffer_idx];
@@ -68,8 +68,8 @@ Engine.Keyboard =
 	{
 		// 'key_name_or_list' could be single value or list of keys to check, either
 		// way we want a list (even if it only has a single key entry)
-		var key_names = Engine.Array.IsArray(key_name_or_list)? key_name_or_list :
-		                                                        [ key_name_or_list ];
+		var key_names = Engine.Util.IsArray(key_name_or_list)? key_name_or_list :
+		                                                     [ key_name_or_list ];
 
 		// Check if any of the keys are pressed
 		var this_buffer = this.key_buffer[this.buffer_idx];
