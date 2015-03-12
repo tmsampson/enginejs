@@ -384,11 +384,13 @@ Engine.Game2D =
 				// Debug render?
 				if(entity.enable_debug_render)
 				{
-					// Draw entity AABB quad
-					var colour = [0.2, 0.2, 0.2, 0.3];
+					// Draw entity AABB quad (outline)
 					var aabb   = entity.GetAABB();
 					var width  = aabb.max[0] - aabb.min[0], height = aabb.max[1] - aabb.min[1];
-					Engine.Debug.DrawRect(aabb.min, width, height, colour);
+					Engine.Debug.DrawLine(aabb.min, Engine.Vec2.Add(aabb.min, [0,  height]), Engine.Colour.Black);
+					Engine.Debug.DrawLine(aabb.min, Engine.Vec2.Add(aabb.min, [width,   0]), Engine.Colour.Black);
+					Engine.Debug.DrawLine(aabb.max, Engine.Vec2.Add(aabb.max, [-width,  0]), Engine.Colour.Black);
+					Engine.Debug.DrawLine(aabb.max, Engine.Vec2.Add(aabb.max, [0, -height]), Engine.Colour.Black);
 
 					// Draw collision shapes?
 					colour = [1.0, 0.0, 0.0, 0.5];
@@ -519,6 +521,12 @@ Engine.Game2D =
 		this.active_texture = null;
 		this.current_anim_frame = 0;
 		this.mirror = [0, 0];
+
+		this.SetOrigin = function(origin)
+		{
+			this.origin[0] = origin[0];
+			this.origin[1] = origin[1];
+		};
 
 		this.SetSequence = function(sequence_name)
 		{
