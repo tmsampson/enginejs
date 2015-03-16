@@ -143,19 +143,42 @@ Engine.Game2D =
 			return this.size[0];
 		};
 
-		this.GetAABB = function()
+		this.GetWorldTransform = function(exclude_rotation)
 		{
-			var min_x = this.position[0] - (this.size[0] / 2); // Origin is centred by default
-			var min_y = this.position[1] - (this.size[1] / 2); // Origin is centred by default
+			var mtx_trans = mat4.create();
+			var sprite_scale_factor = this.GetSpriteScaleFactor();
+
+			// 5. Move into position
+			mat4.translate(mtx_trans, Engine.Math.IdentityMatrix, Engine.Vec3.FromVec2(this.position, 0));
+
+			// 4. Apply scale
+			mat4.scale(mtx_trans, mtx_trans, Engine.Vec3.FromVec2(sprite_scale_factor, 1));
+
+			// 3. Apply origin offset?
 			if(this.sprite)
 			{
-				// If we have a sprite, need to apply origin translation. As this is specified with respect to
-				// the original (native) size of the sprite, we need to scale based on the entity size
-				var sprite_scale_factor = this.GetSpriteScaleFactor();
-				min_x -= this.sprite.origin[0] * sprite_scale_factor[0];
-				min_y -= this.sprite.origin[1] * sprite_scale_factor[1];
+				var to_origin = Engine.Vec2.Negate(this.sprite.origin);
+				mat4.translate(mtx_trans, mtx_trans, Engine.Vec3.FromVec2(to_origin, 0));
 			}
-			return { min : [min_x, min_y], max : [min_x + this.size[0], min_y + this.size[1]] };
+
+			// 2. Always rotate about sprite-space centre (not origin!)
+			if(!exclude_rotation)
+			{
+				mat4.rotate(mtx_trans, mtx_trans, this.rotation, Engine.Vec3.AxisZ);
+			}
+
+			// 1. Start in sprite space ([0,0] = bottom left) and move to centre
+			var to_centre = Engine.Vec2.DivideScalar(Engine.Vec2.Negate(this.original_size), 2);
+			mat4.translate(mtx_trans, mtx_trans, Engine.Vec3.FromVec2(to_centre));
+			return mtx_trans;
+		};
+
+		this.GetAABB = function()
+		{
+			var mtx_trans = this.GetWorldTransform(true); // exclude rotation
+			var min = Engine.Vec2.Transform([0, 0], mtx_trans)
+			var max = Engine.Vec2.Transform(this.original_size, mtx_trans);
+			return { min : min, max : max };
 		};
 
 		this.GetSpriteScaleFactor = function()
@@ -165,35 +188,38 @@ Engine.Game2D =
 			return this.sprite? Engine.Vec2.Divide(this.size, this.original_size) : [1, 1];
 		};
 
-		this.GetTransformedCollisionShapes = function(pre_calculated_aabb, pre_calculated_sprite_scale_factor)
+		this.GetTransformedCollisionShapes = function()
 		{
 			// This returns any collision shapes belonging to the sprite, after
 			// applying correct position/offset translation & scaling for this entity instance
 			if(!this.sprite || this.sprite.collision_shapes.length == 0) { return []; }
 
-			// If we're using the default origin [0, 0] and no scaling is applied, we can
-			// skip the transform process
+			// If we're using the default origin [0, 0] and no scaling or rotation is applied,
+			// we can skip the transform process entirely
 			if(this.sprite.origin[0] == 0 && this.sprite.origin[0] &&
-			   this.size[0] == this.original_size[0] && this.size[0] == this.original_size[1])
+			   this.size[0] == this.original_size[0] && this.size[0] == this.original_size[1] &&
+			   this.rotation == 0)
 			{
 				return this.sprite.collision_shapes;
 			}
 
-			var aabb = pre_calculated_aabb || this.GetAABB();
-			var sprite_scale_factor = pre_calculated_sprite_scale_factor || this.GetSpriteScaleFactor();
+			var sprite_scale_factor = this.GetSpriteScaleFactor();
+			var mtx_trans = this.GetWorldTransform();
+
 			var results = [];
 			for(var i = 0; i < this.sprite.collision_shapes.length; ++i)
 			{
+				// Apply transform
 				var shape = this.sprite.collision_shapes[i];
-				var transformed_x_offset = aabb.min[0] + (shape.offset[0] * sprite_scale_factor[0]);
-				var transformed_y_offset = aabb.min[1] + (shape.offset[1] * sprite_scale_factor[1]);
+				var transformed_offset = Engine.Vec2.Transform(shape.offset, mtx_trans);
+
 				switch(shape.type)
 				{
 					case "rect":
 						results.push(
 						{
 							type   : "rect",
-							offset : [transformed_x_offset, transformed_y_offset],
+							offset : transformed_offset,
 							width  : shape.width  * sprite_scale_factor[0],
 							height : shape.height * sprite_scale_factor[1]
 						});
@@ -202,7 +228,7 @@ Engine.Game2D =
 						results.push(
 						{
 							type   : "circle",
-							offset : [transformed_x_offset, transformed_y_offset],
+							offset : transformed_offset,
 							radius : shape.radius * Engine.Vec2.MaxElement(sprite_scale_factor)
 						});
 						break;
@@ -289,6 +315,7 @@ Engine.Game2D =
 			var mtx_trans = mat4.create();
 
 			// Render background (or grid if background not setup)
+			Engine.Gfx.EnableBlend(false);
 			var background_in_use = this.background.hasOwnProperty("colour") ||
 			                        this.background.layers.length > 0;
 			if(background_in_use)
@@ -326,22 +353,13 @@ Engine.Game2D =
 				var entity = this.entities[i];
 				if(!entity.IsVisible()) { continue; }
 
-				// Setup transforms
-				var entity_scale = [entity.size[0] / 2, entity.size[1] / 2, 0]; // Half size as DrawQuad is 2x2 clip space
-				var entity_trans = Engine.Vec3.FromVec2(entity.position)
-				var entity_origin = entity.sprite? entity.sprite.origin : [0, 0];
+				// Build "model" transform
+				var mtx_trans = entity.GetWorldTransform();
 
-				// Build model transform matrix
-				mat4.translate(mtx_trans, Engine.Math.IdentityMatrix, entity_trans);
-				mat4.scale(mtx_trans, mtx_trans, entity_scale);
-				if(entity.sprite)
-				{
-					// If we have a sprite, need to shift based on sprite origin before
-					// subsequent scaling / translating
-					var origin_as_fraction = Engine.Vec2.Divide(entity_origin, entity.original_size);
-					mat4.translate(mtx_trans, mtx_trans, [-origin_as_fraction[0] * 2, -origin_as_fraction[1] * 2, 0]);
-				}
-				mat4.rotate(mtx_trans, mtx_trans, entity.rotation, [0, 0, 1]);
+				// Apply scale & bias as Engine.Gfx.DrawQuad uses centred 2x2 (clip-space) quad
+				var scale = Engine.Vec2.DivideScalar(entity.original_size, 2);
+				mat4.scale(mtx_trans, mtx_trans, Engine.Vec3.FromVec2(scale));
+				mat4.translate(mtx_trans, mtx_trans, [1, 1, 0]);
 				Engine.Gfx.SetShaderConstant("u_trans_model", mtx_trans, Engine.Gfx.SC_MATRIX4);
 
 				// Setup tint
@@ -394,7 +412,7 @@ Engine.Game2D =
 
 					// Draw collision shapes?
 					colour = [1.0, 0.0, 0.0, 0.5];
-					var collision_shapes = entity.GetTransformedCollisionShapes(aabb);
+					var collision_shapes = entity.GetTransformedCollisionShapes();
 					for(var j = 0; j < collision_shapes.length; ++j)
 					{
 						var shape = collision_shapes[j];
@@ -661,12 +679,29 @@ Engine.Resource.RegisterLoadFunction("sprite", function(descriptor, callback)
 		// Load in textures
 		Engine.Resource.LoadBatch(sprite_object.textures, function()
 		{
+			// Validate textures (make sure all tile sizes match)
+			var first_texture = Engine.Array.GetFirstValue(sprite_object.textures);
+			var first_tile_size = [ first_texture.width  / first_texture.descriptor.cols,
+				                    first_texture.height / first_texture.descriptor.rows];
+			for(var texture_name in sprite_object.textures)
+			{
+				Engine.Log("    Validating texture: " + texture_name);
+				var texture = sprite_object.textures[texture_name];
+				if((texture.width / texture.descriptor.cols)  != first_tile_size[0] ||
+				   (texture.height / texture.descriptor.rows) != first_tile_size[1])
+				{
+					var msg = "    Tiles sizes in " + texture_name + " are non-uniform, should be [";
+						msg += first_tile_size[0] + ", " + first_tile_size[1] + "]";
+					Engine.Log(msg);
+				}
+			}
+
 			// Process sequences
 			for(var sequence_name in sprite_object.sequences)
 			{
 				var sequence = sprite_object.sequences[sequence_name];
 				sequence.name = sequence_name; // Add key-name as member
-				Engine.Log("    Validating sprite sequence " + sequence.name);
+				Engine.Log("    Validating sprite sequence: " + sequence.name);
 
 				// Hookup texture references
 				if(sequence.texture in sprite_object.textures)
