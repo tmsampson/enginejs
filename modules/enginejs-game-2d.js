@@ -263,6 +263,7 @@ Engine.Game2D =
 	Scene : function(background_texture_or_object)
 	{
 		this.entities = [];
+		this.enable_debug_render = false;
 
 		// Setup 2D orthographic camera
 		this.camera = new Engine.Camera.Orthographic();
@@ -322,6 +323,11 @@ Engine.Game2D =
 		this.Clear = function()
 		{
 			this.entities = [];
+		};
+
+		this.EnableDebugRender = function(state)
+		{
+			this.enable_debug_render = state;
 		};
 
 		this.Render = function(info)
@@ -417,7 +423,7 @@ Engine.Game2D =
 				Engine.Gfx.DrawQuad();
 
 				// Debug render?
-				if(entity.enable_debug_render)
+				if(entity.enable_debug_render || this.enable_debug_render)
 				{
 					// Draw entity AABB quad (outline)
 					var aabb   = entity.GetAABB();
@@ -455,7 +461,7 @@ Engine.Game2D =
 					                      Engine.Vec2.Add(entity.position, [0, line_length]), Engine.Colour.Blue, 3);
 				}
 			}
-		}
+		};
 	},
 
 	Background : function()
