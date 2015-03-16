@@ -50,6 +50,20 @@ Engine.Debug =
 		});
 	},
 
+	DrawPolygon : function(vertices, colour, camera)
+	{
+		draw_commands.push(
+		{
+			func   : Engine.Debug.debug_draw_func_poly,
+			config :
+			{
+				vertices : vertices,
+				colour   : colour || Engine.Colour.Red,
+				camera   : camera
+			}
+		});
+	},
+
 	DrawCircle : function(position, radius, colour, camera)
 	{
 		draw_commands.push(
@@ -189,6 +203,47 @@ Engine.Debug =
 
 		// Draw rectangle
 		Engine.Gfx.DrawQuad();
+	},
+
+	debug_draw_func_poly : function(config)
+	{
+		var poly_verts =
+		{
+			attribute_name : "a_pos",
+			item_size      : 3,
+			draw_mode      : "triangle_fan",
+			stream         : [],
+		};
+
+		// Setup vertex stream
+		for(var i = 0; i < config.vertices.length; ++i)
+		{
+			var vert = config.vertices[i];
+			poly_verts.stream.push(vert[0]);
+			poly_verts.stream.push(vert[1]);
+			poly_verts.stream.push(0.0);
+		}
+
+		// Bind shader
+		Engine.Gfx.BindShaderProgram(Engine.Debug.debug_draw_program_basic);
+
+		// Create & bind poly vertex stream
+		var poly_vbo = Engine.Gfx.CreateVertexBuffer(poly_verts);
+		Engine.Gfx.BindVertexBuffer(poly_vbo);
+
+		// Setup transform (canvas space)
+		var mtx_proj = mat4.create(); mat4.identity(mtx_proj);
+		var canvas_size = Engine.Canvas.GetSize();
+		mat4.ortho(mtx_proj, 0, canvas_size[0], 0, canvas_size[1], -1, 1);
+		Engine.Gfx.SetShaderConstant("u_trans_model", Engine.Math.IdentityMatrix, Engine.Gfx.SC_MATRIX4);
+		Engine.Gfx.SetShaderConstant("u_trans_view",  Engine.Math.IdentityMatrix, Engine.Gfx.SC_MATRIX4);
+		Engine.Gfx.SetShaderConstant("u_trans_proj",  mtx_proj, Engine.Gfx.SC_MATRIX4);
+
+		// Set colour
+		Engine.Gfx.SetShaderConstant("u_colour", config.colour, Engine.Gfx.SC_COLOUR);
+
+		// Draw line
+		Engine.Gfx.DrawArray();
 	},
 
 	Break : function()
