@@ -188,6 +188,18 @@ Engine.Vec2 =
 		return v1[0] == v2[0] && v1[1] == v2[1];
 	},
 
+	Transform : function(v, matrix)
+	{
+		// Assumes matrix is 4x4
+		var x = matrix[0] * v[0] + matrix[4] * v[1] + matrix[12];
+		var y = matrix[1] * v[0] + matrix[5] * v[1] + matrix[13];
+		return [x, y];
+	},
+
+	// Constants
+	AxisX : [1, 0],
+	AxisY : [0, 1],
+
 	// Short-hand aliases
 	Sub     : function(v1, v2) { return Engine.Vec2.Subtract(v1, v2); },
 	Mul     : function(v1, v2) { return Engine.Vec2.Multiply(v1, v2); },

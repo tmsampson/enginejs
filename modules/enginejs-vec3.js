@@ -182,6 +182,22 @@ Engine.Vec3 =
 		return v1[0] == v2[0] && v1[1] == v2[1] && v1[2] == v2[2];
 	},
 
+	Transform : function(v, matrix)
+	{
+		// Assumes matrix is 4x4
+		var x = a[0], y = a[1], z = a[2];
+		var w = (m[3] * x + m[7] * y + m[11] * z + m[15]) || 1.0;
+		out_x = (m[0] * x + m[4] * y + m[8]  * z + m[12]) / w;
+		out_y = (m[1] * x + m[5] * y + m[9]  * z + m[13]) / w;
+		out_z = (m[2] * x + m[6] * y + m[10] * z + m[14]) / w;
+		return [out_x, out_y, out_z];
+	},
+
+	// Constants
+	AxisX : [1, 0, 0],
+	AxisY : [0, 1, 0],
+	AxisZ : [0, 0, 1],
+
 	// Short-hand aliases
 	Sub     : function(v1, v2) { return Engine.Vec3.Subtract(v1, v2); },
 	Mul     : function(v1, v2) { return Engine.Vec3.Multiply(v1, v2); },
