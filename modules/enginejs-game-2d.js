@@ -216,13 +216,30 @@ Engine.Game2D =
 				switch(shape.type)
 				{
 					case "rect":
-						results.push(
+						if(this.rotation == 0)
 						{
-							type   : "rect",
-							offset : transformed_offset,
-							width  : shape.width  * sprite_scale_factor[0],
-							height : shape.height * sprite_scale_factor[1]
-						});
+							// Axis-aligned rect
+							results.push(
+							{
+								type   : "rect",
+								offset : transformed_offset,
+								width  : shape.width  * sprite_scale_factor[0],
+								height : shape.height * sprite_scale_factor[1]
+							});
+						}
+						else
+						{
+							// Rotated rect
+							var bl = transformed_offset;
+							var br = Engine.Vec2.Transform(Engine.Vec2.Add(shape.offset, [shape.width, 0]), mtx_trans);
+							var tr = Engine.Vec2.Transform(Engine.Vec2.Add(shape.offset, [shape.width, shape.height]), mtx_trans);
+							var tl = Engine.Vec2.Transform(Engine.Vec2.Add(shape.offset, [0, shape.height]), mtx_trans);
+							results.push(
+							{
+								type     : "polygon",
+								vertices : [bl, br, tr, tl],
+							});
+						}
 						break;
 					case "circle":
 						results.push(
@@ -420,6 +437,9 @@ Engine.Game2D =
 						{
 							case "rect":
 								Engine.Debug.DrawRect(shape.offset, shape.width, shape.height, colour);
+								break;
+							case "polygon":
+								Engine.Debug.DrawPolygon(shape.vertices, colour);
 								break;
 							case "circle":
 								Engine.Debug.DrawCircle(shape.offset, shape.radius, colour);
