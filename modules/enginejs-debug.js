@@ -77,15 +77,13 @@ Engine.Debug =
 		// Note: This is called post user-rendering so we can disable
 		//       z-test and render draw commands in order they were issued
 		Engine.Gfx.EnableDepthTest(false);
-		Engine.Gfx.EnableBlend(false);
+		Engine.Gfx.EnableBlend(true);
 
 		for(var i = 0; i < draw_commands.length; ++i)
 		{
 			var command = draw_commands[i];
 			command.func(command.config);
 		}
-
-		Engine.Gfx.EnableBlend(true);
 	},
 
 	// ****************************************
