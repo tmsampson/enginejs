@@ -527,7 +527,7 @@ Engine.Gfx =
 	ResizeViewport : function()
 	{
 		// Update gl viewport to match canvas
-		Engine.GL.viewport(0, 0, Engine.Canvas.width, Engine.Canvas.height);
+		Engine.GL.viewport(0, 0, Engine.Canvas.GetWidth(), Engine.Canvas.GetHeight());
 
 		// If we have an active camera, let's update this to cope with the new canvas size
 		if(this.active_camera)
