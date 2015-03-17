@@ -38,9 +38,7 @@ Engine.Device =
 			return;
 
 		// Resize maximised canvas accordingly
-		Engine.Canvas.width = window.innerWidth;
-		Engine.Canvas.height = window.innerHeight;
-		Engine.Gfx.ResizeViewport();
+		Engine.Canvas.Resize(window.innerWidth, window.innerHeight);
 	},
 
 	OnFullScreen : function(is_fullscreen)
@@ -52,8 +50,8 @@ Engine.Device =
 		// Update canvas size accordingly
 		if(!is_fullscreen)
 		{
-			Engine.Canvas.width  = Engine.Device.original_canvas_size[0];
-			Engine.Canvas.height = Engine.Device.original_canvas_size[1];
+			Engine.Canvas.Resize(Engine.Device.original_canvas_size[0],
+			                     Engine.Device.original_canvas_size[1]);
 		}
 
 		// Make sure viewport is always resized
@@ -75,10 +73,8 @@ Engine.Device =
 		$(Engine.Canvas).appendTo('body');
 		$(Engine.Canvas).css("display", "block");
 		$(Engine.Canvas).show();
-		Engine.Canvas.width = window.innerWidth;
-		Engine.Canvas.height = window.innerHeight;
+		Engine.Canvas.Resize(window.innerWidth, window.innerHeight);
 		Engine.Device.is_maximised = true;
-		Engine.Gfx.ResizeViewport();
 	},
 
 	Restore : function()
@@ -94,8 +90,7 @@ Engine.Device =
 
 		// Cache the original size of the canvas and maximise
 		Engine.Device.original_canvas_size  = Engine.Canvas.GetSize();
-		Engine.Canvas.width  = screen.width;
-		Engine.Canvas.height = screen.height;
+		Engine.Canvas.Resize(screen.width, screen.height);
 
 		// Initiate transition to fullscreen mode
 		if(Engine.Canvas.webkitRequestFullScreen)
