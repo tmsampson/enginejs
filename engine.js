@@ -41,6 +41,7 @@ Engine =
 		{ name : "EngineJS-Audio",    js : "enginejs/modules/enginejs-audio.js"       },
 		{ name : "EngineJS-Editor",   js : "enginejs/modules/enginejs-editor.js"      },
 		{ name : "EngineJS-Device",   js : "enginejs/modules/enginejs-device.js"      },
+		{ name : "EngineJS-Text2D",   js : "enginejs/modules/enginejs-text-2d.js"     },
 	],
 
 	// *************************************************************************************
