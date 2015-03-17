@@ -4,7 +4,7 @@
 
 Engine.Game2D =
 {
-	Entity : function(texture_or_sprite, config)
+	Entity : function(texture_or_sprite, tag, config)
 	{
 		// Setup defaults
 		this.original_size       = [0, 0];
@@ -17,6 +17,7 @@ Engine.Game2D =
 		this.alpha               = 1;
 		this.is_visible          = true;
 		this.enable_debug_render = false;
+		this.tag                 = tag || "";
 
 		// Apply any user overrides
 		$.extend(this, config);
@@ -61,6 +62,11 @@ Engine.Game2D =
 			{
 				this.sprite.Update(info);
 			}
+		};
+
+		this.SetTag = function(tag)
+		{
+			this.tag = tag;
 		};
 
 		this.SetVelocity = function(velocity)
@@ -121,6 +127,11 @@ Engine.Game2D =
 		this.IsVisible = function()
 		{
 			return this.is_visible;
+		};
+
+		this.GetTag = function()
+		{
+			return this.tag;
 		};
 
 		this.GetOrigin = function()
