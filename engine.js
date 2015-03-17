@@ -155,6 +155,12 @@ Engine =
 			Engine.Canvas.GetAspectRatio = function()  { return this.width / this.height; };
 			Engine.Canvas.GetMaxDimension = function() { return this.width > this.height? this.width  : this.height; };
 			Engine.Canvas.GetMinDimension = function() { return this.width > this.height? this.height : this.width;  };
+			Engine.Canvas.Resize = function(width, height)
+			{
+				this.width = width; this.height = height;
+				if(Engine.Gfx) { Engine.Gfx.ResizeViewport(); }
+				if(Engine.Text2D) { Engine.Text2D.Resize(); }
+			};
 			Engine.Canvas.EnableContextMenu = function(do_enable)
 			{
 				// Suppress canvas right-click context menu?
