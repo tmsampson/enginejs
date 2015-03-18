@@ -144,6 +144,16 @@ Engine.Game2D =
 			return this.position;
 		};
 
+		this.GetX = function()
+		{
+			return this.position[0];
+		};
+
+		this.GetY = function()
+		{
+			return this.position[1];
+		};
+
 		this.GetRotation = function()
 		{
 			return this.rotation;
