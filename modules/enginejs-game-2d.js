@@ -154,6 +154,11 @@ Engine.Game2D =
 			return this.position[1];
 		};
 
+		this.GetVelocity = function()
+		{
+			return this.velocity;
+		};
+
 		this.GetRotation = function()
 		{
 			return this.rotation;
@@ -449,10 +454,10 @@ Engine.Game2D =
 					// Draw entity AABB quad (outline)
 					var aabb   = entity.GetAABB();
 					var width  = aabb.max[0] - aabb.min[0], height = aabb.max[1] - aabb.min[1];
-					Engine.Debug.DrawLine(aabb.min, Engine.Vec2.Add(aabb.min, [0,  height]), Engine.Colour.Black);
-					Engine.Debug.DrawLine(aabb.min, Engine.Vec2.Add(aabb.min, [width,   0]), Engine.Colour.Black);
-					Engine.Debug.DrawLine(aabb.max, Engine.Vec2.Add(aabb.max, [-width,  0]), Engine.Colour.Black);
-					Engine.Debug.DrawLine(aabb.max, Engine.Vec2.Add(aabb.max, [0, -height]), Engine.Colour.Black);
+					Engine.Debug.DrawLine(aabb.min, Engine.Vec2.Add(aabb.min, [0,  height]), Engine.Colour.Orange);
+					Engine.Debug.DrawLine(aabb.min, Engine.Vec2.Add(aabb.min, [width,   0]), Engine.Colour.Orange);
+					Engine.Debug.DrawLine(aabb.max, Engine.Vec2.Add(aabb.max, [-width,  0]), Engine.Colour.Orange);
+					Engine.Debug.DrawLine(aabb.max, Engine.Vec2.Add(aabb.max, [0, -height]), Engine.Colour.Orange);
 
 					// Draw collision shapes?
 					colour = [1.0, 0.0, 0.0, 0.5];
