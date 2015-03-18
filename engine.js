@@ -144,7 +144,9 @@ Engine =
 		{
 			// Try to grab the standard context. If it fails, fallback to experimental
 			Engine.Canvas = canvas || document.getElementsByTagName("canvas")[0];
-			Engine.GL = Engine.Canvas.getContext("webgl") || Engine.Canvas.getContext("experimental-webgl");
+			var webgl_init_config = { alpha: false };
+			Engine.GL = Engine.Canvas.getContext("webgl", webgl_init_config) ||
+			            Engine.Canvas.getContext("experimental-webgl", webgl_init_config);
 			Engine.Canvas.is_fullscreen = false;
 
 			// Canvas helper methods
