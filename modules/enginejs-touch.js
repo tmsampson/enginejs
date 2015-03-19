@@ -5,7 +5,7 @@
 Engine.Touch =
 {
 	streams              : [],   // Event stream per-finger
-	just_released        : [],   // Index of stream just released (lifetime = 1 frame)
+	just_released        : [],   // Index of stream(s) just released (lifetime = 1 frame)
 	is_first_touch       : true, // Flag used to detect first ever touch
 	first_touch_handlers : [],   // Collection of registered handler functions for "first-touch" event
 
@@ -31,6 +31,18 @@ Engine.Touch =
 		var i = index || 0;
 		if(!Engine.Touch.IsPressed(i)) { return null; }
 		return Engine.Array.GetLastValue(Engine.Touch.streams[i]).position;
+	},
+
+	GetX : function(index)
+	{
+		var touch_pos = Engine.Touch.GetPosition();
+		return touch_pos? touch_pos[0] : null;
+	},
+
+	GetY : function(index)
+	{
+		var touch_pos = Engine.Touch.GetPosition();
+		return touch_pos? touch_pos[1] : null;
 	},
 
 	GetOngoingSwipe : function(index)
