@@ -39,9 +39,8 @@ Engine.Device =
 			return;
 
 		// Resize maximised canvas accordingly
-		var desired_width = Engine.Device.maximised_aspect_ratio? window.innerHeight * (1 / Engine.Device.maximised_aspect_ratio) : window.innerWidth;
-		var desired_height = window.innerHeight;
-		Engine.Canvas.Resize(desired_width, desired_height);
+		var desired_width = Engine.Device.GetMaximisedCanvasWidth();
+		Engine.Canvas.Resize(desired_width, window.innerHeight);
 	},
 
 	OnFullScreen : function(is_fullscreen)
@@ -82,9 +81,14 @@ Engine.Device =
 		$(Engine.Canvas).css("margin", "auto");
 
 		// Resize canvas
-		var desired_width = aspect_ratio? window.innerHeight * (1 / aspect_ratio) : window.innerWidth;
-		var desired_height = window.innerHeight;
-		Engine.Canvas.Resize(desired_width, desired_height);
+		var desired_width = Engine.Device.GetMaximisedCanvasWidth();
+		Engine.Canvas.Resize(desired_width, window.innerHeight);
+	},
+
+	GetMaximisedCanvasWidth : function()
+	{
+		var aspect = Engine.Device.maximised_aspect_ratio;
+		return aspect? window.innerHeight * (1 / aspect) : window.innerWidth;
 	},
 
 	Restore : function()
@@ -129,4 +133,6 @@ document.onmozfullscreenchange = function() { Engine.Device.OnFullScreen(documen
 // to runs in fullscreen when launched from a mobile device's home screen.
 $('head').append("<meta name='mobile-web-app-capable' content='yes'>");
 $('head').append("<meta name='apple-mobile-web-app-capable' content='yes'>");
+
+// Clamp device viewport width to screen width (fixes margin:auto on iPad)
 $('head').append("<meta name='viewport' content='width=device-width,maximum-scale=1.0' />");
