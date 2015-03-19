@@ -388,7 +388,7 @@ Engine.Game2D =
 
 			// For now let's depth sort on CPU to avoid issues with alpha sprites with same depth
 			Engine.Gfx.EnableDepthTest(false);
-			this.entities.sort(function(a, b){ return a.depth - b.depth; });
+			this.entities.sort(function(a, b){ return b.depth - a.depth; });
 
 			// Render setup
 			Engine.Gfx.SetBlendMode(Engine.GL.SRC_ALPHA, Engine.GL.ONE_MINUS_SRC_ALPHA, true);
