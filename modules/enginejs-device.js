@@ -4,9 +4,10 @@
 
 Engine.Device =
 {
-	is_maximised  : false,
-	is_fullscreen : false,
-	original_canvas_size : [],
+	is_maximised           : false,
+	maximised_aspect_ratio : null,
+	is_fullscreen          : false,
+	original_canvas_size   : [],
 
 	IsMaximised : function()
 	{
@@ -38,7 +39,9 @@ Engine.Device =
 			return;
 
 		// Resize maximised canvas accordingly
-		Engine.Canvas.Resize(window.innerWidth, window.innerHeight);
+		var desired_width = Engine.Device.maximised_aspect_ratio? window.innerHeight * (1 / Engine.Device.maximised_aspect_ratio) : window.innerWidth;
+		var desired_height = window.innerHeight;
+		Engine.Canvas.Resize(desired_width, desired_height);
 	},
 
 	OnFullScreen : function(is_fullscreen)
@@ -58,8 +61,11 @@ Engine.Device =
 		Engine.Gfx.ResizeViewport();
 	},
 
-	Maximise : function()
+	Maximise : function(aspect_ratio)
 	{
+		Engine.Device.is_maximised = true;
+		Engine.Device.maximised_aspect_ratio = aspect_ratio;
+
 		// Remove margin, padding and hide all other elements
 		$("*").css("margin", "0").css("padding", "0");
 		$("html, body").css("width", "100%").css("height", "100%");
@@ -69,12 +75,16 @@ Engine.Device =
 		// appears momentarily when changing device orientation
 		$("body").css("background-color", "black");
 
-		// Move canvas directly into page body and resize to fit
+		// Move canvas directly into page body
 		$(Engine.Canvas).appendTo('body');
 		$(Engine.Canvas).css("display", "block");
 		$(Engine.Canvas).show();
-		Engine.Canvas.Resize(window.innerWidth, window.innerHeight);
-		Engine.Device.is_maximised = true;
+		$(Engine.Canvas).css("margin", "auto");
+
+		// Resize canvas
+		var desired_width = aspect_ratio? window.innerHeight * (1 / aspect_ratio) : window.innerWidth;
+		var desired_height = window.innerHeight;
+		Engine.Canvas.Resize(desired_width, desired_height);
 	},
 
 	Restore : function()
@@ -119,3 +129,4 @@ document.onmozfullscreenchange = function() { Engine.Device.OnFullScreen(documen
 // to runs in fullscreen when launched from a mobile device's home screen.
 $('head').append("<meta name='mobile-web-app-capable' content='yes'>");
 $('head').append("<meta name='apple-mobile-web-app-capable' content='yes'>");
+$('head').append("<meta name='viewport' content='width=device-width,maximum-scale=1.0' />");
