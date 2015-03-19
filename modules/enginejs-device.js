@@ -4,10 +4,10 @@
 
 Engine.Device =
 {
-	is_maximised           : false,
-	maximised_aspect_ratio : null,
-	is_fullscreen          : false,
-	original_canvas_size   : [],
+	is_maximised         : false,
+	aspect_ratio         : null,
+	is_fullscreen        : false,
+	original_canvas_size : [],
 
 	IsMaximised : function()
 	{
@@ -60,10 +60,14 @@ Engine.Device =
 		Engine.Gfx.ResizeViewport();
 	},
 
-	Maximise : function(aspect_ratio)
+	SetAspectRatio : function(aspect_ratio)
+	{
+		Engine.Device.aspect_ratio = aspect_ratio;
+	},
+
+	Maximise : function()
 	{
 		Engine.Device.is_maximised = true;
-		Engine.Device.maximised_aspect_ratio = aspect_ratio;
 
 		// Remove margin, padding and hide all other elements
 		$("*").css("margin", "0").css("padding", "0");
@@ -85,10 +89,12 @@ Engine.Device =
 		Engine.Canvas.Resize(desired_width, window.innerHeight);
 	},
 
-	GetMaximisedCanvasWidth : function()
+	GetMaximisedCanvasWidth : function(fullscreen)
 	{
-		var aspect = Engine.Device.maximised_aspect_ratio;
-		return aspect? window.innerHeight * (1 / aspect) : window.innerWidth;
+		var aspect = Engine.Device.aspect_ratio;
+		var width  = fullscreen? screen.width  : window.innerWidth;
+		var height = fullscreen? screen.height : window.innerHeight;
+		return aspect? height * (1 / aspect) : width;
 	},
 
 	Restore : function()
@@ -104,16 +110,21 @@ Engine.Device =
 
 		// Cache the original size of the canvas and maximise
 		Engine.Device.original_canvas_size  = Engine.Canvas.GetSize();
-		Engine.Canvas.Resize(screen.width, screen.height);
+		var desired_width = Engine.Device.GetMaximisedCanvasWidth(true);
+		Engine.Canvas.Resize(desired_width, screen.height);
 
 		// Initiate transition to fullscreen mode
+		// Note: If we're maximised, we want to make the *body* element fullscreen
+		//       so that if the aspect ratio is set, we get the borders (instead
+		//       of stretching the canvas element to be fullscreen)
+		var contaner = Engine.Device.is_maximised? document.body : Engine.Canvas;
 		if(Engine.Canvas.webkitRequestFullScreen)
 		{
-			Engine.Canvas.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);
+			contaner.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);
 		}
 		else
 		{
-			Engine.Canvas.mozRequestFullScreen();
+			contaner.mozRequestFullScreen();
 		}
 	},
 };
