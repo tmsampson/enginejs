@@ -18,6 +18,7 @@ Engine.Game2D =
 		this.is_visible          = true;
 		this.enable_debug_render = false;
 		this.tag                 = tag || "";
+		this.scene               = null; // parent scene
 
 		// Apply any user overrides
 		$.extend(this, config);
@@ -204,7 +205,7 @@ Engine.Game2D =
 			var mtx_trans = this.GetWorldTransform(true); // exclude rotation
 			var min = Engine.Vec2.Transform([0, 0], mtx_trans)
 			var max = Engine.Vec2.Transform(this.original_size, mtx_trans);
-			return { min : min, max : max };
+			return new Engine.Math.AABB2D(min, max);
 		};
 
 		this.GetSpriteScaleFactor = function()
@@ -280,6 +281,33 @@ Engine.Game2D =
 			return results;
 		};
 
+		this.IsTapped = function(custom_radius)
+		{
+			// Tap must have occurred
+			var tap_result = Engine.Touch.IsTapped();
+			if(tap_result == null)
+				return null;
+
+			// Entity needs to be part of a scene
+			if(this.scene == null)
+				return null;
+
+			// Parent scene must have valid camera in order to translate
+			// the tap position from canvas space to world-space
+			var camera = this.scene.GetCamera();
+			if(camera == null)
+				return null;
+
+			// Transform tap position into world-space & test against AABB
+			var canvas_size = Engine.Canvas.GetSize();
+			var pos = Engine.Vec2.Subtract(tap_result.position, camera.position);
+			if(!this.GetAABB().ContainsPoint(pos))
+				return null;
+
+			// Tap point was inside entity AABB
+			return tap_result;
+		}
+
 		this.EnableDebugRender = function(state)
 		{
 			this.enable_debug_render = state;
@@ -338,22 +366,36 @@ Engine.Game2D =
 				for(var i = 0; i < entity.length; ++i)
 				{
 					this.entities.push(entity[i]);
+					entity[i].scene = this;
 				}
 			}
 			else
 			{
 				this.entities.push(entity);
+				entity.scene = this;
 			}
 		};
 
 		this.Clear = function()
 		{
+			// Detach entities from scene
+			for(var i = 0; i < this.entities.length; ++i)
+			{
+				this.entities[i].scene = null;
+			}
+
+			// Clear scene
 			this.entities = [];
 		};
 
 		this.EnableDebugRender = function(state)
 		{
 			this.enable_debug_render = state;
+		};
+
+		this.GetCamera = function()
+		{
+			return this.camera;
 		};
 
 		this.Render = function(info)
