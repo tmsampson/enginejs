@@ -26,4 +26,18 @@ Engine.Math =
 	{
 		return Math.floor(Math.random() * (max - min + 1) + min);
 	},
+
+	AABB2D : function(min, max)
+	{
+		this.min = min;
+		this.max = max;
+		this.ContainsPoint = function(point)
+		{
+			if(point[0] < this.min[0] || point[0] > this.max[0])
+				return false;
+			if(point[1] < this.min[1] || point[1] > this.max[1])
+				return false;
+			return true;
+		};
+	}
 };
