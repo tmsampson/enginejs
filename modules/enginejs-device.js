@@ -146,4 +146,4 @@ $('head').append("<meta name='mobile-web-app-capable' content='yes'>");
 $('head').append("<meta name='apple-mobile-web-app-capable' content='yes'>");
 
 // Clamp device viewport width to screen width (fixes margin:auto on iPad)
-$('head').append("<meta name='viewport' content='width=device-width,maximum-scale=1.0' />");
+$('head').append("<meta name='viewport' content='width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0'/>");
