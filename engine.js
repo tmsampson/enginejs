@@ -162,7 +162,7 @@ Engine =
 			{
 				this.width = width; this.height = height;
 				if(Engine.Gfx) { Engine.Gfx.ResizeViewport(); }
-				if(Engine.Text2D) { Engine.Text2D.Resize(); }
+				if(Engine.Text2D) { Engine.Text2D.ResizeElements(); }
 			};
 			Engine.Canvas.EnableContextMenu = function(do_enable)
 			{

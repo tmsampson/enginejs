@@ -11,13 +11,18 @@ Engine.Text2D =
 		Engine.Text2D.instances.push(instance);
 	},
 
-	Resize : function()
+	ResizeElements : function()
 	{
-		for(var i = 0; i < Engine.Text2D.instances.length; ++i)
+		// We have to delay the CSS position updates slightly such that the DOM has
+		// finished resizing and subsequent results from getBoundingClientRect are correct!
+		setTimeout(function()
 		{
-			var instance = Engine.Text2D.instances[i];
-			instance.UpdateCSSPosition();
-		}
+			for(var i = 0; i < Engine.Text2D.instances.length; ++i)
+			{
+				var instance = Engine.Text2D.instances[i];
+				instance.UpdateCSSPosition();
+			}
+		}, 250);
 	},
 
 	TextBox : function(text, config)
@@ -53,7 +58,7 @@ Engine.Text2D =
 		this.Set = function(text)
 		{
 			this.text = text;
-			this.div.text(this.prefix + this.text);
+			this.div.html(this.prefix + this.text);
 		};
 
 		this.SetSize = function(size)
