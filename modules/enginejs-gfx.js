@@ -516,7 +516,7 @@ Engine.Gfx =
 
 	GetActiveCamera : function()
 	{
-		return active_camera;
+		return this.active_camera;
 	},
 
 	EnableWireframeMode : function(do_enable)
