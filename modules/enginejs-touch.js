@@ -5,7 +5,7 @@
 Engine.Touch =
 {
 	streams              : [],   // Event stream per-finger
-	just_released        : [],   // Index of stream(s) just released (lifetime = 1 frame)
+	just_released        : {},   // Index of stream(s) just released (lifetime = 1 frame)
 	is_first_touch       : true, // Flag used to detect first ever touch
 	first_touch_handlers : [],   // Collection of registered handler functions for "first-touch" event
 
@@ -22,7 +22,7 @@ Engine.Touch =
 	{
 		var i = index || 0;
 		var have_stream = Engine.Touch.streams.length > i;
-		return debounce? Engine.Touch.just_released.indexOf(i) != -1 :
+		return debounce? (i in Engine.Touch.just_released) :
 		                 !have_stream;
 	},
 
@@ -68,6 +68,27 @@ Engine.Touch =
 			last_event     : last_event,
 		};
 		return ongoing;
+	},
+
+	IsTapped : function(index, time_threshold, dist_threshold)
+	{
+		var i = index || 0;
+		if(i in Engine.Touch.just_released)
+		{
+			var time = time_threshold || 100; // ms
+			var release_event = Engine.Touch.just_released[i];
+			var duration = release_event.time - release_event.stream[0].time;
+			if(duration < time)
+			{
+				var dist = dist_threshold || 50
+				var swipe_vector = Engine.Vec2.Subtract(release_event.position, release_event.stream[0].position);
+				if(Engine.Vec2.Length(swipe_vector) < dist)
+				{
+					return release_event;
+				}
+			}
+		}
+		return null;
 	},
 
 	IsSwiped : function(index, debounce, user_config)
@@ -139,7 +160,7 @@ Engine.Touch =
 		}
 
 		// Clear out release events
-		Engine.Touch.just_released = [];
+		Engine.Touch.just_released = {};
 	},
 
 	// Internal event handling
@@ -174,10 +195,19 @@ Engine.Touch =
 			var touch = touches[i];
 			for(var i = 0; i < Engine.Touch.streams.length; ++i)
 			{
-				if(Engine.Touch.streams[i].length && Engine.Touch.streams[i][0].identifier == touch.identifier)
+				var stream = Engine.Touch.streams[i];
+				if(stream.length && stream[0].identifier == touch.identifier)
 				{
+					// Create a release event containing stream (lasts one more frame)
+					Engine.Touch.just_released[i] =
+					{
+						stream   : stream,
+						time     : Engine.Time.Now(),
+						position : Engine.Touch._canvas_position_from_touch(touch)
+					};
+
+					// Remove stream
 					Engine.Touch.streams.splice(i, 1);
-					Engine.Touch.just_released.push(i);
 					break;
 				}
 			}
@@ -203,8 +233,7 @@ Engine.Touch =
 		{
 			identifier     : touch.identifier,
 			time           : Engine.Time.Now(),
-			position       : [ touch.pageX - Engine.Canvas.getBoundingClientRect().left,
-			                 Engine.Canvas.getBoundingClientRect().bottom - touch.pageY ],
+			position       : Engine.Touch._canvas_position_from_touch(touch),
 			just_pressed   : false,
 			swipe_detected : false
 		};
@@ -230,6 +259,12 @@ Engine.Touch =
 			touch_event.just_pressed = true;
 			Engine.Touch.streams.push([touch_event]);
 		}
+	},
+
+	_canvas_position_from_touch : function(touch)
+	{
+		return [ touch.pageX - Engine.Canvas.getBoundingClientRect().left,
+		         Engine.Canvas.getBoundingClientRect().bottom - touch.pageY ];
 	}
 };
 
