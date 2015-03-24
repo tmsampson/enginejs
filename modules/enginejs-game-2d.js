@@ -52,7 +52,7 @@ Engine.Game2D =
 			}
 		}
 
-		this.Update = function(info)
+		this.UpdateInternal = function(info)
 		{
 			// Integrate linear velocity
 			this.position[0] += this.velocity[0] * info.delta_s;
@@ -283,30 +283,75 @@ Engine.Game2D =
 
 		this.IsTapped = function(custom_radius)
 		{
-			// Tap must have occurred
+			// Tap must have just occurred
 			var tap_result = Engine.Touch.IsTapped();
 			if(tap_result == null)
-				return null;
+				return false;
 
 			// Entity needs to be part of a scene
 			if(this.scene == null)
-				return null;
+				return false;
 
 			// Parent scene must have valid camera in order to translate
 			// the tap position from canvas space to world-space
 			var camera = this.scene.GetCamera();
 			if(camera == null)
-				return null;
+				return false;
 
 			// Transform tap position into world-space & test against AABB
 			var canvas_size = Engine.Canvas.GetSize();
 			var pos = Engine.Vec2.Subtract(tap_result.position, camera.position);
+
+			// Using custom radius for hit test?
+			if(custom_radius)
+			{
+				var to_tap = Engine.Vec2.Subtract(pos, this.position);
+				return Engine.Vec2.Length(to_tap) <= custom_radius;
+			}
+
+			// Use AABB for hit test
 			if(!this.GetAABB().ContainsPoint(pos))
-				return null;
+				return false;
 
 			// Tap point was inside entity AABB
-			return tap_result;
-		}
+			return true;
+		};
+
+		this.IsClicked = function(debounce, custom_radius)
+		{
+			// Click must have just occurred
+			var just_clicked = Engine.Mouse.IsPressed("left", debounce);
+			if(!just_clicked)
+				return false;
+
+			// Entity needs to be part of a scene
+			if(this.scene == null)
+				return false;
+
+			// Parent scene must have valid camera in order to translate
+			// the tap position from canvas space to world-space
+			var camera = this.scene.GetCamera();
+			if(camera == null)
+				return false;
+
+			// Transform click position into world-space & test against AABB
+			var canvas_size = Engine.Canvas.GetSize();
+			var pos = Engine.Vec2.Subtract(Engine.Mouse.GetPosition(), camera.position);
+
+			// Using custom radius for hit test?
+			if(custom_radius)
+			{
+				var to_tap = Engine.Vec2.Subtract(pos, this.position);
+				return Engine.Vec2.Length(to_tap) <= custom_radius;
+			}
+
+			// Use AABB for hit test
+			if(!this.GetAABB().ContainsPoint(pos))
+				return false;
+
+			// Click point was inside entity AABB
+			return true;
+		};
 
 		this.EnableDebugRender = function(state)
 		{
@@ -425,7 +470,7 @@ Engine.Game2D =
 			// Update entities
 			for(var i = 0; i < this.entities.length; ++i)
 			{
-				this.entities[i].Update(info);
+				this.entities[i].UpdateInternal(info);
 			}
 
 			// For now let's depth sort on CPU to avoid issues with alpha sprites with same depth
