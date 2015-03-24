@@ -68,3 +68,13 @@ Engine.Resource.RegisterLoadFunction("js", function(descriptor, callback)
 		callback(script_object);
 	});
 });
+
+// Register handler for hot-loading css stylesheet files as resources
+Engine.Resource.RegisterLoadFunction("css", function(descriptor, callback)
+{
+	Engine.LoadCSS(descriptor.file, function(source)
+	{
+		var css_object = { url : descriptor.file };
+		callback(css_object);
+	});
+});
