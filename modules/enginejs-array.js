@@ -46,5 +46,14 @@ Engine.Array =
 		{
 			array.pop();
 		}
+	},
+
+	RemoveItem : function(array, item)
+	{
+		var item_index = array.indexOf(item);
+		if(item_index != -1)
+		{
+			array.splice(item_index, 1);
+		}
 	}
 };
