@@ -421,6 +421,26 @@ Engine.Game2D =
 			}
 		};
 
+		this.Remove = function(entity)
+		{
+			entity.scene = null; // Detach from scene
+			Engine.Array.RemoveItem(this.entities, entity);
+		},
+
+		this.FindByTag = function(tag)
+		{
+			var results = []
+			for(var i = 0; i < this.entities.length; ++i)
+			{
+				var entity = this.entities[i];
+				if(entity.tag == tag)
+				{
+					results.push(entity);
+				}
+			}
+			return results;
+		}
+
 		this.Clear = function()
 		{
 			// Detach entities from scene
