@@ -9,6 +9,13 @@ Engine.Touch =
 	is_first_touch       : true, // Flag used to detect first ever touch
 	first_touch_handlers : [],   // Collection of registered handler functions for "first-touch" event
 
+	IsEnabled : function()
+	{
+		var msTouchEnabled = window.navigator.msMaxTouchPoints;
+		var generalTouchEnabled = "ontouchstart" in document.createElement("div");
+		return (msTouchEnabled || generalTouchEnabled);
+	},
+
 	IsPressed : function(index, debounce)
 	{
 		var i = index || 0;
