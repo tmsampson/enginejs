@@ -195,7 +195,8 @@ Engine.Game2D =
 			}
 
 			// 1. Start in sprite space ([0,0] = bottom left) and move to centre
-			var to_centre = Engine.Vec2.DivideScalar(Engine.Vec2.Negate(this.original_size), 2);
+			var to_centre = this.sprite? Engine.Vec2.DivideScalar(Engine.Vec2.Negate(this.original_size), 2) :
+			                             Engine.Vec2.Negate(this.size);
 			mat4.translate(mtx_trans, mtx_trans, Engine.Vec3.FromVec2(to_centre));
 			return mtx_trans;
 		};
@@ -513,7 +514,7 @@ Engine.Game2D =
 				var mtx_trans = entity.GetWorldTransform();
 
 				// Apply scale & bias as Engine.Gfx.DrawQuad uses centred 2x2 (clip-space) quad
-				var scale = Engine.Vec2.DivideScalar(entity.original_size, 2);
+				var scale = entity.sprite? Engine.Vec2.DivideScalar(entity.original_size, 2) : entity.size;
 				mat4.scale(mtx_trans, mtx_trans, Engine.Vec3.FromVec2(scale));
 				mat4.translate(mtx_trans, mtx_trans, [1, 1, 0]);
 				Engine.Gfx.SetShaderConstant("u_trans_model", mtx_trans, Engine.Gfx.SC_MATRIX4);
