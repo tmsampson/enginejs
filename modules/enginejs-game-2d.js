@@ -30,9 +30,11 @@ Engine.Game2D =
 			var is_sprite = texture_or_sprite.descriptor.extension == "sprite";
 			if(is_sprite)
 			{
-				// Use sprite directly and set entity size to match
-				// grid size of first texture
-				this.sprite = texture_or_sprite;
+				// Create instance of specified sprite
+				this.sprite = new Engine.Game2D.Sprite();
+				$.extend(this.sprite, texture_or_sprite);
+
+				// Set entity size to match grid size of first texture
 				var first_texture = Engine.Array.GetFirstValue(this.sprite.textures);
 				this.original_size = [first_texture.width  / first_texture.descriptor.cols,
 				                      first_texture.height / first_texture.descriptor.rows];
