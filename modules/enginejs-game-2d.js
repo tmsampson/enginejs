@@ -89,6 +89,16 @@ Engine.Game2D =
 			this.position[1] = new_pos[1];
 		};
 
+		this.SetX = function(x)
+		{
+			this.position[0] = x;
+		};
+
+		this.SetY = function(y)
+		{
+			this.position[1] = y;
+		};
+
 		this.SetDepth = function(depth)
 		{
 			this.depth = depth;
@@ -708,6 +718,11 @@ Engine.Game2D =
 			this.origin[1] = origin[1];
 		};
 
+		this.SetSpeed = function(speed)
+		{
+			this.anim_frame_length = 1 / speed;
+		};
+
 		this.SetSequence = function(sequence_name)
 		{
 			if(sequence_name in this.sequences)
@@ -718,8 +733,8 @@ Engine.Game2D =
 				this.mirror = this.active_sequence.mirror;
 
 				// Calculate frame duration and reset animation
-				this.anim_frame_length = (sequence.speed == 0)? 1 : 1.0 / sequence.speed;
-				this.anim_time = 0.0;
+				this.anim_frame_length = (sequence.speed == 0)? 1 : 1 / sequence.speed;
+				this.anim_time = 0;
 
 				// Calculate start, end and max frame indices (linear, left-to-right)
 				this.anim_start_frame_index = (sequence.begin[0] * sequence.texture.descriptor.cols) + sequence.begin[1];
