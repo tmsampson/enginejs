@@ -9,12 +9,23 @@ Engine.Camera =
 	Base : function()
 	{
 		this.helpers  = [];
+		this.viewport = { size : [1, 1], position: [0, 0] };
 		this.mtx_view = mat4.create();
 		this.mtx_proj = mat4.create();
 
 		this.AttachHelper = function(helper_class)
 		{
 			this.helpers.push(helper_class);
+		};
+
+		this.BindViewport = function()
+		{
+			// Setup viewport
+			var viewport_x  = this.viewport.position[0] * Engine.Canvas.GetWidth();
+			var viewport_y  = this.viewport.position[1] * Engine.Canvas.GetHeight();
+			var viewport_width  = this.viewport.size[0] * Engine.Canvas.GetWidth();
+			var viewport_height = this.viewport.size[1] * Engine.Canvas.GetHeight();
+			Engine.GL.viewport(viewport_x, viewport_y, viewport_width, viewport_height);
 		};
 
 		this.Update = function(info)
@@ -38,12 +49,31 @@ Engine.Camera =
 		$.extend(this, new Engine.Camera.Base());
 
 		// Set defaults
-		this.position = [0, 0];
-		this.size     = Engine.Canvas.GetSize();
+		this.position        = [0, 0];
+		this.size            = Engine.Canvas.GetSize();
+		this.use_canvas_size = true,
+		this.follow          = null;
 		$.extend(this, user_config); // Override defaults
 
 		this.UpdateMatrices = function()
 		{
+			// Maintain "default" behaviour by keeping camera size in-sync
+			// with canvas size unless user-defined size has been provided
+			// via SetSize(), which clears the use_canvas_size flag.
+			// Note: the "default" behavior can be restored using ResetSize()
+			if(this.use_canvas_size)
+			{
+				this.size = Engine.Canvas.GetSize();
+			}
+
+			// Follow point?
+			if(this.follow && this.follow.GetPosition)
+			{
+				this.position = Engine.Array.Copy(this.follow.GetPosition());
+				this.position[0] -= this.size[0] / 2;
+				this.position[1] -= this.size[1] / 2;
+			}
+
 			mat4.identity(this.mtx_view);
 
 			// Camera x/y represents bottom left of view region
@@ -53,9 +83,20 @@ Engine.Camera =
 			           -1000.0, 1000.0);
 		};
 
-		this.ResizeViewport = function(new_size)
+		this.SetSize = function(size)
 		{
-			this.size = new_size;
+			this.size = Engine.Array.Copy(size);
+			this.use_canvas_size = false;
+		};
+
+		this.ResetSize = function()
+		{
+			this.use_canvas_size = true;
+		};
+
+		this.Follow = function(some_object)
+		{
+			this.follow = some_object;
 		};
 	},
 
@@ -78,13 +119,9 @@ Engine.Camera =
 
 		this.UpdateMatrices = function()
 		{
+			this.aspect = Engine.Canvas.GetAspectRatio();
 			mat4.lookAt(this.mtx_view, this.position, this.look_at, this.up);
 			mat4.perspective(this.mtx_proj, this.fov, this.aspect, this.near, this.far);
-		};
-
-		this.ResizeViewport = function(new_size)
-		{
-			this.aspect = new_size[0] / new_size[1];
 		};
 	},
 };

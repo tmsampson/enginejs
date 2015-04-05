@@ -512,6 +512,9 @@ Engine.Gfx =
 	BindCamera : function(cam)
 	{
 		this.active_camera = cam;
+
+		// Bind viewport for subsequent draw calls
+		cam.BindViewport();
 	},
 
 	GetActiveCamera : function()
@@ -526,13 +529,10 @@ Engine.Gfx =
 
 	ResizeViewport : function()
 	{
-		// Update gl viewport to match canvas
-		Engine.GL.viewport(0, 0, Engine.Canvas.GetWidth(), Engine.Canvas.GetHeight());
-
-		// If we have an active camera, let's update this to cope with the new canvas size
-		if(this.active_camera)
+		// Update gl viewport to match canvas if no camera is in use
+		if(!this.active_camera)
 		{
-			this.active_camera.ResizeViewport(Engine.Canvas.GetSize());
+			Engine.GL.viewport(0, 0, Engine.Canvas.GetWidth(), Engine.Canvas.GetHeight());
 		}
 	},
 

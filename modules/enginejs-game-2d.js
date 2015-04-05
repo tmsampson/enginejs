@@ -378,9 +378,10 @@ Engine.Game2D =
 	{
 		this.entities = [];
 		this.enable_debug_render = false;
+		this.max_size = [1000000, 1000000];
 
 		// Setup 2D orthographic camera
-		this.camera = new Engine.Camera.Orthographic();
+		this.camera = [new Engine.Camera.Orthographic()];
 
 		// Setup background
 		if(background_texture_or_object)
@@ -473,35 +474,14 @@ Engine.Game2D =
 			this.enable_debug_render = state;
 		};
 
-		this.GetCamera = function()
+		this.GetCamera = function(index)
 		{
-			return this.camera;
+			var i = (index == undefined)? 0 : index;
+			return this.camera[i];
 		};
 
 		this.Render = function(info)
 		{
-			// Update & bind camera
-			this.camera.Update(info);
-			Engine.Gfx.BindCamera(this.camera);
-			var mtx_trans = mat4.create();
-
-			// Render background (or grid if background not setup)
-			Engine.Gfx.EnableBlend(false);
-			var background_in_use = this.background.hasOwnProperty("colour") ||
-			                        this.background.layers.length > 0;
-			if(background_in_use)
-			{
-				this.background.Render(info);
-			}
-			else
-			{
-				Engine.Gfx.EnableDepthTest(false);
-				mat4.scale(mtx_trans, mtx_trans, [this.camera.size[0]*2, this.camera.size[1]*2, 0.0]);
-				Engine.Gfx.BindShaderProgram(this.program_grid);
-				Engine.Gfx.SetShaderConstant("u_trans_model", mtx_trans, Engine.Gfx.SC_MATRIX4);
-				Engine.Gfx.DrawQuad();
-			}
-
 			// Update entities
 			for(var i = 0; i < this.entities.length; ++i)
 			{
@@ -512,101 +492,128 @@ Engine.Game2D =
 			Engine.Gfx.EnableDepthTest(false);
 			this.entities.sort(function(a, b){ return b.depth - a.depth; });
 
-			// Render setup
-			Engine.Gfx.SetBlendMode(Engine.GL.SRC_ALPHA, Engine.GL.ONE_MINUS_SRC_ALPHA, true);
-			Engine.Gfx.BindShaderProgram(this.program_sprite);
-			var last_bound_texture = null;
-			var last_bound_tint = null;
-
-			// Render entities
-			for(var i = 0; i < this.entities.length; ++i)
+			for(var camIndex = 0; camIndex < this.camera.length; ++camIndex)
 			{
-				var entity = this.entities[i];
-				if(!entity.IsVisible()) { continue; }
+				var cam = this.camera[camIndex];
 
-				// Build "model" transform
-				var mtx_trans = entity.GetWorldTransform();
+				// Update & bind camera
+				cam.Update(info);
+				Engine.Gfx.BindCamera(cam);
+				var mtx_trans = mat4.create();
 
-				// Apply scale & bias as Engine.Gfx.DrawQuad uses centred 2x2 (clip-space) quad
-				var scale = entity.sprite? Engine.Vec2.DivideScalar(entity.original_size, 2) : entity.size;
-				mat4.scale(mtx_trans, mtx_trans, Engine.Vec3.FromVec2(scale));
-				mat4.translate(mtx_trans, mtx_trans, [1, 1, 0]);
-				Engine.Gfx.SetShaderConstant("u_trans_model", mtx_trans, Engine.Gfx.SC_MATRIX4);
-
-				// Setup tint
-				if(entity.tint != last_bound_tint)
+				// Render background (or grid if background not setup)
+				Engine.Gfx.EnableBlend(false);
+				var background_in_use = this.background.hasOwnProperty("colour") ||
+				                        this.background.layers.length > 0;
+				if(background_in_use)
 				{
-					Engine.Gfx.SetShaderConstant("u_tint", entity.tint, Engine.Gfx.SC_VEC4);
-					last_bound_tint = entity.tint;
-				}
-
-				// Setup sprite?
-				if(entity.sprite)
-				{
-					// Setup anim frame
-					var anim_config = [entity.sprite.active_texture.descriptor.rows,
-					                   entity.sprite.active_texture.descriptor.cols,
-					                   entity.sprite.current_anim_frame];
-					Engine.Gfx.SetShaderConstant("u_anim_config", anim_config, Engine.Gfx.SC_VEC3);
-
-					// Setup mirror config
-					Engine.Gfx.SetShaderConstant("u_mirror_config", entity.sprite.mirror, Engine.Gfx.SC_VEC2);
-
-					// Setup texture
-					if(entity.sprite.active_texture != last_bound_texture)
-					{
-						Engine.Gfx.BindTexture(entity.sprite.active_texture, 0);
-						last_bound_texture = entity.sprite.active_texture;
-					}
+					this.background.Render(info);
 				}
 				else
 				{
-					// Fill with tint colour
-					var dummy_texture = Engine.Resources["tx_white"];
-					Engine.Gfx.BindTexture(dummy_texture, 0);
-					last_bound_texture = dummy_texture;
+					Engine.Gfx.EnableDepthTest(false);
+					mat4.scale(mtx_trans, mtx_trans, [this.max_size[0], this.max_size[1], 0.0]);
+					Engine.Gfx.BindShaderProgram(this.program_grid);
+					Engine.Gfx.SetShaderConstant("u_trans_model", mtx_trans, Engine.Gfx.SC_MATRIX4);
+					Engine.Gfx.DrawQuad();
 				}
 
-				// Draw
-				Engine.Gfx.DrawQuad();
+				// Render setup
+				Engine.Gfx.SetBlendMode(Engine.GL.SRC_ALPHA, Engine.GL.ONE_MINUS_SRC_ALPHA, true);
+				Engine.Gfx.BindShaderProgram(this.program_sprite);
+				var last_bound_texture = null;
+				var last_bound_tint = null;
 
-				// Debug render?
-				if(entity.enable_debug_render || this.enable_debug_render)
+				// Render entities
+				for(var i = 0; i < this.entities.length; ++i)
 				{
-					// Draw entity AABB quad (outline)
-					var aabb  = entity.GetAABB();
-					var width = aabb.max[0] - aabb.min[0], height = aabb.max[1] - aabb.min[1];
-					Engine.Debug.DrawLine(aabb.min, Engine.Vec2.Add(aabb.min, [0,  height]), Engine.Colour.Orange);
-					Engine.Debug.DrawLine(aabb.min, Engine.Vec2.Add(aabb.min, [width,   0]), Engine.Colour.Orange);
-					Engine.Debug.DrawLine(aabb.max, Engine.Vec2.Add(aabb.max, [-width,  0]), Engine.Colour.Orange);
-					Engine.Debug.DrawLine(aabb.max, Engine.Vec2.Add(aabb.max, [0, -height]), Engine.Colour.Orange);
+					var entity = this.entities[i];
+					if(!entity.IsVisible()) { continue; }
 
-					// Draw collision shapes?
-					colour = [1.0, 0.0, 0.0, 0.5];
-					var collision_shapes = entity.GetTransformedCollisionShapes();
-					for(var j = 0; j < collision_shapes.length; ++j)
+					// Build "model" transform
+					var mtx_trans = entity.GetWorldTransform();
+
+					// Apply scale & bias as Engine.Gfx.DrawQuad uses centred 2x2 (clip-space) quad
+					var scale = entity.sprite? Engine.Vec2.DivideScalar(entity.original_size, 2) : entity.size;
+					mat4.scale(mtx_trans, mtx_trans, Engine.Vec3.FromVec2(scale));
+					mat4.translate(mtx_trans, mtx_trans, [1, 1, 0]);
+					Engine.Gfx.SetShaderConstant("u_trans_model", mtx_trans, Engine.Gfx.SC_MATRIX4);
+
+					// Setup tint
+					if(entity.tint != last_bound_tint)
 					{
-						var shape = collision_shapes[j];
-						switch(shape.type)
-						{
-							case "rect":
-								Engine.Debug.DrawRect(shape.offset, shape.width, shape.height, colour);
-								break;
-							case "polygon":
-								Engine.Debug.DrawPolygon(shape.vertices, colour);
-								break;
-							case "circle":
-								Engine.Debug.DrawCircle(shape.offset, shape.radius, colour);
-								break;
-						}
+						Engine.Gfx.SetShaderConstant("u_tint", entity.tint, Engine.Gfx.SC_VEC4);
+						last_bound_tint = entity.tint;
 					}
 
-					// Draw origin
-					var line_length = 10;
-					Engine.Debug.DrawLine(Engine.Vec2.Subtract(entity.position, [line_length, 0]),
-					                      Engine.Vec2.Add(entity.position, [line_length, 0]), Engine.Colour.Blue, 3);
-					Engine.Debug.DrawLine(Engine.Vec2.Subtract(entity.position, [0, line_length]),
-					                      Engine.Vec2.Add(entity.position, [0, line_length]), Engine.Colour.Blue, 3);
+					// Setup sprite?
+					if(entity.sprite)
+					{
+						// Setup anim frame
+						var anim_config = [entity.sprite.active_texture.descriptor.rows,
+						                   entity.sprite.active_texture.descriptor.cols,
+						                   entity.sprite.current_anim_frame];
+						Engine.Gfx.SetShaderConstant("u_anim_config", anim_config, Engine.Gfx.SC_VEC3);
+
+						// Setup mirror config
+						Engine.Gfx.SetShaderConstant("u_mirror_config", entity.sprite.mirror, Engine.Gfx.SC_VEC2);
+
+						// Setup texture
+						if(entity.sprite.active_texture != last_bound_texture)
+						{
+							Engine.Gfx.BindTexture(entity.sprite.active_texture, 0);
+							last_bound_texture = entity.sprite.active_texture;
+						}
+					}
+					else
+					{
+						// Fill with tint colour
+						var dummy_texture = Engine.Resources["tx_white"];
+						Engine.Gfx.BindTexture(dummy_texture, 0);
+						last_bound_texture = dummy_texture;
+					}
+
+					// Draw
+					Engine.Gfx.DrawQuad();
+
+					// Debug render?
+					if(entity.enable_debug_render || this.enable_debug_render)
+					{
+						// Draw entity AABB quad (outline)
+						var aabb  = entity.GetAABB();
+						var width = aabb.max[0] - aabb.min[0], height = aabb.max[1] - aabb.min[1];
+						Engine.Debug.DrawLine(aabb.min, Engine.Vec2.Add(aabb.min, [0,  height]), Engine.Colour.Orange);
+						Engine.Debug.DrawLine(aabb.min, Engine.Vec2.Add(aabb.min, [width,   0]), Engine.Colour.Orange);
+						Engine.Debug.DrawLine(aabb.max, Engine.Vec2.Add(aabb.max, [-width,  0]), Engine.Colour.Orange);
+						Engine.Debug.DrawLine(aabb.max, Engine.Vec2.Add(aabb.max, [0, -height]), Engine.Colour.Orange);
+
+						// Draw collision shapes?
+						colour = [1.0, 0.0, 0.0, 0.5];
+						var collision_shapes = entity.GetTransformedCollisionShapes();
+						for(var j = 0; j < collision_shapes.length; ++j)
+						{
+							var shape = collision_shapes[j];
+							switch(shape.type)
+							{
+								case "rect":
+									Engine.Debug.DrawRect(shape.offset, shape.width, shape.height, colour);
+									break;
+								case "polygon":
+									Engine.Debug.DrawPolygon(shape.vertices, colour);
+									break;
+								case "circle":
+									Engine.Debug.DrawCircle(shape.offset, shape.radius, colour);
+									break;
+							}
+						}
+
+						// Draw origin
+						var line_length = 10;
+						Engine.Debug.DrawLine(Engine.Vec2.Subtract(entity.position, [line_length, 0]),
+						                      Engine.Vec2.Add(entity.position, [line_length, 0]), Engine.Colour.Blue, 3);
+						Engine.Debug.DrawLine(Engine.Vec2.Subtract(entity.position, [0, line_length]),
+						                      Engine.Vec2.Add(entity.position, [0, line_length]), Engine.Colour.Blue, 3);
+					}
 				}
 			}
 		};
