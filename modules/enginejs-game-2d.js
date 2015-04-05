@@ -216,8 +216,10 @@ Engine.Game2D =
 		this.GetAABB = function()
 		{
 			var mtx_trans = this.GetWorldTransform(true); // exclude rotation
-			var min = Engine.Vec2.Transform([0, 0], mtx_trans)
-			var max = Engine.Vec2.Transform(this.original_size, mtx_trans);
+			var min = Engine.Vec2.Transform([0, 0], mtx_trans);
+			var max = this.sprite? this.original_size :
+			                       Engine.Vec2.MultiplyScalar(this.size, 2);
+			max = Engine.Vec2.Transform(max, mtx_trans);
 			return new Engine.Math.AABB2D(min, max);
 		};
 
@@ -494,7 +496,7 @@ Engine.Game2D =
 			else
 			{
 				Engine.Gfx.EnableDepthTest(false);
-				mat4.scale(mtx_trans, mtx_trans, [Engine.Canvas.GetWidth(), Engine.Canvas.GetHeight(), 0.0]);
+				mat4.scale(mtx_trans, mtx_trans, [this.camera.size[0]*2, this.camera.size[1]*2, 0.0]);
 				Engine.Gfx.BindShaderProgram(this.program_grid);
 				Engine.Gfx.SetShaderConstant("u_trans_model", mtx_trans, Engine.Gfx.SC_MATRIX4);
 				Engine.Gfx.DrawQuad();
@@ -572,8 +574,8 @@ Engine.Game2D =
 				if(entity.enable_debug_render || this.enable_debug_render)
 				{
 					// Draw entity AABB quad (outline)
-					var aabb   = entity.GetAABB();
-					var width  = aabb.max[0] - aabb.min[0], height = aabb.max[1] - aabb.min[1];
+					var aabb  = entity.GetAABB();
+					var width = aabb.max[0] - aabb.min[0], height = aabb.max[1] - aabb.min[1];
 					Engine.Debug.DrawLine(aabb.min, Engine.Vec2.Add(aabb.min, [0,  height]), Engine.Colour.Orange);
 					Engine.Debug.DrawLine(aabb.min, Engine.Vec2.Add(aabb.min, [width,   0]), Engine.Colour.Orange);
 					Engine.Debug.DrawLine(aabb.max, Engine.Vec2.Add(aabb.max, [-width,  0]), Engine.Colour.Orange);
