@@ -27,7 +27,7 @@ Engine.Game2D =
 		this.sprite = null;
 		if(texture_or_sprite)
 		{
-			var is_sprite = texture_or_sprite.descriptor.extension == "sprite";
+			var is_sprite = (texture_or_sprite.descriptor.extension == "sprite");
 			if(is_sprite)
 			{
 				// Create instance of specified sprite
