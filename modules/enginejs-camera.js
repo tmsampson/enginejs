@@ -95,11 +95,11 @@ Engine.Camera.Helper =
 	// 3D Orbit
 	Orbit : function(user_config)
 	{
-		this.process_input = true;      // Update based on user input
-		this.look_at       = [0.0, 0.0, 0.0]; // Look at origin
-		this.up            = [0.0, 1.0, 0.0]; // Default up
+		this.process_input = true;                 // Update based on user input
+		this.look_at       = [0.0, 0.0, 0.0];      // Look at origin
+		this.up            = [0.0, 1.0, 0.0];      // Default up
 		this.angles        = [0, 0];
-		this.radius        = 5;
+		this.radius        = [5, 2, 10];           // Default, min, max
 		this.min_y         = -(Math.PI / 2) + 0.1; // prevent alignment with -ve y-axis
 		this.max_y         =  (Math.PI / 2) - 0.1; // prevent alignment with +ve y-axis
 
@@ -110,7 +110,11 @@ Engine.Camera.Helper =
 		{
 			// Zoom
 			var wheel_delta = Engine.Mouse.GetWheelDelta();
-			if(wheel_delta != 0) { this.radius -= wheel_delta * info.delta_s / 3; }
+			if(wheel_delta != 0)
+			{
+				this.radius[0] -= wheel_delta * info.delta_s / 3;
+				this.radius[0] = Engine.Math.Clamp(this.radius[0], this.radius[1], this.radius[2]);
+			}
 
 			// Pan
 			if(Engine.Mouse.IsPressed())
@@ -123,9 +127,9 @@ Engine.Camera.Helper =
 			// Update
 			camera.look_at  = this.look_at;
 			camera.up       = this.up;
-			camera.position = [this.look_at[0] + this.radius * Math.cos(this.angles[0]) * Math.cos(this.angles[1]),
-			                   this.look_at[1] + this.radius * Math.sin(this.angles[1]),
-			                   this.look_at[2] + this.radius * Math.sin(this.angles[0]) * Math.cos(this.angles[1])];
+			camera.position = [this.look_at[0] + this.radius[0] * Math.cos(this.angles[0]) * Math.cos(this.angles[1]),
+			                   this.look_at[1] + this.radius[0] * Math.sin(this.angles[1]),
+			                   this.look_at[2] + this.radius[0] * Math.sin(this.angles[0]) * Math.cos(this.angles[1])];
 		};
 	},
 };
