@@ -379,6 +379,7 @@ Engine.Game2D =
 		this.entities = [];
 		this.enable_debug_render = false;
 		this.max_size = [1000000, 1000000];
+		this.quadtree = new Engine.Spatial.QuadTree();
 
 		// Setup 2D orthographic camera
 		this.cameras = [new Engine.Camera.Orthographic()];
@@ -482,10 +483,14 @@ Engine.Game2D =
 
 		this.Render = function(info)
 		{
-			// Update entities
+			// Rebuild quadtree & update entities
+			this.quadtree.Clear();
 			for(var i = 0; i < this.entities.length; ++i)
 			{
-				this.entities[i].UpdateInternal(info);
+				var entity = this.entities[i];
+				var aabb = entity.GetAABB();
+				this.quadtree.Add({ data : entity, min : aabb.min, max : aabb.max });
+				entity.UpdateInternal(info);
 			}
 
 			// For now let's depth sort on CPU to avoid issues with alpha sprites with same depth
@@ -615,6 +620,9 @@ Engine.Game2D =
 						Engine.Debug.DrawLine(Engine.Vec2.Subtract(entity.position, [0, line_length]),
 						                      Engine.Vec2.Add(entity.position, [0, line_length]), Engine.Colour.Blue, 3);
 					}
+
+					// Debug render quad tree?
+					//this.quadtree.DebugRender();
 				}
 			}
 		};
