@@ -381,7 +381,7 @@ Engine.Game2D =
 		this.max_size = [1000000, 1000000];
 
 		// Setup 2D orthographic camera
-		this.camera = [new Engine.Camera.Orthographic()];
+		this.cameras = [new Engine.Camera.Orthographic()];
 
 		// Setup background
 		if(background_texture_or_object)
@@ -477,7 +477,7 @@ Engine.Game2D =
 		this.GetCamera = function(index)
 		{
 			var i = (index == undefined)? 0 : index;
-			return this.camera[i];
+			return this.cameras[i];
 		};
 
 		this.Render = function(info)
@@ -492,9 +492,10 @@ Engine.Game2D =
 			Engine.Gfx.EnableDepthTest(false);
 			this.entities.sort(function(a, b){ return b.depth - a.depth; });
 
-			for(var camIndex = 0; camIndex < this.camera.length; ++camIndex)
+			// For each camera in the scene...
+			for(var cam_index = 0; cam_index < this.cameras.length; ++cam_index)
 			{
-				var cam = this.camera[camIndex];
+				var cam = this.cameras[cam_index];
 
 				// Update & bind camera
 				cam.Update(info);
