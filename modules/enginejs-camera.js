@@ -51,7 +51,7 @@ Engine.Camera =
 		// Set defaults
 		this.position        = [0, 0];
 		this.size            = Engine.Canvas.GetSize();
-		this.use_canvas_size = true,
+		this.use_canvas_size = !(user_config && user_config.size),
 		this.follow          = null;
 		$.extend(this, user_config); // Override defaults
 
