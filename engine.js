@@ -27,6 +27,7 @@ Engine =
 		{ name : "EngineJS-Easing",   js : "enginejs/modules/enginejs-easing.js"      },
 		{ name : "EngineJS-Vec2",     js : "enginejs/modules/enginejs-vec2.js"        },
 		{ name : "EngineJS-Vec3",     js : "enginejs/modules/enginejs-vec3.js"        },
+		{ name : "EngineJS-Spatial",  js : "enginejs/modules/enginejs-spatial.js"     },
 		{ name : "EngineJS-Camera",   js : "enginejs/modules/enginejs-camera.js"      },
 		{ name : "EngineJS-Net",      js : "enginejs/modules/enginejs-net.js"         },
 		{ name : "EngineJS-Resource", js : "enginejs/modules/enginejs-resource.js"    },
