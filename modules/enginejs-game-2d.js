@@ -380,6 +380,7 @@ Engine.Game2D =
 		this.enable_debug_render = false;
 		this.max_size = [1000000, 1000000];
 		this.quadtree = new Engine.Spatial.QuadTree();
+		this.enable_debug_render_quadtree = false;
 
 		// Setup 2D orthographic camera
 		this.cameras = [new Engine.Camera.Orthographic()];
@@ -483,14 +484,21 @@ Engine.Game2D =
 
 		this.Render = function(info)
 		{
-			// Rebuild quadtree & update entities
+			// Update entities
 			this.quadtree.Clear();
 			for(var i = 0; i < this.entities.length; ++i)
 			{
 				var entity = this.entities[i];
-				var aabb = entity.GetAABB();
-				this.quadtree.Add({ data : entity, min : aabb.min, max : aabb.max });
 				entity.UpdateInternal(info);
+
+				// Cache world-space AABB for this frame & update quadtree
+				entity.cached_aabb = entity.GetAABB();
+				this.quadtree.Add(
+				{
+					data : entity,
+					min  : entity.cached_aabb.min,
+					max  : entity.cached_aabb.max
+				});
 			}
 
 			// For now let's depth sort on CPU to avoid issues with alpha sprites with same depth
@@ -586,7 +594,7 @@ Engine.Game2D =
 					if(entity.enable_debug_render || this.enable_debug_render)
 					{
 						// Draw entity AABB quad (outline)
-						var aabb  = entity.GetAABB();
+						var aabb  = entity.cached_aabb;
 						var width = aabb.max[0] - aabb.min[0], height = aabb.max[1] - aabb.min[1];
 						Engine.Debug.DrawLine(aabb.min, Engine.Vec2.Add(aabb.min, [0,  height]), Engine.Colour.Orange);
 						Engine.Debug.DrawLine(aabb.min, Engine.Vec2.Add(aabb.min, [width,   0]), Engine.Colour.Orange);
@@ -622,7 +630,10 @@ Engine.Game2D =
 					}
 
 					// Debug render quad tree?
-					//this.quadtree.DebugRender();
+					if(this.enable_debug_render_quadtree)
+					{
+						this.quadtree.DebugRender();
+					}
 				}
 			}
 		};
