@@ -172,6 +172,12 @@ Engine.Text2D =
 		this.Set(text);
 		this.UpdateCSSUser();
 
+		// Forward click events
+		// Note: Engine.Mouse can track mouse position when hovered over our div element,
+		//       but we must manually forward the press/release events
+		this.div[0].onmousedown = function(e) { Engine.Mouse.pressed[2][e.button] = true;  };
+		this.div[0].onmouseup   = function(e) { Engine.Mouse.pressed[2][e.button] = false; };
+
 		// Register this instance
 		Engine.Text2D.RegisterTextBox(this);
 	}
