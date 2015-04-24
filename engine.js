@@ -51,8 +51,9 @@ Engine =
 	Resources :
 	{
 		// Vertex shaders
-		vs_basic             : { file: "enginejs/shaders/basic.vs" },
-		vs_basic_transformed : { file: "enginejs/shaders/basic-transformed.vs" },
+		vs_basic                  : { file: "enginejs/shaders/basic.vs" },
+		vs_basic_transformed      : { file: "enginejs/shaders/basic-transformed.vs" },
+		vs_basic_transformed_nouv : { file: "enginejs/shaders/basic-transformed-nouv.vs" },
 
 		// Fragment shaders
 		fs_basic             : { file: "enginejs/shaders/basic.fs" },
@@ -241,6 +242,7 @@ Engine =
 
 			// Kick touch input
 			Engine.Touch.Update();
+			Engine.Gfx.first_frame = false;
 		};
 
 		// Request first render frame
