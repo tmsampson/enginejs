@@ -44,6 +44,18 @@ Engine.Gfx =
 		return vertex_buffer_object;
 	},
 
+	UpdateDynamicVertexBuffer : function(vertex_buffer_object, vertex_buffer_descriptor)
+	{
+		var buffer_type = vertex_buffer_object.buffer_type;
+		var is_index_buffer = (buffer_type == Engine.GL.ELEMENT_ARRAY_BUFFER);
+
+		// Re-bind the buffer
+		Engine.GL.bindBuffer(buffer_type, vertex_buffer_object.resource);
+
+		// Update the data stream
+		Engine.GL.bufferData(buffer_type, new Float32Array(vertex_buffer_descriptor.stream), Engine.GL.DYNAMIC_DRAW);
+	},
+
 	BindVertexBuffer : function(vertex_buffer_object)
 	{
 		this.current_vertex_buffer_object = vertex_buffer_object;
@@ -428,21 +440,25 @@ Engine.Gfx =
 		Engine.GL.clear(Engine.GL.COLOR_BUFFER_BIT);
 	},
 
-	DrawArray : function()
+	DrawArray : function(optional_offset, optional_count)
 	{
 		var wireframe = (this.wireframe_mode || this.force_wireframe_mode);
 		var draw_mode = wireframe? Engine.GL.LINE_LOOP : this.current_vertex_buffer_object.draw_mode;
-		var item_count = this.current_vertex_buffer_object.item_count;
 		var is_index_buffer = (this.current_vertex_buffer_object.buffer_type  == Engine.GL.ELEMENT_ARRAY_BUFFER);
+
+		// Calculate offset / count (by default draw the whole buffer)
+		var offset = optional_offset || 0;
+		var count  = optional_count  || this.current_vertex_buffer_object.item_count;
+
 		if(is_index_buffer)
 		{
 			// Draw indexed
-			Engine.GL.drawElements(draw_mode, item_count, Engine.GL.UNSIGNED_SHORT, 0);
+			Engine.GL.drawElements(draw_mode, count, Engine.GL.UNSIGNED_SHORT, offset);
 		}
 		else
 		{
 			// Draw non-indexed
-			Engine.GL.drawArrays(draw_mode, 0, item_count);
+			Engine.GL.drawArrays(draw_mode, offset, count);
 		}
 	},
 
