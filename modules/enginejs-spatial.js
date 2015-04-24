@@ -14,7 +14,7 @@ Engine.Spatial =
 		this.Init = function()
 		{
 			// Setup default state
-			this.root = new Engine.Spatial.QuadTreeNode(this.min, this.max, this.max_items_per_node);
+			this.root = new Engine.Spatial.QuadTreeNode(null, this.min, this.max, this.max_items_per_node);
 		};
 		this.Init();
 
@@ -56,33 +56,49 @@ Engine.Spatial =
 		};
 	},
 
-	QuadTreeNode : function(min, max, max_items)
+	QuadTreeNode : function(parent, min, max, max_items)
 	{
+		this.parent = parent;
 		this.min = min; this.max = max;
 		this.max_items = max_items;
 		this.items = [];
 		this.children = [];
 
+		this.HasChildren = function()
+		{
+			return (this.children.length != 0);
+		};
+
+		this.IsFull = function()
+		{
+			return (this.items.length == this.max_items);
+		};
+
 		this.Add = function(item)
 		{
 			// Do I need to split?
-			if((this.children.length == 0) && this.items.length == (this.max_items-1))
+			if(!this.HasChildren() && this.IsFull())
 			{
 				this.Split();
 			}
 
-			// Do I have child nodes?
-			if(this.children.length == 0)
+			// Can we add to a child node?
+			if(this.HasChildren() && this.TryAddToChild(item))
 			{
-				this.items.push(item); // Insert into this node
+				return;
 			}
-			else
-			{
-				this.AddToChildren(item);
-			}
-		}
 
-		this.AddToChildren = function(item)
+			// No children or item is not contained fully in child, store in this node
+			this.Insert(item);
+		};
+
+		this.Insert = function(item)
+		{
+			item.qtree_node = this;
+			this.items.push(item);
+		};
+
+		this.TryAddToChild = function(item)
 		{
 			// Look for a suitable child node
 			for(var i = 0; i < this.children.length; ++i)
@@ -91,14 +107,11 @@ Engine.Spatial =
 				if(child.FullyContainsItem(item))
 				{
 					child.Add(item);
-					return;
+					return true;
 				}
 			}
 
-			// Looks like we couldn't find a suitable child that fully contained the
-			// item. In this situation we store the item in the parent (this node), even
-			// if we've surpassed max_items
-			this.items.push(item);
+			return false;
 		};
 
 		this.Split = function()
@@ -110,17 +123,17 @@ Engine.Spatial =
 			var child_size = [(max[0] - min[0]) / 2, (max[1] - min[1]) / 2];
 
 			// Setup child nodes
-			this.children.push(new Engine.Spatial.QuadTreeNode(min, [min[0] + child_size[0], min[1] + child_size[1]], this.max_items)); // BL
-			this.children.push(new Engine.Spatial.QuadTreeNode([min[0] + child_size[0], min[1]], [max[0], min[1] + child_size[1]], this.max_items)); // BR
-			this.children.push(new Engine.Spatial.QuadTreeNode([min[0], min[1] + child_size[1]], [min[0] + child_size[0], max[1]], this.max_items)); // TL
-			this.children.push(new Engine.Spatial.QuadTreeNode([min[0] + child_size[0], min[1] + child_size[1]], max, this.max_items)); // TR
+			this.children.push(new Engine.Spatial.QuadTreeNode(this, min, [min[0] + child_size[0], min[1] + child_size[1]], this.max_items)); // BL
+			this.children.push(new Engine.Spatial.QuadTreeNode(this, [min[0] + child_size[0], min[1]], [max[0], min[1] + child_size[1]], this.max_items)); // BR
+			this.children.push(new Engine.Spatial.QuadTreeNode(this, [min[0], min[1] + child_size[1]], [min[0] + child_size[0], max[1]], this.max_items)); // TL
+			this.children.push(new Engine.Spatial.QuadTreeNode(this, [min[0] + child_size[0], min[1] + child_size[1]], max, this.max_items)); // TR
 
 			// Distribute items
 			var items = Engine.Array.Copy(this.items);
 			this.items = [];
 			for(var i = 0; i < items.length; ++i)
 			{
-				this.AddToChildren(items[i]);
+				this.TryAddToChild(items[i]);
 			}
 		};
 
