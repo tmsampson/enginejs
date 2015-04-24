@@ -11,6 +11,7 @@ Engine.Debug =
 	circle_model  : null,
 
 	// Dynamic polygon soup for debug geometry (arbitrary lines & polygons)
+	soup_max_verts  : 30000,
 	soup_vbo        : null,
 	soup_idx        : 0, // Current write offset into soup
 	soup_descriptor :
@@ -18,7 +19,7 @@ Engine.Debug =
 		attribute_name : "a_pos",
 		item_size      : 3,
 		draw_mode      : "lines",
-		stream         : new Float32Array(30000),
+		stream         : new Float32Array(Engine.Debug.soup_max_verts),
 		stream_index  : 0
 	},
 
