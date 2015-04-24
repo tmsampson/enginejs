@@ -440,11 +440,17 @@ Engine.Gfx =
 		Engine.GL.clear(Engine.GL.COLOR_BUFFER_BIT);
 	},
 
-	DrawArray : function(optional_offset, optional_count)
+	DrawArray : function(optional_offset, optional_count, override_drawmode)
 	{
 		var wireframe = (this.wireframe_mode || this.force_wireframe_mode);
 		var draw_mode = wireframe? Engine.GL.LINE_LOOP : this.current_vertex_buffer_object.draw_mode;
 		var is_index_buffer = (this.current_vertex_buffer_object.buffer_type  == Engine.GL.ELEMENT_ARRAY_BUFFER);
+
+		// Override draw mode?
+		if(!wireframe && override_drawmode)
+		{
+			draw_mode = Engine.Gfx.DrawModeFromString[override_drawmode];
+		}
 
 		// Calculate offset / count (by default draw the whole buffer)
 		var offset = optional_offset || 0;
