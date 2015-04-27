@@ -17,7 +17,7 @@ Engine.KeyboardKeyCodeMap =
 	"f9" : 120, "f10" : 121,
 
 	// Letters
-	"r" : 82,
+	"i" : 73, "o" : 79, "p" : 80, "r" : 82,
 
 	// Ignored
 	"f5" : 116
