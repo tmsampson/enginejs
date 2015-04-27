@@ -1,5 +1,5 @@
 // *******************************************
-//# sourceURL=modules/enginejs-quadtree.js
+//# sourceURL=modules/enginejs-spatial.js
 // *******************************************
 var g_stat_splits = 0;
 
@@ -29,8 +29,9 @@ Engine.Spatial =
 			this.root.Add(item, min, max);
 		};
 
-		this.Query = function(min, max)
+		this.Retrieve = function(min, max)
 		{
+			return this.root.Retrieve(min, max);
 		};
 
 		this.DebugRender = function()
@@ -144,6 +145,33 @@ Engine.Spatial =
 			if(item.max[0] > this.max[0] || item.max[1] > this.max[1])
 				return false;
 			return true;
+		};
+
+		this.Retrieve = function(min, max)
+		{
+			// Add items from this node
+			var results = Engine.Array.Copy(this.items);
+
+			if(this.HasChildren())
+			{
+				// Look for a suitable child node
+				for(var i = 0; i < this.children.length; ++i)
+				{
+					var child = this.children[i];
+					if(child.FullyContainsItem({min : min, max : max}))
+					{
+						results = results.concat(child.Retrieve(min, max));
+						return results;
+					}
+				}
+
+				for(var i = 0; i < this.children.length; ++i)
+				{
+					results = results.concat(this.children[i].Retrieve(min, max));
+				}
+			}
+
+			return results;
 		};
 	}
 };
