@@ -44,9 +44,9 @@ Engine.Math =
 		this.Intersects = function(other_aabb)
 		{
 			if(other_aabb.min[0] > this.max[0] || other_aabb.max[0] < this.min[0])
-				return false; // horizontal separation
+				return false; // horizontal axis separation
 			if(other_aabb.min[1] > this.max[1] || other_aabb.max[1] < this.min[1])
-				return false; // horizontal separation
+				return false; // vertical axis separation
 			return true;
 		};
 	}
