@@ -368,6 +368,16 @@ Engine.Game2D =
 			return true;
 		};
 
+		this.GetColliders = function()
+		{
+			if(!this.scene)
+				return 0;
+
+			var aabb = this.GetAABB();
+			var results = this.scene.quadtree.Retrieve(aabb.min, aabb.max);
+			return results;
+		};
+
 		this.EnableDebugRender = function(state)
 		{
 			this.enable_debug_render = state;
@@ -381,6 +391,10 @@ Engine.Game2D =
 		this.max_size = [1000000, 1000000];
 		this.quadtree = new Engine.Spatial.QuadTree();
 		this.enable_debug_render_quadtree = false;
+
+		// Simulation pause/step
+		this.is_paused   = false;
+		this.is_stepping = false;
 
 		// Setup 2D orthographic camera
 		this.cameras = [new Engine.Camera.Orthographic()];
@@ -476,6 +490,28 @@ Engine.Game2D =
 			this.enable_debug_render = state;
 		};
 
+		this.Pause = function()
+		{
+			this.is_paused = true;
+		};
+
+		this.UnPause = function()
+		{
+			this.is_paused = false;
+		};
+
+		this.StepSimulation = function()
+		{
+			// Must be paused to single step the simulation
+			if(!this.is_paused)
+			{
+				Engine.LogError("Use Engine.Game2D.Entity.Pause() to pause the scene before attempting to step the simulation");
+				return;
+			}
+
+			this.is_stepping = true;
+		};
+
 		this.GetCamera = function(index)
 		{
 			var i = (index == undefined)? 0 : index;
@@ -484,22 +520,28 @@ Engine.Game2D =
 
 		this.Render = function(info)
 		{
-			// Update entities
-			this.quadtree.Clear();
-			for(var i = 0; i < this.entities.length; ++i)
+			if(!this.is_paused || this.is_stepping)
 			{
-				var entity = this.entities[i];
-				entity.UpdateInternal(info);
-
-				// Cache world-space AABB for this frame & update quadtree
-				entity.cached_aabb = entity.GetAABB();
-				this.quadtree.Add(
+				// Update entities
+				this.quadtree.Clear();
+				for(var i = 0; i < this.entities.length; ++i)
 				{
-					data : entity,
-					min  : entity.cached_aabb.min,
-					max  : entity.cached_aabb.max
-				});
+					var entity = this.entities[i];
+					entity.UpdateInternal(info);
+
+					// Cache world-space AABB for this frame & update quadtree
+					entity.cached_aabb = entity.GetAABB();
+					this.quadtree.Add(
+					{
+						data : entity,
+						min  : entity.cached_aabb.min,
+						max  : entity.cached_aabb.max
+					});
+				}
 			}
+
+			// Only ever step simulation by a single frame
+			this.is_stepping = false;
 
 			// For now let's depth sort on CPU to avoid issues with alpha sprites with same depth
 			Engine.Gfx.EnableDepthTest(false);
