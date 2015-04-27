@@ -61,6 +61,12 @@ Engine.Text2D =
 			this.div.html(this.prefix + this.text);
 		};
 
+		this.Append = function(text)
+		{
+			this.text += text;
+			this.div.html(this.prefix + this.text);
+		};
+
 		this.SetSize = function(size)
 		{
 			this.size = size;
