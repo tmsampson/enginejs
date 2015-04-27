@@ -150,7 +150,11 @@ Engine.Spatial =
 		this.Retrieve = function(min, max)
 		{
 			// Add items from this node
-			var results = Engine.Array.Copy(this.items);
+			var results = [];
+			for(var i = 0; i < this.items.length; ++i)
+			{
+				results.push(this.items[i].data);
+			}
 
 			if(this.HasChildren())
 			{
