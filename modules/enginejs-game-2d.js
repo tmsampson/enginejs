@@ -368,13 +368,14 @@ Engine.Game2D =
 			return true;
 		};
 
-		this.GetColliders = function()
+		this.GetPotentialColliders = function()
 		{
 			if(!this.scene)
 				return 0;
 
 			var aabb = this.GetAABB();
 			var results = this.scene.quadtree.Retrieve(aabb.min, aabb.max);
+			Engine.Array.RemoveItem(results, this);
 			return results;
 		};
 
@@ -495,7 +496,7 @@ Engine.Game2D =
 			this.is_paused = true;
 		};
 
-		this.UnPause = function()
+		this.Resume = function()
 		{
 			this.is_paused = false;
 		};
@@ -510,6 +511,21 @@ Engine.Game2D =
 			}
 
 			this.is_stepping = true;
+		};
+
+		this.IsPaused = function()
+		{
+			return this.is_paused;
+		};
+
+		this.GetEntities = function()
+		{
+			return this.entities;
+		};
+
+		this.GetEntityCount = function()
+		{
+			return this.entities.length;
 		};
 
 		this.GetCamera = function(index)
@@ -678,6 +694,28 @@ Engine.Game2D =
 					}
 				}
 			}
+		};
+
+		this.HitTest = function(a, b)
+		{
+			var results = []; // Collision pairs
+
+			// Entity instance <--> Tag
+			if(!Engine.Util.IsString(a) && Engine.Util.IsString(b))
+			{
+				var tag = b;
+				var candidates = a.GetPotentialColliders();
+				for(var i = 0; i < candidates.length; ++i)
+				{
+					var candidate = candidates[i];
+					if(candidate.tag == tag && a.GetAABB().Intersects(candidate.GetAABB()))
+					{
+						results.push([a, candidate]);
+					}
+				}
+			}
+
+			return results.length? results : false;
 		};
 	},
 
