@@ -43,11 +43,24 @@ Engine.Math =
 
 		this.Intersects = function(other_aabb)
 		{
-			if(other_aabb.min[0] > this.max[0] || other_aabb.max[0] < this.min[0])
-				return false; // horizontal axis separation
-			if(other_aabb.min[1] > this.max[1] || other_aabb.max[1] < this.min[1])
-				return false; // vertical axis separation
-			return true;
+			return Engine.Math.Intersect_AABB_AABB(this, other_aabb);
 		};
+	},
+
+	// Intersection tests
+	Intersect_AABB_AABB : function(a, b)
+	{
+		if(a.min[0] > b.max[0] || a.max[0] < b.min[0])
+			return false; // horizontal axis separation
+		if(a.min[1] > b.max[1] || a.max[1] < b.min[1])
+			return false; // vertical axis separation
+		return true;
+	},
+
+	Intersect_Circle_Circle : function(a, b)
+	{
+		var radii_sum = a.radius + b.radius;
+		var dist = Engine.Vec2.Distance(a.position, b.position);
+		return dist <= radii_sum;
 	}
 };
