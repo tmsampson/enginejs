@@ -368,8 +368,9 @@ Engine.Game2D =
 			return true;
 		};
 
-		this.GetPotentialColliders = function()
+		this.GetNeighbours = function()
 		{
+			// Return "nearby" neighbours within scene spatial tree
 			if(!this.scene)
 				return 0;
 
@@ -698,19 +699,115 @@ Engine.Game2D =
 
 		this.HitTest = function(a, b)
 		{
-			var results = []; // Collision pairs
+			var results = [];
 
 			// Entity instance <--> Tag
 			if(!Engine.Util.IsString(a) && Engine.Util.IsString(b))
 			{
-				var tag = b;
-				var candidates = a.GetPotentialColliders();
+				var entity = a, tag = b;
+				var aabb = a.GetAABB()
+
+				// ***********************************************************
+				// Phase 1: Broad-scale AABB intersection tests
+				// ***********************************************************
+				var broadscale_results = []; // Entity pairs with overlapping AABBs
+
+				// Grab the entities "neighbours" (these are other entities which
+				// share the same node in the spatial tree)
+				var candidates = entity.GetNeighbours();
 				for(var i = 0; i < candidates.length; ++i)
 				{
+					// Test each candidate neighbour for AABB intersection
 					var candidate = candidates[i];
 					if(candidate.tag == tag && a.GetAABB().Intersects(candidate.GetAABB()))
 					{
-						results.push([a, candidate]);
+						broadscale_results.push(candidate);
+					}
+				}
+
+				// ***********************************************************
+				// Phase 2: Narrow-scale AABB intersection tests
+				// ***********************************************************
+				for(var i = 0; i < broadscale_results.length; ++i)
+				{
+					var other = broadscale_results[i];
+
+					// Get collision shape lists
+					var shapes = a.GetTransformedCollisionShapes();
+					var other_shapes = other.GetTransformedCollisionShapes();
+
+					// If neither entity has collision shapes, the AABB insersect
+					// constitutes a valid collision
+					if(shapes.length == 0 && other_shapes.length == 0)
+					{
+						results.push([a, other]);
+						continue;
+					}
+
+					// If either entity has no collision shapes, use AABB
+					if(shapes.length == 0)
+					{
+						var aabb_shape = { "type" : "rect", "offset" : aabb.min,
+						                   "width"  : aabb.max[0] - aabb.min[0],
+						                   "height" : aabb.max[1] - aabb.min[1] };
+						shapes.push(aabb_shape);
+					}
+					if(other_shapes.length == 0)
+					{
+						var other_aabb = other.GetAABB();
+						var aabb_shape = { "type" : "rect", "offset" : other_aabb.min,
+						                   "width"  : other_aabb.max[0] - other_aabb.min[0],
+						                   "height" : other_aabb.max[1] - other_aabb.min[1] };
+						other_shapes.push(aabb_shape);
+					}
+
+					// Setup list of collision functions
+					// Note: Need to support more pairs!
+					var collision_functions =
+					{
+						"circle,circle"   : function(a, b)
+						{
+							a_circle = { position: a.offset, radius : a.radius };
+							b_circle = { position: b.offset, radius : b.radius }
+							return Engine.Math.Intersect_Circle_Circle(a_circle, b_circle);
+						},
+						"circle,rect"     : null, // unsupported (WIP)
+						"circle,polygon"  : null, // unsupported (WIP),
+						"polygon,polygon" : null, // unsupported (WIP),
+						"polygon, rect"   : null, // unsupported (WIP),
+						"rect,rect"       : function(a, b)
+						{
+							a_aabb = { min : a.offset, max : [a.offset[0] + a.width, a.offset[1] + a.height] };
+							b_aabb = { min : b.offset, max : [b.offset[0] + b.width, b.offset[1] + b.height] };
+							return Engine.Math.Intersect_AABB_AABB(a_aabb, b_aabb);
+						}
+					};
+
+					// Test for intersection between shapes
+					var is_collision = false;
+					for(var j = 0; j < shapes.length && !is_collision; ++j)
+					{
+						var shape = shapes[j];
+						for(var k = 0; k < other_shapes.length && !is_collision; ++k)
+						{
+							var other_shape = other_shapes[k];
+							var collision_func_name = [shape.type, other_shape.type].sort().join(",");
+							var collision_func = collision_functions[collision_func_name];
+							if(collision_func)
+							{
+								if(collision_func(shape, other_shape))
+								{
+									// Collision occured
+									results.push([entity, other]);
+									is_collision = true; // Break out of loops
+								}
+							}
+							else
+							{
+								// No collision test for this shape combination
+								Engine.LogError("Unsupported entity collision shape pair: " + collision_func_name);
+							}
+						}
 					}
 				}
 			}
