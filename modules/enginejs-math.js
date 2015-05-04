@@ -59,8 +59,8 @@ Engine.Math =
 
 	Intersect_Circle_Circle : function(a, b)
 	{
-		var radii_sum = a.radius + b.radius;
-		var dist = Engine.Vec2.Distance(a.position, b.position);
-		return dist <= radii_sum;
+		var radii_squared_sum = (a.radius * a.radius) + (b.radius * b.radius);
+		var squared_dist = Engine.Vec2.DistanceSquared(a.position, b.position);
+		return squared_dist <= radii_squared_sum;
 	}
 };
