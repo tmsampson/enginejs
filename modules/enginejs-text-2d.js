@@ -178,6 +178,20 @@ Engine.Text2D =
 		this.Set(text);
 		this.UpdateCSSUser();
 
+		// Forward click events
+		// Note: Engine.Mouse can track mouse position when hovered over our div element,
+		//       but we must manually forward the press/release events
+		this.div[0].onmousedown = function(e) { Engine.Mouse.pressed[2][e.button] = true;  };
+		this.div[0].onmouseup   = function(e) { Engine.Mouse.pressed[2][e.button] = false; };
+
+		// Forward touch events
+		// Note: Engine.Touch can track touch position when swiping over our div element,
+		//       but we must manually forward the press/release events
+		this.div[0].addEventListener("touchstart",  Engine.Touch._event_touch_start, false);
+		this.div[0].addEventListener("touchend",    Engine.Touch._event_touch_end,   false);
+		this.div[0].addEventListener("touchcancel", Engine.Touch._event_touch_end,   false);
+		this.div[0].addEventListener("touchleave",  Engine.Touch._event_touch_end,   false);
+
 		// Register this instance
 		Engine.Text2D.RegisterTextBox(this);
 	}
