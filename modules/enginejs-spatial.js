@@ -1,8 +1,6 @@
 // *******************************************
 //# sourceURL=modules/enginejs-spatial.js
 // *******************************************
-var g_stat_splits = 0;
-
 Engine.Spatial =
 {
 	QuadTree : function(min, max, max_items_per_node)
@@ -10,6 +8,7 @@ Engine.Spatial =
 		this.min = min || [-10000000, -10000000];
 		this.max = max || [ 10000000,  10000000];
 		this.max_items_per_node = max_items_per_node || 4;
+		this.subdivide_count = 0;
 
 		this.Init = function()
 		{
@@ -20,7 +19,7 @@ Engine.Spatial =
 
 		this.Clear = function()
 		{
-			g_stat_splits = 0;
+			this.subdivide_count = 0;
 			this.Init(); // Clears all nodes
 		};
 
@@ -32,6 +31,11 @@ Engine.Spatial =
 		this.Retrieve = function(min, max)
 		{
 			return this.root.Retrieve(min, max);
+		};
+
+		this.GetSubdivideCount = function()
+		{
+			return this.subdivide_count;
 		};
 
 		this.DebugRender = function()
@@ -117,7 +121,7 @@ Engine.Spatial =
 
 		this.Split = function()
 		{
-			++g_stat_splits;
+			++this.subdivide_count;
 
 			var min = this.min;
 			var max = this.max;
