@@ -163,6 +163,8 @@ Engine =
 			Engine.Canvas.Resize = function(width, height)
 			{
 				this.width = width; this.height = height;
+
+				// Other modules can hook-in here for now
 				if(Engine.Gfx) { Engine.Gfx.ResizeViewport(); }
 				if(Engine.Text2D) { Engine.Text2D.ResizeElements(); }
 			};
@@ -227,11 +229,12 @@ Engine =
 			// Setup per-frame info for client
 			var info =
 			{
-				elapsed_s  : elapsed_ms / 1000,
-				elapsed_ms : elapsed_ms,
-				delta_s    : delta_ms / 1000,
-				delta_ms   : delta_ms,
-			}
+				elapsed_s    : elapsed_ms / 1000,
+				elapsed_ms   : elapsed_ms,
+				delta_s      : delta_ms / 1000,
+				delta_ms     : delta_ms,
+				frame_number : frame_number
+			};
 
 			// Call user render function
 			last_frame_time = Engine.Time.Now();
@@ -243,9 +246,11 @@ Engine =
 			// Kick touch input
 			Engine.Touch.Update();
 			Engine.Gfx.first_frame = false;
+			++frame_number;
 		};
 
 		// Request first render frame
+		var frame_number = 0;
 		var first_frame_time = Engine.Time.Now();
 		var last_frame_time  = Engine.Time.Now();
 		Engine.SetRenderCallback(on_render_internal);
