@@ -462,8 +462,19 @@ Engine.Game2D =
 
 		this.Remove = function(entity)
 		{
-			entity.scene = null; // Detach from scene
-			Engine.Array.RemoveItem(this.entities, entity);
+			if(Engine.Util.IsArray(entity))
+			{
+				for(var i = 0; i < entity.length; ++i)
+				{
+					entity[i].scene = null; // Detach from scene
+					Engine.Array.RemoveItem(this.entities, entity[i]);
+				}
+			}
+			else
+			{
+				entity.scene = null; // Detach from scene
+				Engine.Array.RemoveItem(this.entities, entity);
+			}
 		},
 
 		this.FindByTag = function(tag)
@@ -774,7 +785,7 @@ Engine.Game2D =
 						{
 							a_circle = { position: a.offset, radius : a.radius };
 							b_circle = { position: b.offset, radius : b.radius }
-							return Engine.Math.Intersect_Circle_Circle(a_circle, b_circle);
+							return Engine.Intersect.Circle_Circle(a_circle, b_circle);
 						},
 						"circle,rect"     : null, // unsupported (WIP)
 						"circle,polygon"  : null, // unsupported (WIP),
@@ -784,7 +795,7 @@ Engine.Game2D =
 						{
 							a_aabb = { min : a.offset, max : [a.offset[0] + a.width, a.offset[1] + a.height] };
 							b_aabb = { min : b.offset, max : [b.offset[0] + b.width, b.offset[1] + b.height] };
-							return Engine.Math.Intersect_AABB_AABB(a_aabb, b_aabb);
+							return Engine.Intersect.AABB_AABB(a_aabb, b_aabb);
 						}
 					};
 
@@ -803,7 +814,7 @@ Engine.Game2D =
 								if(collision_func(shape, other_shape))
 								{
 									// Collision occured
-									results.push([entity, other]);
+									results.push(other);
 									is_collision = true; // Break out of loops
 								}
 							}
@@ -912,6 +923,7 @@ Engine.Game2D =
 		this.textures  = {};
 		this.sequences = {};
 		this.collision_shapes = [];
+		this.sequence_has_finished = false;
 
 		// For update
 		this.requires_update = false;
@@ -960,6 +972,7 @@ Engine.Game2D =
 
 				// Will the sprite need updating?
 				this.requires_update = (this.active_sequence.speed != 0 && this.anim_frame_count != 0);
+				this.sequence_has_finished = false;
 			}
 			else
 			{
@@ -987,6 +1000,7 @@ Engine.Game2D =
 				{
 					current_frame = this.anim_frame_count;
 					this.requires_update = false;
+					this.sequence_has_finished = true;
 				}
 			}
 
@@ -997,7 +1011,12 @@ Engine.Game2D =
 		this.GetSequenceName = function()
 		{
 			return this.active_sequence.name;
-		}
+		};
+
+		this.SequenceHasFinished = function()
+		{
+			return this.sequence_has_finished;
+		};
 
 		this.SetMirror = function(horizontal, vertical)
 		{
