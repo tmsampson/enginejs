@@ -19,13 +19,12 @@ Engine.Game2D =
 		this.enable_debug_render = false;
 		this.tag                 = tag || "";
 		this.scene               = null; // parent scene
+		this.sprite              = null;
 
 		// Apply any user overrides
 		$.extend(this, config);
 
-		// Setup sprite?
-		this.sprite = null;
-		if(texture_or_sprite)
+		this.SetSprite = function(texture_or_sprite)
 		{
 			var is_sprite = (texture_or_sprite.descriptor.extension == "sprite");
 			if(is_sprite)
@@ -52,6 +51,12 @@ Engine.Game2D =
 				this.original_size = [texture_or_sprite.width, texture_or_sprite.height];
 				this.size = Engine.Array.Copy(this.original_size);
 			}
+		};
+
+		// Setup sprite?
+		if(texture_or_sprite)
+		{
+			this.SetSprite(texture_or_sprite);
 		}
 
 		this.UpdateInternal = function(info)
