@@ -373,6 +373,28 @@ Engine.Game2D =
 			return true;
 		};
 
+		this.IsOutsideView = function(camera_index)
+		{
+			// Make sure this entity is part of a scene
+			if(!this.scene)
+				return true;
+
+			// Ensure camera index is valid
+			var cam_index = camera_index || 0;
+			var cameras = this.scene.cameras;
+			if(cameras.length <= cam_index)
+			{
+				Engine.LogError("Invalid camera index: " + cam_index);
+				return true;
+			}
+
+			// Check if entity is contained within view
+			var camera = cameras[cam_index];
+			var entity_aabb = this.GetAABB();
+			var camera_aabb = { min: camera.position, max : Engine.Vec2.Add(camera.position, camera.size) };
+			return !Engine.Intersect.AABB_AABB(entity_aabb, camera_aabb);
+		};
+
 		this.GetNeighbours = function()
 		{
 			// Return "nearby" neighbours within scene spatial tree
