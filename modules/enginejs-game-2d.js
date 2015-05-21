@@ -395,6 +395,11 @@ Engine.Game2D =
 			return !Engine.Intersect.AABB_AABB(entity_aabb, camera_aabb);
 		};
 
+		this.IsWithinView = function(camera_index)
+		{
+			return !this.IsOutsideView(camera_index);
+		};
+
 		this.GetNeighbours = function()
 		{
 			// Return "nearby" neighbours within scene spatial tree
