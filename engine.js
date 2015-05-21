@@ -153,6 +153,8 @@ Engine =
 			Engine.Canvas.is_fullscreen = false;
 
 			// Canvas helper methods
+			Engine.Canvas.Show      = function()       { $(this).show(); };
+			Engine.Canvas.Hide      = function()       { $(this).hide(); };
 			Engine.Canvas.GetSize   = function()       { return [this.width, this.height] };
 			Engine.Canvas.GetWidth  = function()       { return this.width; };
 			Engine.Canvas.GetHeight = function()       { return this.height; };
