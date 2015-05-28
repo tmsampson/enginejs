@@ -4,25 +4,52 @@
 
 Engine.Text2D =
 {
-	instances : [],
+	instances        : [],
+	CachedCanvasData :
+	{
+		centre : [], size : [],
+		left : 0, bottom :0,
+		Synch : function()
+		{
+			var need_sync = this.centre[0] != Engine.Canvas.GetCentre()[0] ||
+			                this.centre[1] != Engine.Canvas.GetCentre()[1] ||
+			                this.size[0]   != Engine.Canvas.GetSize()[0]   ||
+			                this.size[1]   != Engine.Canvas.GetSize()[1]   ||
+			                this.left      != Engine.Canvas.getBoundingClientRect().left ||
+			                this.bottom    != Engine.Canvas.getBoundingClientRect().bottom;
+			if(need_sync)
+			{
+				this.centre = Engine.Array.Copy(Engine.Canvas.GetCentre());
+				this.size   = Engine.Array.Copy(Engine.Canvas.GetSize());
+				this.left   = Engine.Canvas.getBoundingClientRect().left;
+				this.bottom = Engine.Canvas.getBoundingClientRect().bottom;
+			}
+
+			return need_sync;
+		}
+	},
+
+	Init : function()
+	{
+		Engine.Text2D.CachedCanvasData.Synch();
+	},
+
+	Update : function()
+	{
+		var canvas_changed = Engine.Text2D.CachedCanvasData.Synch();
+		for(var i = 0; i < Engine.Text2D.instances.length; ++i)
+		{
+			var instance = Engine.Text2D.instances[i];
+			if(canvas_changed || instance.RequiresUpdate())
+			{
+				instance.UpdateCSSPosition();
+			}
+		}
+	},
 
 	RegisterTextBox : function(instance)
 	{
 		Engine.Text2D.instances.push(instance);
-	},
-
-	ResizeElements : function()
-	{
-		// We have to delay the CSS position updates slightly such that the DOM has
-		// finished resizing and subsequent results from getBoundingClientRect are correct!
-		setTimeout(function()
-		{
-			for(var i = 0; i < Engine.Text2D.instances.length; ++i)
-			{
-				var instance = Engine.Text2D.instances[i];
-				instance.UpdateCSSPosition();
-			}
-		}, 250);
 	},
 
 	TextBox : function(text, config)
@@ -108,30 +135,28 @@ Engine.Text2D =
 			this.UpdateCSSPosition();
 		};
 
-		this.UpdateCSSPosition = function()
+		this.UpdateCSSPosition = function(cached_canvas_data)
 		{
-			var canvas_centre = Engine.Canvas.GetCentre();
-			var canvas_size   = Engine.Canvas.GetSize();
-			var canvas_left   = Engine.Canvas.getBoundingClientRect().left;
-			var canvas_bottom = Engine.Canvas.getBoundingClientRect().bottom;
+			// Grab cached canvas data
+			var ccd = Engine.Text2D.CachedCanvasData;
 
 			// Use absolute position
-			var x = canvas_left + this.position[0];
-			var y = canvas_bottom - this.div.height() - this.position[1];
+			var x = ccd.left + this.position[0];
+			var y = ccd.bottom - this.div.height() - this.position[1];
 
 			// Apply vertical docking?
 			switch(this.dock[0])
 			{
 				case "top":
-					y = canvas_bottom - canvas_size[1] + this.padding;
+					y = ccd.bottom - ccd.size[1] + this.padding;
 					break;
 				case "middle":
 				case "centre":
 				case "center":
-					y = canvas_bottom - (canvas_size[1] / 2) - (this.div.height() / 2);
+					y = ccd.bottom - (ccd.size[1] / 2) - (this.div.height() / 2);
 					break;
 				case "bottom":
-					y = canvas_bottom - this.div.height() - this.padding;
+					y = ccd.bottom - this.div.height() - this.padding;
 					break;
 			}
 
@@ -139,21 +164,33 @@ Engine.Text2D =
 			switch(this.dock[1])
 			{
 				case "left":
-					x = canvas_left + this.padding;
+					x = ccd.left + this.padding;
 					break;
 				case "middle":
 				case "centre":
 				case "center":
-					x = canvas_left + (canvas_size[0] / 2) - (this.div.width() / 2);
+					x = ccd.left + (ccd.size[0] / 2) - (this.div.width() / 2);
 					break;
 				case "right":
-					x = canvas_left + canvas_size[0] - this.div.width() - this.padding;
+					x = ccd.left + ccd.size[0] - this.div.width() - this.padding;
 					break;
 			}
+
+			// Cache off width and height
+			this.cached_width = this.div.width();
+			this.cached_height = this.div.height();
 
 			// Update DOM element
 			this.div.css("left", x + "px");
 			this.div.css("top",  y + "px");
+		};
+
+		this.RequiresUpdate = function()
+		{
+			// We need to update and reposition this text element
+			// if the size of the DOM element has changed
+			return this.cached_width  != this.div.width() ||
+			       this.cached_height != this.div.height();
 		};
 
 		this.UpdateCSSSize = function()
@@ -172,6 +209,16 @@ Engine.Text2D =
 			this.dock = [vertical, horizontal];
 			if(padding != undefined) { this.padding = padding; }
 			this.UpdateCSSPosition();
+		};
+
+		this.Show = function()
+		{
+			this.div.show();
+		};
+
+		this.Hide = function()
+		{
+			this.div.hide();
 		};
 
 		// Setup DOM element
@@ -196,3 +243,6 @@ Engine.Text2D =
 		Engine.Text2D.RegisterTextBox(this);
 	}
 };
+
+// Init
+Engine.Text2D.Init();

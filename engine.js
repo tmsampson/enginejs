@@ -169,7 +169,6 @@ Engine =
 
 				// Other modules can hook-in here for now
 				if(Engine.Gfx) { Engine.Gfx.ResizeViewport(); }
-				if(Engine.Text2D) { Engine.Text2D.ResizeElements(); }
 			};
 			Engine.Canvas.EnableContextMenu = function(do_enable)
 			{
@@ -228,6 +227,9 @@ Engine =
 
 			// Flush debug draw
 			Engine.Debug.Update();
+
+			// Update text elements
+			Engine.Text2D.Update();
 
 			// Setup per-frame info for client
 			var info =
