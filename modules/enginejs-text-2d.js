@@ -84,6 +84,9 @@ Engine.Text2D =
 
 		this.Set = function(text)
 		{
+			// No point updating DOM if no change
+			if(text == this.text) return;
+
 			this.text = text;
 			this.div.html(this.prefix + this.text);
 		};
