@@ -20,6 +20,7 @@ Engine.Game2D =
 		this.tag                 = tag || "";
 		this.scene               = null; // parent scene
 		this.sprite              = null;
+		this.cached_aabb         = null;
 
 		// Apply any user overrides
 		$.extend(this, config);
@@ -234,6 +235,8 @@ Engine.Game2D =
 			// Note: native = 1
 			return this.sprite? Engine.Vec2.Divide(this.size, this.original_size) : [1, 1];
 		};
+
+		this.cached_aabb = this.GetAABB();
 
 		this.GetTransformedCollisionShapes = function()
 		{
