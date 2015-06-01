@@ -4,9 +4,11 @@
 
 Engine.Time =
 {
+	high_precision : self.performance !== undefined && self.performance.now !== undefined,
+
 	Now : function()
 	{
-		return new Date().getTime();
+		return Engine.Time.high_precision? self.performance.now() : Date.now();
 	},
 
 	Sleep : function(milliseconds)
