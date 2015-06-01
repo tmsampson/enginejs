@@ -138,7 +138,10 @@ Engine.Spatial =
 			this.items = [];
 			for(var i = 0; i < items.length; ++i)
 			{
-				this.TryAddToChild(items[i]);
+				if(!this.TryAddToChild(items[i]))
+				{
+					this.Insert(items[i]);
+				}
 			}
 		};
 
