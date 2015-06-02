@@ -857,6 +857,23 @@ Engine.Game2D =
 					}
 				}
 			}
+			else if(Engine.Util.IsString(a) && Engine.Util.IsString(b))
+			{
+				// Tag <--> Tag
+				// NOTE: Implementation rough and ready for GB2015, needs reworking!
+				var results = [];
+				var a_instances = this.FindByTag(a);
+				for(var i = 0; i < a_instances.length; ++i)
+				{
+					var a_instance = a_instances[i];
+					var collisions = this.HitTest(a_instance, b);
+					if(collisions.length > 0)
+					{
+						results.push(a_instance);
+						results = results.concat(collisions);
+					}
+				}
+			}
 
 			return results.length? results : false;
 		};
