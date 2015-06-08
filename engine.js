@@ -98,13 +98,13 @@ Engine =
 							Engine.InitWebGL(canvas, cb)
 						}
 					},
-					// {
-					// 	first : function(cb) // 2. Load internal modules
-					// 	{
-					// 		Engine.LogSection("Loading internal modules");
-					// 		Engine.LoadModules(Engine.Modules, cb);
-					// 	}
-					// },
+					{
+						first : function(cb) // 2. Load internal modules
+						{
+							Engine.LogSection("Loading internal modules");
+							Engine.LoadModules(Engine.Modules, cb);
+						}
+					},
 					{
 						first : function(cb) // 3. Load internal resources
 						{
