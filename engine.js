@@ -24,7 +24,7 @@ Engine =
 		{ name : "EngineJS-Debug",     js : "enginejs/modules/enginejs-debug.js"       },
 		{ name : "EngineJS-Array",     js : "enginejs/modules/enginejs-array.js"       },
 		{ name : "EngineJS-Math",      js : "enginejs/modules/enginejs-math.js"        },
-		{ name : "EngineJS-Intersect", js : "enginejs/modules/enginejs-intersect.js"  },
+		{ name : "EngineJS-Intersect", js : "enginejs/modules/enginejs-intersect.js"   },
 		{ name : "EngineJS-Easing",    js : "enginejs/modules/enginejs-easing.js"      },
 		{ name : "EngineJS-Vec2",      js : "enginejs/modules/enginejs-vec2.js"        },
 		{ name : "EngineJS-Vec3",      js : "enginejs/modules/enginejs-vec3.js"        },
@@ -98,13 +98,13 @@ Engine =
 							Engine.InitWebGL(canvas, cb)
 						}
 					},
-					{
-						first : function(cb) // 2. Load internal modules
-						{
-							Engine.LogSection("Loading internal modules");
-							Engine.LoadModules(Engine.Modules, cb);
-						}
-					},
+					// {
+					// 	first : function(cb) // 2. Load internal modules
+					// 	{
+					// 		Engine.LogSection("Loading internal modules");
+					// 		Engine.LoadModules(Engine.Modules, cb);
+					// 	}
+					// },
 					{
 						first : function(cb) // 3. Load internal resources
 						{
