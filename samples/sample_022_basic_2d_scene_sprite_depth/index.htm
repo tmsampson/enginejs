@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>Engine Sample: Basic 2D Sprite Depth Test</title>
+
+		<!-- EngineJS -->
+		<script type="text/javascript" src="enginejs/jquery.js"></script>
+		<script type="text/javascript" src="enginejs/engine.js"></script>
+
+		<script language="javascript">
+		var resources =
+		{
+			tx_water : { file: "img/water.png" },
+			tx_rock  : { file: "img/rock.png"  },
+			tx_fire  : { file: "img/fire.png"  },
+		};
+		$(document).ready(function()
+		{
+			var tiles = [];
+			var toggle_depth = false;
+
+			var on_init = function()
+			{
+				var scene = new Engine.Game2D.Scene();
+
+				// Generate tiles
+				for(var item in resources)
+				{
+					var tile = new Engine.Game2D.Entity(resources[item]);
+					tiles.push(tile); scene.Add(tile);
+				}
+
+				var on_render = function(info)
+				{
+					var centre = Engine.Canvas.GetCentre();
+					var min_dimension = Engine.Canvas.GetMinDimension();
+					var dist = min_dimension / 4;
+					var size = min_dimension / 3;
+
+					// Toggle depth?
+					if(Engine.Mouse.IsPressed("left", true) || Engine.Touch.IsPressed(0, true))
+					{
+						toggle_depth = !toggle_depth;
+					}
+
+					// Draw tiles
+					for(var i = 0; i < tiles.length; ++i)
+					{
+						tiles[i].MoveTo([centre[0] + (i * dist) - dist, centre[1]]);
+						tiles[i].SetSize(size);
+						tiles[i].SetDepth(toggle_depth? i : 2 - i);
+					}
+
+					// Draw scene
+					scene.Render(info);
+				};
+				return on_render;
+			};
+			Engine.Init(on_init, resources);
+		});
+		</script>
+	</head>
+
+	<body>
+		<canvas width="512" height="512"></canvas>
+	</body>
+</html>

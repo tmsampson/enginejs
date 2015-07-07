@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>Engine Sample: Sprite Origin Demo (using .sprite file)</title>
+
+		<!-- EngineJS -->
+		<script type="text/javascript" src="enginejs/jquery.js"></script>
+		<script type="text/javascript" src="enginejs/engine.js"></script>
+
+		<script language="javascript">
+		var resources = { spr_hero : { file : "sprites/hero.sprite" } };
+		$(document).ready(function()
+		{
+			var on_init = function()
+			{
+				var scene = new Engine.Game2D.Scene();
+				var hero = new Engine.Game2D.Entity(resources["spr_hero"]);
+				hero.sprite.SetSequence("stand_down");
+				hero.MoveTo(Engine.Canvas.GetCentre());
+				scene.Add(hero);
+
+				// Setup sliders
+				$("#slider_origin_x").slider({ value: 0, min: -64, max: 64, step: 1 });
+				$("#slider_origin_y").slider({ value: 0, min: -64, max: 64, step: 1 });
+				$("#slider_scale").slider({ value: 128, min: 32, max: 256, step: 8 });
+				$("#slider_rotation").slider({ value: 0, min: 0, max: Math.PI * 2, step: 0.1 });
+
+				var on_render = function(info)
+				{
+					if(Engine.Keyboard.IsPressed(["w", "up"]))    { hero.Move([0,  2]); }
+					if(Engine.Keyboard.IsPressed(["a", "left"]))  { hero.Move([-2, 0]); }
+					if(Engine.Keyboard.IsPressed(["s", "down"]))  { hero.Move([0, -2]); }
+					if(Engine.Keyboard.IsPressed(["d", "right"])) { hero.Move([2,  0]); }
+
+					// Apply sliders
+					hero.SetSize($("#slider_scale").slider("value"));
+					hero.SetRotation($("#slider_rotation").slider("value"));
+					hero.sprite.SetOrigin([$("#slider_origin_x").slider("value"),
+					                       $("#slider_origin_y").slider("value")]);
+
+					// Draw Scene
+					scene.EnableDebugRender($("#checkbox").is(':checked'));
+					scene.Render(info);
+				};
+				return on_render;
+			};
+			Engine.Init(on_init, resources);
+		});
+		</script>
+	</head>
+
+	<body>
+		<table>
+			<tr>
+				<td><canvas width="800" height="640"></canvas></td>
+				<td valign="top" style="padding:20px">
+					<h3>Config</h3>
+					<table cellspacing="10">
+						<tr><td>Enable Debug Render:</td><td><input id="checkbox" type="checkbox" checked/></td></tr>
+						<tr><td>Origin (x):</td><td><div id="slider_origin_x" style="width:200px"></div></td></tr>
+						<tr><td>Origin (y):</td><td><div id="slider_origin_y" style="width:200px"></div></td></tr>
+						<tr><td>Scale:     </td><td><div id="slider_scale"    style="width:200px"></div></td></tr>
+						<tr><td>Rotation:  </td><td><div id="slider_rotation" style="width:200px"></div></td></tr>
+					</table>
+					<h3>Notes</h3>
+					<ol>
+						<li>Multiple collision shapes can be authored directly within the .sprite file</li>
+						<li>Collision shapes are used to approximate the colllidable (solid) parts of the sprite</li>
+						<li>Collision shape offsets are specified in texture space (relative to bottom-left of texture). Using this system, collision shapes do not require modification if the origin is changed</li>
+					</ol>
+				</td>
+			</tr>
+		</table>
+	</body>
+</html>

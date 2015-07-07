@@ -1,0 +1,12 @@
+{
+	"name"       : "Hero",
+	"origin"     : [0, 0],
+	"textures"   :
+	{
+		"tx_hero_main"  : { "file": "img/hero_main.png",  "rows": 4, "cols": 4 }
+	},
+	"sequences"  :
+	{
+		"stand_down" : { "texture" : "tx_hero_main",  "begin": [2, 0], "end": [2, 0], "speed" : 0,  "loop" : false, "mirror": [0, 0] }
+	}
+}

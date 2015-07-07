@@ -1,0 +1,20 @@
+{
+	"name"       : "Asteroid",
+	"origin"     : [0, 0],
+	"textures"   :
+	{
+		"tx_asteroid_1"  : { "file": "img/asteroid_1.png", "rows": 4, "cols": 4 },
+		"tx_asteroid_2"  : { "file": "img/asteroid_2.png", "rows": 4, "cols": 4 },
+		"tx_asteroid_3"  : { "file": "img/asteroid_3.png", "rows": 4, "cols": 4 }
+	},
+	"sequences"  :
+	{
+		"asteroid_1" : { "texture" : "tx_asteroid_1", "begin": [0, 0], "end": [3, 3], "speed" : 10, "loop" : true, "mirror": [0, 0] },
+		"asteroid_2" : { "texture" : "tx_asteroid_2", "begin": [0, 0], "end": [3, 3], "speed" : 10, "loop" : true, "mirror": [0, 0] },
+		"asteroid_3" : { "texture" : "tx_asteroid_3", "begin": [0, 0], "end": [3, 3], "speed" : 10, "loop" : true, "mirror": [0, 0] }
+	},
+	"collision_shapes" :
+	[
+		{ "type" : "circle", "offset" : [64, 64], "radius" : 35 }
+	]
+}

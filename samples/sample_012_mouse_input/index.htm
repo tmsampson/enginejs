@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>Engine Sample: Mouse Input</title>
+
+		<!-- EngineJS -->
+		<script type="text/javascript" src="enginejs/jquery.js"></script>
+		<script type="text/javascript" src="enginejs/engine.js"></script>
+
+		<script language="javascript">
+		var resources = { tx_plane : { file: "img/plane.png" } };
+		$(document).ready(function()
+		{
+			var on_init = function()
+			{
+				Engine.Canvas.EnableContextMenu(false); // Crucial as we handle right-click manually
+				var scene = new Engine.Game2D.Scene();
+				var plane = new Engine.Game2D.Entity(resources["tx_plane"]);
+				plane.MoveTo(Engine.Canvas.GetCentre()); plane.SetSize(80);
+				scene.Add(plane);
+
+				var on_render = function(info)
+				{
+					// Change aircraft direction based on mouse position
+					var to_mouse = Engine.Vec2.Subtract(Engine.Mouse.GetPosition(), plane.GetPosition());
+					plane.Move(Engine.Vec2.DivideScalar(to_mouse, 40));
+					plane.SetRotation(Engine.Vec2.Angle(to_mouse));
+
+					// Change aircraft altitude with mouse buttons
+					var size_change = Engine.Mouse.IsPressed()? 0.4 : Engine.Mouse.IsPressed("right")? -0.4 : 0;
+					plane.SetSize(Engine.Math.Clamp(plane.GetSize() + size_change, 80, 128));
+
+					// Draw scene
+					scene.Render(info);
+				};
+				return on_render;
+			};
+			Engine.Init(on_init, resources);
+		});
+		</script>
+	</head>
+
+	<body>
+		<canvas width="512" height="512"></canvas>
+	</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>Engine Sample: Basic 2D Scene With Programatic Background</title>
+
+		<!-- EngineJS -->
+		<script type="text/javascript" src="enginejs/jquery.js"></script>
+		<script type="text/javascript" src="enginejs/engine.js"></script>
+
+		<script language="javascript">
+		var resources =
+		{
+			tx_layer_0 : { file: "img/layer_0.png" },
+			tx_layer_1 : { file: "img/layer_1.png" },
+			tx_layer_2 : { file: "img/layer_2.png" },
+			tx_layer_3 : { file: "img/layer_3.png" },
+			tx_layer_4 : { file: "img/layer_4.png" },
+			tx_layer_5 : { file: "img/layer_5.png" },
+			tx_layer_6 : { file: "img/layer_6.png" },
+		};
+		$(document).ready(function()
+		{
+			var on_init = function()
+			{
+				var scene = new Engine.Game2D.Scene();
+
+				// Setup background
+				scene.background.colour = [0.48, 0.65, 1.0, 1.0];
+				scene.background.layers =
+				[
+					{ texture : resources["tx_layer_0"], depth : 1.0,  scale :  [0.5, 0.5], offset : [0, -30], scroll : [0.6, 0], repeat : [true, false] },
+					{ texture : resources["tx_layer_1"], depth : 2.0,  scale :  [0.5, 0.5], offset : [0, -30], scroll : [0.5, 0], repeat : [true, false] },
+					{ texture : resources["tx_layer_2"], depth : 3.0,  scale :  [0.5, 0.5], offset : [0, 0],   scroll : [0.4, 0], repeat : [true, false] },
+					{ texture : resources["tx_layer_3"], depth : 3.5,  scale :  [0.5, 0.5], offset : [0, 30],  scroll : [0.3, 0], repeat : [true, false] },
+					{ texture : resources["tx_layer_4"], depth : 3.75, scale :  [0.7, 0.9], offset : [0, 50],  scroll : [0.2, 0], repeat : [true, false] },
+					{ texture : resources["tx_layer_5"], depth : 5.0,  scale :  [0.8, 0.8], offset : [0, 100], scroll : [0.1, 0], repeat : [true, false] },
+					{ texture : resources["tx_layer_6"], depth : 6.0,  scale :  [0.5, 3.0], offset : [0, 0],   scroll : [0.0, 0], repeat : [true, false] },
+				];
+
+				var on_render = function(info)
+				{
+					var x_dist = (Engine.Canvas.GetWidth() / 2) - Engine.Mouse.GetX();
+					scene.background.x_scroll -= x_dist / 50;
+					scene.Render(info);
+				};
+				return on_render;
+			};
+			Engine.Init(on_init, resources);
+		});
+		</script>
+	</head>
+
+	<body>
+		<canvas width="1024" height="512"></canvas>
+	</body>
+</html>

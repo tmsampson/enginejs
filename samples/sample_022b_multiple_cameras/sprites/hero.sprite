@@ -1,0 +1,23 @@
+{
+	"name"       : "Hero",
+	"origin"     : [0, 0],
+	"textures"   :
+	{
+		"tx_hero_main"  : { "file": "img/hero_main.png",  "rows": 4, "cols": 4 },
+		"tx_hero_death" : { "file": "img/hero_death.png", "rows": 5, "cols": 5 }
+	},
+	"sequences"  :
+	{
+		"stand_left"  : { "texture" : "tx_hero_main",  "begin": [0, 0], "end": [0, 0], "speed" : 0,  "loop" : false, "mirror": [0, 0] },
+		"stand_right" : { "texture" : "tx_hero_main",  "begin": [1, 0], "end": [1, 0], "speed" : 0,  "loop" : false, "mirror": [0, 0] },
+		"stand_down"  : { "texture" : "tx_hero_main",  "begin": [2, 0], "end": [2, 0], "speed" : 0,  "loop" : false, "mirror": [0, 0] },
+		"stand_up"    : { "texture" : "tx_hero_main",  "begin": [3, 0], "end": [3, 0], "speed" : 0,  "loop" : false, "mirror": [0, 0] },
+
+		"walk_left"   : { "texture" : "tx_hero_main",  "begin": [0, 0], "end": [0, 3], "speed" : 6,  "loop" : true,  "mirror": [0, 0] },
+		"walk_right"  : { "texture" : "tx_hero_main",  "begin": [1, 0], "end": [1, 3], "speed" : 6,  "loop" : true,  "mirror": [0, 0] },
+		"walk_down"   : { "texture" : "tx_hero_main",  "begin": [2, 0], "end": [2, 3], "speed" : 6,  "loop" : true,  "mirror": [0, 0] },
+		"walk_up"     : { "texture" : "tx_hero_main",  "begin": [3, 0], "end": [3, 3], "speed" : 6,  "loop" : true,  "mirror": [0, 0] },
+
+		"dead"        : { "texture" : "tx_hero_death", "begin": [0, 0], "end": [4, 4], "speed" : 16, "loop" : false, "mirror": [0, 0] }
+	}
+}

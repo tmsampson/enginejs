@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>Engine Sample: Keyboard Input</title>
+
+		<!-- EngineJS -->
+		<script type="text/javascript" src="enginejs/jquery.js"></script>
+		<script type="text/javascript" src="enginejs/engine.js"></script>
+
+		<script language="javascript">
+		$(document).ready(function()
+		{
+			Engine.Init(function()
+			{
+				var scene  = new Engine.Game2D.Scene();
+				var entity = new Engine.Game2D.Entity();
+				var min_dimension = Engine.Canvas.GetMinDimension();
+				var min_size = min_dimension / 40; var max_size = min_dimension / 4;
+				entity.SetSize(Engine.Math.Midpoint(min_size, max_size));
+				entity.MoveTo(Engine.Canvas.GetCentre()); entity.SetTint([1,0,0]);
+				scene.Add(entity);
+
+				var on_render = function(info)
+				{
+					// Process movement
+					var pos = entity.GetPosition();
+					pos[0] += Engine.Keyboard.IsPressed("a")? -200 * info.delta_s :
+					          Engine.Keyboard.IsPressed("d")?  200 * info.delta_s : 0;
+					pos[1] += Engine.Keyboard.IsPressed("w")?  200 * info.delta_s :
+					          Engine.Keyboard.IsPressed("s")? -200 * info.delta_s : 0;
+					entity.MoveTo(pos);
+
+					// Process scale
+					var scale = entity.GetSize();
+					scale += Engine.Keyboard.IsPressed("up")?    200 * info.delta_s :
+					         Engine.Keyboard.IsPressed("down")? -200 * info.delta_s : 0;
+					entity.SetSize(Engine.Math.Clamp(scale, min_size, max_size));
+
+					// Process rotation
+					var rotation = entity.GetRotation();
+					rotation += Engine.Keyboard.IsPressed("left")?   5 * info.delta_s :
+					            Engine.Keyboard.IsPressed("right")? -5 * info.delta_s : 0;
+					entity.SetRotation(rotation);
+
+					// Draw scene
+					scene.Render(info);
+				};
+				return on_render;
+			});
+		});
+		</script>
+	</head>
+
+	<body>
+		<canvas width="512" height="512"></canvas>
+	</body>
+</html>

@@ -1,0 +1,12 @@
+{
+	"name"       : "Earth",
+	"origin"     : [0, 0],
+	"textures"   :
+	{
+		"tx_earth"  : { "file": "img/earth.png", "rows": 4, "cols": 4 }
+	},
+	"sequences"  :
+	{
+		"default" : { "texture" : "tx_earth", "begin": [0, 0], "end": [3, 3], "speed" : 6, "loop" : true, "mirror": [0, 0] }
+	}
+}

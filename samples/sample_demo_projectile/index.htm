@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>Engine Sample: Projectile Math</title>
+
+		<!-- EngineJS -->
+		<script type="text/javascript" src="enginejs/jquery.js"></script>
+		<script type="text/javascript" src="enginejs/engine.js"></script>
+		<script type="text/javascript" src="script/projectile.js"></script>
+
+		<script language="javascript">
+		function display_info(msg) { $('div').html(msg); }
+		var target_config  = { u : [-100, 0],   v : [30, 10]};
+		var turret_config = { u : [-150, -120], v : [90, 70]};
+		var can_hit = false; var fire_time = null; var hit_time = null;
+		var time_offset = 0.0;
+		var game_state = "placing_target";
+		var resources =
+		{
+			tx_grass      : { file : "img/grass.jpg"  },
+			spr_target    : { file : "sprites/target.sprite" },
+			tx_tank       : { file : "img/tank.png"   },
+			tx_turret     : { file : "img/turret.png" },
+			tx_bullet     : { file : "img/bullet.png" },
+			tx_cross      : { file : "img/cross.png"  },
+			sfx_shot      : { file : "sfx/shot.mp3"   },
+			sfx_explosion : { file : "sfx/explosion.mp3" },
+		};
+
+		$(document).ready(function()
+		{
+			Engine.Init(function()
+			{
+				// Setup scene
+				var scene         = new Engine.Game2D.Scene(resources["tx_grass"]);
+				var target        = new Engine.Game2D.Entity(resources["spr_target"]); target.SetSize(64); target.SetDepth(0);
+				var tank          = new Engine.Game2D.Entity(resources["tx_tank"]); tank.SetSize(64); tank.MoveTo(turret_config.u); tank.SetDepth(2);
+				var bullet        = new Engine.Game2D.Entity(resources["tx_bullet"]); bullet.SetSize(20); bullet.MoveTo(turret_config.u); bullet.SetDepth(1); bullet.SetVisible(false);
+				var turret        = new Engine.Game2D.Entity(resources["tx_turret"]); turret.SetSize(64); turret.MoveTo(turret_config.u); turret.SetDepth(0);
+				var crosshair     = new Engine.Game2D.Entity(resources["tx_cross"]); crosshair.SetSize(20);
+				var sfx_shot      = new Engine.Audio.SoundEffect2D(resources["sfx_shot"]);
+				var sfx_explosion = new Engine.Audio.SoundEffect2D(resources["sfx_explosion"]);
+
+				var begin_simulation = function()
+				{
+					target.SetVelocity(target_config.v);
+
+					var result = find_intersection_and_times_2d(target_config, turret_config);
+					if(result.intersect == null)
+					{
+						display_info("Turret cannot hit target");
+					}
+					else
+					{
+						crosshair.MoveTo(result.intersect);
+						fire_time = result.t1 - result.t2;
+						hit_time = result.t1;
+						if(result.t1 < 0 || result.t2 < 0)
+						{
+							display_info("Turret cannot hit target");
+						}
+						else if(fire_time < 0)
+						{
+							var msg = "target could be hit at [" + result.intersect[0] + ", " + result.intersect[1] + "]...<br/><br/>";
+							msg += "However, turret fires too slow to reach target, would need " + Math.abs(fire_time) + " second head start";
+							display_info(msg);
+						}
+						else
+						{
+							var msg = "target will be hit at [" + result.intersect[0] + ", " + result.intersect[1] + "] ...<br/><br/>";
+							msg += "By firing turret after " + fire_time + " seconds!";
+							display_info(msg);
+							can_hit = true;
+						}
+					}
+				};
+
+				return function(info)
+				{
+					// Centre camera on world [0, 0]
+					scene.GetCamera().position = [-Engine.Canvas.GetWidth() / 2, -Engine.Canvas.GetHeight() / 2];
+
+					var mouse_world_pos = Engine.Vec2.Add(Engine.Mouse.GetPosition(), scene.GetCamera().position);
+					if(game_state == "placing_target")
+					{
+						can_hit = false;
+						target.SetVelocity([0,0]);
+						target.sprite.SetSequence("default");
+						target.MoveTo(mouse_world_pos);
+						bullet.SetVisible(false);
+						if(Engine.Mouse.IsPressed("left", true))
+						{
+							game_state = "rotating_target";
+							target_config.u = mouse_world_pos;
+						}
+					}
+					else if(game_state == "rotating_target")
+					{
+						var target_pos_canvas_space = Engine.Vec2.Subtract(target.GetPosition(), scene.GetCamera().position);
+						Engine.Debug.DrawLine(target_pos_canvas_space, Engine.Mouse.GetPosition(), Engine.Colour.Orange, 3);
+						if(Engine.Mouse.IsPressed("left", true))
+						{
+							game_state = "placing_tank";
+							var to_mouse = Engine.Vec2.Subtract(mouse_world_pos, target_config.u);
+							target_config.v = to_mouse;
+						}
+					}
+					else if(game_state == "placing_tank")
+					{
+						tank.MoveTo(mouse_world_pos);
+						turret.MoveTo(mouse_world_pos);
+						bullet.MoveTo(mouse_world_pos);
+						bullet.SetVisible(true);
+						if(Engine.Mouse.IsPressed("left", true))
+						{
+							game_state = "rotating_turret";
+							turret_config.u = mouse_world_pos;
+						}
+					}
+					else if(game_state == "rotating_turret")
+					{
+						var to_mouse = Engine.Vec2.Subtract(mouse_world_pos, turret_config.u);
+						turret.SetRotation(Math.atan2(to_mouse[1], to_mouse[0]));
+						var turret_pos_canvas_space = Engine.Vec2.Subtract(turret.GetPosition(), scene.GetCamera().position);
+						Engine.Debug.DrawLine(turret_pos_canvas_space, Engine.Mouse.GetPosition(), Engine.Colour.Orange, 3);
+						if(Engine.Mouse.IsPressed("left", true))
+						{
+							turret_config.v = to_mouse;
+							time_offset = info.elapsed_s;
+							begin_simulation();
+							game_state = "running";
+						}
+					}
+
+					// Reset?
+					if(Engine.Keyboard.IsPressed("r", true))
+					{
+						game_state = "placing_target";
+					}
+
+					// Show crosshair?
+					crosshair.SetVisible(can_hit);
+
+					// Show tank?
+					tank.SetVisible(game_state != "placing_target" && game_state != "rotating_target");
+					turret.SetVisible(game_state != "placing_target" && game_state != "rotating_target");
+
+					// Fire shot?
+					if(can_hit && fire_time != null && (info.elapsed_s - time_offset) >= fire_time)
+					{
+						sfx_shot.Play();
+						bullet.SetVelocity(turret_config.v);
+						fire_time = null;
+					}
+
+					// target hit?
+					if(can_hit && hit_time != null && (info.elapsed_s - time_offset) >= hit_time)
+					{
+						target.sprite.SetSequence("explode");
+						sfx_explosion.Play();
+						target.SetVelocity([0,0])
+						bullet.SetVisible(false);
+						bullet.SetVelocity([0,0]);
+						hit_time = null;
+					}
+
+					// Add all items to scene and render
+					scene.Add([target, tank, turret, bullet, crosshair]);
+					scene.Render(info);
+					scene.Clear();
+				};
+			}, resources);
+		});
+		</script>
+	</head>
+
+	<body>
+		<table>
+		<tr>
+			<td><canvas width="1000" height="550"></canvas></td>
+			<td style="padding:20px" valign="top"><div id="#info"></div></td>
+		</tr>
+		</table>
+	</body>
+</html>

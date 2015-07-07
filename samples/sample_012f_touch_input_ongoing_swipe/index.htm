@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>Engine Sample: Touch Input (Ongoing Swipe Info)</title>
+
+		<!-- EngineJS -->
+		<script type="text/javascript" src="enginejs/jquery.js"></script>
+		<script type="text/javascript" src="enginejs/engine.js"></script>
+
+		<script language="javascript">
+		$(document).ready(function()
+		{
+			Engine.Init(function()
+			{
+				Engine.Device.Maximise(); // maximise canvas
+				var scene = new Engine.Game2D.Scene();
+				var text_start = new Engine.Text2D.TextBox("", { size : 15 });
+				var text_end = new Engine.Text2D.TextBox("", { size : 15 });
+
+				var on_render = function(info)
+				{
+					var swipe = Engine.Touch.GetOngoingSwipe();
+
+					// Draw swipe line & text
+					if(swipe)
+					{
+						var round_float = function(key, val) { return val.toFixed? val.toFixed(0) : val; };
+						Engine.Debug.DrawLine(swipe.start_position, swipe.end_position, Engine.Colour.Red, 3);
+
+						// Draw start-point text
+						text_start.Set("Position: " + JSON.stringify(swipe.start_position, round_float));
+						text_start.MoveTo(swipe.start_position);
+
+						// Draw end-point text
+						var text = "Position: " + JSON.stringify(swipe.end_position, round_float) + "<br/>";
+						text +="Length: " + round_float("", swipe.length) + "<br/>";
+						text +="Duration: " + swipe.duration;
+						text_end.Set(text); text_end.MoveTo(swipe.end_position);
+					}
+					else
+					{
+						text_start.Set(""); text_end.Set("");
+					}
+
+					scene.Render(info);
+				};
+				return on_render;
+			});
+		});
+		</script>
+	</head>
+
+	<body>
+		<canvas width="512" height="512"></canvas>
+	</body>
+</html>

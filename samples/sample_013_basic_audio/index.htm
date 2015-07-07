@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>Engine Sample: Basic Audio</title>
+
+		<!-- EngineJS -->
+		<script type="text/javascript" src="enginejs/jquery.js"></script>
+		<script type="text/javascript" src="enginejs/engine.js"></script>
+		<style> td { vertical-align : top } </style>
+
+		<script language="javascript">
+		var resources =
+		{
+			bgm_music   : { file: "bgm/music.mp3"   },
+			sfx_kick_1  : { file: "sfx/kick_1.mp3"  },
+			sfx_kick_2  : { file: "sfx/kick_2.mp3"  },
+			sfx_snare_1 : { file: "sfx/snare_1.mp3" },
+			sfx_snare_2 : { file: "sfx/snare_2.mp3" },
+			sfx_cowbell : { file: "sfx/cowbell.mp3" },
+			sfx_clap    : { file: "sfx/clap.mp3"    },
+			sfx_bongo   : { file: "sfx/bongo.mp3"   },
+			sfx_hihat_1 : { file: "sfx/hihat_1.mp3" },
+			sfx_hihat_2 : { file: "sfx/hihat_2.mp3" },
+			sfx_cymbal  : { file: "sfx/cymbal.mp3"  },
+		};
+
+		$(document).ready(function()
+		{
+			var on_init = function()
+			{
+				$(".slider").slider({ value: 1, min: 0, max: 1, step: 0.05});
+				var bgm = new Engine.Audio.BackgroundMusic(resources["bgm_music"]);
+				bgm.Play();
+
+				// Handle BGM buttons
+				$("#btn_play").click(function(){ bgm.Play(); });
+				$("#btn_pause").click(function(){ bgm.Pause(); });
+				$("#btn_stop").click(function(){ bgm.Stop(); });
+				$("#btn_restart").click(function(){ bgm.Restart(); });
+
+				var on_render = function(info)
+				{
+					Engine.Gfx.Clear(Engine.Colour.Blue);
+					Engine.Audio.SetGlobalBgmVolume($("#bgm_slider").slider("value"));
+					Engine.Audio.SetGlobalSfxVolume($("#sfx_slider").slider("value"));
+
+					if(Engine.Keyboard.IsPressed("1", true)) { Engine.Audio.PlaySFX(resources["sfx_kick_1"]);  }
+					if(Engine.Keyboard.IsPressed("2", true)) { Engine.Audio.PlaySFX(resources["sfx_kick_2"]);  }
+					if(Engine.Keyboard.IsPressed("3", true)) { Engine.Audio.PlaySFX(resources["sfx_snare_1"]); }
+					if(Engine.Keyboard.IsPressed("4", true)) { Engine.Audio.PlaySFX(resources["sfx_snare_2"]); }
+					if(Engine.Keyboard.IsPressed("5", true)) { Engine.Audio.PlaySFX(resources["sfx_bongo"]);   }
+					if(Engine.Keyboard.IsPressed("6", true)) { Engine.Audio.PlaySFX(resources["sfx_clap"]);    }
+					if(Engine.Keyboard.IsPressed("7", true)) { Engine.Audio.PlaySFX(resources["sfx_cowbell"]); }
+					if(Engine.Keyboard.IsPressed("8", true)) { Engine.Audio.PlaySFX(resources["sfx_hihat_1"]); }
+					if(Engine.Keyboard.IsPressed("9", true)) { Engine.Audio.PlaySFX(resources["sfx_hihat_2"]); }
+					if(Engine.Keyboard.IsPressed("0", true)) { Engine.Audio.PlaySFX(resources["sfx_cymbal"]);  }
+				};
+				return on_render;
+			};
+			Engine.Init(on_init, resources);
+		});
+		</script>
+	</head>
+
+	<body>
+		<table>
+			<tr>
+				<td><canvas width="512" height="512"></canvas></td>
+				<td style="padding:20px;">
+					<table>
+						<tr>
+							<td>BGM Volume:</td>
+							<td><div id="bgm_slider" class="slider" style="width:200px; margin-right:20px"></div></td>
+							<td>
+								<button id="btn_play" type="button">Play</button>
+								<button id="btn_pause" type="button">Pause</button>
+								<button id="btn_stop" type="button">Stop</button>
+								<button id="btn_restart" type="button">Restart</button>
+							</td>
+						</tr>
+						<tr>
+							<td>SFX Volume:</td>
+							<td><div id="sfx_slider" class="slider" style="width:200px"></div></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td colspan="3">
+							<h3>SFX Controls:</h3>
+							<table cellspacing="3">
+								<tr>
+									<th align="left">Name</th><th align="left">Key</th><th align="left">Trigger</th>
+								</tr>
+								<tr><td>Kick drum A</td>  <td>1</td> <td><button onclick="Engine.Audio.PlaySFX(resources['sfx_kick_1']);">Play</button>  </td></tr>
+								<tr><td>Kick drum B</td>  <td>2</td> <td><button onclick="Engine.Audio.PlaySFX(resources['sfx_kick_2']);">Play</button>  </td></tr>
+								<tr><td>Snare drum A</td> <td>3</td> <td><button onclick="Engine.Audio.PlaySFX(resources['sfx_snare_1']);">Play</button> </td></tr>
+								<tr><td>Snare drum B</td> <td>4</td> <td><button onclick="Engine.Audio.PlaySFX(resources['sfx_snare_2']);">Play</button> </td></tr>
+								<tr><td>Bongo</td>        <td>5</td> <td><button onclick="Engine.Audio.PlaySFX(resources['sfx_bongo']);">Play</button>   </td></tr>
+								<tr><td>Clap</td>         <td>6</td> <td><button onclick="Engine.Audio.PlaySFX(resources['sfx_clap']);">Play</button>    </td></tr>
+								<tr><td>Cowbell</td>      <td>7</td> <td><button onclick="Engine.Audio.PlaySFX(resources['sfx_cowbell']);">Play</button> </td></tr>
+								<tr><td>Hi-hat A</td>     <td>8</td> <td><button onclick="Engine.Audio.PlaySFX(resources['sfx_hihat_1']);">Play</button> </td></tr>
+								<tr><td>Hi-hat B</td>     <td>9</td> <td><button onclick="Engine.Audio.PlaySFX(resources['sfx_hihat_2']);">Play</button> </td></tr>
+								<tr><td>Crash Cymbal</td> <td>0</td> <td><button onclick="Engine.Audio.PlaySFX(resources['sfx_cymbal']);">Play</button>  </td></tr>
+							</table>
+						</tr>
+					</table>
+				</td>
+			</tr>
+		</table>
+	</body>
+</html>

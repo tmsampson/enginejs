@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>Engine Sample: Multiple Cameras</title>
+
+		<!-- EngineJS -->
+		<script type="text/javascript" src="enginejs/jquery.js"></script>
+		<script type="text/javascript" src="enginejs/engine.js"></script>
+
+		<script language="javascript">
+		var resources = { spr_hero : { file : "sprites/hero.sprite" } };
+		var hero_config =
+		{
+			"up"    : { seq_walk : "walk_up",    seq_stand : "stand_up",    velocity : [0,  150] },
+			"down"  : { seq_walk : "walk_down",  seq_stand : "stand_down",  velocity : [0, -150] },
+			"left"  : { seq_walk : "walk_left",  seq_stand : "stand_left",  velocity : [-150, 0] },
+			"right" : { seq_walk : "walk_right", seq_stand : "stand_right", velocity : [150,  0] },
+		};
+
+		$(document).ready(function()
+		{
+			var on_init = function()
+			{
+				var scene = new Engine.Game2D.Scene();
+				var hero1 = new Engine.Game2D.Entity(resources["spr_hero"]); hero1.SetTint([0, 1, 0]);
+				var hero2 = new Engine.Game2D.Entity(resources["spr_hero"]); hero2.SetTint([1, 0, 0]);
+				scene.Add([hero1, hero2]);
+
+				var text = "<u>Keyboard Controls</u><br/>";
+				text += "1 = Basic<br/>2 = Basic (with follow)<br/>3 = Zoomed with mini-map<br/>4 = Split screen";
+				var instructions = new Engine.Text2D.TextBox(text, { colour : "red", size : 20, dock : ["top", "left"] });
+
+				cam_config_basic = function()
+				{
+					scene.cameras = []; // Clear
+					scene.cameras.push(new Engine.Camera.Orthographic());
+				};
+
+				cam_config_basic_follow = function()
+				{
+					scene.cameras = []; // Clear
+					scene.cameras.push(new Engine.Camera.Orthographic(
+					{
+						follow : hero1
+					}));
+				};
+
+				cam_config_zoomed_with_minimap = function()
+				{
+					scene.cameras = []; // Clear
+					var canvas_width = Engine.Canvas.GetWidth();
+					var canvas_height = Engine.Canvas.GetHeight();
+
+					// Zoomed cam
+					scene.cameras.push(new Engine.Camera.Orthographic(
+					{
+						size     : [canvas_width * 0.4, canvas_height * 0.4],
+						viewport : { size : [0.5, 0.5], position : [0.25, 0.25] },
+						follow   : hero1
+					}));
+
+					// Minimap cam
+					var world_width = 800; var world_height = 800;
+					var width = 0.15; var height = 0.15 * Engine.Canvas.GetAspectRatio();
+					scene.cameras.push(new Engine.Camera.Orthographic(
+					{
+						position : Engine.Vec2.Subtract(Engine.Canvas.GetCentre(), [world_width / 2, world_height / 2]),
+						size     : [world_width, world_height],
+						viewport :
+						{
+							size     : [width, height],
+							position : [(canvas_width  - (width  * canvas_width)  - 30) / canvas_width,
+							            (canvas_height - (height * canvas_height) - 30) / canvas_height]
+						}
+					}));
+				};
+
+				cam_config_split_screen = function()
+				{
+					scene.cameras = []; // Clear
+
+					// Player 1 (right)
+					scene.cameras.push(new Engine.Camera.Orthographic(
+					{
+						size     : [Engine.Canvas.GetWidth() * 0.5, Engine.Canvas.GetHeight()],
+						viewport : { size : [0.5, 1], position : [0.5, 0] },
+						follow   : hero1
+					}));
+
+					// Player 2 (left)
+					scene.cameras.push(new Engine.Camera.Orthographic(
+					{
+						size     : [Engine.Canvas.GetWidth() * 0.5, Engine.Canvas.GetHeight()],
+						viewport : { size : [0.5, 1], position : [0, 0] },
+						follow   : hero2
+					}));
+				};
+
+				update_hero = function(debounce, hero)
+				{
+					var hero_index = (hero == hero1)? 0 : 1;
+					var hero_state = hero_states[hero_index];var pressed = false;
+					if(Engine.Keyboard.IsPressed(hero_index? "w" : "up",    debounce)) { hero_state = "up";    pressed = true; }
+					if(Engine.Keyboard.IsPressed(hero_index? "a" : "left",  debounce)) { hero_state = "left";  pressed = true; }
+					if(Engine.Keyboard.IsPressed(hero_index? "s" : "down",  debounce)) { hero_state = "down";  pressed = true; }
+					if(Engine.Keyboard.IsPressed(hero_index? "d" : "right", debounce)) { hero_state = "right"; pressed = true; }
+					if(pressed)
+					{
+						hero.sprite.SetSequence(hero_config[hero_state].seq_walk);
+						hero.SetVelocity(hero_config[hero_state].velocity);
+					}
+				};
+
+				// Setup hero position & states
+				hero1.MoveTo(Engine.Vec2.Add(Engine.Canvas.GetCentre(), [64,  0]));
+				hero2.MoveTo(Engine.Vec2.Add(Engine.Canvas.GetCentre(), [-64, 0]));
+				var hero_states = ["down", "down"];
+
+				var on_render = function(info)
+				{
+					update_hero(true, hero1); hero1.depth = hero1.GetY();
+					update_hero(true, hero2); hero2.depth = hero2.GetY();
+
+					if(Engine.Keyboard.IsReleased(["left", "right", "up", "down"], true))
+					{
+						hero1.sprite.SetSequence(hero_config[hero_states[0]].seq_stand);
+						hero1.SetVelocity([0, 0]);
+						update_hero(false, hero1);
+					}
+
+					if(Engine.Keyboard.IsReleased(["w", "a", "s", "d"], true))
+					{
+						hero2.sprite.SetSequence(hero_config[hero_states[1]].seq_stand);
+						hero2.SetVelocity([0, 0]);
+						update_hero(false, hero2);
+					}
+
+					// Switch cameras?
+					if(Engine.Keyboard.IsPressed("1", true)) { cam_config_basic(); }
+					if(Engine.Keyboard.IsPressed("2", true)) { cam_config_basic_follow(); }
+					if(Engine.Keyboard.IsPressed("3", true)) { cam_config_zoomed_with_minimap(); }
+					if(Engine.Keyboard.IsPressed("4", true)) { cam_config_split_screen(); }
+
+					// Draw scene
+					scene.Render(info);
+				};
+				return on_render;
+			};
+			Engine.Init(on_init, resources);
+		});
+		</script>
+	</head>
+
+	<body>
+		<canvas width="512" height="512"></canvas>
+	</body>
+</html>

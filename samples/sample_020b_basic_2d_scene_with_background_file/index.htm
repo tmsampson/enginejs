@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>Engine Sample: Basic 2D Scene With Background Files</title>
+
+		<!-- EngineJS -->
+		<script type="text/javascript" src="enginejs/jquery.js"></script>
+		<script type="text/javascript" src="enginejs/engine.js"></script>
+
+		<script language="javascript">
+		var resources =
+		{
+			bg_space     : { file: "backgrounds/space.background"     },
+			bg_forest    : { file: "backgrounds/forest.background"    },
+			bg_filmstrip : { file: "backgrounds/filmstrip.background" }
+		};
+		$(document).ready(function()
+		{
+			var on_init = function()
+			{
+				var scene = new Engine.Game2D.Scene(resources["bg_space"]);
+				$("select").change(function() { scene.background = resources[$('select').val()]; });
+
+				var on_render = function(info)
+				{
+					scene.Render(info);
+				};
+				return on_render;
+			};
+			Engine.Init(on_init, resources);
+		});
+		</script>
+	</head>
+
+	<body>
+		<table>
+			<tr>
+				<td><canvas width="750" height="512"></canvas></td>
+				<td style="padding:20px" valign="top">
+					Choose a background to load:
+					<select>
+						<option value="bg_space">Space</option>
+						<option value="bg_forest">Forest</option>
+						<option value="bg_filmstrip">Filmstrip</option>
+					</select>
+				</td>
+			</tr>
+		</table>
+	</body>
+</html>

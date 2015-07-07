@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>Engine Sample: Manual Animation</title>
+
+		<!-- EngineJS -->
+		<script type="text/javascript" src="enginejs/jquery.js"></script>
+		<script type="text/javascript" src="enginejs/engine.js"></script>
+
+		<script language="javascript">
+		var resources =
+		{
+			tx_anim : { file: "img/anim.png"    },
+			fs_anim : { file: "shaders/anim.fs" }
+		};
+
+		$(document).ready(function()
+		{
+			Engine.Init(function()
+			{
+				var mtx_trans = mat4.create();
+				var tile_count_horizontal = 4;
+				var tile_count_vertical = 4;
+				var current_frame_fast = 0;
+				var current_frame = 0;
+				var play_speed = 1;
+
+				// Setup camera / shader program
+				var cam = new Engine.Camera.Orthographic();
+				var program = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_basic_transformed"],
+				                                             resources["fs_anim"]);
+
+				var on_render = function(info)
+				{
+					Engine.Gfx.Clear(Engine.Colour.Black);
+					Engine.Gfx.SetBlendMode(Engine.GL.SRC_ALPHA, Engine.GL.ONE_MINUS_SRC_ALPHA, true);
+					current_frame = Math.floor(info.elapsed_s * play_speed);
+					current_frame_fast = Math.floor(info.elapsed_s * play_speed * 2);
+					var offset = Engine.Canvas.GetWidth() / 3;
+					var scale = offset / 5;
+
+					// Setup animation
+					Engine.Gfx.BindShaderProgram(program);
+					Engine.Gfx.BindTexture(resources["tx_anim"], 0);
+					var centre = Engine.Canvas.GetCentre();
+
+					// Update & bind camera
+					cam.Update(info);
+					Engine.Gfx.BindCamera(cam);
+
+					// Play anim (top, first 4 frames only)
+					mat4.translate(mtx_trans, Engine.Math.IdentityMatrix, [centre[0] - offset, centre[1], 0]);
+					mat4.scale(mtx_trans, mtx_trans, [scale, scale, 0]);
+					Engine.Gfx.SetShaderConstant("u_trans_model", mtx_trans, Engine.Gfx.SC_MATRIX4);
+					var anim_config = [tile_count_horizontal, tile_count_vertical, current_frame % 4];
+					Engine.Gfx.SetShaderConstant("u_anim_config", anim_config, Engine.Gfx.SC_VEC3);
+					Engine.Gfx.DrawQuad();
+
+					// Play anim (middle, all frames @ double speed, rotating)
+					mat4.translate(mtx_trans, Engine.Math.IdentityMatrix, [centre[0], centre[1], 0]);
+					mat4.scale(mtx_trans, mtx_trans, [scale * 2, scale * 2, 0]);
+					mat4.rotate(mtx_trans, mtx_trans, info.elapsed_s, [0, 0, 1]);
+					Engine.Gfx.SetShaderConstant("u_trans_model", mtx_trans, Engine.Gfx.SC_MATRIX4);
+					anim_config[2] = current_frame_fast;
+					Engine.Gfx.SetShaderConstant("u_anim_config", anim_config, Engine.Gfx.SC_VEC3);
+					Engine.Gfx.DrawQuad();
+
+					// Play anim (bottom, last 4 frames only)
+					mat4.translate(mtx_trans, Engine.Math.IdentityMatrix, [centre[0] + offset, centre[1], 0]);
+					mat4.scale(mtx_trans, mtx_trans, [scale, scale, 0]);
+					Engine.Gfx.SetShaderConstant("u_trans_model", mtx_trans, Engine.Gfx.SC_MATRIX4);
+					anim_config[2] = 8 + current_frame % 4;
+					Engine.Gfx.SetShaderConstant("u_anim_config", anim_config, Engine.Gfx.SC_VEC3);
+					Engine.Gfx.DrawQuad();
+				};
+				return on_render;
+			}, resources);
+		});
+		</script>
+	</head>
+
+	<body>
+		<canvas width="512" height="512"></canvas>
+	</body>
+</html>

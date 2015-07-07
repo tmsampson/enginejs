@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>Engine Sample: Easing</title>
+
+		<!-- EngineJS -->
+		<script type="text/javascript" src="enginejs/jquery.js"></script>
+		<script type="text/javascript" src="enginejs/engine.js"></script>
+
+		<script language="javascript">
+		var resources = { tx_ball : { file : "img/ball.png" } };
+		$(document).ready(function()
+		{
+			var marker_start = [24, 24];
+			var marker_stop  = [800 - 24, 512 - 24];
+			var t = 0; var duration = 2;
+
+			var on_init = function()
+			{
+				// Setup select options
+				$("#x_func, #y_func").change(function() { t = 0; marker.MoveTo(marker_start); });
+				for (var easing_func_name in Engine.Easing)
+				{
+					if(Engine.Util.IsFunction(Engine.Easing[easing_func_name]))
+					{
+						var option = $("<option></option>").text(easing_func_name);
+						$("#x_func, #y_func").append(option);
+					}
+				}
+
+				// Setup scene
+				var scene = new Engine.Game2D.Scene();
+				var marker = new Engine.Game2D.Entity(resources["tx_ball"]);
+				scene.Add(marker);
+
+				var on_render = function(info)
+				{
+					// Update timer
+					t = Engine.Math.Clamp(t + info.delta_s, 0, duration);
+
+					// Apply easing
+					var x = Engine.Easing[$("#x_func").find(":selected").text()](marker_start[0], marker_stop[0], t / duration);
+					var y = Engine.Easing[$("#y_func").find(":selected").text()](marker_start[1], marker_stop[1], t / duration);
+					marker.MoveTo([x, y]);
+
+					// Draw scene
+					scene.Render(info);
+				};
+				return on_render;
+			}
+			Engine.Init(on_init, resources);
+		});
+		</script>
+	</head>
+
+	<body>
+		<table>
+			<tr>
+				<td><canvas width="800" height="512"></canvas></td>
+				<td style="padding:20px" valign="top">
+					x: <select id="x_func"></select><br/><br/>
+					y: <select id="y_func"></select>
+				</td>
+			</tr>
+		</table>
+	</body>
+</html>

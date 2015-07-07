@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>Engine Sample: Manual Prims Textured</title>
+
+		<!-- EngineJS -->
+		<script type="text/javascript" src="enginejs/jquery.js"></script>
+		<script type="text/javascript" src="enginejs/engine.js"></script>
+
+		<script language="javascript">
+		var resources =
+		{
+			tx_water : { file: "img/water.png" },
+			tx_rock  : { file: "img/rock.png"  },
+			tx_fire  : { file: "img/fire.png"  },
+		}
+
+		// Triangle
+		var triangle_verts =
+		{
+			attribute_name : "a_pos",
+			item_size      : 3,
+			draw_mode      : "triangles",
+			stream         : [-1.0,  1.0,  0.0,
+			                   1.0, -1.0,  0.0,
+			                  -1.0, -1.0,  0.0]
+		};
+		var triangle_uvs =
+		{
+			attribute_name : "a_uv",
+			item_size      : 2,
+			draw_mode      : "triangles",
+			stream         : [0.0, 0.0,
+			                  1.0, 1.0,
+			                  0.0, 1.0]
+		};
+
+		// Quad
+		var quad_verts =
+		{
+			attribute_name : "a_pos",
+			item_size      : 3,
+			draw_mode      : "triangle_strip",
+			stream         : [1.0,  1.0,  0.0,
+			                 -1.0,  1.0,  0.0,
+			                  1.0, -1.0,  0.0,
+			                 -1.0, -1.0,  0.0]
+		};
+		var quad_uvs =
+		{
+			attribute_name : "a_uv",
+			item_size      : 2,
+			draw_mode      : "triangle_strip",
+			stream         : [1.0, 0.0,
+			                  0.0, 0.0,
+			                  1.0, 1.0,
+			                  0.0, 1.0]
+		};
+
+		// Circle
+		var circle_verts =
+		{
+			attribute_name : "a_pos",
+			item_size      : 3,
+			draw_mode      : "triangle_fan",
+			stream         : generate_circle_verts(35)
+		};
+		var circle_uvs =
+		{
+			attribute_name : "a_uv",
+			item_size      : 2,
+			draw_mode      : "triangle_fan",
+			stream         : generate_circle_uvs(35)
+		};
+
+		function generate_circle_verts(segment_count)
+		{
+			var verts = [0.0, 0.0, 0.0]; var theta = (2 * Math.PI) / segment_count;
+			for(var i = 0; i <= segment_count; ++i)
+			{
+				verts.push(Math.cos(theta * i), Math.sin(theta * i), 0.0);
+			}
+			return verts;
+		}
+
+		function generate_circle_uvs(segment_count)
+		{
+			var uvs = [0.5, -0.5]; var theta = (2 * Math.PI) / segment_count;
+			var normalise = function (x) { return ((x + 1) / 2); }
+			for(var i = 0; i <= segment_count; ++i)
+			{
+				uvs.push(normalise(Math.cos(theta * i)), -normalise(Math.sin(theta * i)));
+			}
+			return uvs;
+		}
+
+		function RenderPrim(vbo, vbo_uv, scale, pos, texture)
+		{
+			var mtx_trans = mat4.create();
+			Engine.Gfx.BindVertexBuffer(vbo);
+			Engine.Gfx.BindVertexBuffer(vbo_uv);
+			mat4.translate(mtx_trans, Engine.Math.IdentityMatrix, pos);
+			mat4.scale(mtx_trans, mtx_trans, [scale / 2.5, scale / 2.5, 0.0]);
+			Engine.Gfx.SetShaderConstant("u_trans_model", mtx_trans, Engine.Gfx.SC_MATRIX4);
+			Engine.Gfx.BindTexture(texture, 0);
+			Engine.Gfx.DrawArray();
+		}
+
+		$(document).ready(function()
+		{
+			Engine.Init(function()
+			{
+				// Setup VBOs (vertex buffer objects)
+				var tri_verts_vbo    = Engine.Gfx.CreateVertexBuffer(triangle_verts);
+				var tri_uvs_vbo      = Engine.Gfx.CreateVertexBuffer(triangle_uvs);
+				var quad_verts_vbo   = Engine.Gfx.CreateVertexBuffer(quad_verts);
+				var quad_uvs_vbo     = Engine.Gfx.CreateVertexBuffer(quad_uvs);
+				var circle_verts_vbo = Engine.Gfx.CreateVertexBuffer(circle_verts);
+				var circle_uvs_vbo   = Engine.Gfx.CreateVertexBuffer(circle_uvs);
+
+				// Setup camera / shader program
+				var cam = new Engine.Camera.Orthographic();
+				var program = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_basic_transformed"],
+				                                             Engine.Resources["fs_basic_textured"]);
+
+				var on_render = function(info)
+				{
+					Engine.Gfx.Clear(Engine.Colour.Black);
+
+					// Update & bind camera
+					cam.Update(info);
+					Engine.Gfx.BindCamera(cam);
+
+					// Render textured prims
+					var centre = Engine.Canvas.GetCentre();
+					var offset = Engine.Canvas.GetWidth() / 3;
+					Engine.Gfx.BindShaderProgram(program);
+					RenderPrim(tri_verts_vbo,    tri_uvs_vbo,    offset, [centre[0] - offset, centre[1], 0], resources["tx_water"]); // Draw triangle
+					RenderPrim(quad_verts_vbo,   quad_uvs_vbo,   offset, centre, resources["tx_rock"]);                              // Draw quad
+					RenderPrim(circle_verts_vbo, circle_uvs_vbo, offset, [centre[0] + offset, centre[1], 0],  resources["tx_fire"]); // Draw circle
+				};
+				return on_render;
+			}, resources);
+		});
+		</script>
+	</head>
+
+	<body>
+		<canvas width="512" height="512"></canvas>
+	</body>
+</html>

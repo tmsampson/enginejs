@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>Engine Sample: Sprite Origin Demo (using .sprite file)</title>
+
+		<!-- EngineJS -->
+		<script type="text/javascript" src="enginejs/jquery.js"></script>
+		<script type="text/javascript" src="enginejs/engine.js"></script>
+
+		<script language="javascript">
+		var resources = { spr_hero : { file : "sprites/hero.sprite" } };
+		$(document).ready(function()
+		{
+			var on_init = function()
+			{
+				var scene = new Engine.Game2D.Scene();
+				var hero = new Engine.Game2D.Entity(resources["spr_hero"]);
+				hero.sprite.SetSequence("stand_down");
+				hero.MoveTo(Engine.Canvas.GetCentre());
+				scene.Add(hero);
+
+				// Setup sliders
+				$("#slider_origin_x").slider({ value: 0, min: -64, max: 64, step: 1 });
+				$("#slider_origin_y").slider({ value: 0, min: -64, max: 64, step: 1 });
+				$("#slider_scale").slider({ value: 128, min: 32, max: 256, step: 8 });
+				$("#slider_rotation").slider({ value: 0, min: 0, max: Math.PI * 2, step: 0.1 });
+
+				var on_render = function(info)
+				{
+					if(Engine.Keyboard.IsPressed(["w", "up"]))    { hero.Move([0,  2]); }
+					if(Engine.Keyboard.IsPressed(["a", "left"]))  { hero.Move([-2, 0]); }
+					if(Engine.Keyboard.IsPressed(["s", "down"]))  { hero.Move([0, -2]); }
+					if(Engine.Keyboard.IsPressed(["d", "right"])) { hero.Move([2,  0]); }
+
+					// Apply sliders
+					hero.SetSize($("#slider_scale").slider("value"));
+					hero.SetRotation($("#slider_rotation").slider("value"));
+					hero.sprite.SetOrigin([$("#slider_origin_x").slider("value"),
+					                       $("#slider_origin_y").slider("value")]);
+
+					// Draw Scene
+					scene.EnableDebugRender($("#checkbox").is(':checked'));
+					scene.Render(info);
+				};
+				return on_render;
+			};
+			Engine.Init(on_init, resources);
+		});
+		</script>
+	</head>
+
+	<body>
+		<table>
+			<tr>
+				<td><canvas width="800" height="640"></canvas></td>
+				<td valign="top" style="padding:20px">
+					<h3>Config</h3>
+					<table cellspacing="10">
+						<tr><td>Enable Debug Render:</td><td><input id="checkbox" type="checkbox" checked/></td></tr>
+						<tr><td>Origin (x):</td><td><div id="slider_origin_x" style="width:200px"></div></td></tr>
+						<tr><td>Origin (y):</td><td><div id="slider_origin_y" style="width:200px"></div></td></tr>
+						<tr><td>Scale:     </td><td><div id="slider_scale"    style="width:200px"></div></td></tr>
+						<tr><td>Rotation:  </td><td><div id="slider_rotation" style="width:200px"></div></td></tr>
+					</table>
+					<h3>Notes</h3>
+					<ol>
+						<li>When no origin is specified by the sprite, the entity is centred about its position by default</li>
+						<li>The sprite origin is specified relative to the centre of the first texture</li>
+						<li>Rotations always happen about the centre of the entity (whether textured or untextured)</li>
+						<li>The size of each sprite sequence (dictated by the size and row/col count of the underlying texture) should match (otherwise will be scaled based on first sequence)
+					</ol>
+				</td>
+			</tr>
+		</table>
+	</body>
+</html>

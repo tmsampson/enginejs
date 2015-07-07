@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>Engine Sample: Touch Input (Swipe Detection Advanced)</title>
+
+		<!-- EngineJS -->
+		<script type="text/javascript" src="enginejs/jquery.js"></script>
+		<script type="text/javascript" src="enginejs/engine.js"></script>
+
+		<script language="javascript">
+		$(document).ready(function()
+		{
+			Engine.Init(function()
+			{
+				Engine.Device.Maximise(); // maximise canvas
+				var scene = new Engine.Game2D.Scene();
+				var text = new Engine.Text2D.TextBox("None", { prefix : "Detected: ", dock : ["top", "left"] });
+
+				var on_render = function(info)
+				{
+					scene.Render(info);
+
+					// *******************************************
+					// 1. Detect long diagonal swipe
+					var config =
+					{
+						direction  : [0.5, 0.5],         // Up-right diagonal..
+						min_length : 400,                // Of at least 400 pixels..
+						max_time   : 2000,               // In no more than 2 seconds..
+						tollerance : 4 * (Math.PI / 180) // With a tollerance of 4 degrees
+					};
+					if(Engine.Touch.IsSwiped(0, false, config)) { text.Set("Long diagonal swipe"); }
+
+					// *******************************************
+					// 2. Detect quick random swipe in any direction
+					config =
+					{
+						direction  : [0, 1],     // Direction not important as we provide a high tollerance..
+						min_length : 200,        // Of at least 300 pixels..
+						max_time   : 100,        // In no more than 100ms..
+						tollerance : 2 * Math.PI // With a tollerance of 360 degrees
+					};
+					if(Engine.Touch.IsSwiped(0, false, config)) { text.Set("Quick random swipe"); }
+				};
+				return on_render;
+			});
+		});
+		</script>
+	</head>
+
+	<body>
+		<canvas width="512" height="512"></canvas>
+	</body>
+</html>
