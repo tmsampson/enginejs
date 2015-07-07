@@ -2,3 +2,9 @@ syntax: regexp
 
 # Ignore webserver log files
 ^utils/webserver/.*_log
+
+# Ignore sample symlinks
+^samples/sample_.*/enginejs$
+
+# Ignore thumbnail data
+.*/Thumbs.db
