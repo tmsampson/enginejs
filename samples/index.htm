@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+		<link rel="stylesheet" href="../utils/bootstrap/css/bootstrap.min.css">
+
+		<style type="text/css">
+			.navbar-inverse .navbar-nav li a { color: #001a2e; font-weight: bold; font-size:1.1em; }
+			.navbar-inverse .navbar-nav li.active a { background-color : #003863; background-image:none; }
+			.navbar-inverse .navbar-nav li.active a:hover { color: #FF6600; background-color : #003863; background-image:none; }
+			.nav-tabs li a { font-weight : bold; color: #001a2e; }
+			.tab-pane li a:first-child { font-weight : bold; }
+		</style>
+		<title>EngineJS Samples</title>
+	</head>
+
+	<body>
+
+		<nav class="navbar navbar-inverse navbar-fixed-top" style="background-color:#005ea6; background-image:none; border : 0px;">
+			<div class="container">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<img style="width:168px" alt="Engine JS" src="../img/logo.png" />
+				</div>
+				<div id="navbar" class="collapse navbar-collapse">
+					<ul class="nav navbar-nav" style="margin-left:60px">
+						<li><a href="#">Getting Started</a></li>
+						<li class="active"><a href="#">Samples</a></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+
+		<div class="container" style="margin-top:60px;">
+
+			<div role="tabpanel" style="margin-top:12px">
+				<ul class="nav nav-tabs" role="tablist">
+					<li><a href="#gfx" role="tab" data-toggle="tab">Gfx</a></li>
+					<li class="active"><a href="#2d" data-toggle="tab">2D</a></li>
+					<li><a href="#3d" data-toggle="tab">3D</a></li>
+					<li><a href="#input" data-toggle="tab">Input</a></li>
+					<li><a href="#audio" data-toggle="tab">Audio</a></li>
+					<li><a href="#debug" data-toggle="tab">Debug</a></li>
+					<li><a href="#text" data-toggle="tab">Text</a></li>
+					<li><a href="#misc" data-toggle="tab">Misc</a></li>
+					<li><a href="#tests" data-toggle="tab">Tests</a></li>
+					<li><a href="#tools" data-toggle="tab">Tools</a></li>
+					<li><a href="#demos" data-toggle="tab">Demos</a></li>
+					<li><a href="#games" data-toggle="tab">Games</a></li>
+					<li><a href="#testbed" data-toggle="tab">Testbed</a></li>
+				</ul>
+
+				<div class="tab-content" style="padding-top:20px">
+					<div role="tabpanel" class="tab-pane" id="gfx">
+						<ul>
+							<li><a href="sample_001_minimal/index.htm?max=1">Minimal</a> - [ <a href="view-source:localhost:1234/sample_001_minimal/index.htm" target="_blank"><span class="glyphicon glyphicon-file" aria-hidden="true"></span> view source</a> ]</li>
+							<li><a href="sample_002_fullscreen_quad/index.htm?max=1">Quad (Basic shader)</a> - [ <a href="view-source:localhost:1234/sample_002_fullscreen_quad/index.htm" target="_blank"><span class="glyphicon glyphicon-file" aria-hidden="true"></span> view source</a> ]</li>
+							<li><a href="sample_004_plasma/index.htm?max=1">Quad (Plasma shader)</a> - [ <a href="view-source:localhost:1234/sample_002_fullscreen_quad/index.htm" target="_blank"><span class="glyphicon glyphicon-file" aria-hidden="true"></span> view source</a> ]</li>
+							<li><a href="sample_003_fullscreen_quad_textured/index.htm">Quad (Textured)</a> - [ <a href="view-source:localhost:1234/sample_003_fullscreen_quad_textured/index.htm" target="_blank"><span class="glyphicon glyphicon-file" aria-hidden="true"></span> view source</a> ]</li>
+							<li><a href="sample_005_animated_uvs/index.htm">Quad (Animated UV shader)</a> - [ <a href="view-source:localhost:1234/sample_005_animated_uvs/index.htm" target="_blank"><span class="glyphicon glyphicon-file" aria-hidden="true"></span> view source</a> ]</li>
+							<li><a href="sample_006_basic_transform/index.htm?max=1">Basic Transform</a> - [ <a href="view-source:localhost:1234/sample_006_basic_transform/index.htm" target="_blank"><span class="glyphicon glyphicon-file" aria-hidden="true"></span> view source</a> ]</li>
+							<li><a href="sample_007_manual_prims/index.htm?max=1">Manual Prims</a> - [ <a href="view-source:localhost:1234/sample_007_manual_prims/index.htm" target="_blank"><span class="glyphicon glyphicon-file" aria-hidden="true"></span> view source</a> ]</li>
+							<li><a href="sample_007b_manual_prims_textured/index.htm?max=1">Manual Prims (textured)</a> - [ <a href="view-source:localhost:1234/sample_007b_manual_prims_textured/index.htm" target="_blank"><span class="glyphicon glyphicon-file" aria-hidden="true"></span> view source</a> ]</li>
+							<li><a href="sample_007c_manual_animation/index.htm?max=1">Manual 2D Animation</a> - [ <a href="view-source:localhost:1234/sample_007c_manual_animation/index.htm" target="_blank"><span class="glyphicon glyphicon-file" aria-hidden="true"></span> view source</a> ]</li>
+							<li><a href="sample_009_basic_alpha/index.htm?max=1">Basic Alpha</a> - [ <a href="view-source:localhost:1234/sample_009_basic_alpha/index.htm" target="_blank"><span class="glyphicon glyphicon-file" aria-hidden="true"></span> view source</a> ]</li>
+							<li><a href="sample_010_alpha_blend/index.htm?max=1">Alpha Blend</a> - [ <a href="view-source:localhost:1234/sample_010_alpha_blend/index.htm" target="_blank"><span class="glyphicon glyphicon-file" aria-hidden="true"></span> view source</a> ]</li>
+						</ul>
+					</div>
+					<div role="tabpanel" class="tab-pane active" id="2d">
+						<ul>
+							<li><a href="sample_019_basic_2d_scene/index.htm?max=1">Basic Scene</a> - [ <a href="view-source:localhost:1234/sample_019_basic_2d_scene/index.htm" target="_blank"><span class="glyphicon glyphicon-file" aria-hidden="true"></span> view source</a> ]</li>
+							<li><a href="sample_020a_basic_2d_scene_with_background_texture/index.htm?max=1">Background (using single texture)</a> - [ <a href="view-source:localhost:1234/sample_020a_basic_2d_scene_with_background_texture/index.htm" target="_blank"><span class="glyphicon glyphicon-file" aria-hidden="true"></span> view source</a> ]</li>
+							<li><a href="sample_020b_basic_2d_scene_with_background_file/index.htm">Background (using .background files)</a> - [ <a href="view-source:localhost:1234/sample_020b_basic_2d_scene_with_background_file/index.htm" target="_blank"><span class="glyphicon glyphicon-file" aria-hidden="true"></span> view source</a> ]</li>
+							<li><a href="sample_020c_basic_2d_scene_with_background_programmatic/index.htm?max=1">Background (using multiple texture, setup in code)</a> - [ <a href="view-source:localhost:1234/sample_020c_basic_2d_scene_with_background_programmatic/index.htm" target="_blank"><span class="glyphicon glyphicon-file" aria-hidden="true"></span> view source</a> ]</li>
+							<li><a href="sample_021_basic_2d_scene_with_sprites/index.htm?max=1">Sprites (using single texture)</a> - [ <a href="view-source:localhost:1234/sample_021_basic_2d_scene_with_sprites/index.htm" target="_blank"><span class="glyphicon glyphicon-file" aria-hidden="true"></span> view source</a> ]</li>
+							<li><a href="sample_021b_basic_2d_scene_with_sprite_sheet/index.htm?max=1">Sprites (using .sprite file)</a> - [ <a href="view-source:localhost:1234/sample_021b_basic_2d_scene_with_sprite_sheet/index.htm" target="_blank"><span class="glyphicon glyphicon-file" aria-hidden="true"></span> view source</a> ]</li>
+							<li><a href="sample_021c_basic_2d_scene_with_sprite_sheet_origin_demo/index.htm">Sprite Origin Demo (using .sprite file)</a> - [ <a href="view-source:localhost:1234/sample_021c_basic_2d_scene_with_sprite_sheet_origin_demo/index.htm" target="_blank"><span class="glyphicon glyphicon-file" aria-hidden="true"></span> view source</a> ]</li>
+							<li><a href="sample_021d_basic_2d_scene_with_sprite_sheet_collision_shapes/index.htm">Sprite Collision Shapes (using .sprite file)</a> - [ <a href="view-source:localhost:1234/sample_021c_basic_2d_scene_with_sprite_sheet_collision_shapes/index.htm" target="_blank"><span class="glyphicon glyphicon-file" aria-hidden="true"></span> view source</a> ]</li>
+							<li><a href="sample_022_basic_2d_scene_sprite_depth/index.htm?max=1">Sprite Depth</a> - [ <a href="view-source:localhost:1234/sample_022_basic_2d_scene_sprite_depth/index.htm" target="_blank"><span class="glyphicon glyphicon-file" aria-hidden="true"></span> view source</a> ]</li>
+							<li><a href="sample_022b_multiple_cameras/index.htm?max=1">Multiple Cameras</a> - [ <a href="view-source:localhost:1234/sample_022b_multiple_cameras/index.htm" target="_blank"><span class="glyphicon glyphicon-file" aria-hidden="true"></span> view source</a> ]</li>
+						</ul>
+					</div>
+					<div role="tabpanel" class="tab-pane" id="3d">
+						<ul>
+							<li><a href="sample_014_basic_3d_scene/index.htm?max=1">Basic Scene</a> - [ <a href="view-source:localhost:1234/sample_014_basic_3d_scene/index.htm" target="_blank"><span class="glyphicon glyphicon-file" aria-hidden="true"></span> view source</a> ]</li>
+							<li><a href="sample_015_basic_3d_cube/index.htm?max=1">Scene with Cube</a> - [ <a href="view-source:localhost:1234/sample_015_basic_3d_cube/index.htm" target="_blank"><span class="glyphicon glyphicon-file" aria-hidden="true"></span> view source</a> ]</li>
+							<li><a href="sample_016_basic_3d_cube_orbit/index.htm?max=1">Scene with Cube &amp; Orbit Cam</a> - [ <a href="view-source:localhost:1234/sample_016_basic_3d_cube_orbit/index.htm" target="_blank"><span class="glyphicon glyphicon-file" aria-hidden="true"></span> view source</a> ]</li>
+							<li><a href="sample_017_basic_3d_cube_wireframe/index.htm?max=1">Scene with Cube (Wireframe)</a> - [ <a href="view-source:localhost:1234/sample_017_basic_3d_cube_wireframe/index.htm" target="_blank"><span class="glyphicon glyphicon-file" aria-hidden="true"></span> view source</a> ]</li>
+							<li><a href="sample_018_basic_3d_cube_textured/index.htm?max=1">Scene with Cube (Textured)</a> - [ <a href="view-source:localhost:1234/v/index.htm" target="_blank"><span class="glyphicon glyphicon-file" aria-hidden="true"></span> view source</a> ]</li>
+						</ul>
+					</div>
+					<div role="tabpanel" class="tab-pane" id="input">
+						<ul>
+							<li><a href="sample_011_keyboard_input/index.htm?max=1">Keyboard Input</a> - [ <a href="view-source:localhost:1234/sample_011_keyboard_input/index.htm" target="_blank"><span class="glyphicon glyphicon-file" aria-hidden="true"></span> view source</a> ]</li>
+							<li><a href="sample_012_mouse_input/index.htm?max=1">Mouse Input</a> - [ <a href="view-source:localhost:1234/sample_012_mouse_input/index.htm" target="_blank"><span class="glyphicon glyphicon-file" aria-hidden="true"></span> view source</a> ]</li>
+							<li><a href="sample_012b_gamepad_input/index.htm?max=1">Gamepad Input</a> - [ <a href="view-source:localhost:1234/sample_012b_gamepad_input/index.htm" target="_blank"><span class="glyphicon glyphicon-file" aria-hidden="true"></span> view source</a> ]</li>
+							<li><a href="sample_012c_touch_input_basic/index.htm?max=1">Touch Input (Basic)</a> - [ <a href="view-source:localhost:1234/sample_012c_touch_input_basic/index.htm" target="_blank"><span class="glyphicon glyphicon-file" aria-hidden="true"></span> view source</a> ]</li>
+							<li><a href="sample_012d_touch_input_swipe_detection/index.htm?max=1">Touch Input (Swipe Detection)</a> - [ <a href="view-source:localhost:1234/sample_012d_touch_input_swipe_detection/index.htm" target="_blank"><span class="glyphicon glyphicon-file" aria-hidden="true"></span> view source</a> ]</li>
+							<li><a href="sample_012e_touch_input_swipe_detection_advanced/index.htm?max=1">Touch Input (Swipe Detection Advanced)</a> - [ <a href="view-source:localhost:1234/sample_012e_touch_input_swipe_detection_advanced/index.htm" target="_blank"><span class="glyphicon glyphicon-file" aria-hidden="true"></span> view source</a> ]</li>
+							<li><a href="sample_012f_touch_input_ongoing_swipe/index.htm?max=1">Touch Input (Ongoing Swipe Info)</a> - [ <a href="view-source:localhost:1234/sample_012f_touch_input_ongoing_swipe/index.htm" target="_blank"><span class="glyphicon glyphicon-file" aria-hidden="true"></span> view source</a> ]</li>
+							<li><a href="sample_012g_touch_input_tap_detection/index.htm?max=1">Touch Input (Tap Detection)</a> - [ <a href="view-source:localhost:1234/sample_012g_touch_input_tap_detection/index.htm" target="_blank"><span class="glyphicon glyphicon-file" aria-hidden="true"></span> view source</a> ]</li>
+						</ul>
+					</div>
+					<div role="tabpanel" class="tab-pane" id="audio">
+						<ul>
+							<li><a href="sample_013_basic_audio/index.htm">Basic Audio</a> - [ <a href="view-source:localhost:1234/sample_013_basic_audio/index.htm" target="_blank"><span class="glyphicon glyphicon-file" aria-hidden="true"></span> view source</a> ]</li>
+						</ul>
+					</div>
+					<div role="tabpanel" class="tab-pane" id="debug">
+						<ul>
+							<li><a href="sample_024_debug_drawing_2d/index.htm?max=1">Debug Drawing (2D)</a> - [ <a href="view-source:localhost:1234/sample_024_debug_drawing_2d/index.htm" target="_blank"><span class="glyphicon glyphicon-file" aria-hidden="true"></span> view source</a> ]</li>
+						</ul>
+					</div>
+					<div role="tabpanel" class="tab-pane" id="text">
+						<ul>
+							<li><a href="sample_025_drawing_text/index.htm?max=1">Drawing Text (2D)</a> - [ <a href="view-source:localhost:1234/sample_025_drawing_text/index.htm" target="_blank"><span class="glyphicon glyphicon-file" aria-hidden="true"></span> view source</a> ]</li>
+						</ul>
+					</div>
+					<div role="tabpanel" class="tab-pane" id="misc">
+						<ul>
+							<li><a href="sample_008_loading_screen/index.htm">Loading Screen</a> - [ <a href="view-source:localhost:1234/sample_008_loading_screen/index.htm" target="_blank"><span class="glyphicon glyphicon-file" aria-hidden="true"></span> view source</a> ]</li>
+							<li><a href="sample_004b_plasma_interactive/index.htm">Plasma with Param Editor</a> - [ <a href="view-source:localhost:1234/sample_004b_plasma_interactive/index.htm" target="_blank"><span class="glyphicon glyphicon-file" aria-hidden="true"></span> view source</a> ]</li>
+							<li><a href="sample_023_easing/index.htm">Easing</a> - [ <a href="view-source:localhost:1234/sample_023_easing/index.htm" target="_blank"><span class="glyphicon glyphicon-file" aria-hidden="true"></span> view source</a> ]</li>
+						</ul>
+					</div>
+					<div role="tabpanel" class="tab-pane" id="tests">
+						<ul>
+							<li><a href="sample_test_quadtree/index.htm?max=1">Quadtree Visualisation</a> - [ <a href="view-source:localhost:1234/sample_test_quadtree/index.htm" target="_blank"><span class="glyphicon glyphicon-file" aria-hidden="true"></span> view source</a> ]</li>
+						</ul>
+					</div>
+					<div role="tabpanel" class="tab-pane" id="tools">
+						<ul>
+							<li><a href="sample_tool_sprite_previewer/index.htm">Sprite Preview Tool</a> - [ <a href="view-source:localhost:1234/sample_tool_sprite_previewer/index.htm" target="_blank"><span class="glyphicon glyphicon-file" aria-hidden="true"></span> view source</a> ]</li>
+						</ul>
+					</div>
+					<div role="tabpanel" class="tab-pane" id="demos">
+						<ul>
+							<li><a href="sample_demo_projectile/index.htm">Projectiles</a> - [ <a href="view-source:localhost:1234/sample_demo_projectile/index.htm" target="_blank"><span class="glyphicon glyphicon-file" aria-hidden="true"></span> view source</a> ]</li>
+						</ul>
+					</div>
+					<div role="tabpanel" class="tab-pane" id="games">
+						<ul>
+							<li><a href="sample_game_gb_2015/index.htm?max=1">Nebulous</a> - [ <a href="view-source:localhost:1234/sample_game_gb_2015/index.htm" target="_blank"><span class="glyphicon glyphicon-file" aria-hidden="true"></span> view source</a> ]</li>
+							<li><a href="sample_lazer_game/index.htm">Lazer Game</a> - [ <a href="view-source:localhost:1234/sample_lazer_game/index.htm" target="_blank"><span class="glyphicon glyphicon-file" aria-hidden="true"></span> view source</a> ]</li>
+						</ul>
+					</div>
+					<div role="tabpanel" class="tab-pane" id="testbed">
+						<ul>
+							<li><a href="sample_testbed/index.htm?max=1">Testbed</a> - [ <a href="view-source:localhost:1234/sample_testbed/index.htm" target="_blank"><span class="glyphicon glyphicon-file" aria-hidden="true"></span> view source</a> ]</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<script type="text/javascript" src="../jquery.js"></script>
+		<script src="../utils/bootstrap/js/bootstrap.min.js"></script>
+
+	</body>
+</html>
