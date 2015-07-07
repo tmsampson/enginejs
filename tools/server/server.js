@@ -7,8 +7,7 @@ var os            = require('os');
 
 // Config
 var port = 1234;
-var game_root = process.argv[2] || process.cwd();
-var enginejs_root = path.join(game_root, "enginejs");
+var enginejs_root = process.argv[2] || process.cwd();
 
 // Helper
 function GetLocalIPAddress()
@@ -27,7 +26,7 @@ function GetLocalIPAddress()
 }
 
 // Setup Webserver
-var serve = serve_static(game_root);
+var serve = serve_static(enginejs_root);
 var server = http.createServer(function(req, res)
 {
 	if(req.url == "/") { req.url = "/index.htm"; }
@@ -47,8 +46,7 @@ console.log("===================================================================
 console.log("                            Development Server V1                             ");
 console.log("==============================================================================");
 console.log(" EngineJS root : " + enginejs_root);
-console.log("     Game root : " + game_root);
-console.log("   Server root : " + game_root);
+console.log("   Server root : " + enginejs_root);
 console.log("          Port : " + port);
 console.log("    Device URL : " + "http://" + GetLocalIPAddress() + ":" + port);
 console.log("==============================================================================");
