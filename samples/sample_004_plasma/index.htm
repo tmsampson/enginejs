@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>Engine Sample: Plasma</title>
+
+		<!-- EngineJS -->
+		<script type="text/javascript" src="enginejs/jquery.js"></script>
+		<script type="text/javascript" src="enginejs/engine.js"></script>
+
+		<script language="javascript">
+		var resources = { fs_plasma : { file: "shaders/plasma.fs" } }
+		$(document).ready(function()
+		{
+			var on_init = function()
+			{
+				var program  = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_basic"],
+				                                              resources["fs_plasma"]);
+				var on_render = function(info)
+				{
+					Engine.Gfx.BindShaderProgram(program);
+					Engine.Gfx.SetShaderConstant("u_time", info.elapsed_s, Engine.Gfx.SC_FLOAT);
+					Engine.Gfx.DrawQuad();
+				};
+				return on_render;
+			};
+			Engine.Init(on_init, resources);
+		});
+		</script>
+	</head>
+
+	<body>
+		<canvas width="512" height="512"></canvas>
+	</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>Engine Sample: Fullscreen Quad</title>
+
+		<!-- EngineJS -->
+		<script type="text/javascript" src="enginejs/jquery.js"></script>
+		<script type="text/javascript" src="enginejs/engine.js"></script>
+
+		<script language="javascript">
+		$(document).ready(function()
+		{
+			Engine.Init(function()
+			{
+				var program  = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_basic"],
+				                                              Engine.Resources["fs_basic"]);
+				var on_render = function()
+				{
+					Engine.Gfx.BindShaderProgram(program);
+					Engine.Gfx.DrawQuad();
+				};
+				return on_render;
+			});
+		});
+		</script>
+	</head>
+
+	<body>
+		<canvas width="512" height="512"></canvas>
+	</body>
+</html>

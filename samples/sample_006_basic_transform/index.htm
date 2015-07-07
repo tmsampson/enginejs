@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>Engine Sample: Basic Transform</title>
+
+		<!-- EngineJS -->
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+		<script type="text/javascript" src="enginejs/engine.js"></script>
+
+		<script language="javascript">
+		$(document).ready(function()
+		{
+			Engine.Init(function()
+			{
+				var mtx_trans = mat4.create();
+				var cam = new Engine.Camera.Orthographic();
+				var program  = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_basic_transformed"],
+				                                              Engine.Resources["fs_basic_colour"]);
+
+				var on_render = function(info)
+				{
+					Engine.Gfx.Clear(Engine.Colour.Black);
+
+					// Update & bind camera
+					cam.Update(info);
+					Engine.Gfx.BindCamera(cam);
+
+					// Animate scale
+					var min_dimension = Engine.Canvas.GetMinDimension();
+					var scale = (min_dimension / 10) + (Math.sin(info.elapsed_s * 1.5) + 1) * (min_dimension / 8);
+
+					// Render transformed quad
+					Engine.Gfx.BindShaderProgram(program);
+					mat4.translate(mtx_trans, Engine.Math.IdentityMatrix, Engine.Canvas.GetCentre());
+					mat4.rotate(mtx_trans, mtx_trans, info.elapsed_s, [0, 0, 1]);
+					mat4.scale(mtx_trans, mtx_trans, [scale, scale, 0.0]);
+					Engine.Gfx.SetShaderConstant("u_trans_model", mtx_trans, Engine.Gfx.SC_MATRIX4);
+					Engine.Gfx.SetShaderConstant("u_colour", [1.0, 0.0, 0.0, 1.0], Engine.Gfx.SC_COLOUR);
+					Engine.Gfx.DrawQuad();
+				};
+				return on_render;
+			});
+		});
+		</script>
+	</head>
+
+	<body>
+		<canvas width="512" height="512"></canvas>
+	</body>
+</html>

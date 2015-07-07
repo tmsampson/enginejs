@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>Engine Sample: Loading Screen</title>
+
+		<!-- EngineJS -->
+		<script type="text/javascript" src="enginejs/jquery.js"></script>
+		<script type="text/javascript" src="enginejs/engine.js"></script>
+
+		<script language="javascript">
+		var resources =
+		{
+			tx_0 : { file: "img/tx0.png" },
+			tx_1 : { file: "img/tx1.png" },
+			tx_2 : { file: "img/tx2.png" },
+			tx_3 : { file: "img/tx3.png" },
+			tx_4 : { file: "img/tx4.png" },
+			tx_5 : { file: "img/tx5.png" },
+			tx_6 : { file: "img/tx6.png" },
+			tx_7 : { file: "img/tx7.png" },
+			tx_8 : { file: "img/tx8.png" },
+			tx_9 : { file: "img/tx9.png" },
+			on_loaded : function(resource, i, total)
+			{
+				Engine.Time.Sleep(500); // Simulate longer loading times
+				$(".progress-bar").width((i / total) * 400);
+				$(".info").html("Loaded: " + resource + " (" + i + " / " + total + ")");
+			}
+		}
+
+		$(document).ready(function()
+		{
+			$("canvas").hide();
+			Engine.Init(function()
+			{
+				$("body").find("div").remove();
+				$("canvas").show();
+				return function() { Engine.Gfx.Clear(Engine.Colour.Blue); }
+			}, resources);
+		});
+		</script>
+	</head>
+
+	<body>
+		<!-- ************************************************************************************* -->
+		<!--  Loading info / progress bar -->
+		<!-- ************************************************************************************* -->
+		<div class="info" style="width:400px; text-align:center; margin-bottom:10px">-</div>
+		<div class="progress-bar-container" style="width:400px; height:50px; border:1px solid black">
+			<div class="progress-bar" style="background-color:green; width:0px; height:50px;"></div>
+		</div>
+		<!-- ************************************************************************************* -->
+
+		<canvas width="512" height="512"></canvas>
+	</body>
+</html>

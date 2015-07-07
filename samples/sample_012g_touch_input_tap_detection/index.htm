@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>Engine Sample: Touch Input (Swipe Detection)</title>
+
+		<!-- EngineJS -->
+		<script type="text/javascript" src="enginejs/jquery.js"></script>
+		<script type="text/javascript" src="enginejs/engine.js"></script>
+
+		<script language="javascript">
+		var resources =
+		{
+			tx_tap  : { file: "img/tap.png"  },
+			tx_ball : { file: "img/ball.png" }
+		};
+
+		$(document).ready(function()
+		{
+			var on_init = function()
+			{
+				Engine.Device.Maximise(); // maximise canvas
+				var scene = new Engine.Game2D.Scene();
+				var tap_image  = new Engine.Game2D.Entity(resources["tx_tap"]);
+				var ball = new Engine.Game2D.Entity(resources["tx_ball"]);
+				scene.Add([tap_image, ball]); tap_image.SetAlpha(0);
+
+				var on_render = function(info)
+				{
+					// Animate ball
+					var canvas_centre = Engine.Canvas.GetCentre();
+					var radius = Engine.Vec2.MinElement(Engine.Canvas.GetSize()) / 3;
+					ball.SetSize(radius / 2);
+					ball.MoveTo([canvas_centre[0] + (Math.sin(info.elapsed_s) * radius),
+					             canvas_centre[1] + (Math.cos(info.elapsed_s) * radius)]);
+
+					// Detect global taps
+					if(Engine.Touch.IsTapped())
+					{
+						tap_image.SetAlpha(1);
+					}
+
+					// Detect tap on football
+					if(ball.IsTapped())
+					{
+						alert("ball tapped");
+					}
+
+					// Draw scene
+					tap_image.MoveTo(Engine.Canvas.GetCentre());
+					if(tap_image.GetAlpha() > 0) { tap_image.SetAlpha(tap_image.GetAlpha() - 0.04); }
+					scene.Render(info);
+				};
+				return on_render;
+			};
+			Engine.Init(on_init, resources);
+		});
+		</script>
+	</head>
+
+	<body>
+		<canvas width="512" height="512"></canvas>
+	</body>
+</html>

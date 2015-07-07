@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>Engine Sample: Drawing text (2D)</title>
+
+		<!-- EngineJS -->
+		<script type="text/javascript" src="enginejs/jquery.js"></script>
+		<script type="text/javascript" src="enginejs/engine.js"></script>
+
+		<script language="javascript">
+		$(document).ready(function()
+		{
+			Engine.Init(function()
+			{
+				var scene = new Engine.Game2D.Scene();
+
+				// Timer (top left, default padding, updated in game loop)
+				var timer = new Engine.Text2D.TextBox("0",
+				{
+					prefix : "Timer:",
+					dock   : ["top", "left"]
+				});
+
+				// Message (large, centre screen)
+				var message = new Engine.Text2D.TextBox("Text Rendering Sample",
+				{
+					size   : 50,
+					colour : "navy",
+					dock   : ["middle", "middle"]
+				});
+
+				// Hud Element (bottom centre, no padding)
+				var hud_bottom = new Engine.Text2D.TextBox("Bottom HUD",
+				{
+					colour     : "red",
+					background : "black",
+					dock       : ["bottom", "middle"],
+					padding    : 0
+				});
+
+				// Manually positioned element
+				var manual = new Engine.Text2D.TextBox("Manually positioned element",
+				{
+					colour     : "pink",
+					background : "purple",
+					size       : 20,
+					position   : [100, 100]
+				});
+
+				var on_render = function(info)
+				{
+					timer.Set(info.elapsed_s);
+					scene.Render(info);
+				};
+				return on_render;
+			});
+		});
+		</script>
+	</head>
+
+	<body>
+		<canvas width="512" height="512"></canvas>
+	</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>Engine Sample: Debug Drawing 2D</title>
+
+		<!-- EngineJS -->
+		<script type="text/javascript" src="enginejs/jquery.js"></script>
+		<script type="text/javascript" src="enginejs/engine.js"></script>
+
+		<script language="javascript">
+		var thickness = 0;
+		$(document).ready(function()
+		{
+			Engine.Init(function()
+			{
+				var scene = new Engine.Game2D.Scene();
+				var on_render = function(info)
+				{
+					var centre = Engine.Canvas.GetCentre();
+					var size = Engine.Canvas.GetSize();
+
+					// Circles
+					Engine.Debug.DrawCircle(centre, 150, [ 0.0, 0.4, 0.0, 0.5 ]);
+					Engine.Debug.DrawCircle(centre, 100, Engine.Colour.Green);
+					Engine.Debug.DrawCircle(centre, 50, Engine.Colour.Blue);
+
+					// Lines
+					Engine.Debug.DrawLine([centre[0], centre[1] - 100], [centre[0], centre[1] + 100], Engine.Colour.Black, 8);
+					Engine.Debug.DrawLine([centre[0]-100, centre[1]], [centre[0] + 100, centre[1]], Engine.Colour.Black, 8);
+					Engine.Debug.DrawLine([0, 0], size, Engine.Colour.Red, 3);
+					Engine.Debug.DrawLine([0, size[1]], [size[0], 0], Engine.Colour.Red, 3);
+
+					// Rects
+					Engine.Debug.DrawRect([centre[0] - 50,  centre[1] + 200], 100, 200, Engine.Colour.Orange);
+					Engine.Debug.DrawRect([centre[0] - 100, centre[1] - 300], 200, 100, Engine.Colour.Pink);
+					scene.Render(info);
+				};
+				return on_render;
+			});
+		});
+		</script>
+	</head>
+
+	<body>
+		<canvas width="512" height="512"></canvas>
+	</body>
+</html>

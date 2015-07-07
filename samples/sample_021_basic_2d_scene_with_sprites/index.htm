@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>Engine Sample: Basic 2D Scene With Sprites (Basic)</title>
+
+		<!-- EngineJS -->
+		<script type="text/javascript" src="enginejs/jquery.js"></script>
+		<script type="text/javascript" src="enginejs/engine.js"></script>
+
+		<script language="javascript">
+		var resources = { tx_ship : { file : "img/ship.png" } };
+		$(document).ready(function()
+		{
+			var on_init = function()
+			{
+				var scene = new Engine.Game2D.Scene();
+				var generate_ships = function()
+				{
+					scene.Clear();
+					for(var i = 0; i < 50; ++i)
+					{
+						var ship = new Engine.Game2D.Entity(resources["tx_ship"]);
+						var velocity = [Engine.Math.Random(-200, 200), Engine.Math.Random(-200, 200)];
+						ship.MoveTo([Engine.Math.Random(0, Engine.Canvas.GetWidth()), Engine.Math.Random(0, Engine.Canvas.GetHeight())]);
+						ship.SetSize(Engine.Math.Random(20, 80));
+						ship.SetVelocity(velocity);
+						ship.SetRotation(Engine.Vec2.Angle(velocity));
+						ship.SetTint([Engine.Math.Random(0, 1), Engine.Math.Random(0, 1), Engine.Math.Random(0, 1)]);
+						ship.SetAlpha(Engine.Math.Random(0.2, 1));
+						scene.Add(ship);
+					}
+				}
+
+				generate_ships(); // Generate ships
+				var on_render = function(info)
+				{
+					// Regenerate ships?
+					if(Engine.Mouse.IsPressed("left", true) || Engine.Touch.IsPressed(0, true))
+					{
+						generate_ships();
+					}
+
+					scene.Render(info);
+				};
+				return on_render;
+			};
+			Engine.Init(on_init, resources);
+		});
+		</script>
+	</head>
+
+	<body>
+		<canvas width="512" height="512"></canvas>
+	</body>
+</html>

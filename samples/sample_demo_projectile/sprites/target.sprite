@@ -1,0 +1,13 @@
+{
+	"name"       : "Target",
+	"textures"   :
+	{
+		"tx_target"    : { "file": "img/target.png", "rows": 1, "cols": 1 },
+		"tx_explosion" : { "file": "img/explosion.png", "rows": 5, "cols": 5 }
+	},
+	"sequences"  :
+	{
+		"default" : { "texture" : "tx_target",    "begin": [0, 0], "end": [0, 0], "speed" : 0,  "loop" : false, "mirror": [0, 0] },
+		"explode" : { "texture" : "tx_explosion", "begin": [0, 0], "end": [4, 4], "speed" : 16, "loop" : false, "mirror": [0, 0] }
+	}
+}

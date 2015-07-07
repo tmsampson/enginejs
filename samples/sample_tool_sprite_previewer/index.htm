@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>Sprite Preview Tool</title>
+
+		<!-- EngineJS -->
+		<script type="text/javascript" src="enginejs/jquery.js"></script>
+		<script type="text/javascript" src="enginejs/engine.js"></script>
+
+		<script language="javascript">
+		// ======================================================================
+		// ======================================================================
+		// ADD SPRITES YOU WISH TO PREVIEW TO THIS LIST!
+		// ======================================================================
+		// ======================================================================
+		var resources =
+		{
+			"spr_hero"     : { file : "sprites/hero.sprite" },
+			"spr_earth"    : { file : "sprites/earth.sprite" },
+			"spr_asteroid" : { file : "sprites/asteroid.sprite" },
+			"spr_ship" : { file : "sprites/ship.sprite" }
+		};
+		// ======================================================================
+		// ======================================================================
+
+		$(document).ready(function()
+		{
+			// Populate sprites dropdown
+			$("#sprite_select, #sequence_select, #btn_sequence_replay").hide();
+			for(var descriptor in resources)
+			{
+				var file = resources[descriptor].file;
+				var extension = file.split('.').pop();
+				if(extension == "sprite")
+				{
+					$("#sprite_select").append($("<option/>").attr("value", descriptor).text(file));
+				}
+			}
+
+			var on_init = function()
+			{
+				// Setup scene
+				var scene = new Engine.Game2D.Scene();
+				var entity = new Engine.Game2D.Entity();
+				entity.MoveTo(Engine.Canvas.GetCentre()); scene.Add(entity);
+
+				// Setup and show controls
+				$("#sprite_select, #sequence_select").show();
+				$("#slider_zoom").slider({ value: 160, min: 64, max: 256, step: 1 });
+
+				// Setup event handlers
+				$("#sprite_select").change(function()
+				{
+					var sprite = resources[$("#sprite_select").val()];
+					entity.SetSprite(sprite);
+
+					// Populate sprite sequences dropdown
+					$("#sequence_select").empty();
+					for(var sequence_name in sprite.sequences)
+					{
+						$("#sequence_select").append($("<option/>").attr("value", sequence_name).text(sequence_name));
+					}
+
+					// Set first sprite sequence as active
+					var first_sequence_name = $("#sequence_select option:first").val();
+					$("#sequence_select").val(first_sequence_name).trigger("change");
+				});
+
+				$("#sequence_select").change(function()
+				{
+					var sequence_name = $("#sequence_select").val();
+					entity.sprite.SetSequence(sequence_name);
+					var sequence = entity.sprite.active_sequence;
+					var is_animated = sequence.begin[0] != sequence.end[0] || sequence.begin[1] != sequence.end[1];
+					(is_animated && !sequence.loop)? $("#btn_sequence_replay").show() : $("#btn_sequence_replay").hide();
+				});
+
+				$("#btn_sequence_replay").click(function()
+				{
+					$("#sequence_select").trigger("change");
+				});
+
+				// Set first sprite as active
+				var first_sprite_name = $("#sprite_select option:first").val();
+				$("#sprite_select").val(first_sprite_name).trigger("change");
+
+				var on_render = function(info)
+				{
+					entity.SetSize($("#slider_zoom").slider("value"));
+					scene.Render(info);
+				};
+				return on_render;
+			};
+
+			Engine.Init(on_init, resources);
+		});
+		</script>
+	</head>
+
+	<body>
+		<table>
+			<tr>
+				<td><canvas width="800" height="600"></canvas></td>
+				<td style="padding:20px" valign="top">
+					<h2>Sprite Preview Tool</h2>
+					<table cellspacing="10">
+						<tr><td>Choose a sprite to preview:</td><td><select id="sprite_select"></select></td></tr>
+						<tr><td>Choose a sprite sequence to preview:</td><td><select id="sequence_select"></select>&nbsp;<button id="btn_sequence_replay" type="button">Replay</button></td></tr>
+						<tr><td>Zoom:</td><td><div id="slider_zoom" style="width:200px; float:left;"></div></td></tr>
+					</table>
+				</td>
+			</tr>
+		</table>
+	</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>Engine Sample: Alpha Blend</title>
+
+		<!-- EngineJS -->
+		<script type="text/javascript" src="enginejs/jquery.js"></script>
+		<script type="text/javascript" src="enginejs/engine.js"></script>
+
+		<script language="javascript">
+		$(document).ready(function()
+		{
+			Engine.Init(function()
+			{
+				var mtx_trans = mat4.create();
+				var circle = Engine.Geometry.MakeCircle({segment_count : 60, generate_uvs : false});
+				var cam = new Engine.Camera.Orthographic();
+				var program  = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_basic_transformed"],
+				                                              Engine.Resources["fs_basic_colour"]);
+
+				var RenderCircle = function(model, pos, size, colour)
+				{
+					mat4.translate(mtx_trans, Engine.Math.IdentityMatrix, pos);
+					mat4.scale(mtx_trans, mtx_trans, [size, size, 0.0]);
+					Engine.Gfx.SetShaderConstant("u_trans_model", mtx_trans, Engine.Gfx.SC_MATRIX4);
+					Engine.Gfx.SetShaderConstant("u_colour", colour, Engine.Gfx.SC_COLOUR);
+					Engine.Gfx.DrawModel(model);
+				};
+
+				var angle = (Math.PI * 2.0) / 3.0;
+				var angles = [angle * 0, angle * 1, angle * 2];
+				var on_render = function(info)
+				{
+					var centre = Engine.Canvas.GetCentre();
+					var scale = Math.min(Engine.Canvas.GetWidth(), Engine.Canvas.GetHeight()) / 4;
+					var dist = scale * 0.8;
+
+					var rot =
+					[
+						[dist * Math.sin(angles[0] + info.elapsed_s), dist * Math.cos(angles[0] + info.elapsed_s)],
+						[dist * Math.sin(angles[1] + info.elapsed_s), dist * Math.cos(angles[1] + info.elapsed_s)],
+						[dist * Math.sin(angles[2] + info.elapsed_s), dist * Math.cos(angles[2] + info.elapsed_s)]
+					];
+
+					Engine.Gfx.Clear(Engine.Colour.Black);
+					Engine.Gfx.SetBlendMode(Engine.GL.SRC_ALPHA, Engine.GL.ONE_MINUS_SRC_ALPHA, true);
+
+					// Update & bind camera
+					cam.Update(info);
+					Engine.Gfx.BindCamera(cam);
+
+					// Render circles
+					Engine.Gfx.BindShaderProgram(program);
+					RenderCircle(circle, [centre[0] + rot[0][0], centre[1] + rot[0][1], 0.0], scale, [0.0, 0.0, 1.0, 0.8]);
+					RenderCircle(circle, [centre[0] + rot[1][0], centre[1] + rot[1][1], 0.0], scale, [0.0, 1.0, 0.0, 0.8]);
+					RenderCircle(circle, [centre[0] + rot[2][0], centre[1] + rot[2][1], 0.0], scale, [1.0, 0.0, 0.0, 0.8]);
+				};
+				return on_render;
+			});
+		});
+		</script>
+	</head>
+	<body>
+		<canvas width="512" height="512"></canvas>
+	</body>
+</html>

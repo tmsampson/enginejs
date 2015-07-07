@@ -1,0 +1,19 @@
+{
+	"name"       : "Ship",
+	"origin"     : [0, 0],
+	"textures"   :
+	{
+		"tx_ship"      : { "file": "img/ship.png", "rows": 4, "cols": 4 },
+		"tx_ship_bank" : { "file": "img/ship_bank.png", "rows": 4, "cols": 4 }
+	},
+	"sequences"  :
+	{
+		"default" : { "texture" : "tx_ship", "begin": [0, 0], "end": [3, 3], "speed" : 20, "loop" : true, "mirror": [0, 0] },
+		"bank_left" : { "texture" : "tx_ship_bank", "begin": [0, 0], "end": [3, 3], "speed" : 20, "loop" : true, "mirror": [0, 0] },
+		"bank_right" : { "texture" : "tx_ship_bank", "begin": [0, 0], "end": [3, 3], "speed" : 20, "loop" : true, "mirror": [1, 0] }
+	},
+	"collision_shapes" :
+	[
+		{ "type" : "circle", "offset" : [64, 64], "radius" : 50 }
+	]
+}

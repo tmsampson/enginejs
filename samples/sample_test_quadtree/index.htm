@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>Engine Sample: Basic 2D Scene</title>
+
+		<!-- EngineJS -->
+		<script type="text/javascript" src="enginejs/jquery.js"></script>
+		<script type="text/javascript" src="enginejs/engine.js"></script>
+
+		<script language="javascript">
+		var resources = { "tx_ship" : { file : "img/ship.png" } };
+		$(document).ready(function()
+		{
+			var on_init = function()
+			{
+				var scene = new Engine.Game2D.Scene();
+				var text_box = new Engine.Text2D.TextBox("0", { dock : ["top", "left"], size : 20 });
+
+				var selected_ship = null;
+				var on_render = function(info)
+				{
+					// Update on-screen text
+					text_box.Set("Entities: " + scene.GetEntityCount() + "<br/>");
+					text_box.Append("Timer: " + info.delta_ms + "<br/>");
+					text_box.Append("Subdivides: " + scene.quadtree.GetSubdivideCount() + "<br/>");
+
+					// Spawn ships? (space bar)
+					if(Engine.Keyboard.IsPressed("space") && !scene.IsPaused())
+					{
+						var ship = new Engine.Game2D.Entity(resources["tx_ship"], "ship");
+						var angle = Engine.Math.Random(0, Math.PI * 2);
+						ship.SetRotation(angle);
+						ship.SetVelocity([-Math.sin(angle) * 100, Math.cos(angle) * 100]);
+						ship.MoveTo(Engine.Mouse.GetPosition());
+						scene.Add(ship);
+					}
+
+					// Draw scene partitioning?
+					if(Engine.Keyboard.IsPressed("d", true))
+						scene.enable_debug_render_quadtree = !scene.enable_debug_render_quadtree;
+
+					// Simulation control
+					if(Engine.Keyboard.IsPressed("p", true)) { scene.Pause(); }
+					if(Engine.Keyboard.IsPressed("o", true)) { scene.StepSimulation(); }
+					if(Engine.Keyboard.IsPressed("i", true)) { scene.Resume(); }
+
+					// Remove off-screen ships
+					for(ship of scene.FindByTag("ship"))
+					{
+						if(ship.GetX() < 0 || ship.GetX() > Engine.Canvas.GetWidth() ||
+						   ship.GetY() < 0 || ship.GetY() > Engine.Canvas.GetHeight())
+						{
+							scene.Remove(ship);
+						}
+
+						// Colour ships (red = selected, green = normal)
+						ship.SetTint(ship == selected_ship? [1, 0, 0] : [0, 1, 0]);
+
+						// Track most recently clicked ship
+						if(ship.IsClicked()) { selected_ship = ship; }
+					}
+
+					// Colour potential colliders blue
+					if(selected_ship != null)
+					{
+						var results = selected_ship.GetNeighbours();
+						text_box.Append("Neighbours (potential colliders): " + results.length);
+						text_box.Append(" (" + Math.round(results.length / scene.GetEntityCount() * 100) + "%)");
+						for(var i = 0; i < results.length; ++i)
+						{
+							var other = results[i];
+							if(other != selected_ship)
+								other.SetTint([0, 0, 1]);
+						}
+					}
+
+					// Daw scene
+					scene.Render(info);
+				};
+				return on_render;
+			};
+
+			Engine.Init(on_init, resources);
+		});
+		</script>
+	</head>
+
+	<body>
+		<canvas width="512" height="512"></canvas>
+	</body>
+</html>

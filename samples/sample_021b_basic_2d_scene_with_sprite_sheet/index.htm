@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>Engine Sample: Basic 2D Scene With Sprite Files</title>
+
+		<!-- EngineJS -->
+		<script type="text/javascript" src="enginejs/jquery.js"></script>
+		<script type="text/javascript" src="enginejs/engine.js"></script>
+
+		<script language="javascript">
+		var resources = { spr_hero : { file : "sprites/hero.sprite" } };
+		var hero_states =
+		{
+			"up"    : { seq_walk : "walk_up",    seq_stand : "stand_up",    velocity : [0,  150] },
+			"down"  : { seq_walk : "walk_down",  seq_stand : "stand_down",  velocity : [0, -150] },
+			"left"  : { seq_walk : "walk_left",  seq_stand : "stand_left",  velocity : [-150, 0] },
+			"right" : { seq_walk : "walk_right", seq_stand : "stand_right", velocity : [150,  0] },
+			"dead"  : { seq_walk : "dead",       seq_stand : "dead",        velocity : [0,    0] },
+		};
+
+		$(document).ready(function()
+		{
+			var on_init = function()
+			{
+				var scene = new Engine.Game2D.Scene();
+				var hero = new Engine.Game2D.Entity(resources["spr_hero"]);
+				scene.Add(hero);
+
+				update_hero = function(debounce)
+				{
+					var pressed = false;
+					if(Engine.Keyboard.IsPressed(["w", "up"],    debounce)) { hero_state = "up";    pressed = true; }
+					if(Engine.Keyboard.IsPressed(["a", "left"],  debounce)) { hero_state = "left";  pressed = true; }
+					if(Engine.Keyboard.IsPressed(["s", "down"],  debounce)) { hero_state = "down";  pressed = true; }
+					if(Engine.Keyboard.IsPressed(["d", "right"], debounce)) { hero_state = "right"; pressed = true; }
+					if(Engine.Keyboard.IsPressed("space", debounce)) { hero_state = "dead";  pressed = true; }
+					if(pressed)
+					{
+						hero.sprite.SetSequence(hero_states[hero_state].seq_walk);
+						hero.SetVelocity(hero_states[hero_state].velocity);
+					}
+				};
+
+				// Setup hero position & state
+				hero.MoveTo(Engine.Canvas.GetCentre());
+				var hero_state = "down";
+
+				var on_render = function(info)
+				{
+					if(hero_state != "dead")
+					{
+						update_hero(true);
+
+						var keys = ["left", "right", "up", "down", "w", "a", "s", "d"];
+						if(Engine.Keyboard.IsReleased(keys, true))
+						{
+							hero.sprite.SetSequence(hero_states[hero_state].seq_stand);
+							hero.SetVelocity([0, 0]);
+							update_hero(false);
+						}
+					}
+
+					// Draw scene
+					scene.Render(info);
+				};
+				return on_render;
+			};
+			Engine.Init(on_init, resources);
+		});
+		</script>
+	</head>
+
+	<body>
+		<canvas width="512" height="512"></canvas>
+	</body>
+</html>
