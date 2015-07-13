@@ -1,0 +1,13 @@
+{
+	"name"       : "Filmstrip",
+	"colour"     : [0.15, 0.01, 0, 1],
+	"textures"   :
+	{
+		"tx_filmstrip" : { "file": "img/filmstrip.jpg" }
+	},
+	"layers" :
+	[
+		{ "texture" : "tx_filmstrip", "depth" : 1.0, "scale" : [0.5, 0.5], "repeat" : [true, false], "offset" : [250, 50],  "scroll" : [1, 0] },
+		{ "texture" : "tx_filmstrip", "depth" : 2.0, "scale" : [0.5, 0.5], "repeat" : [false, true], "offset" : [50, 50],   "scroll" : [0, 1] }
+	]
+}

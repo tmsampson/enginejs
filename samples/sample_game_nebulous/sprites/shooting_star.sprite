@@ -1,0 +1,12 @@
+{
+	"name"     : "Shooting Stars",
+	"origin"   : [0, 0],
+	"textures" :
+	{
+		"tx_shooting_stars" : { "file": "img/shooting_star.png", "rows": 1, "cols": 1 }
+	},
+	"sequences"  :
+	{
+		"default" : { "texture" : "tx_shooting_stars", "begin": [0, 0], "end": [0, 0], "speed" : 0, "loop" : true, "mirror": [0, 0] }
+	}
+}
