@@ -1,0 +1,19 @@
+{
+	"name"       : "Pickup",
+	"origin"     : [0, 0],
+	"textures"   :
+	{
+		"tx_ammo_pickup"  : { "file": "img/ammo_pickup.png", "rows": 4, "cols": 4 },
+		"tx_shield_pickup"  : { "file": "img/shield_pickup.png", "rows": 4, "cols": 4 }
+
+	},
+	"sequences"  :
+	{
+		"ammo_pickup" : { "texture" : "tx_ammo_pickup", "begin": [0, 0], "end": [3, 3], "speed" : 16, "loop" : true,  "mirror": [0, 0] },
+		"shield_pickup" : { "texture" : "tx_shield_pickup", "begin": [0, 0], "end": [3, 3], "speed" : 16, "loop" : true,  "mirror": [0, 0] }
+	},
+	"collision_shapes" :
+	[
+		{ "type" : "circle", "offset" : [32, 32], "radius" : 45 }
+	]
+}

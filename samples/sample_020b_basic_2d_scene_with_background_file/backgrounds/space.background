@@ -1,0 +1,14 @@
+{
+	"name"       : "Space",
+	"colour"     : [0, 0, 0, 1],
+	"textures"   :
+	{
+		"tx_moon"  : { "file": "img/moon.png"  },
+		"tx_stars" : { "file": "img/stars.jpg" }
+	},
+	"layers" :
+	[
+		{ "texture" : "tx_moon",  "depth" : 1.5,  "scale" : [0.5, 0.5],   "repeat" : [false, false],  "offset" : [575, 350], "scroll" : [0, 0]     },
+		{ "texture" : "tx_stars", "depth" : 3.0,  "scale" : [0.5, 0.5],   "repeat" : [true, true],    "offset" : [250, 50],  "scroll" : [0.1, 0.1] }
+	]
+}
