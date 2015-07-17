@@ -1,7 +1,18 @@
+#!/bin/bash
 ENGINEJS_ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+INSTALL_FLAG="launcher/installed.flag"
 
 # Colour
-printf '\033[0;33m'
+setterm -term linux -back blue -fore yellow -clear
+
+# Install chrome (first-run only)
+if [ ! -f $INSTALL_FLAG ]; then
+	wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add - 
+	sudo sh -c 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
+	sudo apt-get -y update 
+	sudo apt-get -y install google-chrome-stable
+	touch $INSTALL_FLAG
+fi
 
 # Setup symlinks for samples to point back to ../enginejs
 printf "* Setting up symlinks for samples\n"
@@ -18,12 +29,8 @@ export PATH=$PATH:$ENGINEJS_ROOT/utils/nodejs/linux64
 export NODE_PATH=$ENGINEJS_ROOT/utils/nodejs/node_modules
 printf "* NodeJS added to path\n"
 
-# Prepare chromium
-# http://askubuntu.com/questions/79280/how-to-install-chrome-browser-properly-via-command-line
-sudo apt-get install chromium-browser
-
 # Open launcher in chromium shell
-google-chrome --incognito --app=http://localhost:1234/samples/index.htm --window-size=200x200 --enable-webgl --ignore-gpu-blacklist &> /dev/null &
+google-chrome --incognito --app=http://localhost:1234/samples/index.htm --enable-webgl --ignore-gpu-blacklist &> /dev/null &
 
 # Start webserver
 printf "* Starting EngineJS development server\n"
