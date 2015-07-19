@@ -82,7 +82,7 @@ Engine.Touch =
 		var i = index || 0;
 		if(i in Engine.Touch.just_released)
 		{
-			var time = time_threshold || 100; // ms
+			var time = time_threshold || 300; // ms
 			var release_event = Engine.Touch.just_released[i];
 			var duration = release_event.time - release_event.stream[0].time;
 			if(duration < time)
