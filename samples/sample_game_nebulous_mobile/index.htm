@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Nebulous</title>
+
+		<!-- EngineJS -->
+		<script type="text/javascript" src="enginejs/jquery.js"></script>
+		<script type="text/javascript" src="enginejs/engine.js"></script>
+
+		<!-- Icons -->
+		<link rel="shortcut icon" href="img/favicon.ico"/>
+		<link rel="apple-touch-icon" href="img/favicon.png">
+
+		<!-- Bootstrap -->
+		<script type="text/javascript" src="game.js"></script>
+		<link rel="stylesheet" type="text/css" href="css/nebulous.css">
+		<script language="javascript">
+		window.resizeTo(600, 800);
+		$(document).ready(function() { Game.Launch(); });
+		</script>
+	</head>
+
+	<body style="background-color:black;">
+		<div id="loader">
+			<img src="img/load.gif"/>
+			<div id="loadinfo">Loading 0%</div>
+		</div>
+		<canvas></canvas>
+	</body>
+</html>

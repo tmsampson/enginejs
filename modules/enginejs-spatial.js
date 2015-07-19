@@ -9,18 +9,41 @@ Engine.Spatial =
 		this.max = max || [ 10000000,  10000000];
 		this.max_items_per_node = max_items_per_node || 4;
 		this.subdivide_count = 0;
+		this.nodes = [];
+		this.FREE_NODE = 0;
+
+		this.MAKE_NODE = function(parent, min, max)
+		{
+			var available = this.nodes[this.FREE_NODE++];
+			available.parent = parent;
+			available.min = min;
+			available.max = max;
+			return available;
+		}
 
 		this.Init = function()
 		{
 			// Setup default state
-			this.root = new Engine.Spatial.QuadTreeNode(null, this.min, this.max, this.max_items_per_node);
+			this.root = this.MAKE_NODE(null, this.min, this.max);
 		};
+
+		// Pre-allocate
+		for(var i = 0; i < 10000; ++i)
+		{
+			this.nodes[i] = new Engine.Spatial.QuadTreeNode(null, 0, 0, this.max_items_per_node, this);
+		}
 		this.Init();
 
 		this.Clear = function()
 		{
+			this.FREE_NODE = 0;
 			this.subdivide_count = 0;
-			this.Init(); // Clears all nodes
+			for(var i = 0; i < 10000; ++i)
+			{
+				this.nodes[i].items = [];
+				this.nodes[i].children = [];
+			}
+			this.Init();
 		};
 
 		this.Add = function(item, min, max)
@@ -61,13 +84,14 @@ Engine.Spatial =
 		};
 	},
 
-	QuadTreeNode : function(parent, min, max, max_items)
+	QuadTreeNode : function(parent, min, max, max_items, tree)
 	{
 		this.parent = parent;
 		this.min = min; this.max = max;
 		this.max_items = max_items;
 		this.items = [];
 		this.children = [];
+		this.tree = tree;
 
 		this.HasChildren = function()
 		{
@@ -128,10 +152,10 @@ Engine.Spatial =
 			var child_size = [(max[0] - min[0]) / 2, (max[1] - min[1]) / 2];
 
 			// Setup child nodes
-			this.children.push(new Engine.Spatial.QuadTreeNode(this, min, [min[0] + child_size[0], min[1] + child_size[1]], this.max_items)); // BL
-			this.children.push(new Engine.Spatial.QuadTreeNode(this, [min[0] + child_size[0], min[1]], [max[0], min[1] + child_size[1]], this.max_items)); // BR
-			this.children.push(new Engine.Spatial.QuadTreeNode(this, [min[0], min[1] + child_size[1]], [min[0] + child_size[0], max[1]], this.max_items)); // TL
-			this.children.push(new Engine.Spatial.QuadTreeNode(this, [min[0] + child_size[0], min[1] + child_size[1]], max, this.max_items)); // TR
+			this.children.push(tree.MAKE_NODE(this, min, [min[0] + child_size[0], min[1] + child_size[1]])); // BL
+			this.children.push(tree.MAKE_NODE(this, [min[0] + child_size[0], min[1]], [max[0], min[1] + child_size[1]])); // BR
+			this.children.push(tree.MAKE_NODE(this, [min[0], min[1] + child_size[1]], [min[0] + child_size[0], max[1]])); // TL
+			this.children.push(tree.MAKE_NODE(this, [min[0] + child_size[0], min[1] + child_size[1]], max)); // TR
 
 			// Distribute items
 			var items = Engine.Array.Copy(this.items);
