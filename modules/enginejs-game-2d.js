@@ -410,7 +410,7 @@ Engine.Game2D =
 				return 0;
 
 			var aabb = this.GetAABB();
-			var results = this.scene.quadtree.Retrieve(aabb.min, aabb.max);
+			var results = this.scene.quadtree.Search(aabb.min, aabb.max);
 			Engine.Array.RemoveItem(results, this);
 			return results;
 		};

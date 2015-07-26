@@ -23,7 +23,7 @@
 					// Update on-screen text
 					text_box.Set("Entities: " + scene.GetEntityCount() + "<br/>");
 					text_box.Append("Timer: " + info.delta_ms + "<br/>");
-					text_box.Append("Subdivides: " + scene.quadtree.GetSubdivideCount() + "<br/>");
+					text_box.Append("Subdivides: " + scene.quadtree.GetDebugInfo().subdivide_count + "<br/>");
 
 					// Spawn ships? (space bar)
 					if(Engine.Keyboard.IsPressed("space") && !scene.IsPaused())
