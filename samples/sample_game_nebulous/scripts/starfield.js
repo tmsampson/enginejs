@@ -34,7 +34,7 @@ Game.Starfield = function()
 	this.ammo_icons = [];
 	for(var i = 0; i < Game.Config.MAX_AMMO; ++i)
 	{
-		this.ammo_icons[i] = new Engine.Game2D.Entity(Game.Resources["tex_ammo_icon"]);
+		this.ammo_icons[i] = new Engine.Game2D.Entity(Game.Resources["tex_ammo_icon"], "ammo", { is_collidable : false });
 		this.ammo_icons[i].SetDepth(-1);
 		this.Add(this.ammo_icons[i]);
 	}
@@ -88,8 +88,11 @@ Game.Starfield = function()
 
 	this.UpdateScenery = function(ship_shift, info)
 	{
-		for(item of this.FindByTag("scenery"))
+		var scenery = this.FindByTag("scenery");
+		for(var i = 0; i < scenery.length; ++i)
 		{
+			var item = scenery[i];
+
 			// Update parallax
 			item.SetX(item.random_x - (ship_shift * item.parallax));
 
@@ -172,8 +175,9 @@ Game.Starfield = function()
 		// Update parallax effect for background / scenery
 		this.background.layers[0].scroll[1] = this.layer_scroll_0 * (Engine.Canvas.GetHeight() / 1000);
 		this.background.layers[1].scroll[1] = this.layer_scroll_1 * (Engine.Canvas.GetHeight() / 1000);
-		for(layer of this.background.layers)
+		for(var i = 0; i < this.background.layers.length; ++i)
 		{
+			var layer = this.background.layers[i];
 			var layer_multiplier = 1 / (layer.depth + 1);
 			layer.offset[0] = -(ship_shift * layer_multiplier * Game.Config.PARALAX_AMOUNT);
 		}
@@ -186,8 +190,11 @@ Game.Starfield = function()
 			this.SpawnAsteroid();
 
 		// Update asteroids
-		for(asteroid of this.FindByTag("asteroid"))
+		var asteroids = this.FindByTag("asteroid");
+		for(var i = 0; i < asteroids.length; ++i)
 		{
+			var asteroid = asteroids[i];
+
 			// Skip exploding asteroids (removing if explosion is complete)
 			if(asteroid.is_exploding)
 			{
