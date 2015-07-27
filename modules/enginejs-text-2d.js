@@ -65,6 +65,7 @@ Engine.Text2D =
 		this.css        = "";
 		this.prefix     = "";
 		this.div        = $("<div />").appendTo("body");
+		this.is_hidden  = false;
 
 		// Apply any user overrides
 		$.extend(this, config);
@@ -179,21 +180,24 @@ Engine.Text2D =
 					break;
 			}
 
-			// Cache off width and height
-			this.cached_width = this.div.width();
-			this.cached_height = this.div.height();
-
 			// Update DOM element
 			this.div.css("left", x + "px");
 			this.div.css("top",  y + "px");
+
+			// Cache off width and height
+			this.cached_width = this.div.width();
+			this.cached_height = this.div.height();
 		};
 
 		this.RequiresUpdate = function()
 		{
+			if(this.is_hidden)
+				return false;
+
 			// We need to update and reposition this text element
 			// if the size of the DOM element has changed
-			return this.cached_width  != this.div.width() ||
-			       this.cached_height != this.div.height();
+			return this.cached_width  != this.div[0].offsetWidth ||
+			       this.cached_height != this.div[0].offsetHeight;
 		};
 
 		this.UpdateCSSSize = function()
@@ -216,11 +220,13 @@ Engine.Text2D =
 
 		this.Show = function()
 		{
+			this.is_hidden = false;
 			this.div.show();
 		};
 
 		this.Hide = function()
 		{
+			this.is_hidden = true;
 			this.div.hide();
 		};
 
