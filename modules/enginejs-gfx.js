@@ -53,7 +53,7 @@ Engine.Gfx =
 		Engine.GL.bindBuffer(buffer_type, vertex_buffer_object.resource);
 
 		// Update the data stream
-		Engine.GL.bufferData(buffer_type, new Float32Array(vertex_buffer_descriptor.stream), Engine.GL.DYNAMIC_DRAW);
+		Engine.GL.bufferData(buffer_type, vertex_buffer_descriptor.stream, Engine.GL.DYNAMIC_DRAW);
 	},
 
 	BindVertexBuffer : function(vertex_buffer_object)
@@ -308,7 +308,7 @@ Engine.Gfx =
 		if(sampler_name == undefined) { sampler_name = ("u_tx"); }
 
 		// Bind textures
-		var sampler_indices = new Int32Array(texture_array.length);
+		var sampler_indices = [];
 		for(var idx = 0; idx < texture_array.length; ++idx)
 		{
 			var texture = texture_array[idx];
@@ -384,8 +384,10 @@ Engine.Gfx =
 	// **********************************************
 	// Model functionality
 	// **********************************************
-	DrawModel : function(model)
+	DrawModel : function(model, bind_only)
 	{
+		bind_only = typeof bind_only !== 'undefined' ? bind_only : false;
+
 		// Make sure model has been "loaded" (vertex buffer objects have been created)
 		if(!model.hasOwnProperty("is_loaded"))
 		{
@@ -425,7 +427,10 @@ Engine.Gfx =
 			if(index_buffer) { this.BindVertexBuffer(index_buffer.vbo); }
 
 			// Draw primitive
-			this.DrawArray();
+			if(!bind_only)
+			{
+				this.DrawArray();
+			}
 		}
 
 		return true;
@@ -468,10 +473,9 @@ Engine.Gfx =
 		}
 	},
 
-	DrawQuad : function()
+	DrawQuad : function(bind_only)
 	{
-		// Draw full-screen quad
-		this.DrawModel(Engine.Resources["ml_quad"]);
+		this.DrawModel(Engine.Resources["ml_quad"], bind_only);
 	},
 
 	// **********************************************
