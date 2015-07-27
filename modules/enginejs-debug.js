@@ -18,7 +18,7 @@ Engine.Debug =
 		attribute_name : "a_pos",
 		item_size      : 3,
 		draw_mode      : "lines",
-		stream         : new Float32Array(3000000),
+		stream         : [],
 		stream_index  : 0
 	},
 
