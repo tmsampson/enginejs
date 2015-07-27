@@ -89,8 +89,10 @@ Game.PlayerShip = function()
 		}
 
 		// Remove off-screen bullets
-		for(bullet of Game.GetStarfield().FindByTag("bullet"))
+		var bullets = Game.GetStarfield().FindByTag("bullet")
+		for(var i = 0; i < bullets.length; ++i)
 		{
+			var bullet = bullets[i];
 			if(bullet.IsOutsideView())
 			{
 				Game.GetStarfield().Remove(bullet);
