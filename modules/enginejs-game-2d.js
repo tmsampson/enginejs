@@ -21,6 +21,8 @@ Engine.Game2D =
 		this.scene               = null; // parent scene
 		this.sprite              = null;
 		this.cached_aabb         = null;
+		this.mtx_trans           = mat4.create();
+		this.is_collidable       = true;
 
 		// Apply any user overrides
 		$.extend(this, config);
@@ -190,7 +192,9 @@ Engine.Game2D =
 
 		this.GetWorldTransform = function(exclude_rotation)
 		{
-			var mtx_trans = mat4.create();
+			var mtx_trans = this.mtx_trans;
+			mat4.identity(mtx_trans);
+
 			var sprite_scale_factor = this.GetSpriteScaleFactor();
 
 			// 5. Move into position
@@ -594,12 +598,15 @@ Engine.Game2D =
 
 					// Cache world-space AABB for this frame & update quadtree
 					entity.cached_aabb = entity.GetAABB();
-					this.quadtree.Add(
+					if(entity.is_collidable)
 					{
-						data : entity,
-						min  : entity.cached_aabb.min,
-						max  : entity.cached_aabb.max
-					});
+						this.quadtree.Add(
+						{
+							data : entity,
+							min  : entity.cached_aabb.min,
+							max  : entity.cached_aabb.max
+						});
+					}
 				}
 			}
 
@@ -611,14 +618,15 @@ Engine.Game2D =
 			this.entities.sort(function(a, b){ return b.depth - a.depth; });
 
 			// For each camera in the scene...
+			var mtx_trans = mat4.create();
 			for(var cam_index = 0; cam_index < this.cameras.length; ++cam_index)
 			{
 				var cam = this.cameras[cam_index];
+				mat4.identity(mtx_trans);
 
 				// Update & bind camera
 				cam.Update(info);
 				Engine.Gfx.BindCamera(cam);
-				var mtx_trans = mat4.create();
 
 				// Render background (or grid if background not setup)
 				Engine.Gfx.EnableBlend(false);
@@ -643,6 +651,10 @@ Engine.Game2D =
 				var last_bound_texture = null;
 				var last_bound_tint = null;
 
+				// Bind quad model ready for multiple draws
+				var bind_only = true;
+				Engine.Gfx.DrawQuad(bind_only);
+
 				// Render entities
 				for(var i = 0; i < this.entities.length; ++i)
 				{
@@ -650,7 +662,7 @@ Engine.Game2D =
 					if(!entity.IsVisible()) { continue; }
 
 					// Build "model" transform
-					var mtx_trans = entity.GetWorldTransform();
+					mtx_trans = entity.GetWorldTransform();
 
 					// Apply scale & bias as Engine.Gfx.DrawQuad uses centred 2x2 (clip-space) quad
 					var scale = entity.sprite? Engine.Vec2.DivideScalar(entity.original_size, 2) : entity.size;
@@ -692,8 +704,8 @@ Engine.Game2D =
 						last_bound_texture = dummy_texture;
 					}
 
-					// Draw
-					Engine.Gfx.DrawQuad();
+					// Draw previously bound quad
+					Engine.Gfx.DrawArray();
 
 					// Debug render?
 					if(entity.enable_debug_render || this.enable_debug_render)
