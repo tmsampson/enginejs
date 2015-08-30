@@ -20,17 +20,25 @@ Engine.Audio =
 		});
 	},
 
-	PlaySFX : function(sound_object)
+	PlaySFX : function(sound_resource)
 	{
 		// This is just a helper method, intended for use when the user wants
 		// to fire-and-forget sounds without holding on to the sound effect instance
-		var sfx = new Engine.Audio.SoundEffect2D(sound_object);
+		var sfx = new Engine.Audio.SoundEffect2D(sound_resource);
 		sfx.Play();
 	},
 
-	Sound : function(sound_object, global_volume_node, loop)
+	PlayBGM : function(sound_resource)
 	{
-		this.resource = sound_object;
+		// This is just a helper method, intended for use when the user wants
+		// to fire-and-forget background music without holding on to the sound effect instance
+		var bgm = new Engine.Audio.BackgroundMusic(sound_resource);
+		bgm.Play();
+	},
+
+	Sound : function(sound_resource, global_volume_node, loop)
+	{
+		this.resource = sound_resource;
 		this.loop = loop;
 
 		// Let this instance have it's own volume range, starting at
@@ -112,16 +120,20 @@ Engine.Audio =
 		this.ResetSoundSource(loop);
 	},
 
-	SoundEffect2D : function(sound_object)
+	SoundEffect2D : function(sound_resource)
 	{
+		if(!Engine.Audio.IsEnabled) return;
+
 		// Inherit base
-		$.extend(this, new Engine.Audio.Sound(sound_object, Engine.Audio.volume_nodes["sfx"], false));
+		$.extend(this, new Engine.Audio.Sound(sound_resource, Engine.Audio.volume_nodes["sfx"], false));
 	},
 
-	BackgroundMusic : function(sound_object)
+	BackgroundMusic : function(sound_resource)
 	{
+		if(!Engine.Audio.IsEnabled) return;
+
 		// Inherit base
-		$.extend(this, new Engine.Audio.Sound(sound_object, Engine.Audio.volume_nodes["bgm"], true));
+		$.extend(this, new Engine.Audio.Sound(sound_resource, Engine.Audio.volume_nodes["bgm"], true));
 	},
 
 	SetGlobalBgmVolume : function(volume)

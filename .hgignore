@@ -1,12 +1,16 @@
 syntax: regexp
 
+# Ignore node modules
+^node_modules/*
+
 # Ignore webserver log files
 ^utils/webserver/.*_log
 
 # Ignore sample symlinks
-^samples/sample_.*/enginejs$
+^samples/sample_*/enginejs$
+^samples/wip/enginejs$
 
-# Ignore thumbnail data
+# Ignore thumbnail cache
 .*/Thumbs.db
 
 # Ignore flag files

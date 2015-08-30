@@ -5,12 +5,12 @@ var Engine =
 	// *************************************************************************************
 	Dependencies :
 	[
-		"enginejs/css/engine.css",
-		"enginejs/script/third_party/hashCode-v1.0.0.js",
-		"enginejs/script/third_party/webtoolkit.md5.js",
-		"enginejs/script/third_party/gl-matrix-min.js",
-		"enginejs/script/third_party/jquery-ui.min.js",
-		"enginejs/css/third_party/jquery-ui/jquery-ui.css",
+		"enginejs/resources/css/engine.css",
+		"enginejs/resources/libs/hashCode-v1.0.0.js",
+		"enginejs/resources/libs/webtoolkit.md5.js",
+		"enginejs/resources/libs/gl-matrix-min.js",
+		"enginejs/resources/libs/jquery-ui.min.js",
+		"enginejs/resources/css/third_party/jquery-ui/jquery-ui.css",
 	],
 
 	// *************************************************************************************
@@ -18,32 +18,32 @@ var Engine =
 	// *************************************************************************************
 	Modules :
 	[
-		{ name : "EngineJS-Util",      js : "enginejs/modules/enginejs-util.js"        },
-		{ name : "EngineJS-Time",      js : "enginejs/modules/enginejs-time.js"        },
-		{ name : "EngineJS-Colour",    js : "enginejs/modules/enginejs-colour.js"      },
-		{ name : "EngineJS-Debug",     js : "enginejs/modules/enginejs-debug.js"       },
-		{ name : "EngineJS-Array",     js : "enginejs/modules/enginejs-array.js"       },
-		{ name : "EngineJS-Math",      js : "enginejs/modules/enginejs-math.js"        },
-		{ name : "EngineJS-Intersect", js : "enginejs/modules/enginejs-intersect.js"   },
-		{ name : "EngineJS-Easing",    js : "enginejs/modules/enginejs-easing.js"      },
-		{ name : "EngineJS-Vec2",      js : "enginejs/modules/enginejs-vec2.js"        },
-		{ name : "EngineJS-Vec3",      js : "enginejs/modules/enginejs-vec3.js"        },
-		{ name : "EngineJS-Spatial",   js : "enginejs/modules/enginejs-spatial.js"     },
-		{ name : "EngineJS-Camera",    js : "enginejs/modules/enginejs-camera.js"      },
-		{ name : "EngineJS-Net",       js : "enginejs/modules/enginejs-net.js"         },
-		{ name : "EngineJS-Resource",  js : "enginejs/modules/enginejs-resource.js"    },
-		{ name : "EngineJS-Keyboard",  js : "enginejs/modules/enginejs-keyboard.js"    },
-		{ name : "EngineJS-Mouse",     js : "enginejs/modules/enginejs-mouse.js"       },
-		{ name : "EngineJS-Gamepad",   js : "enginejs/modules/enginejs-gamepad.js"     },
-		{ name : "EngineJS-Touch",     js : "enginejs/modules/enginejs-touch.js"       },
-		{ name : "EngineJS-Gfx",       js : "enginejs/modules/enginejs-gfx.js"         },
-		{ name : "EngineJS-Geometry",  js : "enginejs/modules/enginejs-geometry.js"    },
-		{ name : "EngineJS-Model",     js : "enginejs/modules/enginejs-model.js"       },
-		{ name : "EngineJS-Game-2D",   js : "enginejs/modules/enginejs-game-2d.js"     },
-		{ name : "EngineJS-Audio",     js : "enginejs/modules/enginejs-audio.js"       },
-		{ name : "EngineJS-Editor",    js : "enginejs/modules/enginejs-editor.js"      },
-		{ name : "EngineJS-Device",    js : "enginejs/modules/enginejs-device.js"      },
-		{ name : "EngineJS-Text2D",    js : "enginejs/modules/enginejs-text-2d.js"     },
+		{ name : "EngineJS-Util",      js : "enginejs/modules/enginejs-util.js",      ie : "load"     },
+		{ name : "EngineJS-Time",      js : "enginejs/modules/enginejs-time.js",      ie : "load"     },
+		{ name : "EngineJS-Colour",    js : "enginejs/modules/enginejs-colour.js",    ie : "load"     },
+		{ name : "EngineJS-Debug",     js : "enginejs/modules/enginejs-debug.js",     ie : "load"     },
+		{ name : "EngineJS-Array",     js : "enginejs/modules/enginejs-array.js",     ie : "load"     },
+		{ name : "EngineJS-Math",      js : "enginejs/modules/enginejs-math.js",      ie : "load"     },
+		{ name : "EngineJS-Intersect", js : "enginejs/modules/enginejs-intersect.js", ie : "load"     },
+		{ name : "EngineJS-Easing",    js : "enginejs/modules/enginejs-easing.js",    ie : "load"     },
+		{ name : "EngineJS-Vec2",      js : "enginejs/modules/enginejs-vec2.js",      ie : "load"     },
+		{ name : "EngineJS-Vec3",      js : "enginejs/modules/enginejs-vec3.js",      ie : "load"     },
+		{ name : "EngineJS-Spatial",   js : "enginejs/modules/enginejs-spatial.js",   ie : "load"     },
+		{ name : "EngineJS-Camera",    js : "enginejs/modules/enginejs-camera.js",    ie : "load"     },
+		{ name : "EngineJS-Net",       js : "enginejs/modules/enginejs-net.js",       ie : "load"     },
+		{ name : "EngineJS-Resource",  js : "enginejs/modules/enginejs-resource.js",  ie : "load"     },
+		{ name : "EngineJS-Keyboard",  js : "enginejs/modules/enginejs-keyboard.js",  ie : "load"     },
+		{ name : "EngineJS-Mouse",     js : "enginejs/modules/enginejs-mouse.js",     ie : "load"     },
+		{ name : "EngineJS-Gamepad",   js : "enginejs/modules/enginejs-gamepad.js",   ie : "load"     },
+		{ name : "EngineJS-Touch",     js : "enginejs/modules/enginejs-touch.js",     ie : "load"     },
+		{ name : "EngineJS-Gfx",       js : "enginejs/modules/enginejs-gfx.js",       ie : "load"     },
+		{ name : "EngineJS-Geometry",  js : "enginejs/modules/enginejs-geometry.js",  ie : "load"     },
+		{ name : "EngineJS-Model",     js : "enginejs/modules/enginejs-model.js",     ie : "load"     },
+		{ name : "EngineJS-Game-2D",   js : "enginejs/modules/enginejs-game-2d.js",   ie : "load"     },
+		{ name : "EngineJS-Audio",     js : "enginejs/modules/enginejs-audio.js",     ie : "override" },
+		{ name : "EngineJS-Editor",    js : "enginejs/modules/enginejs-editor.js",    ie : "load"     },
+		{ name : "EngineJS-Device",    js : "enginejs/modules/enginejs-device.js",    ie : "load"     },
+		{ name : "EngineJS-Text2D",    js : "enginejs/modules/enginejs-text-2d.js",   ie : "load"     },
 	],
 
 	// *************************************************************************************
@@ -52,31 +52,31 @@ var Engine =
 	Resources :
 	{
 		// Vertex shaders
-		vs_basic                  : { file: "enginejs/shaders/basic.vs" },
-		vs_basic_transformed      : { file: "enginejs/shaders/basic-transformed.vs" },
-		vs_basic_transformed_nouv : { file: "enginejs/shaders/basic-transformed-nouv.vs" },
+		vs_basic                  : { file: "enginejs/resources/shaders/basic.vs" },
+		vs_basic_transformed      : { file: "enginejs/resources/shaders/basic-transformed.vs" },
+		vs_basic_transformed_nouv : { file: "enginejs/resources/shaders/basic-transformed-nouv.vs" },
 
 		// Fragment shaders
-		fs_basic             : { file: "enginejs/shaders/basic.fs" },
-		fs_basic_colour      : { file: "enginejs/shaders/basic-colour.fs" },
-		fs_basic_textured    : { file: "enginejs/shaders/basic-textured.fs" },
-		fs_grid              : { file: "enginejs/shaders/grid.fs" },
-		fs_grid_3d           : { file: "enginejs/shaders/grid-3d.fs" },
-		fs_grid_3d_fog       : { file: "enginejs/shaders/grid-3d-fog.fs" },
+		fs_basic                  : { file: "enginejs/resources/shaders/basic.fs" },
+		fs_basic_colour           : { file: "enginejs/resources/shaders/basic-colour.fs" },
+		fs_basic_textured         : { file: "enginejs/resources/shaders/basic-textured.fs" },
+		fs_grid                   : { file: "enginejs/resources/shaders/grid.fs" },
+		fs_grid_3d                : { file: "enginejs/resources/shaders/grid-3d.fs" },
+		fs_grid_3d_fog            : { file: "enginejs/resources/shaders/grid-3d-fog.fs" },
 
 		// Game-2D shaders
-		fs_2d_background     : { file: "enginejs/shaders/2d/background.fs" },
-		fs_2d_sprite         : { file: "enginejs/shaders/2d/sprite.fs" },
+		fs_2d_background          : { file: "enginejs/resources/shaders/2d/background.fs" },
+		fs_2d_sprite              : { file: "enginejs/resources/shaders/2d/sprite.fs" },
 
 		// Models
-		ml_quad              : { file: "enginejs/models/quad.model"       },
-		ml_floor_tile        : { file: "enginejs/models/floor_tile.model" },
-		ml_tri               : { file: "enginejs/models/tri.model"        },
-		ml_cube              : { file: "enginejs/models/cube.model"       },
+		ml_quad                   : { file: "enginejs/resources/models/quad.model"       },
+		ml_floor_tile             : { file: "enginejs/resources/models/floor_tile.model" },
+		ml_tri                    : { file: "enginejs/resources/models/tri.model"        },
+		ml_cube                   : { file: "enginejs/resources/models/cube.model"       },
 
 		// Misc
-		tx_white             : { file: "enginejs/img/white.png"   },
-		sfx_blank            : { file: "enginejs/audio/blank.mp3" }
+		tx_white                  : { file: "enginejs/resources/img/white.png"   },
+		sfx_blank                 : { file: "enginejs/resources/audio/blank.mp3" }
 	},
 
 	// *************************************************************************************
@@ -286,15 +286,31 @@ var Engine =
 		console.error("[engine] ERROR: " + msg);
 	},
 
+	LogWarning : function(msg)
+	{
+		console.warn("[engine] WARNING: " + msg);
+	},
+
 	// *************************************************************************************
 	// Misc
 	// *************************************************************************************
 	LoadModules : function(modules, on_complete)
 	{
-		ExecuteAsyncLoop(modules, function(_module, carry_on)
+		var is_ie = (typeof document.documentMode !== 'undefined');
+		ExecuteAsyncLoop(modules, function(module, carry_on)
 		{
-			Engine.Log("Loading module: " + _module.name);
-			Engine.LoadJS(_module.js, function()
+			var module_url = module.js;
+			var module_name = module.name;
+
+			// Load an 'override' version of the module for IE?
+			if(is_ie && module.ie == "override")
+			{
+				module_url = module_url.replace(".js", "-ie.js");
+				module_name += " (IE override)";
+			}
+
+			Engine.Log("Loading module: " + module_name);
+			Engine.LoadJS(module_url, function()
 			{
 				carry_on(true); // Load next module
 			});
@@ -313,7 +329,7 @@ var Engine =
 
 		// 1. Load ajq for better async jobs/loops
 		Engine.LogSection("Loading Dependencies");
-		$.getScript("enginejs/script/third_party/ajq/ajq.js", function(script)
+		$.getScript("enginejs/resources/libs/ajq.js", function(script)
 		{
 			eval(script); // Hotload ajq.js
 
