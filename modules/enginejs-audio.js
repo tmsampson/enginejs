@@ -122,16 +122,12 @@ Engine.Audio =
 
 	SoundEffect2D : function(sound_resource)
 	{
-		if(!Engine.Audio.IsEnabled) return;
-
 		// Inherit base
 		$.extend(this, new Engine.Audio.Sound(sound_resource, Engine.Audio.volume_nodes["sfx"], false));
 	},
 
 	BackgroundMusic : function(sound_resource)
 	{
-		if(!Engine.Audio.IsEnabled) return;
-
 		// Inherit base
 		$.extend(this, new Engine.Audio.Sound(sound_resource, Engine.Audio.volume_nodes["bgm"], true));
 	},
