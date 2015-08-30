@@ -1,4 +1,4 @@
-<img src="https://raw.githubusercontent.com/drummertom999/enginejs/master/resources/img/logo.png">
+(https://raw.githubusercontent.com/drummertom999/enginejs/master/resources/img/logo.png")
 > A lightweight, simplistic library for developing games for the web, utilising HTML, CSS and WebGL.
 
 Welcome to the EngineJS codebase
