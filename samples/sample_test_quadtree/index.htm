@@ -2,6 +2,8 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8" />
+		<link rel="stylesheet" href="../sample.css">
+		
 		<title>Engine Sample: Basic 2D Scene</title>
 
 		<!-- EngineJS -->
@@ -46,8 +48,10 @@
 					if(Engine.Keyboard.IsPressed("i", true)) { scene.Resume(); }
 
 					// Remove off-screen ships
-					for(ship of scene.FindByTag("ship"))
+					var ships = scene.FindByTag("ship");
+					for(var i = 0; i < ships.length; ++i)
 					{
+						var ship = ships[i];
 						if(ship.GetX() < 0 || ship.GetX() > Engine.Canvas.GetWidth() ||
 						   ship.GetY() < 0 || ship.GetY() > Engine.Canvas.GetHeight())
 						{

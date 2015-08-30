@@ -30,5 +30,10 @@ Engine.Util =
 	IsString : function(obj)
 	{
 		return typeof obj == 'string' || obj instanceof String;
+	},
+
+	IsDefined : function(x)
+	{
+		return typeof x !== 'undefined';
 	}
 };

@@ -21,6 +21,12 @@ Engine.Device =
 		return check;
 	},
 
+	IsInternetExplorer : function()
+	{
+		var msie = document.documentMode;
+		return Engine.Utils.IsDefined(msie);
+	},
+
 	IsFullScreen : function()
 	{
 		return Engine.Device.is_fullscreen;
