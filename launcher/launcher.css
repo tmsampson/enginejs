@@ -1,0 +1,5 @@
+.navbar-inverse .navbar-nav li a { color: #001a2e; font-weight: bold; font-size:1.1em; }
+.navbar-inverse .navbar-nav li.active a { background-color : #003863; background-image:none; }
+.navbar-inverse .navbar-nav li.active a:hover { color: #FF6600; background-color : #003863; background-image:none; }
+.nav-tabs li a { font-weight : bold; color: #001a2e; }
+.tab-pane li a:first-child { font-weight : bold; }

@@ -98,7 +98,7 @@ server.listen(port);
 locateChrome(function(chrome)
 {
 	var args = "--incognito " +
-	           "--app=" + url + "/samples/index.htm " +
+	           "--app=" + url + "/launcher/index.htm " +
 	           "--enable-webgl " +
 	           "--ignore-gpu-blacklist";
   	child_process.exec(quotes(chrome) + args);
