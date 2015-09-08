@@ -13,3 +13,6 @@ Thumbs.db
 
 # Ignore flag files
 *.flag
+
+# Ignore launcher config
+launcher/config.json
