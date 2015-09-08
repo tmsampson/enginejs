@@ -2,18 +2,24 @@
 var fs            = require('fs');
 var path          = require('path')
 var http          = require('http');
-var final_handler = require('finalhandler');
-var serve_static  = require('serve-static');
 var os            = require('os');
 var child_process = require('child_process');
 var locateChrome  = require('locate-chrome');
+var express       = require('express');
+var bodyParser    = require('body-parser');
 
 // Config
+var server = express();
+var config;
 var platform = os.platform();
-var port = 1234;
 var enginejs_root = __dirname;
+var enginejs_launcher_dir = enginejs_root + "/launcher";
 var enginejs_samples_dir = enginejs_root + "/samples";
+var user_home_dir = process.env[(platform == 'win32') ? 'USERPROFILE' : 'HOME'];
 var junction_tool = enginejs_root + "/tools/junction/junction.exe";
+var config_file = enginejs_launcher_dir + "/config.json";
+var default_project_folder_name = "EngineJSProjects";
+var default_port = 1234;
 
 // Helpers
 function GetLocalIPAddress()
@@ -44,6 +50,50 @@ function quotes(x)
 	return "\"" + x + "\" ";
 }
 
+function to_json(x) { return JSON.stringify(x, null, "\t"); }
+function from_json(x) { return JSON.parse(x); }
+
+function CreateIfMissing(folder)
+{
+	if(!fs.existsSync(folder))
+	{
+		console.log("Creating folder: " + folder);
+		fs.mkdirSync(folder);
+	}
+}
+
+function SetProjectsFolder(folder)
+{
+	config.project_folder = folder;
+	ApplyConfigChanges();
+
+	console.log("Now serving /projects from: " + config.project_folder);
+	server.use("/projects", express.static(config.project_folder));
+}
+
+function ApplyConfigChanges()
+{
+	CreateIfMissing(config.project_folder);
+	fs.writeFileSync(config_file, to_json(config));
+}
+
+// Setup config file?
+if(!fs.existsSync(config_file))
+{
+	var config_default =
+	{
+		project_folder : user_home_dir + "\\" + default_project_folder_name,
+		port           : default_port
+	};
+
+	ApplyConfigChanges(config_default);
+}
+else
+{
+	// Load config file from disk
+	config = from_json(fs.readFileSync(config_file, 'utf8'));
+}
+
 // Setup symlinks
 var samples = GetDirectories(enginejs_root + "/samples");
 for(var i = 0; i < samples.length; ++i)
@@ -64,17 +114,8 @@ for(var i = 0; i < samples.length; ++i)
 	}
 }
 
-// Setup Webserver
-var serve = serve_static(enginejs_root);
-var server = http.createServer(function(req, res)
-{
-	if(req.url == "/") { req.url = "/index.htm"; }
-	var done = final_handler(req, res);
-	serve(req, res, done);
-});
-
 // Show splash screen
-var url = "http://" + GetLocalIPAddress() + ":" + port;
+var url = "http://" + GetLocalIPAddress() + ":" + config.port;
 console.log("==============================================================================");
 console.log("                     _____         _            __ _____                      ");
 console.log("                    |   __|___ ___|_|___ ___ __|  |   __|                     ");
@@ -87,12 +128,34 @@ console.log("                            Development Server V1                  
 console.log("==============================================================================");
 console.log(" EngineJS root : " + enginejs_root);
 console.log("   Server root : " + enginejs_root);
-console.log("          Port : " + port);
+console.log("          Port : " + config.port);
 console.log("    Device URL : " + url);
 console.log("==============================================================================");
 
+// Setup Webserver
+server.use(bodyParser.json());
+server.use("/", express.static(enginejs_root));
+SetProjectsFolder(config.project_folder);
+
+server.get('/server/launcher/get_project_details', function (req, res)
+{
+	var project_details =
+	{
+		folder   : config.project_folder,
+		projects : GetDirectories(config.project_folder)
+	};
+	res.send(to_json(project_details));
+});
+
+server.post('/server/launcher/set_project_folder', function (req, res)
+{
+	SetProjectsFolder(req.body.folder);
+	ApplyConfigChanges(config);
+	res.send("DONE");
+});
+
 // Start Webserver
-server.listen(port);
+server.listen(config.port);
 
 // Launch in chrome app shell
 locateChrome(function(chrome)
@@ -101,5 +164,5 @@ locateChrome(function(chrome)
 	           "--app=" + url + "/launcher/index.htm " +
 	           "--enable-webgl " +
 	           "--ignore-gpu-blacklist";
-  	child_process.exec(quotes(chrome) + args);
+	child_process.exec(quotes(chrome) + args);
 });

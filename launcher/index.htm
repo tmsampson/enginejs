@@ -72,14 +72,14 @@
 						<p>Please set the folder where your EngineJS projects are stored</p>
 						<form>
 							<div class="form-group">
-								<label for="exampleInputEmail1">Projects Folder</label>
+								<label for="projectFolderInput">Projects Folder</label>
 								<input type="text" class="form-control" id="projectFolderInput">
 							</div>
 						</form>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-						<button type="button" class="btn btn-primary" data-dismiss="modal" onclick="javascript:alert('WIP')">Save changes</button>
+						<button type="button" class="btn btn-primary" data-dismiss="modal" onclick="PostProjectFolder()">Save changes</button>
 					</div>
 				</div><!-- /.modal-content -->
 			</div><!-- /.modal-dialog -->
@@ -87,6 +87,31 @@
 
 		<script type="text/javascript" src="../jquery.js"></script>
 		<script src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+		<script type="text/javascript">
+		function RetrieveProjectDetails()
+		{
+			$.get("../server/launcher/get_project_details", function(data)
+			{
+				data = jQuery.parseJSON(data);
+				$("#projectFolderInput").val(data.folder);
+			});
+		}
+
+		function PostProjectFolder()
+		{
+			var data = { folder: $("#projectFolderInput").val() };
+			$.post("../server/launcher/set_project_folder", JSON.stringify(data)).done(function(data)
+			{
+				alert(data);
+			});
+		}
+
+		$(document).ready(function()
+		{
+			$.ajaxSetup({ contentType: "application/json; charset=utf-8" });
+			RetrieveProjectDetails();
+		});
+		</script>
 
 	</body>
 </html>
