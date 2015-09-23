@@ -80,13 +80,13 @@ function ApplyConfigChanges()
 // Setup config file?
 if(!fs.existsSync(config_file))
 {
-	var config_default =
+	config =
 	{
 		project_folder : user_home_dir + "\\" + default_project_folder_name,
 		port           : default_port
 	};
 
-	ApplyConfigChanges(config_default);
+	ApplyConfigChanges();
 }
 else
 {
