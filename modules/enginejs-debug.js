@@ -13,13 +13,13 @@ Engine.Debug =
 	// Dynamic polygon soup for debug geometry (arbitrary lines & polygons)
 	soup_vbo        : null,
 	soup_idx        : 0, // Current write offset into soup
+	soup_max_verts  : 3000000,
 	soup_descriptor :
 	{
 		attribute_name : "a_pos",
 		item_size      : 3,
 		draw_mode      : "lines",
-		stream         : [],
-		stream_index  : 0
+		stream_index   : 0
 	},
 
 	// Deferred queues for rect/cirlces
@@ -28,58 +28,46 @@ Engine.Debug =
 	PreGameLoopInit : function()
 	{
 		Engine.Debug.shader_program = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_basic_transformed_nouv"],
-		                                        Engine.Resources["fs_basic_colour"]);
+		                                                             Engine.Resources["fs_basic_colour"]);
 		Engine.Debug.circle_model = Engine.Geometry.MakeCircle({ segment_count : 50 });
+
+		// Allocate soup
+		Engine.Debug.soup_descriptor.stream = new Float32Array(Engine.Debug.soup_max_verts);
 
 		// Setup vertex buffer object
 		Engine.Debug.soup_vbo = Engine.Gfx.CreateVertexBuffer(Engine.Debug.soup_descriptor);
 	},
 
-	DeferDrawLine : function(vertices, colour)
+	RegisterDrawCommand : function(command)
 	{
-		// Register command
-		Engine.Debug.draw_commands.push(
+		// Validate
+		command.offset = Engine.Debug.soup_idx / Engine.Debug.soup_descriptor.item_size;
+		var new_length = command.offset + command.vertices.length;
+		if(new_length > Engine.Debug.soup_max_verts)
 		{
-			offset    : Engine.Debug.soup_idx / Engine.Debug.soup_descriptor.item_size,
-			count     : vertices.length,
-			draw_mode : "lines",
-			colour    : colour
-		});
+			Engine.LogError("Debug draw buffer overflow, required = " + new_length + ", max = " + Engine.Debug.soup_max_verts);
+		}
 
-		// Add verts to buffer
-		for(var i = 0; i < vertices.length; ++i)
+		// Copy command verts into soup
+		for(var i = 0; i < command.vertices.length; ++i)
 		{
-			Engine.Debug.soup_descriptor.stream[Engine.Debug.soup_idx++] = vertices[i][0];
-			Engine.Debug.soup_descriptor.stream[Engine.Debug.soup_idx++] = vertices[i][1];
+			Engine.Debug.soup_descriptor.stream[Engine.Debug.soup_idx++] = command.vertices[i][0];
+			Engine.Debug.soup_descriptor.stream[Engine.Debug.soup_idx++] = command.vertices[i][1];
 			Engine.Debug.soup_descriptor.stream[Engine.Debug.soup_idx++] = 0;
 		}
+
+		// Clear command verts
+		command.length = command.vertices.length;
+		command.vertices = [];
+
+		// Register
+		Engine.Debug.draw_commands.push(command);
 	},
 
-	DeferDrawPoly : function(vertices, colour)
-	{
-		// Register command
-		Engine.Debug.draw_commands.push(
-		{
-			buffer    : Engine.Debug.soup_descriptor,
-			offset    : Engine.Debug.soup_idx / Engine.Debug.soup_descriptor.item_size,
-			count     : vertices.length,
-			draw_mode : "triangle_fan",
-			colour    : colour
-		});
-
-		// Add verts to buffer
-		for(var i = 0; i < vertices.length; ++i)
-		{
-			Engine.Debug.soup_descriptor.stream[Engine.Debug.soup_idx++] = vertices[i][0];
-			Engine.Debug.soup_descriptor.stream[Engine.Debug.soup_idx++] = vertices[i][1];
-			Engine.Debug.soup_descriptor.stream[Engine.Debug.soup_idx++] = 0;
-		}
-	},
-
-	DrawLine : function(start, end, colour, thickness, camera)
+	DrawLine : function(start, end, colour, thickness)
 	{
 		// Draw main line
-		Engine.Debug.DeferDrawLine([start, end], colour);
+		Engine.Debug.RegisterDrawCommand({ vertices : [start, end], colour : colour, draw_mode : "lines" });
 
 		// Thicken line?
 		if(thickness > 1)
@@ -95,17 +83,17 @@ Engine.Debug =
 				                    Engine.Vec2.Add(end,   [ normal[0] * shift,  normal[1] * shift]),   // Line A (end)
 				                    Engine.Vec2.Add(start, [-normal[0] * shift, -normal[1] * shift]),   // Line B (start)
 				                    Engine.Vec2.Add(end,   [-normal[0] * shift, -normal[1] * shift]) ]; // Line B (end)
-				Engine.Debug.DeferDrawLine(extra_lines, colour);
+				Engine.Debug.RegisterDrawCommand({ vertices : extra_lines, colour : colour, draw_mode : "lines" });
 			}
 		}
 	},
 
-	DrawPolygon : function(vertices, colour, camera)
+	DrawPolygon : function(vertices, colour)
 	{
-		Engine.Debug.DeferDrawPoly(vertices, colour);
+		Engine.Debug.RegisterDrawCommand({ vertices : vertices, colour : colour, draw_mode : "triangle_fan" });
 	},
 
-	DrawRect : function(position, width, height, colour, camera)
+	DrawRect : function(position, width, height, colour)
 	{
 		// Setup transform (canvas space)
 		var mtx_trans = mat4.create();
@@ -118,7 +106,7 @@ Engine.Debug =
 		Engine.Debug.prim_queue.push({ type : "rect", mtx : mtx_trans, colour : colour});
 	},
 
-	DrawCircle : function(position, radius, colour, camera)
+	DrawCircle : function(position, radius, colour)
 	{
 		// Setup transform (canvas space)
 		var mtx_trans = mat4.create();
@@ -149,7 +137,7 @@ Engine.Debug =
 		Engine.Gfx.EnableDepthTest(false);
 		Engine.Gfx.EnableBlend(true);
 
-		// Update vertex streams
+		// Update vertex stream
 		Engine.Gfx.UpdateDynamicVertexBuffer(Engine.Debug.soup_vbo, Engine.Debug.soup_descriptor);
 
 		// Bind shader
@@ -169,7 +157,7 @@ Engine.Debug =
 			var command = Engine.Debug.draw_commands[i];
 			Engine.Gfx.SetShaderConstant("u_colour", command.colour, Engine.Gfx.SC_COLOUR);
 			Engine.Gfx.BindVertexBuffer(Engine.Debug.soup_vbo);
-			Engine.Gfx.DrawArray(command.offset, command.count, command.draw_mode);
+			Engine.Gfx.DrawArray(command.offset, command.length, command.draw_mode);
 		}
 
 		// Draw deferred prims (rect & circles)
