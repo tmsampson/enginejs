@@ -94,24 +94,30 @@ else
 	config = from_json(fs.readFileSync(config_file, 'utf8'));
 }
 
-// Setup symlinks
-var samples = GetDirectories(enginejs_root + "/samples");
-for(var i = 0; i < samples.length; ++i)
+function CreateSymlink(src, dest)
 {
-	var src = enginejs_samples_dir + "/" + samples[i] + "/enginejs";
 	switch(platform)
 	{
 		case "win32":
-			var cmd = quotes(junction_tool) + quotes(src) + quotes(enginejs_root);
+			var cmd = quotes(junction_tool) + quotes(src) + quotes(dest);
 			child_process.exec(cmd);
 			break;
 		default:
 			if(!fs.existsSync(src))
 			{
-				fs.symlinkSync(enginejs_root, src);
+				fs.symlinkSync(dest, src);
 			}
 			break;
 	}
+}
+
+// Setup symlinks
+CreateSymlink(enginejs_root + "/tools/sprite_previewer/enginejs", enginejs_root);
+var samples = GetDirectories(enginejs_root + "/samples");
+for(var i = 0; i < samples.length; ++i)
+{
+	var src = enginejs_samples_dir + "/" + samples[i] + "/enginejs";
+	CreateSymlink(src, enginejs_root);
 }
 
 // Show splash screen
@@ -151,7 +157,6 @@ server.post('/server/launcher/set_project_folder', function (req, res)
 {
 	SetProjectsFolder(req.body.folder);
 	ApplyConfigChanges(config);
-	res.send("DONE");
 });
 
 // Start Webserver
