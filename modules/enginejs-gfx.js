@@ -111,7 +111,7 @@ Engine.Gfx =
 		{
 			var extension = descriptor.file.split('.').pop();
 			var shader_object = (extension == "vs")? Engine.Gfx.CompileVertexShader(shader_code, defines) :
-			                                           Engine.Gfx.CompileFragmentShader(shader_code, defines);
+			                                         Engine.Gfx.CompileFragmentShader(shader_code, defines);
 
 			if(shader_object)
 			{
