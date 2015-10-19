@@ -2,7 +2,6 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8" />
-		<link rel="stylesheet" href="../sample.css">
 		
 		<title>Engine Sample: Plasma</title>
 
@@ -19,7 +18,38 @@
     overflow: visible;
 
 }
+.box {
+  display: flex;
+  flex-flow: column;
+  height: 100%;
+}
+
+.box .row {
+  flex: 0 1 auto;
+}
+
+.box .row.header {
+  flex: 0 1 40px;
+  background-color:#525252;
+  background-image: url(img/logo.png);
+  background-repeat:no-repeat;
+  background-position:2px 2px
+}
+
+.box .row.content {
+  flex: 1 1 auto;
+  display: flex;
+}
+
+.box .row.footer {
+  flex: 0 1 0px;
+}
 		</style>
+
+		<script src="scripts/codemirror/lib/codemirror.js"></script>
+		<script src="scripts/codemirror/mode/clike/clike.js"></script>
+		<link rel="stylesheet" href="scripts/codemirror/lib/codemirror.css"/>
+		<link rel="stylesheet" href="scripts/codemirror/theme/twilight.css"/>
 
 		<script language="javascript">
 		var resources = { fs_plasma : { file: "shaders/plasma.fs" } }
@@ -27,6 +57,16 @@
 		{
 			var on_init = function()
 			{
+				var editor = CodeMirror.fromTextArea(document.getElementById("textarea-code"),
+	{
+		lineNumbers   : true,
+		matchBrackets : true,
+		autofocus     : true,
+		mode          : "x-shader/x-fragment",
+		theme         : "twilight",
+		onKeyEvent    : OnEditorKeyEvent
+	});
+
 				var program  = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_basic"],
 				                                              resources["fs_plasma"]);
 				var on_render = function(info)
@@ -38,18 +78,50 @@
 				return on_render;
 			};
 			Engine.Init(on_init, resources);
+
+			function OnEditorKeyEvent(editor, e)
+{
+	var ctrlKey      = (e.ctrlKey || e.metaKey);
+	var ctrlAndEnter = ctrlKey && (e.which == '10');
+	var ctrlAndS     = ctrlKey && (e.which == '83');
+	var ctrlAndO     = ctrlKey && (e.which == '79');
+	pendingChanges   = true;
+
+	if(ctrlAndO)
+	{
+		e.preventDefault();
+		//OpenShaderPicker();
+	}
+	else if(ctrlAndEnter || ctrlAndS)
+	{
+		e.preventDefault();
+		//RecompileShader(editor.getValue());
+	}
+}
 		});
 		</script>
 	</head>
 
 	<body>
-	<div style="width:100%; height:100%">
+		<div class="box">
 
-		<div style="float:left; width: 800px; height: 100%; margin: 0px 0px; background-color:yellow">
-			<canvas width="800" height="450"></canvas>
+		<div class="row header"></div>
+
+		<div class="row content">
+			<div style="float:left; width: 800px; margin: 0px 0px; background-color:yellow">
+				<canvas width="800" height="450"></canvas>
+			</div>
+
+			<div style="overflow:hidden; flex: 1 1 auto; margin: 0px 0px; background-color:red">
+				<form style="height:100%">
+					<textarea id="textarea-code" contenteditable="true" style="height:100%">here
+					</textarea>
+				</form>
+			</div>
 		</div>
 
-		<div style="overflow:hidden; height: 100%; margin: 0px 0px; background-color:red">LEFT</div>
-	</div>
+		<div class="row footer"></div>
+
+		</div>
 	</body>
 </html>
