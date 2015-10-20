@@ -92,7 +92,7 @@ Engine.Keyboard =
 // *******************************************
 // Init
 // *******************************************
-document.onkeydown = function(e)
+$(document).keydown(function(e)
 {
 	Engine.Keyboard.key_buffer[2][e.keyCode] = 1;
 
@@ -103,11 +103,11 @@ document.onkeydown = function(e)
 		Engine.Device.EnableFullScreen();
 	}
 
-	return Engine.Keyboard.IsIgnored(e.keyCode);
-};
+	return !Engine.Keyboard.IsIgnored(e.keyCode);
+});
 
-document.onkeyup = function(e)
+$(document).keyup(function(e)
 {
 	Engine.Keyboard.key_buffer[2][e.keyCode] = 0;
-	return Engine.Keyboard.IsIgnored(e.keyCode);
-};
+	return !Engine.Keyboard.IsIgnored(e.keyCode);
+});
