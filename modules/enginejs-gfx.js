@@ -179,8 +179,12 @@ Engine.Gfx =
 		Engine.GL.linkProgram(shader_program);
 		var success = Engine.GL.getProgramParameter(shader_program, Engine.GL.LINK_STATUS);
 
+		// Select names for vert/frag shaders (use filename or fall-back to "?")
+		var vertex_shader_name = Engine.Util.IsDefined(vertex_shader.descriptor)? vertex_shader.descriptor.file : "?";
+		var fragment_shader_name = Engine.Util.IsDefined(fragment_shader.descriptor)? fragment_shader.descriptor.file : "?";
+
 		// Create shader program object
-		var id_string = uid + " (" + vertex_shader.descriptor.file + " --> " + fragment_shader.descriptor.file + ")";
+		var id_string = uid + " (" + vertex_shader_name + " --> " + fragment_shader_name + ")";
 		var shader_program_object =
 		{
 			name      : uid,
