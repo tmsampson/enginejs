@@ -19,7 +19,14 @@
 		<link rel="stylesheet" href="enginejs/resources/misc/codemirror/theme/twilight.css"/>
 
 		<script language="javascript">
-		var resources = { fs_plasma : { file: "shaders/plasma.fs" } }
+		var resources =
+		{
+			fs_plasma    : { file: "shaders/plasma.fs" },
+			txt_template : { file: "template.fs.txt"   }
+		};
+
+		var template_code = "";
+
 		$(document).ready(function()
 		{
 			var editor = CodeMirror.fromTextArea(document.getElementById("textarea-code"),
@@ -46,6 +53,7 @@
 			var program = null;
 			var on_init = function()
 			{
+				template_code = resources["txt_template"].text;
 				program  = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_basic"],
 				                                              resources["fs_plasma"]);
 				var on_render = function(info)
