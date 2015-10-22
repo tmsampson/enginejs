@@ -78,3 +78,13 @@ Engine.Resource.RegisterLoadFunction("css", function(descriptor, callback)
 		callback(css_object);
 	});
 });
+
+// Register handlers for hot-loading plain text files
+Engine.Resource.RegisterLoadFunction("txt", function(descriptor, callback)
+{
+	Engine.Net.FetchResource(descriptor.file, function(data)
+	{
+		var text_resource_object = { text : data };
+		callback(text_resource_object);
+	});
+});
