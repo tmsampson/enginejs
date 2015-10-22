@@ -9,7 +9,7 @@ Engine.Net =
 		callback = callback || false;
 		jQuery.ajax(
 		{
-			url     : resource_url,// + "?timestamp=" + Engine.Time.Now(),
+			url     : resource_url + "?timestamp=" + Engine.Time.Now(),
 			async   : callback,
 			cache   : false,
 			success : function(data)
