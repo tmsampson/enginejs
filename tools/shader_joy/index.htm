@@ -26,10 +26,40 @@
 		};
 
 		var template_code = "";
+		var editor = null;
+		var shader_toy_ids = [];
+		var shader_toy_index = -1;
+		var program = null;
+
+		function NextShaderToy(index)
+		{
+			shader_toy_index = (shader_toy_index + index) % (shader_toy_ids.length -1);
+			var get_id = shader_toy_ids[shader_toy_index];
+
+			Engine.Net.FetchResource("https://www.shadertoy.com/api/v1/shaders/" + get_id + "?key=ftHKwr", function(data)
+			{
+				var code = data.Shader.renderpass[0].code;
+				editor.setValue(code);
+				RecompileShader(code);
+			});
+		}
+
+		function RandomShaderToy(index)
+		{
+			shader_toy_index = Engine.Math.RandomInteger(0, shader_toy_ids.length -1);
+			var get_id = shader_toy_ids[shader_toy_index];
+
+			Engine.Net.FetchResource("https://www.shadertoy.com/api/v1/shaders/" + get_id + "?key=ftHKwr", function(data)
+			{
+				var code = data.Shader.renderpass[0].code;
+				editor.setValue(code);
+				RecompileShader(code);
+			});
+		}
 
 		$(document).ready(function()
 		{
-			var editor = CodeMirror.fromTextArea(document.getElementById("textarea-code"),
+			editor = CodeMirror.fromTextArea(document.getElementById("textarea-code"),
 			{
 				lineNumbers   : true,
 				matchBrackets : true,
@@ -39,6 +69,9 @@
 				extraKeys:
 				{
 					"Alt-Enter" : function(instance) { RecompileShader(editor.getValue()); return true; },
+					"Ctrl-U" : function(instance) { NextShaderToy(-1); return true; },
+					"Ctrl-I" : function(instance) { NextShaderToy(1); return true; },
+					"Ctrl-Q" : function(instance) { RandomShaderToy(1); return true; },
 				}
 			});
 
@@ -50,13 +83,19 @@
 				editor.refresh()
 			}).trigger('resize');
 
-			var program = null;
 			var click_pos = [0, 0];
 			var mpos = [0, 0];
 			var param_editor = null;
 
 			var on_init = function()
 			{
+				// API
+				Engine.Net.FetchResource("https://www.shadertoy.com/api/v1/shaders?key=ftHKwr", function(data)
+				{
+					shader_toy_ids = data.Results;
+					editor.setValue(JSON.stringify(shader_toy_ids, null, '\t'));
+				});
+
 				template_code = resources["txt_template"].text;
 				program  = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_basic"],
 				                                              resources["fs_plasma"]);
@@ -90,10 +129,7 @@
 				return on_render;
 			};
 			Engine.Init(on_init, resources);
-
-			/// API NOTES
-			// Get all shader ids = https://www.shadertoy.com/api/v1/shaders?key=ftHKwr
-			// Get shader metadata (including code) = https://www.shadertoy.com/api/v1/shaders/XslGRr?key=ftHKwr
+		});
 
 			function RecompileShader(user_code)
 			{
@@ -107,7 +143,6 @@
 				$("#sliders").empty();
 				$("#sliders").append(param_editor);
 			}
-		});
 		</script>
 	</head>
 
