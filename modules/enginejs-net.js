@@ -9,7 +9,7 @@ Engine.Net =
 		callback = callback || false;
 		jQuery.ajax(
 		{
-			url     : resource_url + "?timestamp=" + Engine.Time.Now(),
+			url     : resource_url + Engine.Net.MakeCachPreventionString(resource_url),
 			async   : callback,
 			cache   : false,
 			success : function(data)
@@ -29,8 +29,7 @@ Engine.Net =
 		// see: http://bugs.jquery.com/ticket/11461
 		callback = callback || false;
 		var xhr = new XMLHttpRequest();
-		var no_cache = "?timestamp=" + new Date().getTime();
-		xhr.open("GET", resource_url + no_cache, true);
+		xhr.open("GET", resource_url + Engine.Net.MakeCachPreventionString(resource_url), true);
 		xhr.responseType = 'arraybuffer';
 		xhr.onload = function(e)
 		{
@@ -44,5 +43,11 @@ Engine.Net =
 			}
 		};
 		xhr.send();
+	},
+
+	MakeCachPreventionString : function(resource_url)
+	{
+		var url_contains_param = (resource_url.indexOf('?') != -1);
+		return (url_contains_param? "&" : "?") + "timestamp=" + Engine.Time.Now();
 	}
 };
