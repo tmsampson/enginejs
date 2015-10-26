@@ -1,0 +1,32 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4tfXRl",
+			"date": "1438773564",
+			"viewed": 454,
+			"name": "Contour",
+			"username": "antonOTI",
+			"description": "my implementation of contour, I intend to use it for a small game of my own",
+			"likes": 2,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"noob",
+				"edge"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

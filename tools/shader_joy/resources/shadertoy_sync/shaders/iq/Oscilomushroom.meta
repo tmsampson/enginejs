@@ -1,0 +1,39 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XsjSzc",
+			"date": "1414459923",
+			"viewed": 753,
+			"name": "Oscilomushroom",
+			"username": "iq",
+			"description": "Made after this: . No actual implicit procedural modeling used!",
+			"likes": 9,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"osciloscope"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			},
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "const float freq = 500.0;\n\nfloat saw( float x ) { return -1.0 + 2.0*fract(x); }\n\nvec2 mainSound(float time)\n{\n    float t = time;\n    \n    float x = 0.5*cos( 5.0*freq*6.2831*t ) * \n                  sin( 1.0*freq*6.2831*t/12.0) *\n                 (0.1+0.9*step(fract(t*freq/12.0),0.25)) - \n              0.2*sin(t*6.2831*freq/12.0 + t*2.0) * \n                 (1.0-fract(t*freq/12.0));\n    float y = 0.1*sin( 5.0*freq*6.2831*t ) - \n              1.0*saw( 1.0*freq*t/12.0 );\n    \n    return 0.15*vec2( x, y );\n}",
+				"name": "",
+				"description": "",
+				"type": "sound"
+			}
+		]
+	}
+}

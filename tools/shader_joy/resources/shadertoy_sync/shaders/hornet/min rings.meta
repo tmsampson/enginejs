@@ -1,0 +1,32 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "Ms2SzV",
+			"date": "1414085404",
+			"viewed": 572,
+			"name": "min rings",
+			"username": "hornet",
+			"description": "from the demo 'min' by loopit: http://www.pouet.net/prod.php?which=62851<br/>- code cleaned up a bit, but still in a terrible state<br/><br/>added a hue-offset not present in original (as it looks cool <img src=\"/img/emoticonLaugh.png\"/> )",
+			"likes": 15,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"raymarching",
+				"min",
+				"loopit"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

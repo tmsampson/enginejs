@@ -1,0 +1,32 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "ltfXDs",
+			"date": "1440591886",
+			"viewed": 417,
+			"name": "Fractal Experiment 8",
+			"username": "aiekick",
+			"description": "use mouse axis x for varying the magic coef of the magicBox Fractal<br/>The fractal is extracted from the shader of dgreensp <a href=\"https://www.shadertoy.com/view/4ljGDd\"  class=\"regular\" target=\"_blank\">Magic Fractal</a>",
+			"likes": 1,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"fractal",
+				"experiment",
+				"8"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

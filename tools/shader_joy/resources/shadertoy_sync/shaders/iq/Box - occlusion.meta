@@ -1,0 +1,55 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4djXDy",
+			"date": "1415595000",
+			"viewed": 1142,
+			"name": "Box - occlusion",
+			"username": "iq",
+			"description": "Analytical ambient occlusion of a box. Left side of screen, stochastically sampled occlusion. Right side of the screen, analytical solution (no rays casted). Move the mouse to compare.",
+			"likes": 5,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"3d",
+				"box",
+				"occlusion",
+				"analytic"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 2,
+						"src": "/presets/tex01.jpg",
+						"ctype": "texture",
+						"channel": 1
+					},
+					{
+						"id": 30,
+						"src": "/presets/tex16.png",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

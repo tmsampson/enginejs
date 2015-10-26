@@ -1,0 +1,43 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MlX3Wj",
+			"date": "1425126720",
+			"viewed": 432,
+			"name": "Flake Ball",
+			"username": "aiekick",
+			"description": "Flake Ball<br/>mouse control",
+			"likes": 3,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"ball",
+				"flake"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 22,
+						"src": "/presets/cube00_0.jpg",
+						"ctype": "cubemap",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

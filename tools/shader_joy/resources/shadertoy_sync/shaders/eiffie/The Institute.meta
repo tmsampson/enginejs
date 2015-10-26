@@ -1,0 +1,30 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "Xll3Wn",
+			"date": "1420826241",
+			"viewed": 519,
+			"name": "The Institute",
+			"username": "eiffie",
+			"description": "Although their accomplishments were few the real pride of the institute was their well lit ample parking.",
+			"likes": 10,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"partitions"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

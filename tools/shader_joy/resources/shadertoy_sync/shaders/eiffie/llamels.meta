@@ -1,0 +1,30 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "ltsGz4",
+			"date": "1419434227",
+			"viewed": 1332,
+			"name": "llamels",
+			"username": "eiffie",
+			"description": "Creating the creatures evolution didn't dare dream of.",
+			"likes": 28,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"zjoint"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

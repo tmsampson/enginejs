@@ -1,0 +1,43 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XtsXWB",
+			"date": "1439407873",
+			"viewed": 429,
+			"name": "Background Vertical Scroller",
+			"username": "MrBodean",
+			"description": "THis is a test for background scroll based on https://www.shadertoy.com/view/ltB3Dc",
+			"likes": 2,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"background",
+				"scroll"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 6,
+						"src": "/presets/tex05.jpg",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

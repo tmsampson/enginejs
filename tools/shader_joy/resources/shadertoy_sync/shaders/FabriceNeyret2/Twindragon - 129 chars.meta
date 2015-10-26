@@ -1,0 +1,32 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MlfXRS",
+			"date": "1437517011",
+			"viewed": 429,
+			"name": "Twindragon - 129 chars",
+			"username": "FabriceNeyret2",
+			"description": "compaction inspired from of  NinjaKoala's shader https://www.shadertoy.com/view/4lX3zB<br/><br/>motion: uncomment line 8",
+			"likes": 5,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"fractal",
+				"short",
+				"onetweet"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

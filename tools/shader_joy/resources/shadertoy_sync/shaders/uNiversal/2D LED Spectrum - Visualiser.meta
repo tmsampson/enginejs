@@ -1,0 +1,46 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "Mlj3WV",
+			"date": "1432723892",
+			"viewed": 491,
+			"name": "2D LED Spectrum - Visualiser",
+			"username": "uNiversal",
+			"description": "A simple 2D LED Spectrum analyser visualisation, based on Led Spectrum Analyser by: simesgreen<br/><br/>Made to work in Kodi shadertoy addon https://github.com/topfs2/visualization.shadertoy/pull/3",
+			"likes": 7,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"spectrum",
+				"audio",
+				"visualisation",
+				"analyser"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 19,
+						"src": "/presets/mzk02.mp3",
+						"ctype": "music",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

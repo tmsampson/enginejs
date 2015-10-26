@@ -1,0 +1,32 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XtfSRH",
+			"date": "1434302299",
+			"viewed": 436,
+			"name": "Sin without trig IV",
+			"username": "demofox",
+			"description": "This uses a 1d (explicit) rational quadratic bezier curve to calculate the first quadrant of sine, then uses the quadrant number to flip it on the x or y axis to make the other quadrants. red = sine, green = value made with curve, yellow = overlap (equal)",
+			"likes": 3,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"math",
+				"sin"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

@@ -1,0 +1,31 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "Xdj3Dt",
+			"date": "1395273585",
+			"viewed": 1467,
+			"name": "704.2",
+			"username": "PauloFalcao",
+			"description": "A readable and more optimized version of my 1K 704 webgl demo, which is similar to my 704 but adds reflections, and some fake soft shadows.<br/>Original webgl 1K version - http://www.backtothepixel.com/demos/js/webgl/704webgl1k.html<br/>",
+			"likes": 12,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"procedural",
+				"remake"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

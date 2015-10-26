@@ -1,0 +1,37 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MdBSz3",
+			"date": "1414250370",
+			"viewed": 541,
+			"name": "VR test scene",
+			"username": "RavenWorks",
+			"description": "Here's my first WebVR raymarching test scene, now ported to ShaderToy's VR mode!<br/>Standalone version here: <a href=\"http://raven.works/projects/raymarchFull/\" class=\"regular\" target=\"_blank\">http://raven.works/projects/raymarchFull/</a>",
+			"likes": 2,
+			"published": 3,
+			"flags": 1,
+			"tags": [
+				"procedural",
+				"wood",
+				"oculus",
+				"marble",
+				"rift",
+				"vr",
+				"pillars",
+				"webvr"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

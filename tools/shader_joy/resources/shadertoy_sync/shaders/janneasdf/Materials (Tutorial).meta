@@ -1,0 +1,32 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "lllSR7",
+			"date": "1435522792",
+			"viewed": 430,
+			"name": "Materials (Tutorial)",
+			"username": "janneasdf",
+			"description": "This shader demonstrates a way to handle shading different materials. Basically the map function returns also the material of the closest object (\"hitMaterial\"), which will be used to decide shading logic.",
+			"likes": 3,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"3d",
+				"raymarching",
+				"tutorial"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

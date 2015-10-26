@@ -1,0 +1,30 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XtjXRK",
+			"date": "1444980600",
+			"viewed": 169,
+			"name": "HSL vizualization ",
+			"username": "acterhd",
+			"description": "This need for compare for HCG color model.",
+			"likes": 0,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"hslvisualization"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

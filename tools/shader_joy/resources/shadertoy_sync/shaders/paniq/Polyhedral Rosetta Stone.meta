@@ -1,0 +1,30 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XtX3z2",
+			"date": "1423238847",
+			"viewed": 543,
+			"name": "Polyhedral Rosetta Stone",
+			"username": "paniq",
+			"description": "Cube, octahedron and rhombic dodecahedron tesselating each other.",
+			"likes": 4,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"mattdamon"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

@@ -1,0 +1,62 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MdsGDM",
+			"date": "1372348949",
+			"viewed": 549,
+			"name": "perlin video transition -test",
+			"username": "FabriceNeyret2",
+			"description": "use saturated perlin noise for separating channels.",
+			"likes": 6,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"procedural"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 8,
+						"src": "/presets/tex07.jpg",
+						"ctype": "texture",
+						"channel": 2
+					},
+					{
+						"id": 12,
+						"src": "/presets/vid01.webm",
+						"ctype": "video",
+						"channel": 1
+					},
+					{
+						"id": 29,
+						"src": "/presets/vid02.ogv",
+						"ctype": "video",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

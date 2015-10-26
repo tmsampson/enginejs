@@ -1,0 +1,32 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "ltXGRj",
+			"date": "1423242433",
+			"viewed": 477,
+			"name": "Questionable Kiwi",
+			"username": "eiffie",
+			"description": "It doesn't have an expiration date but I'm still hesitant.",
+			"likes": 8,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"fur",
+				"defur",
+				"kiwi"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

@@ -1,0 +1,42 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "lssXWS",
+			"date": "1406723972",
+			"viewed": 2204,
+			"name": "Music - Harry Potter",
+			"username": "iq",
+			"description": "Experiment for sequencing a simple melody (the instrument is simple too). So there, Hedwig's Theme from Harry Potter) generated completely in a GPU shader!",
+			"likes": 17,
+			"published": 3,
+			"flags": 8,
+			"tags": [
+				"2d",
+				"sound",
+				"music",
+				"synthesis",
+				"melody"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			},
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "// Created by inigo quilez - iq/2014\n// License Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License.\n\nvec2 mainSound( float time )\n{\n  time = mod( time, 40.0 );\n\n  // do 3 echo/reverb bounces\n  vec2 tot = vec2(0.0);\n  for( int i=0; i<3; i++ )\n  {\n    float h = float(i)/(3.0-1.0);\n\n    // compute note\t\n    float t = (time - 0.57*h)/0.18;\n    float n = 0.0, b = 0.0, x = 0.0;\n    #define D(u,v)   b+=float(u);if(t>b){x=b;n=float(v);}\n    D(10,71)D(2,76)D(3,79)D(1,78)D( 2,76)D( 4,83)D(2,81)D(6,78)D(6,76)D(3,79)\n    D( 1,78)D(2,74)D(4,77)D(2,71)D(10,71)D( 2,76)D(3,79)D(1,78)D(2,76)D(4,83)\n    D( 2,86)D(4,85)D(2,84)D(4,80)D( 2,84)D( 3,83)D(1,82)D(2,71)D(4,79)D(2,76)\n    D(10,79)D(2,83)D(4,79)D(2,83)D( 4,79)D( 2,84)D(4,83)D(2,82)D(4,78)D(2,79)\n    D( 3,83)D(1,82)D(2,70)D(4,71)D( 2,83)D(10,79)D(2,83)D(4,79)D(2,83)D(4,79)\n    D( 2,86)D(4,85)D(2,84)D(4,80)D( 2,84)D( 3,83)D(1,82)D(2,71)D(4,79)D(2,76) \n        \n    // calc frequency and time for note\t  \n    float noteFreq = 440.0*pow( 2.0, (n-69.0)/12.0 );\n    float noteTime = 0.18*(t-x);\n\t\n    // compute instrument\t\n    float y  = 0.5*sin(6.2831*1.00*noteFreq*noteTime)*exp(-0.0015*1.0*noteFreq*noteTime);\n\t      y += 0.3*sin(6.2831*2.01*noteFreq*noteTime)*exp(-0.0015*2.0*noteFreq*noteTime);\n\t      y += 0.2*sin(6.2831*4.01*noteFreq*noteTime)*exp(-0.0015*4.0*noteFreq*noteTime);\n          y += 0.1*y*y*y;\t  \n          y *= 0.9 + 0.1*cos(40.0*noteTime);\n\t      y *= smoothstep(0.0,0.01,noteTime);\n          \n    // accumulate echo\t  \n    tot += y * vec2(0.5+0.2*h,0.5-0.2*h) * (1.0-sqrt(h)*0.85);\n  }\n  tot /= 3.0;\n\t\n  return tot;\n}\n",
+				"name": "",
+				"description": "",
+				"type": "sound"
+			}
+		]
+	}
+}

@@ -1,0 +1,31 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4l23RV",
+			"date": "1430470516",
+			"viewed": 358,
+			"name": "Ethereal onion",
+			"username": "Aj_",
+			"description": "An onion I came up with while learning stuff",
+			"likes": 2,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"happy",
+				"onion"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

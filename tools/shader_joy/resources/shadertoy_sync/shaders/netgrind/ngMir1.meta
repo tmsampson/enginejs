@@ -1,0 +1,44 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MtBGDR",
+			"date": "1427999761",
+			"viewed": 593,
+			"name": "ngMir1",
+			"username": "netgrind",
+			"description": "feeling blue",
+			"likes": 1,
+			"published": 3,
+			"flags": 2,
+			"tags": [
+				"blue",
+				"mirror",
+				"netgrind"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 31,
+						"src": "/presets/webcam.png",
+						"ctype": "webcam",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

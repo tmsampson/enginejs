@@ -1,0 +1,31 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MlBXzm",
+			"date": "1442440664",
+			"viewed": 577,
+			"name": "sphere stuff",
+			"username": "tly",
+			"description": "idea from http://www.josleys.com/article_show.php?id=83, linked by BeyondTheStatic <img src=\"/img/emoticonHappy.png\"/>",
+			"likes": 3,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"sphere",
+				"reflections"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

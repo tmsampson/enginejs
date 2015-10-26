@@ -1,0 +1,43 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4dXGRX",
+			"date": "1374996661",
+			"viewed": 458,
+			"name": "tracker",
+			"username": "FabriceNeyret2",
+			"description": "track and zoom on the brightest part of the video.<br/>2 methods: barycenter of v^2 and invmax(v). First is more robust, but if multiple bright areas it goes at the middle :-)",
+			"likes": 1,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"video",
+				"tracking"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 31,
+						"src": "/presets/webcam.png",
+						"ctype": "webcam",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

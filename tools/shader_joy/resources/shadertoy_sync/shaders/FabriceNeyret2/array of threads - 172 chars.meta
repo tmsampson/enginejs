@@ -1,0 +1,32 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "llsXWr",
+			"date": "1436024009",
+			"viewed": 487,
+			"name": "array of threads - 172 chars",
+			"username": "FabriceNeyret2",
+			"description": ".",
+			"likes": 5,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"2tweets",
+				"short"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

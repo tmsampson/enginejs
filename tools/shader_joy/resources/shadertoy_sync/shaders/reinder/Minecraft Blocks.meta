@@ -1,0 +1,33 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MdlGz4",
+			"date": "1364485357",
+			"viewed": 3379,
+			"name": "Minecraft Blocks",
+			"username": "reinder",
+			"description": "Shameless port of javascriptcode by Markus Persson (http://jsfiddle.net/uzMPU/).",
+			"likes": 25,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"raycasting",
+				"voxel",
+				"minecraft",
+				"proceduraltextures"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

@@ -1,0 +1,33 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "lls3Wf",
+			"date": "1425908996",
+			"viewed": 610,
+			"name": "Pseudo Knightyan",
+			"username": "eiffie",
+			"description": "An homage to Knighty.",
+			"likes": 16,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"godrays",
+				"knighty",
+				"volumelight",
+				"pseudokleinian"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

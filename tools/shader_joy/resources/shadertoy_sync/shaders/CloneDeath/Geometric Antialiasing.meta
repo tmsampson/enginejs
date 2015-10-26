@@ -1,0 +1,54 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "lts3WX",
+			"date": "1425843066",
+			"viewed": 384,
+			"name": "Geometric Antialiasing",
+			"username": "CloneDeath",
+			"description": "calculating a realtime antialiasing stencil buffer based on the input geometry.<br/><br/>Set APPLY_ANTIALIASING to false at the top to disable antialiasing, as a comparison.",
+			"likes": 1,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"antialiasing",
+				"realtime",
+				"geometric"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 1,
+						"src": "/presets/tex00.jpg",
+						"ctype": "texture",
+						"channel": 1
+					},
+					{
+						"id": 28,
+						"src": "/presets/tex15.png",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

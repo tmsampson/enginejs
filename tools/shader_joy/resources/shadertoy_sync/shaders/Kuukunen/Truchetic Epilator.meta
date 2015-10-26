@@ -1,0 +1,45 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XljXzh",
+			"date": "1441613220",
+			"viewed": 509,
+			"name": "Truchetic Epilator",
+			"username": "Kuukunen",
+			"description": "Messing around with two of WAHa_06x36's shaders, for something even worse.",
+			"likes": 2,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"distancefield",
+				"music",
+				"epilepsy",
+				"pain"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 21,
+						"src": "/presets/mzk04.mp3",
+						"ctype": "music",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

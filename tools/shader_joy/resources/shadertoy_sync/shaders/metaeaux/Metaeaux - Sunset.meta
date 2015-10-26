@@ -1,0 +1,59 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MlSSR1",
+			"date": "1441531936",
+			"viewed": 751,
+			"name": "Metaeaux - Sunset",
+			"username": "metaeaux",
+			"description": "My first procedural world <img src=\"/img/emoticonHappy.png\"/><br/>Mountains, sunset, stars, wind, clouds.. I think perhaps it needs a lake next!",
+			"likes": 23,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"raymarching",
+				"sunset",
+				"clouds",
+				"stars",
+				"mountains",
+				"world",
+				"wind",
+				"prodedural"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 8,
+						"src": "/presets/tex07.jpg",
+						"ctype": "texture",
+						"channel": 1
+					},
+					{
+						"id": 17,
+						"src": "/presets/tex12.png",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

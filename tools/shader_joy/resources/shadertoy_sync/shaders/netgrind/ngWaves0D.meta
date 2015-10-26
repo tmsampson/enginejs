@@ -1,0 +1,32 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "lt23z1",
+			"date": "1427066479",
+			"viewed": 372,
+			"name": "ngWaves0D",
+			"username": "netgrind",
+			"description": "plasm",
+			"likes": 1,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"waves",
+				"plasma",
+				"netgrind"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

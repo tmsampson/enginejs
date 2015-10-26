@@ -1,0 +1,33 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "ltSXRV",
+			"date": "1444934114",
+			"viewed": 160,
+			"name": "HCG color model visualize ",
+			"username": "acterhd",
+			"description": "As you can see, gray and chroma have difference. <br/>https://github.com/acterhd/hcg",
+			"likes": 0,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"color",
+				"model",
+				"visualize",
+				"hcg"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

@@ -1,0 +1,45 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XtlSzX",
+			"date": "1438557365",
+			"viewed": 515,
+			"name": "ngMir8",
+			"username": "netgrind",
+			"description": "what<br/>play with the defines<br/>mouseX controls amount of fuck",
+			"likes": 1,
+			"published": 3,
+			"flags": 2,
+			"tags": [
+				"camera",
+				"webcam",
+				"wat",
+				"fuckboy"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 31,
+						"src": "/presets/webcam.png",
+						"ctype": "webcam",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

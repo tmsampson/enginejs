@@ -1,0 +1,32 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "Xts3RB",
+			"date": "1423054135",
+			"viewed": 447,
+			"name": "Weird Fractal 0",
+			"username": "aiekick",
+			"description": "Weird, Fractal, 0",
+			"likes": 4,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"fractal",
+				"0",
+				"weird"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

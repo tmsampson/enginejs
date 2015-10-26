@@ -1,0 +1,32 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "ltXSWf",
+			"date": "1440104950",
+			"viewed": 460,
+			"name": "Morphick",
+			"username": "vizionary",
+			"description": "Inspiration from following iq's articles and shaders for years and most recently, after watching the Revision 2015 Live Coding event videos ... AMAZING coding guys !!           click-n-drag to slide time",
+			"likes": 5,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"3d",
+				"distancefield",
+				"logo"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

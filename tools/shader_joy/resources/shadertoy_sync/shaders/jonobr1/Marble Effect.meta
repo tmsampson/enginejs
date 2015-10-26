@@ -1,0 +1,35 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MlB3R3",
+			"date": "1430854582",
+			"viewed": 465,
+			"name": "Marble Effect",
+			"username": "jonobr1",
+			"description": "A shader to create an animated marble effect.",
+			"likes": 5,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"noise",
+				"bw",
+				"marble",
+				"white",
+				"black"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

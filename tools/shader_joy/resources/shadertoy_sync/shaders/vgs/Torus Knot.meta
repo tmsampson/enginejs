@@ -1,0 +1,33 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XlSGWR",
+			"date": "1427921255",
+			"viewed": 588,
+			"name": "Torus Knot",
+			"username": "vgs",
+			"description": "A trefoil knot as a (p, q) torus knot. Click to rotate.",
+			"likes": 8,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"3d",
+				"torus",
+				"knot",
+				"trefoil"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

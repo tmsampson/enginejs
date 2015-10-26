@@ -1,0 +1,65 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4ljGRh",
+			"date": "1426847425",
+			"viewed": 1492,
+			"name": "[NV15] Tiny Cutting Planet",
+			"username": "aiekick",
+			"description": "Tiny Planet",
+			"likes": 16,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"space",
+				"planet",
+				"tiny",
+				"nv15"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 10,
+						"src": "/presets/tex09.jpg",
+						"ctype": "texture",
+						"channel": 2
+					},
+					{
+						"id": 23,
+						"src": "/presets/cube01_0.png",
+						"ctype": "cubemap",
+						"channel": 1
+					},
+					{
+						"id": 26,
+						"src": "/presets/cube04_0.png",
+						"ctype": "cubemap",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

@@ -1,0 +1,55 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MtBGWW",
+			"date": "1428985857",
+			"viewed": 728,
+			"name": "pbr sphere",
+			"username": "cgikoray",
+			"description": "An adaption of physically-based shading for use in education.",
+			"likes": 10,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"sphere",
+				"metal",
+				"pbr",
+				"tdm"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 3,
+						"src": "/presets/tex02.jpg",
+						"ctype": "texture",
+						"channel": 1
+					},
+					{
+						"id": 23,
+						"src": "/presets/cube01_0.png",
+						"ctype": "cubemap",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

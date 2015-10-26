@@ -1,0 +1,44 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "lllGWj",
+			"date": "1425412359",
+			"viewed": 506,
+			"name": "Alien magma",
+			"username": "mpcomplete",
+			"description": "Testing noise, fbm,and color rotation.",
+			"likes": 5,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"noise",
+				"fbm",
+				"hsv"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 30,
+						"src": "/presets/tex16.png",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

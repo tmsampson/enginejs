@@ -1,0 +1,44 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "ltj3W1",
+			"date": "1428740067",
+			"viewed": 416,
+			"name": "Revision 2015 Livecoding Round 1",
+			"username": "mu6k",
+			"description": "Written under 25 minutes at Revision 2015 live-coding qualifier round. I tried to adapt it by making as less modifications as possible. Put some music into iChannel0 and remove the comments from the first define.",
+			"likes": 5,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"3d",
+				"raymarching",
+				"livecoding"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 20,
+						"src": "/presets/mzk03.mp3",
+						"ctype": "music",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

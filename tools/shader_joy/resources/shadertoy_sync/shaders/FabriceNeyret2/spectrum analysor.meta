@@ -1,0 +1,45 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XlS3DD",
+			"date": "1428958340",
+			"viewed": 595,
+			"name": "spectrum analysor",
+			"username": "FabriceNeyret2",
+			"description": "speak, sing, play guitar, and see the sound formants !<br/>Mouse.y: time window from 1\" to 10\".<br/>Orange: 440Hz=A   Red: octaves   Green: harmonics ",
+			"likes": 7,
+			"published": 3,
+			"flags": 4,
+			"tags": [
+				"sound",
+				"spectrum",
+				"discard",
+				"mic"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 32,
+						"src": "/presets/mic.png",
+						"ctype": "mic",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

@@ -1,0 +1,45 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "ldBGWW",
+			"date": "1387898382",
+			"viewed": 3419,
+			"name": "Eye of Sauron",
+			"username": "Dave_Hoskins",
+			"description": "The Eye of Sauron from the Lord of the Rings film. Was that really more than 12 years ago? <br/><br/>",
+			"likes": 49,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"3d",
+				"raytracing",
+				"fractal",
+				"eyeofsauron"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 30,
+						"src": "/presets/tex16.png",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

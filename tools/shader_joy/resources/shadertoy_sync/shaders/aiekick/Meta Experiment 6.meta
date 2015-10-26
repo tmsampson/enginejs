@@ -1,0 +1,32 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "Mll3z8",
+			"date": "1418751894",
+			"viewed": 397,
+			"name": "Meta Experiment 6",
+			"username": "aiekick",
+			"description": "Meta Experiment 6",
+			"likes": 2,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"experiment",
+				"meta",
+				"metacurve"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

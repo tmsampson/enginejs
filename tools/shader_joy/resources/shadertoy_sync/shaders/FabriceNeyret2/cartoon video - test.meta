@@ -1,0 +1,42 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "ldl3WM",
+			"date": "1372314957",
+			"viewed": 595,
+			"name": "cartoon video - test",
+			"username": "FabriceNeyret2",
+			"description": "sobel  mask  times colorized smoothed saturated image",
+			"likes": 2,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"imageprocessing"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 12,
+						"src": "/presets/vid01.webm",
+						"ctype": "video",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

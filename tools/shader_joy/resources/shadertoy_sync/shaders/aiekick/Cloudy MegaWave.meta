@@ -1,0 +1,47 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MljSRy",
+			"date": "1444737900",
+			"viewed": 189,
+			"name": "Cloudy MegaWave",
+			"username": "aiekick",
+			"description": "Cloudy MegaWave based of the <a href=\"https://www.shadertoy.com/view/MljXDw\"  class=\"regular\" target=\"_blank\">Cloudy Spikeball</a> shader from duke",
+			"likes": 4,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"3d",
+				"raymarching",
+				"cloud",
+				"fog",
+				"cloudy",
+				"megawave"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 30,
+						"src": "/presets/tex16.png",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

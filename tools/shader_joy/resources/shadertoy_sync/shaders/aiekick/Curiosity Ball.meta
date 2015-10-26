@@ -1,0 +1,43 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XtlSzS",
+			"date": "1437583309",
+			"viewed": 434,
+			"name": "Curiosity Ball",
+			"username": "aiekick",
+			"description": "raytracing",
+			"likes": 4,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"raytracing",
+				"curiosity"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 22,
+						"src": "/presets/cube00_0.jpg",
+						"ctype": "cubemap",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

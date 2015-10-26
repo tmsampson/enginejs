@@ -1,0 +1,44 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4sXGRX",
+			"date": "1375006115",
+			"viewed": 814,
+			"name": "webcam game tracker - pong",
+			"username": "FabriceNeyret2",
+			"description": "track a green and red pannel in the video. <br/>(e.g. colored A4 paper or cardboard. Tune your color lines 4,5)<br/>NB: game not fonctionnal. (for the moment :-) ).",
+			"likes": 0,
+			"published": 3,
+			"flags": 2,
+			"tags": [
+				"video",
+				"pong",
+				"tracking"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 31,
+						"src": "/presets/webcam.png",
+						"ctype": "webcam",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

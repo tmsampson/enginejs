@@ -1,0 +1,33 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "llS3zd",
+			"date": "1431490269",
+			"viewed": 561,
+			"name": "Gimbal Harmonics",
+			"username": "otaviogood",
+			"description": "I like visualizations of different frequencies next to each other. So I tried one with discs. I stuck with the same lighting and materials as my last shader.",
+			"likes": 14,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"raymarching",
+				"harmonics",
+				"harmonic",
+				"gimbal"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

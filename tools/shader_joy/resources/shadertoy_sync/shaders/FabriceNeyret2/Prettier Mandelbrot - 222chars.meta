@@ -1,0 +1,33 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MllXWM",
+			"date": "1437241004",
+			"viewed": 489,
+			"name": "Prettier Mandelbrot - 222chars",
+			"username": "FabriceNeyret2",
+			"description": "compaction of Wicpar's shader https://www.shadertoy.com/view/XtlSW7 (see its forum for steps of compaction)",
+			"likes": 1,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"fractal",
+				"mandelbrot",
+				"2tweets",
+				"short"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

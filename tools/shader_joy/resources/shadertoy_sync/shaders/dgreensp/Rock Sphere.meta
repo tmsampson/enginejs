@@ -1,0 +1,30 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "ltXSRr",
+			"date": "1434060151",
+			"viewed": 421,
+			"name": "Rock Sphere",
+			"username": "dgreensp",
+			"description": "Raymarch a rocky sphere",
+			"likes": 7,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"sphererockstoneraymarch"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

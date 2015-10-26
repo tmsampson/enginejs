@@ -1,0 +1,30 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "ltlSRj",
+			"date": "1438139512",
+			"viewed": 411,
+			"name": "Heat map color palettes",
+			"username": "fibre",
+			"description": "Showing a few different heatmap color palettes.",
+			"likes": 0,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"heatmap"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

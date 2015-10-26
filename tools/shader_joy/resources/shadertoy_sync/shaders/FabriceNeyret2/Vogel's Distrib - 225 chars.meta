@@ -1,0 +1,35 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XtlXDM",
+			"date": "1437133630",
+			"viewed": 523,
+			"name": "Vogel's Distrib - 225 chars",
+			"username": "FabriceNeyret2",
+			"description": "compacification of  fernlightning's shader https://www.shadertoy.com/view/XtsSWM",
+			"likes": 2,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"disk",
+				"2tweets",
+				"distribution",
+				"uniform",
+				"short",
+				"vogel"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

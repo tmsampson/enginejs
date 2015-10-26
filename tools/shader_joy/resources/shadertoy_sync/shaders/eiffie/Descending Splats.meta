@@ -1,0 +1,31 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MlsGRl",
+			"date": "1424445730",
+			"viewed": 565,
+			"name": "Descending Splats",
+			"username": "eiffie",
+			"description": "Choose a few random splats and reposition them in front of the ray using gradient descent. The idea seems sound - the implementation not so much.",
+			"likes": 7,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"splats",
+				"parametericsurface"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

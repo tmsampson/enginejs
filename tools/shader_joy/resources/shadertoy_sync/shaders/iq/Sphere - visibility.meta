@@ -1,0 +1,32 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XdS3Rt",
+			"date": "1392023597",
+			"viewed": 3000,
+			"name": "Sphere - visibility",
+			"username": "iq",
+			"description": "Analytical sphere visibility. Can be used for occlusion culling!  White: spheres don't touch.   Yellow: spheres touch (partial occlusion).   Red: spheres completely occlude each other. I'm expecting the \"Yellow is gay\" joke.",
+			"likes": 11,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"3d",
+				"sphere",
+				"analytic"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

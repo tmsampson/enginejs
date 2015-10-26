@@ -1,0 +1,32 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "Xl23Wy",
+			"date": "1432063291",
+			"viewed": 628,
+			"name": "Directional Derivative",
+			"username": "iq",
+			"description": "Directional Derivatives for lighting. Much faster than gradients, see <a href=\"https://www.shadertoy.com/view/XslGRr\" class=\"regular\" target=\"_blank\">https://www.shadertoy.com/view/XslGRr</a> or <a href=\"https://www.shadertoy.com/view/Xd23zh\" class=\"regular\" target=\"_blank\">https://www.shadertoy.com/view/Xd23zh</a>. More info: <a href=\"http://iquilezles.org/www/articles/derivative/derivative.htm\" class=\"regular\" target=\"_blank\">http://iquilezles.org/www/articles/derivative/derivative.htm</a>",
+			"likes": 6,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"3d",
+				"gradient",
+				"derivative"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

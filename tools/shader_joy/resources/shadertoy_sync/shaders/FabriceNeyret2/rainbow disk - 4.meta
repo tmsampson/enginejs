@@ -1,0 +1,30 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XtjSWD",
+			"date": "1443738943",
+			"viewed": 342,
+			"name": "rainbow disk - 4",
+			"username": "FabriceNeyret2",
+			"description": "a variant of https://www.shadertoy.com/view/Xl2XDW<br/>You can try the various commented versions,   or suppressing  \"ceil\"",
+			"likes": 5,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"rainbow"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

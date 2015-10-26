@@ -1,0 +1,55 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4lsSz2",
+			"date": "1438125020",
+			"viewed": 435,
+			"name": "Psychodelic Circles",
+			"username": "athlete",
+			"description": "playing around with concentric circles - pro tip: listen to deep progressive house while watching ;)",
+			"likes": 1,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"circle",
+				"abstract",
+				"distance",
+				"ripple"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 6,
+						"src": "/presets/tex05.jpg",
+						"ctype": "texture",
+						"channel": 1
+					},
+					{
+						"id": 8,
+						"src": "/presets/tex07.jpg",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

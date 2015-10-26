@@ -1,0 +1,33 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4t23RD",
+			"date": "1427323378",
+			"viewed": 412,
+			"name": "Plummer galaxy twist",
+			"username": "davidjonsson",
+			"description": "Use the mouse and animation to get different whirl patterns. Stars have a Plummer speed distribution, mid cross section ( proof read if you wish, line 61). Mouse.x is time multiplier. Mouse.y is the characteristic radius of the Plummer sphere. ",
+			"likes": 2,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"galaxy",
+				"whirl",
+				"starlight",
+				"plummersphere"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

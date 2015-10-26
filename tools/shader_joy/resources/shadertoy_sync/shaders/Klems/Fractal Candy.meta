@@ -1,0 +1,32 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4t2Sz3",
+			"date": "1445636962",
+			"viewed": 123,
+			"name": "Fractal Candy",
+			"username": "Klems",
+			"description": "Rotating candy landscape 3D fractal thingy.",
+			"likes": 2,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"3d",
+				"fractal",
+				"raymarch"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

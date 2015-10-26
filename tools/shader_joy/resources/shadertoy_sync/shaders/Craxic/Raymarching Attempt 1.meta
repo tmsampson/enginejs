@@ -1,0 +1,30 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4tlGDs",
+			"date": "1426496916",
+			"viewed": 603,
+			"name": "Raymarching Attempt 1",
+			"username": "Craxic",
+			"description": "My first attempt at a very basic ray marcher. I haven't even used a projection matrix :P <br/>Not sure where to start optimizing though, this shader is SLOW.",
+			"likes": 9,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"raymarching"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

@@ -1,0 +1,56 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4djGWR",
+			"date": "1386313470",
+			"viewed": 9378,
+			"name": "Rounded Voxels",
+			"username": "iq",
+			"description": "Another regular voxel renderer. When a voxel is hit, a distance field is raymarched inside the cell in order to shape it in any arbitrary shape. Looks cool with a video rather than a static texture ^_^",
+			"likes": 82,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"procedural",
+				"3d",
+				"raymarching",
+				"distancefield",
+				"voxel"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 2,
+						"src": "/presets/tex01.jpg",
+						"ctype": "texture",
+						"channel": 0
+					},
+					{
+						"id": 30,
+						"src": "/presets/tex16.png",
+						"ctype": "texture",
+						"channel": 1
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

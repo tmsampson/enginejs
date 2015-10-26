@@ -1,0 +1,32 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4tXSDl",
+			"date": "1440383322",
+			"viewed": 437,
+			"name": "Metaeaux - Metaballs",
+			"username": "metaeaux",
+			"description": "Creating metaballs with a polynomial smoothmin function",
+			"likes": 2,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"raymarching",
+				"distancefields",
+				"smoothmin"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

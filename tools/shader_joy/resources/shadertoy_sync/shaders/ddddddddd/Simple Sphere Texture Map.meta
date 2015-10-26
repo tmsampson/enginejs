@@ -1,0 +1,43 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "ltjGDG",
+			"date": "1432137355",
+			"viewed": 406,
+			"name": "Simple Sphere Texture Map",
+			"username": "ddddddddd",
+			"description": "For reference. Please mess around with the code and do whatever you want with it.",
+			"likes": 0,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"simple",
+				"sphere"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 1,
+						"src": "/presets/tex00.jpg",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

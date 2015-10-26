@@ -1,0 +1,32 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XlsGWN",
+			"date": "1427819239",
+			"viewed": 390,
+			"name": "Weird Things 2",
+			"username": "aiekick",
+			"description": "used in ray marching experiment 14 : <a href=\"https://www.shadertoy.com/view/Mt23Rm\" class=\"regular\" target=\"_blank\">https://www.shadertoy.com/view/Mt23Rm</a>",
+			"likes": 0,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"weird",
+				"2",
+				"things"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

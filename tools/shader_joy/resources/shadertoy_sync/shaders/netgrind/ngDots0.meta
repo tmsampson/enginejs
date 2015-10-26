@@ -1,0 +1,32 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4tfGW2",
+			"date": "1425067666",
+			"viewed": 392,
+			"name": "ngDots0",
+			"username": "netgrind",
+			"description": "10th shade a day!",
+			"likes": 1,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"dots",
+				"shadeaday",
+				"netgrind"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

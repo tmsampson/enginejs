@@ -1,0 +1,40 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "lllXWr",
+			"date": "1436018800",
+			"viewed": 497,
+			"name": "Disco Lighting",
+			"username": "eiffie",
+			"description": "I am a silent carrier of disco fever.",
+			"likes": 10,
+			"published": 3,
+			"flags": 8,
+			"tags": [
+				"disco",
+				"mirrorball",
+				"discoball"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			},
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "#define PI 3.14159\n\nfloat rand(float t){return fract(sin(dot(vec2(t),vec2(12.9898,78.233)))*43758.5453);}\nfloat noyz(float t){return mix(rand(floor(t)),rand(floor(t)+1.0),fract(t));}\n\nvec2 mainSound(float time)\n{\n\ttime*=0.95;\n\t//just making a snare - sorry i forgot who i stole the other drums from :(\n\tfloat beat=fract(time);\n\tfloat kick=sin(beat*1000.0*max(1.0-beat*6.0,0.441))*(1.0-beat);\n\tbeat=fract(time+0.5);\n\tfloat bt2=beat*2600.0*max(1.0-beat*6.0,0.666);\n\tfloat snare=sin(bt2)*noyz(bt2)*exp(-beat*16.0);\n\tfloat hihat=rand(time)/pow(mod(time,0.125)+1.0,20.0)*(0.5+sin(time*PI*8.0)*0.45);\n\tbeat=fract(time+0.75);\n\tfloat openhat=rand(beat)*exp(-beat*15.0);\n\tfloat beats=kick+0.25*snare+0.05*hihat+0.1*openhat;\n\t\n\t\n\treturn clamp(vec2(beats),-1.0,1.0);\n}\n",
+				"name": "",
+				"description": "",
+				"type": "sound"
+			}
+		]
+	}
+}

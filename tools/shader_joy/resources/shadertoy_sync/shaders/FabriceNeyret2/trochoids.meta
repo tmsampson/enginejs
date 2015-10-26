@@ -1,0 +1,30 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XdXXRS",
+			"date": "1402853180",
+			"viewed": 506,
+			"name": "trochoids",
+			"username": "FabriceNeyret2",
+			"description": "Gerstner swell model: surface points displace along stationary circles -> trochoidal wave<br/>Mouse tune wavelengh (x) and amplitude (y).<br/>(NB: Computing distance to displacement is not so easy... But I hate coslty iterative scheme ! :-p )",
+			"likes": 4,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"trochoid"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

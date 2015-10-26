@@ -1,0 +1,44 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MlsGDS",
+			"date": "1424997405",
+			"viewed": 484,
+			"name": "Water3D",
+			"username": "heyx3",
+			"description": "Raymarched water.",
+			"likes": 1,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"3d",
+				"noise",
+				"water"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 7,
+						"src": "/presets/tex06.jpg",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

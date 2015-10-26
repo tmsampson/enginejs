@@ -1,0 +1,32 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MsjXRd",
+			"date": "1415141222",
+			"viewed": 690,
+			"name": "Taylor",
+			"username": "iq",
+			"description": "Degree 6 Taylor expansion of cosine (and sine). There's a yellow true sin/circle graph rendered behind it, but the approximation is accurate to the pixel for this magnification level! Made after demofox' shader https://www.shadertoy.com/view/MdBSRt",
+			"likes": 6,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"taylor",
+				"trigonometry"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

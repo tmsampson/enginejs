@@ -1,0 +1,34 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "Xtf3zn",
+			"date": "1417961720",
+			"viewed": 6863,
+			"name": "Tokyo",
+			"username": "reinder",
+			"description": "Tokyo by night in the rain. The car model is made by Eiffie (Shiny Toy': https://www.shadertoy.com/view/ldsGWB). I have never been in Tokyo btw.",
+			"likes": 94,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"raymarching",
+				"reflection",
+				"rain",
+				"city",
+				"car"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

@@ -1,0 +1,42 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MdBXWh",
+			"date": "1411333881",
+			"viewed": 517,
+			"name": "Gray move",
+			"username": "FabriceNeyret2",
+			"description": "How to memorize a position and move it from keyboard.<br/>2x4 keys (Horiz: ABCD Vertic: GHIJ) = 16x16 possible locations.<br/>Based on Greycode (inspired from https://www.shadertoy.com/view/XdS3RV )",
+			"likes": 4,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"graycode"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 33,
+						"src": "/presets/tex00.jpg",
+						"ctype": "keyboard",
+						"channel": 2
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

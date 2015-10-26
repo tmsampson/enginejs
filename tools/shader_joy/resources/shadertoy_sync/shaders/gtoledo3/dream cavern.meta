@@ -1,0 +1,33 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "Xt2SRG",
+			"date": "1444618549",
+			"viewed": 218,
+			"name": "dream cavern",
+			"username": "gtoledo3",
+			"description": "Dream cavern derived from julia fractal.",
+			"likes": 3,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"fractal",
+				"julia",
+				"cavern",
+				"hills"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

@@ -1,0 +1,33 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "lsf3WH",
+			"date": "1368568313",
+			"viewed": 2285,
+			"name": "Noise - value - 2D",
+			"username": "iq",
+			"description": "Value Noise . It's cheap and produces blocky patterns (left), but it's good enough to generate fractal noise in most cases (right).",
+			"likes": 29,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"procedural",
+				"2d",
+				"noise",
+				"perlin"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

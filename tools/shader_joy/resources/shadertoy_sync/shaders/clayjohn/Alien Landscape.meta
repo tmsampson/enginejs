@@ -1,0 +1,47 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MlBSRm",
+			"date": "1442709684",
+			"viewed": 559,
+			"name": "Alien Landscape",
+			"username": "clayjohn",
+			"description": "Some weird alien planet landscape thing. Oddly pleased with how the sky turned out.",
+			"likes": 3,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"terrain",
+				"raymarch",
+				"stars",
+				"moon",
+				"cosine",
+				"milkyway"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 4,
+						"src": "/presets/tex03.jpg",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

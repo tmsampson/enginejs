@@ -1,0 +1,44 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "lt2SDm",
+			"date": "1444365412",
+			"viewed": 262,
+			"name": "Circular Sound Visualizer",
+			"username": "Mx7f",
+			"description": "Very simple sound visualizer; value of the green channel is equal to the frequency value at the x coordinate corresponding to distance from the center.",
+			"likes": 3,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"sound",
+				"music",
+				"visualizer"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 18,
+						"src": "/presets/mzk01.mp3",
+						"ctype": "music",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

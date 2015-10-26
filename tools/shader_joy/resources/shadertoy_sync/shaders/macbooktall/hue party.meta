@@ -1,0 +1,32 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "Xtj3zD",
+			"date": "1427321485",
+			"viewed": 389,
+			"name": "hue party",
+			"username": "macbooktall",
+			"description": "can i have my birthday party here?",
+			"likes": 2,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"hue",
+				"party",
+				"pizza"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

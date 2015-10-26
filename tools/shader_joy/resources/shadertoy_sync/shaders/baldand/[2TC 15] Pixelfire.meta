@@ -1,0 +1,30 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "llsGD4",
+			"date": "1422199581",
+			"viewed": 505,
+			"name": "[2TC 15] Pixelfire",
+			"username": "baldand",
+			"description": "Another 1 tweet (140 char) shader based on my earlier \"[2TC 15] Hologram\" https://www.shadertoy.com/view/ltsGD4",
+			"likes": 4,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2tc15"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

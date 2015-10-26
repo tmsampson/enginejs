@@ -1,0 +1,32 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "Mdl3RH",
+			"date": "1363459291",
+			"viewed": 2964,
+			"name": "Iterations - trigonometric",
+			"username": "iq",
+			"description": "Trigonometric iterations. Or, some abstract stuff inspired made after Pickover's popcorn formulas.",
+			"likes": 32,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"procedural",
+				"2d",
+				"trigonometric"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

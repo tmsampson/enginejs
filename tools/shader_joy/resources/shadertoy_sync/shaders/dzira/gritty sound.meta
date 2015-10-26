@@ -1,0 +1,38 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "lts3Rf",
+			"date": "1424040730",
+			"viewed": 426,
+			"name": "gritty sound",
+			"username": "dzira",
+			"description": "My first sound, don't really know what I'm doing or what's 'correct', mostly messing around. (is there a way to reference sound code in image without copy paste?)",
+			"likes": 2,
+			"published": 3,
+			"flags": 8,
+			"tags": [
+				"sound"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			},
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "float hash( float n )\n{\n    return fract(sqrt(abs(n))*3734.421891);\n}\nvec2 mainSound(float time)\n{\n    float t = mod(time,.6);\n    vec2 b = vec2(sin(.125*6.2831*440.0*.8*t));\n    b += 0.5+(.4+t)*vec2((t/2.+.5)*sin(.5*6.2831*440.0*.5*t)*1./t*.08/exp(-3.0*t))+.2*(sin(4.*time));;\n    vec2 huv = floor(t*40.+80.*vec2(sin(t/2.),cos(t/2.)));\n    vec2 x = vec2(hash(fract(hash(.213*huv.x+.5*huv.y)+hash(.73*huv.y+7.))));\n    b = b*2.-1.5;\n    x = 2.*(x-1.);\n    x=b+.4*sin(time)*x;\n    x=(sin(time*3.14)+.5)*x+b;\n    x=x/(1.+abs(x));\n    return x;\n}",
+				"name": "",
+				"description": "",
+				"type": "sound"
+			}
+		]
+	}
+}

@@ -1,0 +1,32 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "ltXSDB",
+			"date": "1439341322",
+			"viewed": 905,
+			"name": "Bézier - Signed Distance",
+			"username": "ajs15822",
+			"description": "Analytical signed distance to a quadratic bezier curve. Click and drag to move the center control point.",
+			"likes": 9,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"bezier",
+				"distance"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

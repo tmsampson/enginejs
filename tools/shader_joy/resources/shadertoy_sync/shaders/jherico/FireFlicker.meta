@@ -1,0 +1,30 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4lBSDD",
+			"date": "1443569051",
+			"viewed": 307,
+			"name": "FireFlicker",
+			"username": "jherico",
+			"description": "testing a flickering light algorithm. ",
+			"likes": 0,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

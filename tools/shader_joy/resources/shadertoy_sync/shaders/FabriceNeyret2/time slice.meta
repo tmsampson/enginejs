@@ -1,0 +1,44 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MlS3DW",
+			"date": "1429024044",
+			"viewed": 464,
+			"name": "time slice",
+			"username": "FabriceNeyret2",
+			"description": "screen(x,y) = video(t,y)",
+			"likes": 2,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"video",
+				"discard",
+				"plenoptic"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 12,
+						"src": "/presets/vid01.webm",
+						"ctype": "video",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

@@ -1,0 +1,42 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4djSRW",
+			"date": "1409577464",
+			"viewed": 1760,
+			"name": "Hash without Sine",
+			"username": "Dave_Hoskins",
+			"description": "A Hash function that is the same on all systems and doesn't rely on trig functions. <br/>New hash on the left, sine hash function on the right.<br/>It appears to be the same efficiency, but I suppose that depends on the hardware.<br/>",
+			"likes": 53,
+			"published": 3,
+			"flags": 8,
+			"tags": [
+				"noise",
+				"fbm",
+				"perlin",
+				"random",
+				"hash"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			},
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "// Hash without Sine\n// License Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License.\n// Created by David Hoskins.\n\n// https://www.shadertoy.com/view/4djSRW\n// Trying to find a Hash function that is the same on all systems\n// and doesn't rely on trigonometry functions that lose accuracy with high values. \n// New one on the left, sine function on the right.\n// It appears to be the same speed, but I suppose that depends.\n\n// * Note. It still goes wrong eventually!\n\n#define ITERATIONS 8\n#define MOD2 vec2(443.8975,397.2973)\n#define MOD3 vec3(443.8975,397.2973, 491.1871)\n\n//----------------------------------------------------------------------------------------\n//----------------------------------------------------------------------------------------\n///  2 out, 2 in...\nvec2 hash22(vec2 p)\n{\n\tvec3 p3 = fract(vec3(p.xyx) * MOD3);\n    p3 += dot(p3.zxy, p3.yzx+19.19);\n    return fract(vec2((p3.x + p3.y)*p3.z, (p3.x+p3.z)*p3.y));\n}\n//----------------------------------------------------------------------------------------\nvec2 mainSound(float time)\n{\n    vec2 audio = vec2(0.0);\n    for (int t = 0; t < ITERATIONS; t++)\n    {\n        float v = float(t)*3.21239;\n\t\taudio += hash22(vec2(time + v, time*1.423 + v)) * 2.0 - 1.0;\n    }\n    audio /= float(ITERATIONS);\n\n    return audio*.2 * smoothstep(0.0, 2.0, time) * smoothstep(60.0, 50.0, time);\n}",
+				"name": "",
+				"description": "",
+				"type": "sound"
+			}
+		]
+	}
+}

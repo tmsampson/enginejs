@@ -1,0 +1,33 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XssGRs",
+			"date": "1377128402",
+			"viewed": 836,
+			"name": "Into The Sponge",
+			"username": "fb39ca4",
+			"description": "I tried to make this as close to a perfect loop as possible. If you get a black screen, and you are using Windows, try disabling ANGLE in your browser. https://github.com/mrdoob/three.js/wiki/How-to-use-OpenGL-or-ANGLE-rendering-on-Windows",
+			"likes": 13,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"raymarching",
+				"menger",
+				"loop",
+				"sponge"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

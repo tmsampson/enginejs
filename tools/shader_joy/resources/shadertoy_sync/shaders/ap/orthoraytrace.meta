@@ -1,0 +1,42 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "ltj3zD",
+			"date": "1428173113",
+			"viewed": 398,
+			"name": "orthoraytrace",
+			"username": "ap",
+			"description": "ortho ray tracing experiment",
+			"likes": 0,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"sphere"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 35,
+						"src": "/presets/mzk06.mp3",
+						"ctype": "music",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

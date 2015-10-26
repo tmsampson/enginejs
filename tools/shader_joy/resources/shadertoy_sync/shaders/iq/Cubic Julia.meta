@@ -1,0 +1,58 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "lsl3W2",
+			"date": "1379986451",
+			"viewed": 2368,
+			"name": "Cubic Julia",
+			"username": "iq",
+			"description": "A cubic Julia set f(z) = z^3 + c, in quaternion space. I used the regular Hubbard-Douady potential based distance estimator d(z) = 0.5·log|z|·|z|/|dz| for the marcher, orbit traps for coloring, and a compact way to rise a quaterion to the cube power.",
+			"likes": 29,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"3d",
+				"raymarching",
+				"fractal",
+				"julia",
+				"distance",
+				"quaternion",
+				"cubic"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 24,
+						"src": "/presets/cube02_0.jpg",
+						"ctype": "cubemap",
+						"channel": 0
+					},
+					{
+						"id": 30,
+						"src": "/presets/tex16.png",
+						"ctype": "texture",
+						"channel": 1
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

@@ -1,0 +1,32 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XdXGDS",
+			"date": "1377741343",
+			"viewed": 4143,
+			"name": "Iterations - inversion",
+			"username": "iq",
+			"description": "Playing with 16 inversions of the plane (1/z).",
+			"likes": 20,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"iterations",
+				"inversion"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

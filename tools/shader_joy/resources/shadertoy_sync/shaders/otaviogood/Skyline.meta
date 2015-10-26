@@ -1,0 +1,45 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XtsSWs",
+			"date": "1443073804",
+			"viewed": 13201,
+			"name": "Skyline",
+			"username": "otaviogood",
+			"description": "I have always wanted to make a procedural city. The architecture was limited by what I could do in real-time, but I tried to give it enough complexity that it would look realistic.",
+			"likes": 121,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"procedural",
+				"raymarch",
+				"city",
+				"skyline"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 22,
+						"src": "/presets/cube00_0.jpg",
+						"ctype": "cubemap",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

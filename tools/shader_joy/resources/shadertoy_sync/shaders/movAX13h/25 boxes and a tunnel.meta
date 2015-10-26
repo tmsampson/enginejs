@@ -1,0 +1,47 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "ldSGRW",
+			"date": "1384244142",
+			"viewed": 1952,
+			"name": "25 boxes and a tunnel",
+			"username": "movAX13h",
+			"description": "25 boxes, a tunnel based on voronoi, bit encoded patterns, script for 80 seconds (music); making visual use of inaccuracies (blue fluff)",
+			"likes": 23,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"3d",
+				"raymarching",
+				"tunnel",
+				"text",
+				"vononoi",
+				"scripted"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 21,
+						"src": "/presets/mzk04.mp3",
+						"ctype": "music",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

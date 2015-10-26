@@ -1,0 +1,30 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XlBXzd",
+			"date": "1445775811",
+			"viewed": 55,
+			"name": "black hole 2",
+			"username": "fantomas",
+			"description": "test",
+			"likes": 1,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"ray"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

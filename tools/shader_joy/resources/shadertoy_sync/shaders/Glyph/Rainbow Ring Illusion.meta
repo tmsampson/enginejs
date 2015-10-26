@@ -1,0 +1,32 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "llX3zs",
+			"date": "1424365714",
+			"viewed": 411,
+			"name": "Rainbow Ring Illusion",
+			"username": "Glyph",
+			"description": "I'm very new to shaders. This is the first thing I've created that I would consider even mildly interesting. I am positive that my code is horribly inefficient, so if you can tell me how to make it better please do not hesitate to comment. ",
+			"likes": 0,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"illusion",
+				"ring",
+				"wiggle"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

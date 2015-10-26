@@ -1,0 +1,31 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MdB3Rc",
+			"date": "1393409984",
+			"viewed": 2128,
+			"name": "Physics - no collisions",
+			"username": "iq",
+			"description": "My own version of some bouncing balls. Basic parabolic kinematics, as you learnt them at school as a kid: x(t) = xo + v·t + ½·a·t². I think mu6k did this before in Shadertoy, but this is my own quick take on it I guess.",
+			"likes": 33,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"physics"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

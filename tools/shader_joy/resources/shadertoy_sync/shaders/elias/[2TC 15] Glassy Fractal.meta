@@ -1,0 +1,34 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4ls3WN",
+			"date": "1422137991",
+			"viewed": 505,
+			"name": "[2TC 15] Glassy Fractal",
+			"username": "elias",
+			"description": "Magic happens in line 12",
+			"likes": 3,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"challenge",
+				"short",
+				"compo",
+				"tweet"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

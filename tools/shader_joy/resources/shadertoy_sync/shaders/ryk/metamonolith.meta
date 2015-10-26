@@ -1,0 +1,33 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XtXXRH",
+			"date": "1434309667",
+			"viewed": 497,
+			"name": "metamonolith",
+			"username": "ryk",
+			"description": "Some code-duplication for the sake of self-reflections, no regrets.",
+			"likes": 14,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"3d",
+				"reflection",
+				"raymarch",
+				"glow"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

@@ -1,0 +1,45 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "ltjGRG",
+			"date": "1430083698",
+			"viewed": 389,
+			"name": "Psyche Nimix",
+			"username": "xbe",
+			"description": "Kind of psychedelic curves animation, quite simple. it's a remix of \"Overly Satisfying\" by Nimitz, also reusing adapted part of \"The power of sin\" by antonOTI.<br/>",
+			"likes": 3,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"noise",
+				"cheap",
+				"psyche"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 30,
+						"src": "/presets/tex16.png",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

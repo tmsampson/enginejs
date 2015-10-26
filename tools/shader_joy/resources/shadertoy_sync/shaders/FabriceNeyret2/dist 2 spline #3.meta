@@ -1,0 +1,42 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XdlXDr",
+			"date": "1399404228",
+			"viewed": 655,
+			"name": "dist 2 spline #3",
+			"username": "FabriceNeyret2",
+			"description": "M: toggles construction mesh     L: toggles distance field / thin line<br/>G: show gradient                        I: show isolines<br/>C: shows parts drawn with the costly algo",
+			"likes": 7,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"spline"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 33,
+						"src": "/presets/tex00.jpg",
+						"ctype": "keyboard",
+						"channel": 2
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

@@ -1,0 +1,30 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "llsSWH",
+			"date": "1436538954",
+			"viewed": 414,
+			"name": "2D Pixel Plot Variation",
+			"username": "aiekick",
+			"description": "2D Pixel Plot Variation of https://www.shadertoy.com/view/MtsSWH",
+			"likes": 1,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2dpixelplotvariation"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

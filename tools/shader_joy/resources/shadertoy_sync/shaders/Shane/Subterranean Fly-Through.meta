@@ -1,0 +1,45 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XlXXWj",
+			"date": "1439902578",
+			"viewed": 782,
+			"name": "Subterranean Fly-Through",
+			"username": "Shane",
+			"description": "Standard, ray marched tunnel fly-through.",
+			"likes": 35,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"raymarching",
+				"tunnel",
+				"bumpmapping",
+				"layering"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 2,
+						"src": "/presets/tex01.jpg",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

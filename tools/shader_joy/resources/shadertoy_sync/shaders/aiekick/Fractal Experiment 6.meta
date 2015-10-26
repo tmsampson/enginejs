@@ -1,0 +1,32 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "Mt23Wh",
+			"date": "1433862477",
+			"viewed": 350,
+			"name": "Fractal Experiment 6",
+			"username": "aiekick",
+			"description": "Fractal Experiment 6",
+			"likes": 1,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"fractal",
+				"experiment",
+				"6"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

@@ -1,0 +1,33 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4lSXzh",
+			"date": "1441330609",
+			"viewed": 849,
+			"name": "Traced Minkowski Tube",
+			"username": "Shane",
+			"description": "A point lit, rounded square tunnel, produced without the use of ray marching.",
+			"likes": 29,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"raytracing",
+				"voronoi",
+				"tunnel",
+				"oldschool"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

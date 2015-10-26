@@ -1,0 +1,33 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MlsSzS",
+			"date": "1437677914",
+			"viewed": 824,
+			"name": "Water in a box",
+			"username": "adam27",
+			"description": "Woda, pudełko i powietrze.",
+			"likes": 6,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"water",
+				"box",
+				"warsztat",
+				"air"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

@@ -1,0 +1,36 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4tX3R4",
+			"date": "1418905227",
+			"viewed": 845,
+			"name": "Meta Experiment 7",
+			"username": "aiekick",
+			"description": "Meta Experiment 7",
+			"likes": 18,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"experiment",
+				"spiral",
+				"meta",
+				"paper",
+				"milk",
+				"strawberry"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

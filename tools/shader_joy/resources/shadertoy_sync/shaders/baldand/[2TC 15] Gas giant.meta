@@ -1,0 +1,42 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4lsGWN",
+			"date": "1422135352",
+			"viewed": 432,
+			"name": "[2TC 15] Gas giant",
+			"username": "baldand",
+			"description": "Something big squeezed into 1 tweet",
+			"likes": 1,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2tc15"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 3,
+						"src": "/presets/tex02.jpg",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

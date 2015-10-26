@@ -1,0 +1,31 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4lXXRf",
+			"date": "1438356289",
+			"viewed": 443,
+			"name": "live tapestry - 70 chars",
+			"username": "FabriceNeyret2",
+			"description": ".",
+			"likes": 3,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"short",
+				"halftweet"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

@@ -1,0 +1,32 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XtfXWl",
+			"date": "1440375843",
+			"viewed": 480,
+			"name": "Metaeaux - Warp drive",
+			"username": "metaeaux",
+			"description": "Experimenting with modulating the focal length to distort the perspective.",
+			"likes": 2,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"raymarching",
+				"distancefields",
+				"focallength"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

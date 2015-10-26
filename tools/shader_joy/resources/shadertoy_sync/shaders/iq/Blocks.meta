@@ -1,0 +1,43 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "lsSGRc",
+			"date": "1391567190",
+			"viewed": 1836,
+			"name": "Blocks",
+			"username": "iq",
+			"description": "A 2D Voronoi pattern (see https://www.shadertoy.com/view/MdSGRc) with textures and colors",
+			"likes": 36,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"voronoi"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 6,
+						"src": "/presets/tex05.jpg",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

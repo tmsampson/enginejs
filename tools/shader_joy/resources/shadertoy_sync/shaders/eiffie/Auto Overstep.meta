@@ -1,0 +1,30 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "lsBSDK",
+			"date": "1415902084",
+			"viewed": 672,
+			"name": "Auto Overstep",
+			"username": "eiffie",
+			"description": "I've been out of the loop so this has probably been done before (please point me to it!)<br/>The paper \"Enhanced Sphere Tracing\" describes a simple overstep method that assures no surface is missed. This is the result of my experiments \"improving\" it. <img src=\"/img/emoticonHappy.png\"/>",
+			"likes": 18,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"overstep"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

@@ -1,0 +1,46 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XljGDy",
+			"date": "1443741481",
+			"viewed": 1106,
+			"name": "Sphere - fog density",
+			"username": "iq",
+			"description": "Analytically integrating quadratically decaying participating media within a sphere. No raymarching involved.",
+			"likes": 18,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"3d",
+				"sphere",
+				"fog",
+				"media",
+				"analytical"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 6,
+						"src": "/presets/tex05.jpg",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

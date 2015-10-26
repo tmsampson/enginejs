@@ -1,0 +1,44 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "Mt23DG",
+			"date": "1432155652",
+			"viewed": 374,
+			"name": "Worm / Ripple from Sphere",
+			"username": "ddddddddd",
+			"description": "modified from the Simple Sphere shader.<br/>just playing around. not supposed to be anything precise.",
+			"likes": 1,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"sphere",
+				"ripple",
+				"worm"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 1,
+						"src": "/presets/tex00.jpg",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

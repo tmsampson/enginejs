@@ -1,0 +1,30 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4dlXWM",
+			"date": "1402249635",
+			"viewed": 686,
+			"name": "Mandelbrot Glow Grow",
+			"username": "TekF",
+			"description": "More mandelbrot animations...<br/>Best viewed full screen.",
+			"likes": 9,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"fractal"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

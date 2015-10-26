@@ -1,0 +1,32 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MtlXWj",
+			"date": "1440160232",
+			"viewed": 569,
+			"name": "Attack of the Space Slugs",
+			"username": "tsherif",
+			"description": "Took the terrain from the SIGGRAPH 2015 Shadertoy workshop and added some flying slugs to it.<br/><br/>Click and drag to look around.",
+			"likes": 3,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"raymarching",
+				"siggraph",
+				"slugs"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

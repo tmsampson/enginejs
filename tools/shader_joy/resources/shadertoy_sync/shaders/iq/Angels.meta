@@ -1,0 +1,33 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "lssGRM",
+			"date": "1366414346",
+			"viewed": 4780,
+			"name": "Angels",
+			"username": "iq",
+			"description": "Some flying creatures. I need to find a cheap way to do volumetric rays!",
+			"likes": 60,
+			"published": 3,
+			"flags": 1,
+			"tags": [
+				"procedural",
+				"3d",
+				"raymarching",
+				"distancefield"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

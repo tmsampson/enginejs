@@ -1,0 +1,47 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MsXXRr",
+			"date": "1395768131",
+			"viewed": 632,
+			"name": "Cavern game",
+			"username": "XT95",
+			"description": "A small game (delete inadvertently but bugs fixed now!)<br/>You must avoid the obstacles by moving the camera with the mouse !",
+			"likes": 6,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"3d",
+				"distancefield",
+				"reflection",
+				"game",
+				"collision",
+				"sss"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 30,
+						"src": "/presets/tex16.png",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

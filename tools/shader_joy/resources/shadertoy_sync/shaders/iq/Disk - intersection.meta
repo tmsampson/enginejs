@@ -1,0 +1,33 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "lsfGDB",
+			"date": "1378277216",
+			"viewed": 5549,
+			"name": "Disk - intersection",
+			"username": "iq",
+			"description": "Spinning disks",
+			"likes": 54,
+			"published": 3,
+			"flags": 1,
+			"tags": [
+				"3d",
+				"raytracing",
+				"intersection",
+				"disk"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

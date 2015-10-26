@@ -1,0 +1,32 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MdSGRc",
+			"date": "1391556832",
+			"viewed": 1195,
+			"name": "Voronoi - metrics",
+			"username": "iq",
+			"description": "Changing the distance metric in voronoi patterns to get different shapes",
+			"likes": 36,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"voronoi",
+				"worley"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

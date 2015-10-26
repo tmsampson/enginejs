@@ -1,0 +1,44 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4tf3WN",
+			"date": "1422009982",
+			"viewed": 643,
+			"name": "[2TC 15] Cloudy",
+			"username": "TekF",
+			"description": "Trying to do volumetric clouds in 280 chars<br/>For nimitz's 2 tweet contest: https://www.shadertoy.com/view/4tl3W8",
+			"likes": 7,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"raymarching",
+				"clouds",
+				"volumetric"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 30,
+						"src": "/presets/tex16.png",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

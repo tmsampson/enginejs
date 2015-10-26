@@ -1,0 +1,43 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4lB3Dc",
+			"date": "1432938792",
+			"viewed": 567,
+			"name": "VHS pause effect",
+			"username": "caaaaaaarter",
+			"description": "Simulates a VHS being paused.<br/><br/>Some of the textures are upside-down for some reason, so you might need to comment out line 22 if it looks wrong.",
+			"likes": 9,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"vhs"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 5,
+						"src": "/presets/tex04.jpg",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

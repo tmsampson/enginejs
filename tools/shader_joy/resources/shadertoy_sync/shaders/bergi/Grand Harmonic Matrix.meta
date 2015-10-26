@@ -1,0 +1,35 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "lll3D8",
+			"date": "1421811083",
+			"viewed": 436,
+			"name": "Grand Harmonic Matrix",
+			"username": "bergi",
+			"description": "Visualization of all integer divisors in 3D space.<br/>(And, tatatataa, my first non-kali-set shader ;-)",
+			"likes": 1,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"reflection",
+				"ray",
+				"mathematics",
+				"antialiasing",
+				"marching",
+				"divisors"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

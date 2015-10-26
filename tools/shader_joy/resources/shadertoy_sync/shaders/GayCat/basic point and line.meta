@@ -1,0 +1,31 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4lSGzh",
+			"date": "1426745794",
+			"viewed": 370,
+			"name": "basic point and line",
+			"username": "GayCat",
+			"description": "study",
+			"likes": 0,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"line",
+				"point"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

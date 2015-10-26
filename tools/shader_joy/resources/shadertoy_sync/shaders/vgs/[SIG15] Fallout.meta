@@ -1,0 +1,67 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "ltXXzr",
+			"date": "1438735776",
+			"viewed": 906,
+			"name": "[SIG15] Fallout",
+			"username": "vgs",
+			"description": "Let's open the vault door to SIG15! This shader is still WIP! Please inform me if the shader is broken in your machine.",
+			"likes": 15,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"raymarching",
+				"cave",
+				"vault",
+				"bethesda",
+				"obsidian",
+				"door"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 3,
+						"src": "/presets/tex02.jpg",
+						"ctype": "texture",
+						"channel": 0
+					},
+					{
+						"id": 7,
+						"src": "/presets/tex06.jpg",
+						"ctype": "texture",
+						"channel": 1
+					},
+					{
+						"id": 10,
+						"src": "/presets/tex09.jpg",
+						"ctype": "texture",
+						"channel": 2
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

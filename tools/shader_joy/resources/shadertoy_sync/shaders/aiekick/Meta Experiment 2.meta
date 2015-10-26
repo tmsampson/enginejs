@@ -1,0 +1,31 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4tX3R8",
+			"date": "1418251652",
+			"viewed": 400,
+			"name": "Meta Experiment 2",
+			"username": "aiekick",
+			"description": "Meta Experiment 2<br/>uncomment the line 4 if you want a full rotate. but it take some time for 360°",
+			"likes": 0,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"experiment",
+				"meta"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

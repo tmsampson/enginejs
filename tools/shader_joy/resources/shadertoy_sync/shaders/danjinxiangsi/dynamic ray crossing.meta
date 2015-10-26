@@ -1,0 +1,32 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4ll3DM",
+			"date": "1422494403",
+			"viewed": 380,
+			"name": "dynamic ray crossing",
+			"username": "danjinxiangsi",
+			"description": "This is a dynamic ray crossing effect created by Xiao Wu. <br/>This shader is inspired by blue ray crossing shader effect.<br/>Everyone is welcome to use, modify and add on this effect.",
+			"likes": 1,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"ray",
+				"crossing"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

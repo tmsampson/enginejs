@@ -1,0 +1,35 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "Mds3zr",
+			"date": "1361990425",
+			"viewed": 1052,
+			"name": "Cornell Box",
+			"username": "XT95",
+			"description": "Cornell box with a fake global illumination.",
+			"likes": 4,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"3d",
+				"distancefield",
+				"sss",
+				"gi",
+				"cornellbox",
+				"reflexion"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

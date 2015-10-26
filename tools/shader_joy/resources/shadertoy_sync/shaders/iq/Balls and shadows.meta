@@ -1,0 +1,56 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "lsSSWV",
+			"date": "1434151481",
+			"viewed": 994,
+			"name": "Balls and shadows",
+			"username": "iq",
+			"description": "Playing",
+			"likes": 21,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"3d",
+				"raytracing",
+				"shadow",
+				"occlusion",
+				"analytic"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 6,
+						"src": "/presets/tex05.jpg",
+						"ctype": "texture",
+						"channel": 0
+					},
+					{
+						"id": 8,
+						"src": "/presets/tex07.jpg",
+						"ctype": "texture",
+						"channel": 1
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

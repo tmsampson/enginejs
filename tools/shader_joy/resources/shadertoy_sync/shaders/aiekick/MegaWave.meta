@@ -1,0 +1,35 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4tjXDz",
+			"date": "1442945753",
+			"viewed": 561,
+			"name": "MegaWave",
+			"username": "aiekick",
+			"description": "A MegaWave",
+			"likes": 6,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"3d",
+				"raymarch",
+				"sin",
+				"cos",
+				"repeat",
+				"megawave"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

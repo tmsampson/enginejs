@@ -1,0 +1,45 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "llj3zV",
+			"date": "1430612911",
+			"viewed": 773,
+			"name": "Gas Giant!",
+			"username": "HamzaHutchinson",
+			"description": "Trying to make a nice looking space scene. Inspiration, code and learning drawn from a number of different shaders. Thanks to iq, Antonalog and mu6k.",
+			"likes": 22,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"space",
+				"planet",
+				"stars",
+				"gasgiant"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 10,
+						"src": "/presets/tex09.jpg",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

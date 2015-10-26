@@ -1,0 +1,55 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MllSzj",
+			"date": "1438185163",
+			"viewed": 437,
+			"name": "dithered video - 110 chars",
+			"username": "FabriceNeyret2",
+			"description": "dithering of video. <br/>color or B&W,  with or without gamma correction :  change comments.   try i/8./scale.<br/>( All this in less than 1 tweet ;-p )",
+			"likes": 3,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"video",
+				"dithering",
+				"short",
+				"onetweet"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 12,
+						"src": "/presets/vid01.webm",
+						"ctype": "video",
+						"channel": 1
+					},
+					{
+						"id": 28,
+						"src": "/presets/tex15.png",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

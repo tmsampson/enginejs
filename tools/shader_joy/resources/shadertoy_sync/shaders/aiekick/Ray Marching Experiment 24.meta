@@ -1,0 +1,45 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "llB3zc",
+			"date": "1432901050",
+			"viewed": 378,
+			"name": "Ray Marching Experiment 24",
+			"username": "aiekick",
+			"description": "There is some noise on the edges of the \"blue\" side. Failed to reduce this with bisection.<br/>i think this noise is due to the pattern himself... <img src=\"/img/emoticonSad.png\"/>",
+			"likes": 4,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"ray",
+				"experiment",
+				"marching",
+				"24"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 26,
+						"src": "/presets/cube04_0.png",
+						"ctype": "cubemap",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

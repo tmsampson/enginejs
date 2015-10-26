@@ -1,0 +1,44 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XdXSR8",
+			"date": "1396274086",
+			"viewed": 557,
+			"name": "noise histogramm 2",
+			"username": "FabriceNeyret2",
+			"description": "Evaluates histogramm of Perlin noise algorithms.<br/>In theory fbm should be Gaussian...<br/>Try larger STEP to better average.",
+			"likes": 3,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"noise",
+				"perlin",
+				"histogramm"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 17,
+						"src": "/presets/tex12.png",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

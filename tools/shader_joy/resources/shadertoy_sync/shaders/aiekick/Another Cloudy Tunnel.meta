@@ -1,0 +1,46 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4lSXRK",
+			"date": "1444764867",
+			"viewed": 256,
+			"name": "Another Cloudy Tunnel",
+			"username": "aiekick",
+			"description": "the cloudy tech come from the <a href=\"https://www.shadertoy.com/view/MljXDw\"  class=\"regular\" target=\"_blank\">Cloudy Spikeball</a> shader from duke<br/>jute for the fun => click on screen for a second visu mode<br/>Comment line 14 to see antoher cloud version",
+			"likes": 3,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"3d",
+				"raymarching",
+				"tunnel",
+				"cloud",
+				"cloudy"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 30,
+						"src": "/presets/tex16.png",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

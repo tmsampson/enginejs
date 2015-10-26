@@ -1,0 +1,30 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4tsGRl",
+			"date": "1424317610",
+			"viewed": 501,
+			"name": "Plane Feature Points",
+			"username": "paniq",
+			"description": "finding feature points of planes with a simplified SVD",
+			"likes": 4,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"mattdamon"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

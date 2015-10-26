@@ -1,0 +1,32 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "ldBXDm",
+			"date": "1412654050",
+			"viewed": 643,
+			"name": "Point in Quad",
+			"username": "iq",
+			"description": "Tests whether a point is inside a quad. Note than the quadrilateral can intersect itself. Derived from https://www.shadertoy.com/view/lsBSDm",
+			"likes": 6,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"quad",
+				"interior"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

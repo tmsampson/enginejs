@@ -1,0 +1,43 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "Xsf3WB",
+			"date": "1377900576",
+			"viewed": 958,
+			"name": "Circle Wave",
+			"username": "TekF",
+			"description": "A fairly simple music visualiser.",
+			"likes": 26,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"spectrum",
+				"music"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 13,
+						"src": "/presets/mzk00.mp3",
+						"ctype": "music",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

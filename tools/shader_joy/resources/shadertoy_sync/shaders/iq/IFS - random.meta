@@ -1,0 +1,44 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4dXGWS",
+			"date": "1377741096",
+			"viewed": 977,
+			"name": "IFS - random",
+			"username": "iq",
+			"description": "Random linear IFS fractal (4 affine transforms) inverted and twisted. Very noisy due to the low iteration count (rendering approach is brute force gathering). Some more info ",
+			"likes": 8,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"fractal",
+				"ifs"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 17,
+						"src": "/presets/tex12.png",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

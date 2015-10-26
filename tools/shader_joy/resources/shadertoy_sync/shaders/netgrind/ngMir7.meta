@@ -1,0 +1,46 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MtXXRf",
+			"date": "1438463119",
+			"viewed": 520,
+			"name": "ngMir7",
+			"username": "netgrind",
+			"description": "shitty lil dither<br/>mouse x to fuck with the number<br/>play with the steps define perhaps?",
+			"likes": 3,
+			"published": 3,
+			"flags": 2,
+			"tags": [
+				"camera",
+				"dither",
+				"sine",
+				"hack",
+				"webcam"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 31,
+						"src": "/presets/webcam.png",
+						"ctype": "webcam",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

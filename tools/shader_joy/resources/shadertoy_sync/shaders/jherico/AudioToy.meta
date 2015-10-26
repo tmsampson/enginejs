@@ -1,0 +1,53 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XtX3zl",
+			"date": "1424136515",
+			"viewed": 466,
+			"name": "AudioToy",
+			"username": "jherico",
+			"description": "Working on a potential audio meter for voice.",
+			"likes": 2,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"audio"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 11,
+						"src": "/presets/vid00.ogv",
+						"ctype": "video",
+						"channel": 1
+					},
+					{
+						"id": 19,
+						"src": "/presets/mzk02.mp3",
+						"ctype": "music",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

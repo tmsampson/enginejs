@@ -1,0 +1,44 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "ldl3W8",
+			"date": "1369238474",
+			"viewed": 16415,
+			"name": "Voronoi - distances",
+			"username": "iq",
+			"description": "Mathematically correct Voronoi cell interior distances and hence correct cell borders. Seems nobody out there is doing this correctly... So here. More info <a href=\"http://www.iquilezles.org/www/articles/voronoilines/voronoilines.htm\"  class=\"regular\" target=\"_blank\">in this article</a>",
+			"likes": 142,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"voronoi",
+				"worley"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 30,
+						"src": "/presets/tex16.png",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

@@ -1,0 +1,43 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MlfXWl",
+			"date": "1440503639",
+			"viewed": 474,
+			"name": "infinite stretch ",
+			"username": "FabriceNeyret2",
+			"description": "( try also the commented line).",
+			"likes": 5,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"texture",
+				"advection"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 2,
+						"src": "/presets/tex01.jpg",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

@@ -1,0 +1,31 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4dfGRn",
+			"date": "1357136829",
+			"viewed": 1174,
+			"name": "Julia - Traps 2",
+			"username": "iq",
+			"description": "A Julia set (fractal). It uses orbit traps for coloring",
+			"likes": 21,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"fractal"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

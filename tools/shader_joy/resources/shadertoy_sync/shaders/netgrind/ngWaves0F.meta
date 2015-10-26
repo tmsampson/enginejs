@@ -1,0 +1,33 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4l23Rw",
+			"date": "1427666879",
+			"viewed": 483,
+			"name": "ngWaves0F",
+			"username": "netgrind",
+			"description": "subsystem rainbow",
+			"likes": 5,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"waves",
+				"plasma",
+				"netgrind",
+				"arch"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

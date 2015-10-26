@@ -1,0 +1,32 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "Mlf3zl",
+			"date": "1434586328",
+			"viewed": 598,
+			"name": "Curvature - Parametric 2D",
+			"username": "iq",
+			"description": "Computes curvature for parametric curves (same formula works for 3D), and displays it with colors (red is high curvature, yellow is medium, green is low)",
+			"likes": 9,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"curve",
+				"parametric"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

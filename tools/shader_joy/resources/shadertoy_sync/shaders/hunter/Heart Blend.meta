@@ -1,0 +1,46 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MlB3zw",
+			"date": "1427583689",
+			"viewed": 379,
+			"name": "Heart Blend",
+			"username": "hunter",
+			"description": "orginal by:  macbooktall ( https://www.shadertoy.com/view/llSGzw )",
+			"likes": 0,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"effect",
+				"heart",
+				"fx",
+				"blend",
+				"symmetry"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 11,
+						"src": "/presets/vid00.ogv",
+						"ctype": "video",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

@@ -1,0 +1,33 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XllXzM",
+			"date": "1435353285",
+			"viewed": 362,
+			"name": "Julia Rotater",
+			"username": "spookdy",
+			"description": "Fast Julia Set Animator<br/><br/>Known Bugs: Orbit trap code returns black (???) for some hardware",
+			"likes": 1,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"fractal",
+				"juliaset",
+				"animation",
+				"complex"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

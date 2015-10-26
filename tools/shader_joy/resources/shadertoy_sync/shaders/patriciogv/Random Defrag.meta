@@ -1,0 +1,31 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XtfSz2",
+			"date": "1437849019",
+			"viewed": 426,
+			"name": "Random Defrag",
+			"username": "patriciogv",
+			"description": "From http://patriciogonzalezvivo.com/2015/thebookofshaders/10/",
+			"likes": 5,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"random",
+				"serial"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

@@ -1,0 +1,43 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4t23RW",
+			"date": "1427270385",
+			"viewed": 419,
+			"name": "dithering0",
+			"username": "FabriceNeyret2",
+			"description": "mouse.y: quantized dynamics       mouse.x: zoom <br/>From top to bottom:  pure quantization, 50% post-jitter, 100%, 50% pre-jitter, 100%",
+			"likes": 2,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"dither",
+				"quantization"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 17,
+						"src": "/presets/tex12.png",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

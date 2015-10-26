@@ -1,0 +1,42 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4tfGRM",
+			"date": "1419644442",
+			"viewed": 431,
+			"name": "Shulgins' Eye",
+			"username": "jimbo00000",
+			"description": "A ripoff of, or homage to <a href=\"http://alexgrey.com/art/paintings/soul/the-shulgins/\"  class=\"regular\" target=\"_blank\">Alex Grey's work.</a> I'd put it on the front of my Rift if it didn't block the positional tracking LEDs.",
+			"likes": 4,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"eye",
+				"flames",
+				"alexgray",
+				"thirdeye",
+				"pihkal"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			},
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "float PI = 3.1415926535979;\n\nfloat fundamental(float time, float freq)\n{\n    float a = 0.;\n\n    for (float i=1.; i<=67.; i+=1.) // overtone series\n    {\n        float x = .0001*i*(time+16.);\n        float p =\n            1.\n            *sin(x*32.)\n            ;\n        \n        a += sin(2.*PI*freq*i*(time+p))\n            * .8\n            *1./(5.*i)\n            ;\n    }\n    \n    return a;\n}\n\nvec2 mainSound(float time)\n{\n    float freq = 64.;\n    //return vec2(sin(2.*PI*freq*time)); // tuning check\n\n    float a = 0.;\n    a += fundamental(time, freq);\n    a += fundamental(time, freq*2.001);\n    a += fundamental(time, freq*1.500015);\n    \n    float vol = 1.05\n        * smoothstep(0., 5., time)\n        ;\n    return vol * vec2(a);\n}\n",
+				"name": "",
+				"description": "",
+				"type": "sound"
+			}
+		]
+	}
+}

@@ -1,0 +1,47 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4tSXRm",
+			"date": "1442419753",
+			"viewed": 756,
+			"name": "Jagged Plain",
+			"username": "Shane",
+			"description": "Using relatively cheap functions to produce a sharp, jagged, surface with a fake glow.",
+			"likes": 26,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"noise",
+				"terrain",
+				"triangle",
+				"glow",
+				"rocks",
+				"jagged"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 2,
+						"src": "/presets/tex01.jpg",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

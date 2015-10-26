@@ -1,0 +1,45 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "ldSGzR",
+			"date": "1382482572",
+			"viewed": 2508,
+			"name": "Screen space bump mapping",
+			"username": "iq",
+			"description": "Mikkelsen's technique for Bump Mapping Unparametrized Surfaces  (pretty much copy & pasted).",
+			"likes": 29,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"3d",
+				"bump",
+				"bumpmapping",
+				"mikkelsen"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 2,
+						"src": "/presets/tex01.jpg",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

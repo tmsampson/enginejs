@@ -1,0 +1,31 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MlXSDs",
+			"date": "1440586832",
+			"viewed": 524,
+			"name": "Life (Conway automata)",
+			"username": "FabriceNeyret2",
+			"description": "Conway game of life.<br/>Sorry it gets ultra-slow with time: as long as we won't be allowed to save frame state in shadertoy, all simulations have to re-play at every time+pixel the whole duration since t=0;.",
+			"likes": 1,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"simulation",
+				"cellularautomata"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

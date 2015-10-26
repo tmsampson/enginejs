@@ -1,0 +1,32 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4tsSR7",
+			"date": "1435349518",
+			"viewed": 401,
+			"name": "Rainbow #1",
+			"username": "WAHa_06x36",
+			"description": "Subtitle, \"Gay Aurora\".<br/><br/>In honour of the news of the day.",
+			"likes": 6,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"rainbow",
+				"sines",
+				"gay"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

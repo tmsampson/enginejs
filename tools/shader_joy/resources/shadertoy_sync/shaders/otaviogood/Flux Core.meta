@@ -1,0 +1,31 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "ltlSWf",
+			"date": "1440476793",
+			"viewed": 1598,
+			"name": "Flux Core",
+			"username": "otaviogood",
+			"description": "Long range space-based energy transmission requires a flux core to amplify and concentrate energy.<br/>*** Try out the high quality non-realtime renderer. Feel free to use it for your shaders if you want to render screenshots.",
+			"likes": 43,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"fractal",
+				"space"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

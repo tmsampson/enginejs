@@ -1,0 +1,31 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "ltlGWH",
+			"date": "1421825255",
+			"viewed": 393,
+			"name": "[2TC 15] Duskrise",
+			"username": "mplanck",
+			"description": "Two tweet challenge! (make a shadertoy under 280 chars)  Started looking good at 230 chars... so I stopped.  Open to ideas on how to take advantage of the remaining 50. ",
+			"likes": 0,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2tweets",
+				"dusk"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

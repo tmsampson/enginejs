@@ -1,0 +1,31 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "ltBSzt",
+			"date": "1445794081",
+			"viewed": 63,
+			"name": "sparkle effect",
+			"username": "erkaman",
+			"description": "This simple shader draws a sparkle particle effect.",
+			"likes": 4,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"sparkle"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

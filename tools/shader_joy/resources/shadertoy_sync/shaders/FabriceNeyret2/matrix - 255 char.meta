@@ -1,0 +1,31 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4tlXR4",
+			"date": "1434898356",
+			"viewed": 540,
+			"name": "matrix - 255 char",
+			"username": "FabriceNeyret2",
+			"description": "compacting to 2-tweets  patriciogv's Matrix shader https://www.shadertoy.com/view/MlfXzN <br/>( 819 -> 255 chars )<br/>But first go see patriciogv's comments and readable sources :-D",
+			"likes": 9,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2tweets",
+				"short"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

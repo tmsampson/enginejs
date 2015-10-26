@@ -1,0 +1,32 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4lsGDX",
+			"date": "1425710024",
+			"viewed": 391,
+			"name": "ngWaves08",
+			"username": "netgrind",
+			"description": "mouse x is<br/>r a d",
+			"likes": 1,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"waves",
+				"netgrind",
+				"neat"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

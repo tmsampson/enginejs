@@ -1,0 +1,63 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XdlGzn",
+			"date": "1361268206",
+			"viewed": 2599,
+			"name": "Rasterizer - Cube",
+			"username": "iq",
+			"description": "This shader implements software rasterization. Tex coordinates (and other vertex attributes) are interpolated correctly. Polygon clipping is not implemented though. See  for a more complex object.",
+			"likes": 32,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"3d",
+				"rasterizer"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 2,
+						"src": "/presets/tex01.jpg",
+						"ctype": "texture",
+						"channel": 2
+					},
+					{
+						"id": 6,
+						"src": "/presets/tex05.jpg",
+						"ctype": "texture",
+						"channel": 1
+					},
+					{
+						"id": 8,
+						"src": "/presets/tex07.jpg",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

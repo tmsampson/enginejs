@@ -1,0 +1,44 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "llSSWD",
+			"date": "1443625796",
+			"viewed": 402,
+			"name": "Texture Experiment 1 (203c)",
+			"username": "aiekick",
+			"description": "how remove the tile artifact (dicontinuity) ?",
+			"likes": 4,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"texture",
+				"experiment",
+				"1"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 10,
+						"src": "/presets/tex09.jpg",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

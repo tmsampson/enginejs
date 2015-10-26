@@ -1,0 +1,30 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "lt2XRD",
+			"date": "1442224212",
+			"viewed": 874,
+			"name": "Rainbow Painter",
+			"username": "mrdoob",
+			"description": "Quick brush experiment.",
+			"likes": 3,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"paintdraw"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

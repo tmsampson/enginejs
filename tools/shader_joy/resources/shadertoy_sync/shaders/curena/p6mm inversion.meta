@@ -1,0 +1,35 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MtjGz3",
+			"date": "1431078212",
+			"viewed": 506,
+			"name": "p6mm inversion",
+			"username": "curena",
+			"description": "A planar pattern with all p6mm wallpaper group symmetries, mapped through a hyperbolic circle inversion + time dependent shift. Click and drag mouse to move inversion center.",
+			"likes": 9,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"group",
+				"tiling",
+				"inversion",
+				"p6mm",
+				"wallpapergroup",
+				"symmetries"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

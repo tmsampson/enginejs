@@ -1,0 +1,33 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XtXGDS",
+			"date": "1424563021",
+			"viewed": 387,
+			"name": "ngWaves01",
+			"username": "netgrind",
+			"description": "x - mad moire<br/>y - color shift",
+			"likes": 1,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"wave",
+				"moire",
+				"sine",
+				"netgrind"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

@@ -1,0 +1,50 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "ldsGWB",
+			"date": "1378824091",
+			"viewed": 15916,
+			"name": "Shiny Toy",
+			"username": "eiffie",
+			"description": "Who is more drunk, the driver, pilot, camera operator, road surveyor or coder? Up the \"Rays\" value for a better quality.",
+			"likes": 87,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"pathmarching"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 16,
+						"src": "/presets/tex11.png",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			},
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "//sorry, couldn't help myself\n/*float sawtooth(float time){return fract(time)-0.5;}\n\nvec2 mainSound(float time)\n{\n    return vec2( sawtooth(time*time) );\n}*/\n//v2 with LOTS of gears\nfloat saw(float time){return clamp(fract(time)*2.0-1.0,-0.5,0.5);}\nvec2 mainSound(float time)\n{\n    float t=pow(time+1.0,0.75);\n    t=mod(t,2.0)+1.0+floor(t*0.25+0.5);\n    t=pow(t,4.0);\n    return vec2( saw(t),saw(t+sin(time)) )*0.2;\n}\n",
+				"name": "",
+				"description": "",
+				"type": "sound"
+			}
+		]
+	}
+}

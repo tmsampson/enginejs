@@ -1,0 +1,44 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XdX3Rn",
+			"date": "1358124981",
+			"viewed": 1308,
+			"name": "Kinderpainter",
+			"username": "iq",
+			"description": "Code for the 4k intro Kinderpainter from the demoscene (http://www.pouet.net/prod.php?which=51762). It made 1st position in the BCN party 2006 in Barcelona (Spain). It's a GLSL based raytracer",
+			"likes": 8,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"3d",
+				"raytracing",
+				"demoscene"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 1,
+						"src": "/presets/tex00.jpg",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

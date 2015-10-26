@@ -1,0 +1,31 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MllXz7",
+			"date": "1435593116",
+			"viewed": 441,
+			"name": "crowded gyros",
+			"username": "FabriceNeyret2",
+			"description": "one more variant of https://www.shadertoy.com/view/ltfXRM <br/>Be sure to wait long enough ;-)",
+			"likes": 6,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"3d",
+				"raymarching"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

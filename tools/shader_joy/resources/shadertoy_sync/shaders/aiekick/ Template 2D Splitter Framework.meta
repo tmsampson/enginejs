@@ -1,0 +1,44 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4tf3RS",
+			"date": "1423740591",
+			"viewed": 396,
+			"name": " Template 2D Splitter Framework",
+			"username": "aiekick",
+			"description": "this template is used for develop transform effect by splitter. var controled by mouse y axis<br/>on right the source<br/>on left the transform<br/>see comment in code",
+			"likes": 1,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"framework",
+				"template",
+				"splitter"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 12,
+						"src": "/presets/vid01.webm",
+						"ctype": "video",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

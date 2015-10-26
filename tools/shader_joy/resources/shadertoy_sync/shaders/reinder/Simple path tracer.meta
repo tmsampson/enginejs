@@ -1,0 +1,34 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4tl3z4",
+			"date": "1419368177",
+			"viewed": 1427,
+			"name": "Simple path tracer",
+			"username": "reinder",
+			"description": "This shader shows the difference between a path tracer with, and without, direct light sampling.",
+			"likes": 22,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"light",
+				"sampling",
+				"tracer",
+				"path",
+				"direct"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}
