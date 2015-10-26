@@ -1,0 +1,30 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XtsXRn",
+			"date": "1434056182",
+			"viewed": 430,
+			"name": "Cheap Fractal Noise",
+			"username": "dgreensp",
+			"description": "Cheap, simple, fractal noise based on iq's https://www.shadertoy.com/view/4sfGzS",
+			"likes": 4,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"fractalnoisefbm"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

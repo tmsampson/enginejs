@@ -1,0 +1,55 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MlSGWm",
+			"date": "1429466739",
+			"viewed": 438,
+			"name": "Ray Marching Experiment 20",
+			"username": "aiekick",
+			"description": "it is the intersection of a thikness sphere with a repetition set of cubes ( with mod)<br/>use Mouse for control the distance and the elevation of the camera",
+			"likes": 1,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"ray",
+				"experiment",
+				"marching",
+				"20"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 8,
+						"src": "/presets/tex07.jpg",
+						"ctype": "texture",
+						"channel": 1
+					},
+					{
+						"id": 22,
+						"src": "/presets/cube00_0.jpg",
+						"ctype": "cubemap",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

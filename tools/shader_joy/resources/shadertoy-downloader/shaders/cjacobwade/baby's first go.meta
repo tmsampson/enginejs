@@ -1,0 +1,32 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4lXGDl",
+			"date": "1425977628",
+			"viewed": 379,
+			"name": "baby's first go",
+			"username": "cjacobwade",
+			"description": "move the mouse for a kaleidoscope effect",
+			"likes": 1,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"noise",
+				"mouse",
+				"fractals"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

@@ -1,0 +1,42 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4dsXR4",
+			"date": "1397548314",
+			"viewed": 425,
+			"name": "fibospirals",
+			"username": "FabriceNeyret2",
+			"description": "Mouse.x to change the stippling.<br/>",
+			"likes": 2,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"spiral"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 33,
+						"src": "/presets/tex00.jpg",
+						"ctype": "keyboard",
+						"channel": 2
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

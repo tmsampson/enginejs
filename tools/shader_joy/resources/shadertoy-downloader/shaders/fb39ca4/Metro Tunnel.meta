@@ -1,0 +1,75 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "ldsGRS",
+			"date": "1373678886",
+			"viewed": 1714,
+			"name": "Metro Tunnel",
+			"username": "fb39ca4",
+			"description": "Inspired by the tunnels in Metro 2033. Click and drag to move the light along the tunnel.<br/>This scene makes heavy use of repeating geometry, as you can see in the train tracks and wall braces. I even  plan to extend this to repeating lights in the future.",
+			"likes": 16,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"raymarching",
+				"shadow",
+				"metro",
+				"2033"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 3,
+						"src": "/presets/tex02.jpg",
+						"ctype": "texture",
+						"channel": 1
+					},
+					{
+						"id": 6,
+						"src": "/presets/tex05.jpg",
+						"ctype": "texture",
+						"channel": 2
+					},
+					{
+						"id": 7,
+						"src": "/presets/tex06.jpg",
+						"ctype": "texture",
+						"channel": 3
+					},
+					{
+						"id": 30,
+						"src": "/presets/tex16.png",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

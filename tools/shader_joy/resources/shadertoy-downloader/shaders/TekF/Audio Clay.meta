@@ -1,0 +1,73 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4sf3DB",
+			"date": "1378157024",
+			"viewed": 561,
+			"name": "Audio Clay",
+			"username": "TekF",
+			"description": "I was messing with applying the spectograph to an isosurface and I thought it looked like clay, so I went with that and this is the result.",
+			"likes": 11,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"music",
+				"isosurface"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 7,
+						"src": "/presets/tex06.jpg",
+						"ctype": "texture",
+						"channel": 3
+					},
+					{
+						"id": 21,
+						"src": "/presets/mzk04.mp3",
+						"ctype": "music",
+						"channel": 1
+					},
+					{
+						"id": 27,
+						"src": "/presets/cube05_0.png",
+						"ctype": "cubemap",
+						"channel": 2
+					},
+					{
+						"id": 30,
+						"src": "/presets/tex16.png",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

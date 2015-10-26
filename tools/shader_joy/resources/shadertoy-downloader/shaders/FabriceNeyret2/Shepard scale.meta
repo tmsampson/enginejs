@@ -1,0 +1,39 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XdlXWX",
+			"date": "1407408546",
+			"viewed": 638,
+			"name": "Shepard scale",
+			"username": "FabriceNeyret2",
+			"description": "tune going up forever ",
+			"likes": 10,
+			"published": 3,
+			"flags": 8,
+			"tags": [
+				"sound",
+				"illusion"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			},
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "#define T 8.   // cycling time\n#define N 56   // number of peaks\n#define O 1.25 // octaves\n\nvec2 mainSound(float time)\n{\n    float v = 0.;\n    for (int i=0; i<=N; i++) {\n        float enveloppe = (1.-cos(2.*3.1415927*float(i)/float(N)))/2.;\n        //float freq = pow(O,fract(time/T));\n        // phase = int of freq\n        float phase =floor(time/T) + pow(O,fract(time/T))-1.;\n        phase = phase * pow(O,float(i))*T/log(O) + float(i);\n        v += enveloppe*sin(2.*3.1415927*phase);\n    }\n    \n    return vec2( v/float(N) );\n}\n",
+				"name": "",
+				"description": "",
+				"type": "sound"
+			}
+		]
+	}
+}

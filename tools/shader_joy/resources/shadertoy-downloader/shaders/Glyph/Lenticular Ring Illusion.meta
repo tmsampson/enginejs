@@ -1,0 +1,31 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "Mt2GDW",
+			"date": "1429223280",
+			"viewed": 394,
+			"name": "Lenticular Ring Illusion",
+			"username": "Glyph",
+			"description": "A simple optical effect, click and drag to move top slide. <br/><br/>I coded this on my phone, with no keyboard, on a plane. ",
+			"likes": 0,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"rings",
+				"illusion"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

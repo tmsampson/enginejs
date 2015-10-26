@@ -1,0 +1,53 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "lt2GDd",
+			"date": "1433846071",
+			"viewed": 530,
+			"name": "Texture variation II",
+			"username": "iq",
+			"description": "One simple way to avoid texture tile repetition, at the cost of 4 times the amount of texture lookups (still much better than <a href=\"https://www.shadertoy.com/view/4tsGzf\" class=\"regular\" target=\"_blank\">https://www.shadertoy.com/view/4tsGzf</a>). Needs textureGrad() and GL_NEAREST_MIPMAP_LINEAR to be usable in real life.",
+			"likes": 7,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"texture"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 8,
+						"src": "/presets/tex07.jpg",
+						"ctype": "texture",
+						"channel": 0
+					},
+					{
+						"id": 30,
+						"src": "/presets/tex16.png",
+						"ctype": "texture",
+						"channel": 1
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

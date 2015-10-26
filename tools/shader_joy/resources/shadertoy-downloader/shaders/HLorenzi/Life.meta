@@ -1,0 +1,36 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4sS3Ry",
+			"date": "1389894654",
+			"viewed": 705,
+			"name": "Life",
+			"username": "HLorenzi",
+			"description": "Trying to circumvent GLSL's array access limitations! Simulates 3 generations of random initial cells every 4 seconds on a 5 x 5 torus grid! Is probably broken on many machines...",
+			"likes": 13,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"game",
+				"simulation",
+				"life",
+				"cell",
+				"dot",
+				"conway"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

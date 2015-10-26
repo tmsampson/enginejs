@@ -1,0 +1,46 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "ldjGWc",
+			"date": "1394660740",
+			"viewed": 510,
+			"name": "Variations on Noise",
+			"username": "FabriceNeyret2",
+			"description": "variation on https://www.shadertoy.com/view/Xs23D3<br/>mouse.x: zoom   S: mouse.x controls lacunarity instead <br/>E:   mouse.y = exponent (=vicinity)<br/>N+B: noise type:   00: smooth 10: abs 11: 1-abs 10:1/n<br/>T: add or mul <br/>C: toggles colors   G: toggles galaxy",
+			"likes": 4,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"fractal",
+				"noise",
+				"perlin",
+				"filtering",
+				"multiscale"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 33,
+						"src": "/presets/tex00.jpg",
+						"ctype": "keyboard",
+						"channel": 2
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

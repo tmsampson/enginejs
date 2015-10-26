@@ -1,0 +1,32 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "Xl23zc",
+			"date": "1431021208",
+			"viewed": 446,
+			"name": "Ocean Thing",
+			"username": "Kyle273",
+			"description": "Wroley noise + distance fields. Terribly optimized!<br/>Going for a wind-waker style water.",
+			"likes": 2,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"distancefields",
+				"noob",
+				"wroley"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

@@ -1,0 +1,32 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MtlXR4",
+			"date": "1435001585",
+			"viewed": 450,
+			"name": "Golden Mandelbox",
+			"username": "LeWiZ",
+			"description": "A golden mandelbox !<br/><br/>But still too slow to visit inside... :-(",
+			"likes": 3,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"raymarching",
+				"fractal",
+				"mandelbox"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

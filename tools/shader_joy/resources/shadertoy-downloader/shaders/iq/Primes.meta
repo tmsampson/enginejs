@@ -1,0 +1,31 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4slGRH",
+			"date": "1362565218",
+			"viewed": 1222,
+			"name": "Primes",
+			"username": "iq",
+			"description": "Computes pr-ime numbers. The quadratic patterns (vertical lines in this case) of Euler can be clearly seen. Checks are done by following the sequence {2, 4, 2, 4, 6, 2, 6, 4} which skips multiples of 2, 3 and 5.",
+			"likes": 8,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"mathematics"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

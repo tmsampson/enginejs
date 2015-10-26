@@ -1,0 +1,32 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4tXSDf",
+			"date": "1440112487",
+			"viewed": 510,
+			"name": "Voronoi Water",
+			"username": "clayjohn",
+			"description": "This started off as an experiment in multi octave voronoi cell-based noise. it ended up as a very simple water shader.",
+			"likes": 4,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"voronoi",
+				"water",
+				"worleynoise"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

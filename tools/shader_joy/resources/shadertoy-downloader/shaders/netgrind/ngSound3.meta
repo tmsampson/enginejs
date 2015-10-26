@@ -1,0 +1,42 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4tB3Rw",
+			"date": "1427428415",
+			"viewed": 439,
+			"name": "ngSound3",
+			"username": "netgrind",
+			"description": "headphones<br/>fullscreen<br/>observe<br/>look away",
+			"likes": 3,
+			"published": 3,
+			"flags": 8,
+			"tags": [
+				"sound",
+				"plasma",
+				"trippy",
+				"vision",
+				"netgrind"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			},
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "vec2 mainSound(float time)\n{\n    vec2 g = vec2(1.0);\n    float freq = 100.0;//+sin(time)*5.;\n    vec2 f = vec2(1.0);\n    f.x = sin(6.2831*freq*time+time);\n    f.y = cos(6.2831*freq*time+time);\n    float m = mod(time*10.0,2.0)-1.0;\n\tf*= pow(cos(m*3.141/2.),5.0);\n    return f+f;\n}",
+				"name": "",
+				"description": "",
+				"type": "sound"
+			}
+		]
+	}
+}

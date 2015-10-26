@@ -1,0 +1,32 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "ltS3zR",
+			"date": "1426612264",
+			"viewed": 369,
+			"name": "sunshine moonshadow",
+			"username": "macbooktall",
+			"description": "2",
+			"likes": 1,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"shadeaday",
+				"cheeba",
+				"pizza"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

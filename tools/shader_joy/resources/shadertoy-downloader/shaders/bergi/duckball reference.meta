@@ -1,0 +1,34 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4tX3W8",
+			"date": "1421255913",
+			"viewed": 440,
+			"name": "duckball reference",
+			"username": "bergi",
+			"description": "Reference shader for the 2D Kali set.",
+			"likes": 1,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"fractal",
+				"noise",
+				"generative",
+				"kali",
+				"duckball"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

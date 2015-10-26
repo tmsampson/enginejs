@@ -1,0 +1,44 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XlBSRz",
+			"date": "1440854078",
+			"viewed": 2743,
+			"name": "VolumetricIntegration",
+			"username": "SebH",
+			"description": "A volumetric rendering demo.<br/>This shader also presents the advantage of integrating analytically the scattered light within participating media having high scattering value.",
+			"likes": 70,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"volumetric",
+				"integration",
+				"participatingmedia"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 15,
+						"src": "/presets/tex10.png",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

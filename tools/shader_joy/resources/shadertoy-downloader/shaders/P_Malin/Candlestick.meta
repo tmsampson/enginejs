@@ -1,0 +1,65 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "Xss3DH",
+			"date": "1374068681",
+			"viewed": 2889,
+			"name": "Candlestick",
+			"username": "P_Malin",
+			"description": "Playing with iterative raymarching and cubemap materials.",
+			"likes": 38,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"raymarch",
+				"flame",
+				"iterative",
+				"candle"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 6,
+						"src": "/presets/tex05.jpg",
+						"ctype": "texture",
+						"channel": 2
+					},
+					{
+						"id": 24,
+						"src": "/presets/cube02_0.jpg",
+						"ctype": "cubemap",
+						"channel": 0
+					},
+					{
+						"id": 25,
+						"src": "/presets/cube03_0.png",
+						"ctype": "cubemap",
+						"channel": 1
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

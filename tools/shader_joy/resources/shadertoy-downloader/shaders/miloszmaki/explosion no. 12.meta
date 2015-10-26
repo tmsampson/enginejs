@@ -1,0 +1,44 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XlXSzf",
+			"date": "1438372477",
+			"viewed": 721,
+			"name": "explosion no. 12",
+			"username": "miloszmaki",
+			"description": "experimenting with raymarching trough 3D noise density field<br/>made for competition on warsztat.gd",
+			"likes": 8,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"raymarching",
+				"explosion",
+				"warsztat"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 30,
+						"src": "/presets/tex16.png",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

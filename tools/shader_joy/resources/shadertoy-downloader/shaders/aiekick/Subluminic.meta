@@ -1,0 +1,42 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "ltBSzc",
+			"date": "1445379337",
+			"viewed": 186,
+			"name": "Subluminic",
+			"username": "aiekick",
+			"description": "Subluminic",
+			"likes": 10,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"subluminic"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 30,
+						"src": "/presets/tex16.png",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

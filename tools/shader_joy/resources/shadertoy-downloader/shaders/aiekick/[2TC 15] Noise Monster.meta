@@ -1,0 +1,30 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "llXGWN",
+			"date": "1422106062",
+			"viewed": 436,
+			"name": "[2TC 15] Noise Monster",
+			"username": "aiekick",
+			"description": "better in full screen<br/>have Mouse control if you uncomment the line 5<br/>do you see a meaning for do filtering on noise for doing the shape more accurate ?",
+			"likes": 2,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2tc15"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

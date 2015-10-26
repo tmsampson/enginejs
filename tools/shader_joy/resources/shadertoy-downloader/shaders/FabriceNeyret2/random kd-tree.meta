@@ -1,0 +1,31 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4lXSWl",
+			"date": "1440367104",
+			"viewed": 470,
+			"name": "random kd-tree",
+			"username": "FabriceNeyret2",
+			"description": "translate and move with mouse.<br/>#define tunes the probabilty of subdividing.",
+			"likes": 7,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"procedural",
+				"kdtree"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

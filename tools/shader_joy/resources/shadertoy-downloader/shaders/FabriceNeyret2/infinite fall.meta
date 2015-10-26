@@ -1,0 +1,42 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4sl3RX",
+			"date": "1375812626",
+			"viewed": 684,
+			"name": "infinite fall",
+			"username": "FabriceNeyret2",
+			"description": "mouse works",
+			"likes": 7,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"procedural"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 17,
+						"src": "/presets/tex12.png",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

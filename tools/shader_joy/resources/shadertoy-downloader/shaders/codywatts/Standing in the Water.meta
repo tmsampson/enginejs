@@ -1,0 +1,42 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XtlXRM",
+			"date": "1435347009",
+			"viewed": 342,
+			"name": "Standing in the Water",
+			"username": "codywatts",
+			"description": "This was my first time playing with raymarching. Somehow it turned into... this. Click and drag the mouse to move the camera.",
+			"likes": 0,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"raymarching"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 8,
+						"src": "/presets/tex07.jpg",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

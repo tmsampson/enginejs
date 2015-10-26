@@ -1,0 +1,63 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4tfSzS",
+			"date": "1437412045",
+			"viewed": 448,
+			"name": "simulating collisions - array",
+			"username": "FabriceNeyret2",
+			"description": "the less efficient simulator I ever coded.<br/>The \"game\" was: GLSL ES only allows for static access 1D arrays. Try doing something with that ;-)<br/>(that's why most demos are tricking events and their treatments by pure playback cinematics).",
+			"likes": 0,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"simulation",
+				"arrays"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 1,
+						"src": "/presets/tex00.jpg",
+						"ctype": "texture",
+						"channel": 0
+					},
+					{
+						"id": 9,
+						"src": "/presets/tex08.jpg",
+						"ctype": "texture",
+						"channel": 2
+					},
+					{
+						"id": 10,
+						"src": "/presets/tex09.jpg",
+						"ctype": "texture",
+						"channel": 1
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

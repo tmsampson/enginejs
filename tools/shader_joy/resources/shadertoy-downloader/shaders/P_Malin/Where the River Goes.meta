@@ -1,0 +1,44 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "Xl2XRW",
+			"date": "1442094288",
+			"viewed": 2063,
+			"name": "Where the River Goes",
+			"username": "P_Malin",
+			"description": "What started as a hacked flow and advection experiment turned into something nice.<br/>Lots still to do...<br/>If you have a (very) fast GPU, try uncommenting #define ENABLE_ULTRA_QUALITY",
+			"likes": 40,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"water",
+				"flow",
+				"advection"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 7,
+						"src": "/presets/tex06.jpg",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

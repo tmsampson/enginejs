@@ -1,0 +1,46 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4sBGD1",
+			"date": "1387675116",
+			"viewed": 2036,
+			"name": "Fast balls",
+			"username": "iq",
+			"description": "Fast motion blurred spheres. Brute force motion blur, no cheats, no cleverness.",
+			"likes": 28,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"3d",
+				"raytracing",
+				"grid",
+				"motionblur",
+				"mblur"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 30,
+						"src": "/presets/tex16.png",
+						"ctype": "texture",
+						"channel": 1
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

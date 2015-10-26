@@ -1,0 +1,43 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4tXSW4",
+			"date": "1436589410",
+			"viewed": 457,
+			"name": "2d primitives and sound",
+			"username": "tmpvar",
+			"description": "practice",
+			"likes": 0,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"sdf"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 35,
+						"src": "/presets/mzk06.mp3",
+						"ctype": "music",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

@@ -1,0 +1,44 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "llSGDh",
+			"date": "1428482235",
+			"viewed": 773,
+			"name": "Input - Microphone",
+			"username": "iq",
+			"description": "Testing the Sound Input (microphone).",
+			"likes": 4,
+			"published": 3,
+			"flags": 4,
+			"tags": [
+				"2d",
+				"sound",
+				"microphone"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 32,
+						"src": "/presets/mic.png",
+						"ctype": "mic",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

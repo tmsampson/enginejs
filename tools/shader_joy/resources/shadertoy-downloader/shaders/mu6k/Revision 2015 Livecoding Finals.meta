@@ -1,0 +1,54 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "llj3W1",
+			"date": "1428741177",
+			"viewed": 467,
+			"name": "Revision 2015 Livecoding Finals",
+			"username": "mu6k",
+			"description": "Written under 25 minutes at Revision 2015 live-coding finals. I tried to adapt it by making as less modifications as possible. Put some music into iChannel0.",
+			"likes": 8,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"3d",
+				"raymarching",
+				"livecoding"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 17,
+						"src": "/presets/tex12.png",
+						"ctype": "texture",
+						"channel": 1
+					},
+					{
+						"id": 18,
+						"src": "/presets/mzk01.mp3",
+						"ctype": "music",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

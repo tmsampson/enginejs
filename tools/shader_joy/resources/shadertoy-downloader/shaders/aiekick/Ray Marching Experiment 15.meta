@@ -1,0 +1,55 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4lBGWz",
+			"date": "1428621400",
+			"viewed": 462,
+			"name": "Ray Marching Experiment 15",
+			"username": "aiekick",
+			"description": "Ray Marching Experiment 15",
+			"likes": 2,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"ray",
+				"experiment",
+				"marching",
+				"15"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 17,
+						"src": "/presets/tex12.png",
+						"ctype": "texture",
+						"channel": 1
+					},
+					{
+						"id": 25,
+						"src": "/presets/cube03_0.png",
+						"ctype": "cubemap",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

@@ -1,0 +1,42 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4tXGDf",
+			"date": "1425520527",
+			"viewed": 468,
+			"name": "Tetrahedral Interpolation",
+			"username": "paniq",
+			"description": "A method for linear interpolation of four tetrahedral corners that regresses to simple barycentric interpolation on the faces; drag the mouse for a cutaway; hit P to toggle the cutting plane. Hit N to toggle nearest neighbor interpolation.",
+			"likes": 3,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"mattdamon"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 33,
+						"src": "/presets/tex00.jpg",
+						"ctype": "keyboard",
+						"channel": 3
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

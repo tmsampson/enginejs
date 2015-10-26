@@ -1,0 +1,30 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "Xdj3Rh",
+			"date": "1383614599",
+			"viewed": 756,
+			"name": "Binary gates",
+			"username": "iq",
+			"description": "Binary gates",
+			"likes": 10,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

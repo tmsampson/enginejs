@@ -1,0 +1,33 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "Xsl3Dl",
+			"date": "1381786924",
+			"viewed": 869,
+			"name": "Noise - gradient - 3D",
+			"username": "iq",
+			"description": "3D gradient Noise (. Slightly more expensive than \"Value Noise\" (https://www.shadertoy.com/view/lsf3WH), but higher quality.",
+			"likes": 14,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"procedural",
+				"3d",
+				"noise",
+				"gradient"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

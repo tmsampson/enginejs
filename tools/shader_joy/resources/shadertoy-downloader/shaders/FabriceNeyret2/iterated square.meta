@@ -1,0 +1,42 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XtfSRn",
+			"date": "1433858263",
+			"viewed": 420,
+			"name": "iterated square",
+			"username": "FabriceNeyret2",
+			"description": "( try SPACE or F )",
+			"likes": 7,
+			"published": 3,
+			"flags": 16,
+			"tags": [
+				"ifs"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 33,
+						"src": "/presets/tex00.jpg",
+						"ctype": "keyboard",
+						"channel": 2
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

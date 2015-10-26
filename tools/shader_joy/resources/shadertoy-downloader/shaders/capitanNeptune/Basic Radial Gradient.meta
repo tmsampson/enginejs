@@ -1,0 +1,31 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4tjSWh",
+			"date": "1443285049",
+			"viewed": 356,
+			"name": "Basic Radial Gradient",
+			"username": "capitanNeptune",
+			"description": "basic radial gradient with motion",
+			"likes": 1,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"radial",
+				"gradient"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

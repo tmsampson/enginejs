@@ -1,0 +1,63 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "lslXRj",
+			"date": "1404836685",
+			"viewed": 1940,
+			"name": "Wax (fake subsurface)",
+			"username": "TekF",
+			"description": "Another fake lighting trick with distance fields.><br/>Press: D - dark scene, S - toggle sub-surface, A,R - toggle occlusion, L - lens effects><br/>Mouse drag: move camera",
+			"likes": 36,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"distancefields",
+				"subsurfacescattering"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 10,
+						"src": "/presets/tex09.jpg",
+						"ctype": "texture",
+						"channel": 1
+					},
+					{
+						"id": 30,
+						"src": "/presets/tex16.png",
+						"ctype": "texture",
+						"channel": 0
+					},
+					{
+						"id": 33,
+						"src": "/presets/tex00.jpg",
+						"ctype": "keyboard",
+						"channel": 3
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

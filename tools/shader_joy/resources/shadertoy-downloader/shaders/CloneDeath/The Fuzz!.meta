@@ -1,0 +1,52 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4ljGDy",
+			"date": "1432074456",
+			"viewed": 353,
+			"name": "The Fuzz!",
+			"username": "CloneDeath",
+			"description": "The fuzz are here to catch him!",
+			"likes": 1,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"fuzzpolicesirens"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 5,
+						"src": "/presets/tex04.jpg",
+						"ctype": "texture",
+						"channel": 1
+					},
+					{
+						"id": 36,
+						"src": "/presets/vid03.webm",
+						"ctype": "video",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

@@ -1,0 +1,33 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XlsGW7",
+			"date": "1422506897",
+			"viewed": 360,
+			"name": "Yellow and blue",
+			"username": "danjinxiangsi",
+			"description": "This simple shader is created by Xiao Wu.<br/>It mimic a yellow and blue bulb effect.<br/>Everyone is welcome to use/modified it. Any feedbacks and comments are also helpful",
+			"likes": 0,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"yellow",
+				"blue",
+				"bulb"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

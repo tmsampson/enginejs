@@ -1,0 +1,31 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XdBSWh",
+			"date": "1411149092",
+			"viewed": 576,
+			"name": "Circles-intersections",
+			"username": "Doublefresh",
+			"description": "This shader shows a nice way to find the intersection points between two circles.",
+			"likes": 9,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"circles",
+				"intersections"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

@@ -1,0 +1,63 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "ldfXzS",
+			"date": "1403188726",
+			"viewed": 3043,
+			"name": "Wet Sand",
+			"username": "TekF",
+			"description": "Trying the nice surface shading tricks from my  on a landscape.><br/>Toggle Ambient Occlusion: A, Toggle Reflection Occlusion: S. View modes:Q,W,L",
+			"likes": 36,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"ambientocclusion",
+				"specularocclusion"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 10,
+						"src": "/presets/tex09.jpg",
+						"ctype": "texture",
+						"channel": 1
+					},
+					{
+						"id": 30,
+						"src": "/presets/tex16.png",
+						"ctype": "texture",
+						"channel": 0
+					},
+					{
+						"id": 33,
+						"src": "/presets/tex00.jpg",
+						"ctype": "keyboard",
+						"channel": 3
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

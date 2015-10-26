@@ -1,0 +1,54 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XtjSRG",
+			"date": "1444599557",
+			"viewed": 215,
+			"name": "Color channel offset fft",
+			"username": "Macint",
+			"description": "A simple method to get old video tape effect with missmatched color channels. The effected is matched to the intensity of a frequency interval in the music.",
+			"likes": 1,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"fft",
+				"audio",
+				"chromaticabberation"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 29,
+						"src": "/presets/vid02.ogv",
+						"ctype": "video",
+						"channel": 0
+					},
+					{
+						"id": 35,
+						"src": "/presets/mzk06.mp3",
+						"ctype": "music",
+						"channel": 1
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

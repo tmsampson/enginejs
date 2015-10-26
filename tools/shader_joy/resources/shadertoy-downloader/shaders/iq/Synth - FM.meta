@@ -1,0 +1,40 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XsjSzV",
+			"date": "1423306654",
+			"viewed": 662,
+			"name": "Synth - FM",
+			"username": "iq",
+			"description": "Not much. FM (well, PM) sound Synthesis",
+			"likes": 8,
+			"published": 3,
+			"flags": 8,
+			"tags": [
+				"sound",
+				"fm",
+				"synthesis"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			},
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "vec2 mainSound( float time )\n{\n    float f = 220.0;\n                  \n    float im = 20.0 + 18.0*sin(0.21*6.2831*time);\n    float y = sin( 6.2831*f*time + im*sin(0.25*6.2831*f*time) );\n        \n    y *= exp(-2.0*fract(8.0*time));\n    \n    return vec2(y);\n}",
+				"name": "",
+				"description": "",
+				"type": "sound"
+			}
+		]
+	}
+}

@@ -1,0 +1,31 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MlSXRV",
+			"date": "1444937675",
+			"viewed": 238,
+			"name": "ugly grass",
+			"username": "erkaman",
+			"description": "just a shader that draws some crappy 2D grass <img src=\"/img/emoticonHappy.png\"/>",
+			"likes": 4,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"grass"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

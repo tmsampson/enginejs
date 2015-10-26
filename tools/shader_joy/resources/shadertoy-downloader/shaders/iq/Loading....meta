@@ -1,0 +1,30 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XsfGWB",
+			"date": "1386791128",
+			"viewed": 784,
+			"name": "Loading...",
+			"username": "iq",
+			"description": "Loading...",
+			"likes": 14,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

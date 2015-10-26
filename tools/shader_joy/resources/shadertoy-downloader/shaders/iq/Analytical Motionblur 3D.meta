@@ -1,0 +1,34 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MdB3Dw",
+			"date": "1389235253",
+			"viewed": 3510,
+			"name": "Analytical Motionblur 3D",
+			"username": "iq",
+			"description": "Analytic motion blur. A sphere is checked for intersection while moving linearly. The resulting equation is a quadratic in two parameters (distance and time), and returns the time coverage of the swept disk over the aperture of the camera for a given ray",
+			"likes": 65,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"3d",
+				"blur",
+				"motionblur",
+				"motion",
+				"analytic"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

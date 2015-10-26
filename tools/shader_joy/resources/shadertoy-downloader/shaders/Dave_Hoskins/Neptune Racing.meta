@@ -1,0 +1,96 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XtX3Rr",
+			"date": "1417633586",
+			"viewed": 973,
+			"name": "Neptune Racing",
+			"username": "Dave_Hoskins",
+			"description": "Another landscape. This time using a stack of 8 distance field sphere scoops, enabling anti-aliasing and DOF.<br/>No shadows yet, I may do them tomorrow if it needs it.<br/>Thanks to vgs (<a href=\"https://www.shadertoy.com/view/MdBSDt\" class=\"regular\" target=\"_blank\">https://www.shadertoy.com/view/MdBSDt</a>) for the stack idea.",
+			"likes": 27,
+			"published": 3,
+			"flags": 8,
+			"tags": [
+				"3d",
+				"raymarching",
+				"antialiasing",
+				"fov",
+				"neptuneracing"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 4,
+						"src": "/presets/tex03.jpg",
+						"ctype": "texture",
+						"channel": 3
+					},
+					{
+						"id": 8,
+						"src": "/presets/tex07.jpg",
+						"ctype": "texture",
+						"channel": 1
+					},
+					{
+						"id": 10,
+						"src": "/presets/tex09.jpg",
+						"ctype": "texture",
+						"channel": 0
+					},
+					{
+						"id": 30,
+						"src": "/presets/tex16.png",
+						"ctype": "texture",
+						"channel": 2
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			},
+			{
+				"inputs": [
+					{
+						"id": 10,
+						"src": "/presets/tex09.jpg",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "//--------------------------------------------------------------------------\nvec3 CameraPath( float t )\n{\n    float s = smoothstep(.0, 3.0, t);\n\tvec3 pos = vec3( t*30.0*s +120.0, 1.0, t* 220.* s -80.0);\n\t\n\tfloat a = t/4.0;\n\tpos.xz += vec2(1350.0 * cos(a), 350.0*sin(a));\n    pos.xz += vec2(1400.0 * sin(-a*1.8), 400.0*cos(-a*4.43));\n\n\treturn pos;\n}\n\nvec2 Hash( vec2 n)\n{\n\tvec4 p = texture2D( iChannel0, n*vec2(.78271, .32837), -100.0 );\n    return (p.xy + p.zw) * .5; \n}\n\n//--------------------------------------------------------------------------\nvec2 Noise( in vec2 x )\n{\n    vec2 p = floor(x);\n    vec2 f = fract(x);\n    f = f*f*(3.0-2.0*f);\n    vec2 res = mix(mix( Hash(p + 0.0), Hash(p + vec2(1.0, 0.0)),f.x),\n                   mix( Hash(p + vec2(0.0, 1.0) ), Hash(p + vec2(1.0, 1.0)),f.x),f.y);\n    return res-.5;\n}\n\n//--------------------------------------------------------------------------\nvec2 FBM( vec2 p )\n{\n    vec2 f;\n\tf  = 0.5000\t * Noise(p); p = p * 2.32;\n\tf += 0.2500  * Noise(p); p = p * 2.23;\n\tf += 0.1250  * Noise(p); p = p * 2.31;\n    f += 0.0625  * Noise(p); p = p * 2.28;\n    f += 0.03125 * Noise(p);\n    return f;\n}\nfloat rockets(float t)\n{\n    t  = texture2D(iChannel0, vec2(t*.3, t*.1731), -100.0).x-.5;\n    t += texture2D(iChannel0, vec2(t*.2, t*.01731), -100.0).t-.5;\n    return t;\n}\n\nvec2 mainSound(float time)\n{\n    float gTime = (time+135.0)*.25;\n    vec3 ca = CameraPath(gTime);\n    vec3 ct = CameraPath(gTime+.05);\n    float f = length(ct-ca)*.1;\n    vec2 audio;\n    audio = FBM(vec2(gTime*120.0, gTime*1200.0)) * 5.0 * f;\n    audio += FBM(vec2(gTime*200.0* f, gTime*200.0)) * 4.5;\n    audio *= .1;\n    \n    float g = mod(f*gTime, 8.0);\n    //audio *= g < 4.0 ? 1.0:0.0;\n    return audio * smoothstep(.0, 2.0, time) * smoothstep(60.0, 55.0, time);\n}",
+				"name": "",
+				"description": "",
+				"type": "sound"
+			}
+		]
+	}
+}

@@ -1,0 +1,43 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4ts3WN",
+			"date": "1422136865",
+			"viewed": 727,
+			"name": "Flower Sphere Displacement",
+			"username": "aiekick",
+			"description": "Diplace from top on sphere of iq flower shader <a href=\"https://www.shadertoy.com/view/4dX3Rn\" class=\"regular\" target=\"_blank\">https://www.shadertoy.com/view/4dX3Rn</a>",
+			"likes": 12,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"displacement",
+				"flower"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 23,
+						"src": "/presets/cube01_0.png",
+						"ctype": "cubemap",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

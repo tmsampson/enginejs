@@ -1,0 +1,42 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "Xls3zf",
+			"date": "1423931351",
+			"viewed": 478,
+			"name": "Harmonograph??",
+			"username": "eiffie",
+			"description": "So I search harmonograph and see it described one way but then find a picture of this little cutie which seems to work differently. I wanted to see what pictures it draws. Don't ask how the paper stays horizontal. I just didn't want to calc the pen height",
+			"likes": 12,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"harmonograph"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 6,
+						"src": "/presets/tex05.jpg",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

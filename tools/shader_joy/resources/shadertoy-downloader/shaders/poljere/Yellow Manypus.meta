@@ -1,0 +1,57 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "ltB3RK",
+			"date": "1430936470",
+			"viewed": 479,
+			"name": "Yellow Manypus",
+			"username": "poljere",
+			"description": "A Manypus is a species discovered in Shadertoyland in May 2015. This new cell/monster/animal loves music and it specially enjoys reacting to your microphone!",
+			"likes": 4,
+			"published": 3,
+			"flags": 4,
+			"tags": [
+				"2d",
+				"sound",
+				"reactive",
+				"music",
+				"microphone",
+				"manypus"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 17,
+						"src": "/presets/tex12.png",
+						"ctype": "texture",
+						"channel": 1
+					},
+					{
+						"id": 32,
+						"src": "/presets/mic.png",
+						"ctype": "mic",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

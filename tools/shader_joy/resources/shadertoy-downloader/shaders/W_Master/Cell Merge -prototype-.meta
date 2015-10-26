@@ -1,0 +1,33 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "llsXD8",
+			"date": "1436516238",
+			"viewed": 433,
+			"name": "Cell Merge (prototype)",
+			"username": "W_Master",
+			"description": "very inefficient code, also contains glitches, want to make a better one with similar result.<br/>click to interact.",
+			"likes": 2,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"circle",
+				"glitched",
+				"inefficient"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

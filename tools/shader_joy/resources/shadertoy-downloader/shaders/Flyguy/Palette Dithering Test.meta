@@ -1,0 +1,45 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MtjGRd",
+			"date": "1431576207",
+			"viewed": 716,
+			"name": "Palette Dithering Test",
+			"username": "Flyguy",
+			"description": " Testing palette dithering using the bayer matrix texture and colors from the Commodore 64's color palette.",
+			"likes": 20,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"raymarching",
+				"dither",
+				"c64",
+				"palette"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 28,
+						"src": "/presets/tex15.png",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

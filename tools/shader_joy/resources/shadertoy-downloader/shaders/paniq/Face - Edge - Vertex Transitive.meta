@@ -1,0 +1,30 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4lf3z2",
+			"date": "1423244222",
+			"viewed": 423,
+			"name": "Face / Edge / Vertex Transitive",
+			"username": "paniq",
+			"description": "Demonstrates how cube and octahedron are each others dual (one's face is the other's vertex), and the rhombic dodecahedron unites vertices from both sets and turns either edges into faces.",
+			"likes": 3,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"mattdamon"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

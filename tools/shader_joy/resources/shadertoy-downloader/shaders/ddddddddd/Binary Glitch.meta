@@ -1,0 +1,48 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MlBSzR",
+			"date": "1440961967",
+			"viewed": 598,
+			"name": "Binary Glitch",
+			"username": "ddddddddd",
+			"description": "Binary Glitch - based on Luminosity. (use the Mouse to effect the strength).",
+			"likes": 2,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"binary",
+				"glitch",
+				"mirror",
+				"tile",
+				"samples",
+				"subsample"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 36,
+						"src": "/presets/vid03.webm",
+						"ctype": "video",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

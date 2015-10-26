@@ -1,0 +1,46 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "ltf3Dl",
+			"date": "1426098313",
+			"viewed": 548,
+			"name": "lsdSheetGenerator",
+			"username": "netgrind",
+			"description": "sexy blending via https://twitter.com/Titouan_Millet/status/575722640570191872",
+			"likes": 2,
+			"published": 3,
+			"flags": 2,
+			"tags": [
+				"blend",
+				"lsd",
+				"webcam",
+				"netgrind",
+				"merge"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 31,
+						"src": "/presets/webcam.png",
+						"ctype": "webcam",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

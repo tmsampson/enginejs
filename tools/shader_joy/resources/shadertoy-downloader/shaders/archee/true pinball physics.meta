@@ -1,0 +1,31 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4tBGRm",
+			"date": "1427504885",
+			"viewed": 617,
+			"name": "true pinball physics",
+			"username": "archee",
+			"description": "Click on the shader-screen to define start location. <br/>I actually coded this in my head during the long flight home from NVScene, California, 2015<br/>",
+			"likes": 21,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"physics"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

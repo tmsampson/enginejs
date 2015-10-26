@@ -1,0 +1,43 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4dSSW1",
+			"date": "1411204120",
+			"viewed": 412,
+			"name": "Worley noise 4",
+			"username": "FabriceNeyret2",
+			"description": "variant from https://www.shadertoy.com/view/Md2SDz",
+			"likes": 2,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"voronoi",
+				"worley"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 16,
+						"src": "/presets/tex11.png",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

@@ -1,0 +1,42 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XlXGD8",
+			"date": "1421261309",
+			"viewed": 542,
+			"name": "Britbot",
+			"username": "eiffie",
+			"description": "Frolicking endlessly with my gal pal Britbot. I was going to view all the shaders here but after spending an hour playing with the first one I gave up.",
+			"likes": 7,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"fake3d"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 12,
+						"src": "/presets/vid01.webm",
+						"ctype": "video",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

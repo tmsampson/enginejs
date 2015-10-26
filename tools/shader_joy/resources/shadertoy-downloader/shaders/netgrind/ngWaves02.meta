@@ -1,0 +1,33 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4tfGDB",
+			"date": "1424660600",
+			"viewed": 395,
+			"name": "ngWaves02",
+			"username": "netgrind",
+			"description": "cool",
+			"likes": 2,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"waves",
+				"mobius",
+				"netgrind",
+				"hyperbolic"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

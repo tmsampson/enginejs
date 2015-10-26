@@ -1,0 +1,35 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "ltjGzd",
+			"date": "1431592253",
+			"viewed": 401,
+			"name": "ngRay2",
+			"username": "netgrind",
+			"description": "neat",
+			"likes": 4,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"fractal",
+				"raycast",
+				"cube",
+				"sponge",
+				"manger",
+				"woah"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

@@ -1,0 +1,32 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XlB3Wz",
+			"date": "1427935835",
+			"viewed": 475,
+			"name": "Rainbow soft brush draw ",
+			"username": "klk",
+			"description": "Draw something with rainbow-like color gradient.",
+			"likes": 3,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"rainbow",
+				"soft",
+				"paintbrush"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

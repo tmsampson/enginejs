@@ -1,0 +1,32 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MlsSzn",
+			"date": "1434492778",
+			"viewed": 425,
+			"name": "Ellipsoid - occlusion",
+			"username": "iq",
+			"description": "Ellipsoid - occlusion (approximation)",
+			"likes": 4,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"3d",
+				"occlusion",
+				"ellipsoid"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

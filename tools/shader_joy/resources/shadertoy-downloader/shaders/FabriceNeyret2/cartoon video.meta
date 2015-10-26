@@ -1,0 +1,42 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "Msl3zB",
+			"date": "1373822803",
+			"viewed": 750,
+			"name": "cartoon video",
+			"username": "FabriceNeyret2",
+			"description": "color regions are dilated , luminosity is flatten, contours are highlighted.<br/>",
+			"likes": 2,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"cartoon"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 31,
+						"src": "/presets/webcam.png",
+						"ctype": "webcam",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

@@ -1,0 +1,33 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MlfGWS",
+			"date": "1424703878",
+			"viewed": 403,
+			"name": "ngTweet0",
+			"username": "netgrind",
+			"description": "a shader that can fit in a tweet",
+			"likes": 0,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"waves",
+				"tweet",
+				"netgrind",
+				"140"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

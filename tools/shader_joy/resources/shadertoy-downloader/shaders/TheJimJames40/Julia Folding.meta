@@ -1,0 +1,34 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4ls3R2",
+			"date": "1423401643",
+			"viewed": 418,
+			"name": "Julia Folding",
+			"username": "TheJimJames40",
+			"description": "a visualization of how a Julia fractal is generated.",
+			"likes": 5,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"fractal",
+				"julia",
+				"folding",
+				"complex",
+				"explanation"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

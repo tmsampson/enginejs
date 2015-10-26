@@ -1,0 +1,32 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "llfSRM",
+			"date": "1435164802",
+			"viewed": 461,
+			"name": "gamma detection test",
+			"username": "hornet",
+			"description": "A test for gamma-levels that includes three tests rather than just the usual 50% grey.<br/>On most monitors, a power-function does not appear to be adequate correction.<br/>(see also https://www.shadertoy.com/view/Xdl3DM )",
+			"likes": 4,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"gamma",
+				"gammacorrection",
+				"brightness"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

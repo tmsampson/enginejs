@@ -1,0 +1,44 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "Mt23Rm",
+			"date": "1427819045",
+			"viewed": 422,
+			"name": "Ray Marching Experiment 14",
+			"username": "aiekick",
+			"description": "the refraction coef move during animation, this is why some time the blob is opaque, and other time tranparant",
+			"likes": 0,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"ray",
+				"marching",
+				"experiment14"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 22,
+						"src": "/presets/cube00_0.jpg",
+						"ctype": "cubemap",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

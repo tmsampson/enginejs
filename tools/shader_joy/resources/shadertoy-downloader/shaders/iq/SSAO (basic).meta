@@ -1,0 +1,53 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "Ms23Wm",
+			"date": "1389637734",
+			"viewed": 1444,
+			"name": "SSAO (basic)",
+			"username": "iq",
+			"description": "SSAO, without using normals for better sampling nor bilateral filtering for smoothing the noise out",
+			"likes": 18,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"ssao"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 28,
+						"src": "/presets/tex15.png",
+						"ctype": "texture",
+						"channel": 0
+					},
+					{
+						"id": 30,
+						"src": "/presets/tex16.png",
+						"ctype": "texture",
+						"channel": 1
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

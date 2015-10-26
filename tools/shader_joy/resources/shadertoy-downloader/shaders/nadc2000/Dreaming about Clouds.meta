@@ -1,0 +1,57 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MtXXz4",
+			"date": "1434803501",
+			"viewed": 583,
+			"name": "Dreaming about Clouds",
+			"username": "nadc2000",
+			"description": "Based on IQ shader https://www.shadertoy.com/view/XslGRr, just wanted to playing around, thanks IQ.",
+			"likes": 7,
+			"published": 3,
+			"flags": 1,
+			"tags": [
+				"procedural",
+				"3d",
+				"raymarching",
+				"volumetric",
+				"lod",
+				"vr"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 11,
+						"src": "/presets/vid00.ogv",
+						"ctype": "video",
+						"channel": 1
+					},
+					{
+						"id": 30,
+						"src": "/presets/tex16.png",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

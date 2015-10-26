@@ -1,0 +1,31 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MtSGDK",
+			"date": "1432382500",
+			"viewed": 403,
+			"name": "Corroded Sphere",
+			"username": "ManuManu",
+			"description": "I try to make a decomposed sphere<br/><br/>Made on GlSlSandbox here : http://glslsandbox.com/e#25147.1",
+			"likes": 4,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"raymarching",
+				"fractal"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

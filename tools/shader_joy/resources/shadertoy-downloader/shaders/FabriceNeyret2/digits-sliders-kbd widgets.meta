@@ -1,0 +1,45 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "lsXXzN",
+			"date": "1397566249",
+			"viewed": 544,
+			"name": "digits/sliders/kbd widgets",
+			"username": "FabriceNeyret2",
+			"description": "Utils",
+			"likes": 7,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"keyboard",
+				"digits",
+				"sliders",
+				"widgets"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 33,
+						"src": "/presets/tex00.jpg",
+						"ctype": "keyboard",
+						"channel": 2
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

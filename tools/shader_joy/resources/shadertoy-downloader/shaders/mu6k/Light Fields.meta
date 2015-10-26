@@ -1,0 +1,46 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "lt2GRV",
+			"date": "1430584454",
+			"viewed": 554,
+			"name": "Light Fields",
+			"username": "mu6k",
+			"description": "Took my terrain from rocket science and added some glowing spheres.",
+			"likes": 12,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"reflection",
+				"terrain",
+				"raymarch",
+				"volumetric",
+				"glow"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 30,
+						"src": "/presets/tex16.png",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

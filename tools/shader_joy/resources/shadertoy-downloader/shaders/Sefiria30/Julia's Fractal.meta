@@ -1,0 +1,31 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XllGWM",
+			"date": "1422449742",
+			"viewed": 367,
+			"name": "Julia's Fractal",
+			"username": "Sefiria30",
+			"description": "Simply the Julia's fractal.",
+			"likes": 0,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"fractal",
+				"julia"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

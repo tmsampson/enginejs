@@ -1,0 +1,35 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4l23DK",
+			"date": "1432550258",
+			"viewed": 415,
+			"name": "International NASA Earth Flag",
+			"username": "lamogui",
+			"description": "The earth flag designed by nasa, not perfectly the same but the idea is here...",
+			"likes": 2,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"texture",
+				"earth",
+				"flag",
+				"nasa",
+				"international"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

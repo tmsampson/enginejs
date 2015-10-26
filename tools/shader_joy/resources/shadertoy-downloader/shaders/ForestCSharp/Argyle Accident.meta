@@ -1,0 +1,30 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "ltfGzs",
+			"date": "1427079981",
+			"viewed": 326,
+			"name": "Argyle Accident",
+			"username": "ForestCSharp",
+			"description": "Raymarching via JackAsser turns into a happy accident after inverting raycast function. Torus artifacts still present",
+			"likes": 0,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"raymarching"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

@@ -1,0 +1,55 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "lslGDB",
+			"date": "1378971661",
+			"viewed": 1646,
+			"name": "Water world",
+			"username": "reinder",
+			"description": "A living, surrealistic, water world showing reflections and distance field rendering.<br/>As usual, almost al code is copy-paste from shaders by inigo quilez.<br/>Lens flare by musk! (https://www.shadertoy.com/view/4sX3Rs).",
+			"likes": 21,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"distancefield",
+				"reflection",
+				"water",
+				"flare"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 6,
+						"src": "/presets/tex05.jpg",
+						"ctype": "texture",
+						"channel": 1
+					},
+					{
+						"id": 16,
+						"src": "/presets/tex11.png",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

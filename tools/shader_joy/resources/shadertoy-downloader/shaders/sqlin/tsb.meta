@@ -1,0 +1,30 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MlXSR8",
+			"date": "1434365135",
+			"viewed": 341,
+			"name": "tsb",
+			"username": "sqlin",
+			"description": "颜色改变",
+			"likes": 0,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"test"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

@@ -1,0 +1,35 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MtX3DM",
+			"date": "1422408202",
+			"viewed": 522,
+			"name": "kali-traps",
+			"username": "bergi",
+			"description": "hybrid volume sampler / surface finder with mouse adjustable attention scale to magnify the different worlds in the kali set. ",
+			"likes": 10,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"3d",
+				"fractal",
+				"volume",
+				"marching",
+				"kali",
+				"traps"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

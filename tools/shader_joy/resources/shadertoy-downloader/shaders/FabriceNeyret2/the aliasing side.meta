@@ -1,0 +1,42 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4slXR4",
+			"date": "1397545950",
+			"viewed": 511,
+			"name": "the aliasing side",
+			"username": "FabriceNeyret2",
+			"description": "Mouse.x to tune the power<br/>C toggles colors",
+			"likes": 8,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"aliasing"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 33,
+						"src": "/presets/tex00.jpg",
+						"ctype": "keyboard",
+						"channel": 2
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

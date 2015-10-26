@@ -1,0 +1,32 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4lj3Rw",
+			"date": "1427662996",
+			"viewed": 362,
+			"name": "floored symmetric noise",
+			"username": "macbooktall",
+			"description": "my mom kicked me out of her straight edge band for breaking edge over a text message",
+			"likes": 6,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"noise",
+				"symmetry",
+				"cool"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

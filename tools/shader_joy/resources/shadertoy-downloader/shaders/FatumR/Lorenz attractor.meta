@@ -1,0 +1,31 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "lts3D4",
+			"date": "1422214311",
+			"viewed": 415,
+			"name": "Lorenz attractor",
+			"username": "FatumR",
+			"description": "Rough Lorenz Attractor",
+			"likes": 2,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"procedural",
+				"2d"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

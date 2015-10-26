@@ -1,0 +1,46 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XllGRl",
+			"date": "1424307327",
+			"viewed": 1492,
+			"name": "Surface Splats",
+			"username": "iq",
+			"description": "Stochastic rasterization of splats. Random points are generated at the surface of some parametric objects, and the points are projected into screen space. A z/depth buffer mechanism resolves visibility, and then shading happens in a deferred manner.",
+			"likes": 18,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"3d",
+				"projection",
+				"rasterization",
+				"splat",
+				"stochastic"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 2,
+						"src": "/presets/tex01.jpg",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

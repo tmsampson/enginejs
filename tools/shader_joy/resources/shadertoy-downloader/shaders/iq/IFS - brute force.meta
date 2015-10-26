@@ -1,0 +1,32 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "lss3zs",
+			"date": "1392152304",
+			"viewed": 799,
+			"name": "IFS - brute force",
+			"username": "iq",
+			"description": "Brute force approach to computing an approximate distance field to the classic IFS fern of Barnsley. This is how you want to NOT do things for rendering IFS fractals.",
+			"likes": 5,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"fractal",
+				"ifs"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

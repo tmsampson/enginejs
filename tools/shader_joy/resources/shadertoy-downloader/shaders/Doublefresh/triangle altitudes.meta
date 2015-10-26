@@ -1,0 +1,32 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XtXGRl",
+			"date": "1424107131",
+			"viewed": 216,
+			"name": "triangle altitudes",
+			"username": "Doublefresh",
+			"description": "the altitudes (and orthocenter) of a triangle, using cross product in homogenous coordinates.",
+			"likes": 1,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"3",
+				"points"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

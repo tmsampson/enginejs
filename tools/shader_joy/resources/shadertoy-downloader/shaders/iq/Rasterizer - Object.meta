@@ -1,0 +1,43 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4slGzn",
+			"date": "1363670394",
+			"viewed": 5232,
+			"name": "Rasterizer - Object",
+			"username": "iq",
+			"description": "Using rasterization to render a deforming polygonal mesh, in a fragment shader!!! <img src=\"/img/emoticonLaugh.png\"/>",
+			"likes": 97,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"3d",
+				"rasterizer"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 3,
+						"src": "/presets/tex02.jpg",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

@@ -1,0 +1,31 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "ltBSRy",
+			"date": "1444554727",
+			"viewed": 194,
+			"name": "crowded cubes 2",
+			"username": "FabriceNeyret2",
+			"description": "one more variant of https://www.shadertoy.com/view/ltfXRM ",
+			"likes": 6,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"3d",
+				"raymarching"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

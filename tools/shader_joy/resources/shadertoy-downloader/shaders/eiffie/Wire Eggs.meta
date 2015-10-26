@@ -1,0 +1,38 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4lS3zw",
+			"date": "1427467994",
+			"viewed": 557,
+			"name": "Wire Eggs",
+			"username": "eiffie",
+			"description": "The chickens aren't that thrilled either.",
+			"likes": 25,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"eggs"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			},
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "#define bps 8.0\nfloat nofs(float n){//the song's \"random\" ring\n    n=mod(n,8.0);\n    if(n<1.0)return -5.0;\n    if(n<2.0)return -5.0;\n    if(n<3.0)return -5.0;\n    if(n<4.0)return 0.0;\n    if(n<5.0)return -1.0;\n    if(n<6.0)return 0.0;\n    if(n<7.0)return 0.0;\n    return 12.0;\n}\n\nfloat scale(float note){//throws out dissonant tones\n\tfloat n2=mod(note,12.0);\n\tif((n2==1.0)||(n2==3.0)||(n2==6.0)||(n2==8.0)||(n2==10.0))note=-100.0;//major\n\t//if((n2==1.0)||(n2==4.0)||(n2==6.0)||(n2==9.0)||(n2==11.0))note=-100.0;//minor\n\t//if((n2==1.0)||(n2==4.0)||(n2==5.0)||(n2==9.0)||(n2==10.0))note=-100.0;//hungarian minor\n\tif(note>96.0)note=96.0+n2;\n\treturn note;\n}\nfloat ntof(float note){//note frequencies from wikipedia\n\tif(note<12.0)return 0.0;\n\tfloat octave=floor((note+0.5)/12.0)-5.0;\n\tnote=mod(note,12.0);\n\tfloat nt=493.88;//b\n    \tif(note<0.5)nt=261.63;//c\n\telse if(note<1.5)nt=277.18;//c#\n\telse if(note<2.5)nt=293.66;//d\n    \telse if(note<3.5)nt=311.13;//d#\n    \telse if(note<4.5)nt=329.63;//e\n    \telse if(note<5.5)nt=349.23;//f\n    \telse if(note<6.5)nt=369.99;//f#\n    \telse if(note<7.5)nt=392.0;//g\n    \telse if(note<8.5)nt=415.30;//g#\n    \telse if(note<9.5)nt=440.0;//a\n    \telse if(note<10.5)nt=466.16;//a#\n\treturn nt*pow(2.0,octave);\n}\n\n// note number to frequency  from https://www.shadertoy.com/view/ldfSW2\n//float ntof(float n){return (n>0.0)?440.0 * pow(2.0, (n - 67.0) / 12.0):0.0;}\n\n#define PI 3.1416\n\nfloat I(float f, float t, float amp, float freq, float wpwr, float apwr, float att){\n\tfloat a=sin(f*PI+amp*PI*sin(f*PI*freq));\n\tif(t<att)t=1.0-t*(1.0-att)/att;\n\treturn sign(a)*pow(abs(a),wpwr)*(1.0-pow(t,apwr));\n}\nvec2 inst(float n,float t,float bt,float pan,int i){\n\tfloat f=ntof(scale(n));\n\tif(f<12.0)return vec2(0.0);\t\n\tfloat a=I(f*t,bt*0.5,0.0,0.0,2.0+float(i*i)*2.0,0.5,0.1);\n\ta*=60.0/n;\n\treturn vec2(a*(1.0-pan),a*pan);\n}\nvec2 inst2(float nn,float no,float of,float t,float bt,float pan,int i){\n\treturn inst(nn+of,t,bt,pan,i)+inst(no+of,t,bt+1.0,pan,i);//plays new note and tail of last note\n}\n\nvec2 mainSound(float time)\n{\n\tfloat tim=time*bps;\n\tfloat b=floor(tim);\n\tfloat t0=fract(tim),t1=mod(tim,2.0)*0.5,t2=mod(tim,4.0)*0.25;\n\tfloat n2=nofs(b*0.0625)+nofs(b*0.125)+nofs(b*0.25);\n\tfloat n1=n2+nofs(b*0.5),n0=n1+nofs(b);\n\tb-=1.0;//go back in time to finish old notes\n\tfloat n5=nofs(b*0.0625)+nofs(b*0.125)+nofs(b*0.25);\n\tfloat n4=n5+nofs(b*0.5),n3=n4+nofs(b);\n\tb-=1.0;\n\tn5=nofs(b*0.0625)+nofs(b*0.125)+nofs(b*0.25);\n\tn4=n5+nofs(b*0.5);\n\tb-=2.0;\n\tn5=nofs(b*0.0625)+nofs(b*0.125)+nofs(b*0.25);\n\tvec2 a0=inst2(n0,n3,72.0,time,t0,0.8,0);\n\tvec2 a1=inst2(n1,n4,60.0,time,t1,0.5,1);\n\tvec2 a2=inst2(n2,n5,48.0,time,t2,0.2,2);\n\t//vec2 a1h=inst2(n1,n4,57.0,time,t1,0.6,0);\n\t//vec2 a2h=vec2(0.0);//inst2(n2,n5,53.0,time,t2,0.25,0);\n\t//vec2 a1hb=inst(n1+64.0,time,t1,0.0,1)*2.0;\n\tvec2 v=0.25*(a0+a1+a2);\n\treturn clamp(v,-1.0,1.0);\n}\n",
+				"name": "",
+				"description": "",
+				"type": "sound"
+			}
+		]
+	}
+}

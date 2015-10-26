@@ -1,0 +1,33 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4df3D8",
+			"date": "1368236734",
+			"viewed": 3455,
+			"name": "Image - Audrey",
+			"username": "iq",
+			"description": "If you were entrusted to portray Audrey Hepburn (you've seen \"Breakfast at Tiffany's\") BUT asked to do it in no more than 316 brushstrokes you'd surely have to be very careful on your choice of strokes! (you'll only see 201 in the code thanks to symmetry)",
+			"likes": 28,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"compression",
+				"genetic",
+				"image"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

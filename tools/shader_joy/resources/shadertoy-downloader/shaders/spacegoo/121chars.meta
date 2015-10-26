@@ -1,0 +1,31 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4lS3Dt",
+			"date": "1433405885",
+			"viewed": 357,
+			"name": "121chars",
+			"username": "spacegoo",
+			"description": "zou<br/>",
+			"likes": 1,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"shader",
+				"tweeter"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

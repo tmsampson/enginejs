@@ -1,0 +1,44 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XtsGR2",
+			"date": "1424079000",
+			"viewed": 558,
+			"name": "simple terrian",
+			"username": "EvilRyu",
+			"description": "Try some simplest terrian.",
+			"likes": 11,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"raymarching",
+				"fbm",
+				"terrian"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 4,
+						"src": "/presets/tex03.jpg",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

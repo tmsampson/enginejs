@@ -1,0 +1,34 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4tsXRM",
+			"date": "1435310056",
+			"viewed": 365,
+			"name": "Skyline3 - 156 chars",
+			"username": "FabriceNeyret2",
+			"description": "my variant  of  GregRostami https://www.shadertoy.com/view/MtXSR7 variant of  gsingh93 shader  https://www.shadertoy.com/view/4tXSRM#  :-D",
+			"likes": 2,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"short",
+				"2tc",
+				"2tweet",
+				"skyline"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

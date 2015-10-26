@@ -1,0 +1,42 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MlXXDM",
+			"date": "1439205467",
+			"viewed": 530,
+			"name": "[SIG15] Winning Solitaire 2",
+			"username": "eigenaar",
+			"description": "A classic and forever satisfying video game moment. Controls : hold A while running to better see the cards. If you can, increase the number of cards (see \"#define OBJECT\") and add the missing patterns (see \"#define COMPILE_PATTERNS\").",
+			"likes": 1,
+			"published": 3,
+			"flags": 16,
+			"tags": [
+				"sig15"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 33,
+						"src": "/presets/tex00.jpg",
+						"ctype": "keyboard",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

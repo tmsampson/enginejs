@@ -1,0 +1,30 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4lfSD4",
+			"date": "1436664906",
+			"viewed": 398,
+			"name": "De-Burn-In",
+			"username": "RavenWorks",
+			"description": "Use at your own risk :P I just had a burnt-in screen so I figured I'd try it... (I know it's not perfect noise, I can see the 'seams' too, but it should be good enough for these purposes!)",
+			"likes": 2,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"noise"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

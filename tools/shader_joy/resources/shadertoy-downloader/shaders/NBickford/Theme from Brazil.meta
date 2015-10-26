@@ -1,0 +1,58 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MtSGzW",
+			"date": "1427259522",
+			"viewed": 1531,
+			"name": "Theme from Brazil",
+			"username": "NBickford",
+			"description": "Specular path tracing, AKA Yet Another Thing Which Really Will Not Run At 120 FPS, AKA Super 16 2: Electric Boogaloo.<br/>This started out as a naive path tracer, but soon turned into a pretty neat mini-demo!<br/>Inspired by Fairlight's Feed Me Lies and PHOTON.",
+			"likes": 15,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"raytracing",
+				"video",
+				"gi",
+				"globalillumination",
+				"pathtracing",
+				"pathtracer",
+				"film"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 3,
+						"src": "/presets/tex02.jpg",
+						"ctype": "texture",
+						"channel": 2
+					},
+					{
+						"id": 29,
+						"src": "/presets/vid02.ogv",
+						"ctype": "video",
+						"channel": 1
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

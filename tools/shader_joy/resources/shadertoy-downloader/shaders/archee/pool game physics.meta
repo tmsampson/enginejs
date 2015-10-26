@@ -1,0 +1,34 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MljSz1",
+			"date": "1441763260",
+			"viewed": 621,
+			"name": "pool game physics",
+			"username": "archee",
+			"description": "continuously timed physics with collisions.<br/>mouse.y = initial Y coordinate of white ball<br/>mouse.x = angle of shooting the white ball<br/><br/>No iMouse input in sound shader -> no sound",
+			"likes": 16,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"game",
+				"collision",
+				"balls",
+				"physics",
+				"pool"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

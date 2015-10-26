@@ -1,0 +1,30 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XlX3DH",
+			"date": "1421449711",
+			"viewed": 403,
+			"name": "Hypnobar",
+			"username": "mpcomplete",
+			"description": "First foray into shadertoy.",
+			"likes": 0,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"empty"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

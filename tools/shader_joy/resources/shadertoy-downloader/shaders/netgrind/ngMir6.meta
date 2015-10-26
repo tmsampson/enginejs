@@ -1,0 +1,45 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MllSR7",
+			"date": "1435523032",
+			"viewed": 432,
+			"name": "ngMir6",
+			"username": "netgrind",
+			"description": "rainbows",
+			"likes": 1,
+			"published": 3,
+			"flags": 2,
+			"tags": [
+				"colorful",
+				"rainbow",
+				"webcam",
+				"mirror"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 31,
+						"src": "/presets/webcam.png",
+						"ctype": "webcam",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

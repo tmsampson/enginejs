@@ -1,0 +1,62 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4ssXW2",
+			"date": "1407004040",
+			"viewed": 3205,
+			"name": "Alps",
+			"username": "Dave_Hoskins",
+			"description": "Uses a ridged fractal noise with corrosion effects for higher altitudes. I tried to remove as many artefacts as possible and still have a long draw distance. Now includes fractal wind. <img src=\"/img/emoticonHappy.png\"/>",
+			"likes": 63,
+			"published": 3,
+			"flags": 8,
+			"tags": [
+				"alps"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 30,
+						"src": "/presets/tex16.png",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			},
+			{
+				"inputs": [
+					{
+						"id": 30,
+						"src": "/presets/tex16.png",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "\nvec2 Hash( vec2 n)\n{\n\tvec4 p = texture2D( iChannel0, n*vec2(.78271, .32837), -100.0 );\n    return (p.xy + p.zw) * .5; \n}\n\n//--------------------------------------------------------------------------\nvec2 Noise( in vec2 x )\n{\n    vec2 p = floor(x);\n    vec2 f = fract(x);\n    f = f*f*(3.0-2.0*f);\n    vec2 res = mix(mix( Hash(p + 0.0), Hash(p + vec2(1.0, 0.0)),f.x),\n                   mix( Hash(p + vec2(0.0, 1.0) ), Hash(p + vec2(1.0, 1.0)),f.x),f.y);\n    return res-.5;\n}\n\n//--------------------------------------------------------------------------\nvec2 FBM( vec2 p )\n{\n    vec2 f;\n\tf  = 0.5000\t * Noise(p); p = p * 2.32;\n\tf += 0.2500  * Noise(p); p = p * 2.23;\n\tf += 0.1250  * Noise(p); p = p * 2.31;\n    f += 0.0625  * Noise(p); p = p * 2.28;\n    f += 0.03125 * Noise(p);\n    return f;\n}\n\n//--------------------------------------------------------------------------\nvec2 Wind(float n)\n{\n    vec2 pos = vec2(n * (162.017331), n * (132.066927));\n    vec2 vol = Noise(vec2(n*23.131, -n*42.13254))*1.0 + 1.0;\n    \n    vec2 noise = vec2(FBM(pos*33.313))* vol.x *.5 + vec2(FBM(pos*4.519)) * vol.y;\n    \n\treturn noise;\n}\n\n//--------------------------------------------------------------------------\nvec2 mainSound(float time)\n{\n    vec2 audio = Wind(time*.1) * 6.0;\n    return clamp(audio, -1.0, 1.0) * (smoothstep(0.0, 2.0, time) * smoothstep(60.0, 50.0, time));;\n}",
+				"name": "",
+				"description": "",
+				"type": "sound"
+			}
+		]
+	}
+}

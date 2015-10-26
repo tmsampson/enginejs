@@ -1,0 +1,46 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MdfGRX",
+			"date": "1375342854",
+			"viewed": 13187,
+			"name": "Hell",
+			"username": "iq",
+			"description": "A variation of my Clouds shaders, made to look more like we are sinking to the very center of hell. Some postprocessed bloom effect would look awesome in this.",
+			"likes": 199,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"procedural",
+				"3d",
+				"raymarching",
+				"noise",
+				"volumetric"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 30,
+						"src": "/presets/tex16.png",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

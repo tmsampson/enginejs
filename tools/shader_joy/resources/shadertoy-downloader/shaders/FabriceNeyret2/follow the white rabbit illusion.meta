@@ -1,0 +1,30 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XdlSR7",
+			"date": "1398525215",
+			"viewed": 457,
+			"name": "follow the white rabbit illusion",
+			"username": "FabriceNeyret2",
+			"description": "inspired from http://www.moillusions.com/pulsating-nightmare-optical-illusion/",
+			"likes": 3,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"illusions"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

@@ -1,0 +1,35 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XlfSWS",
+			"date": "1439195578",
+			"viewed": 449,
+			"name": "Gravity",
+			"username": "charlieamer",
+			"description": "Shows amount of gravity in interaction with planets/sun.",
+			"likes": 1,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"procedural",
+				"2d",
+				"simulation",
+				"physics",
+				"planets",
+				"gravity"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

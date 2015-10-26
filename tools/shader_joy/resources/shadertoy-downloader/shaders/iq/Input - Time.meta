@@ -1,0 +1,33 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "lsXGz8",
+			"date": "1362214766",
+			"viewed": 2276,
+			"name": "Input - Time",
+			"username": "iq",
+			"description": "Simple realtime, real time, watch. The background changes with the time of day - dark grey at night, and blue during the day <img src=\"/img/emoticonHappy.png\"/>",
+			"likes": 26,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"time",
+				"clock",
+				"watch"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

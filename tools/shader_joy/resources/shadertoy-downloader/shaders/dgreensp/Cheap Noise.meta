@@ -1,0 +1,30 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MtfXzr",
+			"date": "1434055421",
+			"viewed": 408,
+			"name": "Cheap Noise",
+			"username": "dgreensp",
+			"description": "This is just iq's procedural noise (see e.g. https://www.shadertoy.com/view/4sfGzS) with slight syntactic alterations.  Slower than sampling a texture, but nice and simple and pretty darn fast.",
+			"likes": 0,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"noise"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

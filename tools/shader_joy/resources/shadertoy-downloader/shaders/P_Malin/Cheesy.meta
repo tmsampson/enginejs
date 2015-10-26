@@ -1,0 +1,64 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XsXSWN",
+			"date": "1400884539",
+			"viewed": 1095,
+			"name": "Cheesy",
+			"username": "P_Malin",
+			"description": "A very cheesy raytracing (not raymarching!) shader.<br/>Raytracing with CSG, bump mapping, shiny things and cheese!<br/>(I don't know why)",
+			"likes": 19,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"raytracing",
+				"csg",
+				"cheese"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 1,
+						"src": "/presets/tex00.jpg",
+						"ctype": "texture",
+						"channel": 0
+					},
+					{
+						"id": 22,
+						"src": "/presets/cube00_0.jpg",
+						"ctype": "cubemap",
+						"channel": 2
+					},
+					{
+						"id": 23,
+						"src": "/presets/cube01_0.png",
+						"ctype": "cubemap",
+						"channel": 3
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

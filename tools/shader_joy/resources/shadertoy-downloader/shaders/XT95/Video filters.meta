@@ -1,0 +1,46 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XsX3z8",
+			"date": "1362060087",
+			"viewed": 893,
+			"name": "Video filters",
+			"username": "XT95",
+			"description": "Some video filters",
+			"likes": 6,
+			"published": 3,
+			"flags": 2,
+			"tags": [
+				"filters",
+				"invert",
+				"desaturate",
+				"chromaticaberration",
+				"colorswitching"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 31,
+						"src": "/presets/webcam.png",
+						"ctype": "webcam",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

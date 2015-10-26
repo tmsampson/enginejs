@@ -1,0 +1,46 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "Ms2SWW",
+			"date": "1357121825",
+			"viewed": 2185,
+			"name": "Deform - square tunnel",
+			"username": "iq",
+			"description": "A 2D square tunnel",
+			"likes": 10,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"planedeformation",
+				"deform",
+				"distance",
+				"metric"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 1,
+						"src": "/presets/tex00.jpg",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

@@ -1,0 +1,30 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XlSGzD",
+			"date": "1427149661",
+			"viewed": 392,
+			"name": "Acid Kaleidoscope",
+			"username": "mpcomplete",
+			"description": "Playing with transitions between transformations.<br/><br/>Mixing ideas from<br/>- https://www.shadertoy.com/view/XlXGW2 and<br/>- https://www.shadertoy.com/view/XlfGDf",
+			"likes": 3,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"transformations"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

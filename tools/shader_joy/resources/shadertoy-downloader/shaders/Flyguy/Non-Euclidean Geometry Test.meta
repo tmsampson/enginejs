@@ -1,0 +1,34 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4llSWf",
+			"date": "1440217637",
+			"viewed": 652,
+			"name": "Non-Euclidean Geometry Test",
+			"username": "Flyguy",
+			"description": "Testing non-euclidean geometry in a distance field ray marcher.<br/>Mostly fixed artifacts by scaling the map and ray origin upon entering the \"warp zone\" instead of speeding up rays.",
+			"likes": 6,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"distancefield",
+				"raymarch",
+				"geometry",
+				"euclidean",
+				"noneuclidean"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

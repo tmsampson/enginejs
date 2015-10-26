@@ -1,0 +1,31 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "ll2GWy",
+			"date": "1432179123",
+			"viewed": 682,
+			"name": "Smooth XOR",
+			"username": "iq",
+			"description": "Smoothing out a bit the discontinuous XOR pattern.",
+			"likes": 10,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"xor"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

@@ -1,0 +1,32 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MdlSDX",
+			"date": "1407459297",
+			"viewed": 724,
+			"name": "Derivatives - boundaries",
+			"username": "iq",
+			"description": "A demonstration of how GPU derivatives don't work across 2x2 render tile boundaries. GPUs render in tiles of 2x2 pixels, and derivatives can only be computed within it. Signal changes that occur between to tiles can't be detected by dFdx()/dFdy()/fwidth()",
+			"likes": 4,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"glsl",
+				"derivatives"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

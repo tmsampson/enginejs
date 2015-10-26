@@ -1,0 +1,36 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4dsGRs",
+			"date": "1377126109",
+			"viewed": 1482,
+			"name": "Juster Beaver",
+			"username": "movAX13h",
+			"description": "just a beaver; use your mouse (horizontal) to make him smile",
+			"likes": 25,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"mouse",
+				"triangle",
+				"motionblur",
+				"rectangle",
+				"shapes",
+				"beaver"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

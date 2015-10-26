@@ -1,0 +1,32 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MdfSzn",
+			"date": "1395717092",
+			"viewed": 808,
+			"name": "Metatunnel",
+			"username": "XT95",
+			"description": "Fixed step marching.",
+			"likes": 14,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"raymarching",
+				"metatunnel",
+				"fixedstep"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

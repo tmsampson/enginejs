@@ -1,0 +1,44 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "ldf3RH",
+			"date": "1362278402",
+			"viewed": 808,
+			"name": "Music ball",
+			"username": "PauloFalcao",
+			"description": "An experiment using the fft sound texture.<br/>Try using a video, the effect is probably even cooler than the sound fft LOL",
+			"likes": 6,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"3d",
+				"sound",
+				"fft"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 18,
+						"src": "/presets/mzk01.mp3",
+						"ctype": "music",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

@@ -1,0 +1,31 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "Mss3zH",
+			"date": "1363056994",
+			"viewed": 1275,
+			"name": "Input - Mouse",
+			"username": "iq",
+			"description": "Shows how the mouse input events work",
+			"likes": 12,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"mouse"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

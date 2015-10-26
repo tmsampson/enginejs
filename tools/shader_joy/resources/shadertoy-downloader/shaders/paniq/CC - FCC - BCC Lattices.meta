@@ -1,0 +1,30 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "llfGRj",
+			"date": "1423249901",
+			"viewed": 621,
+			"name": "CC / FCC / BCC Lattices",
+			"username": "paniq",
+			"description": "Morphing between all 7 permutations of the edge-centered, face-centered and body-centered lattice.",
+			"likes": 11,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"mattdamon"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

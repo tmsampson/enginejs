@@ -1,0 +1,52 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4lX3Rf",
+			"date": "1423642036",
+			"viewed": 1356,
+			"name": "Van Damme",
+			"username": "iq",
+			"description": "testing new video",
+			"likes": 11,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 22,
+						"src": "/presets/cube00_0.jpg",
+						"ctype": "cubemap",
+						"channel": 2
+					},
+					{
+						"id": 36,
+						"src": "/presets/vid03.webm",
+						"ctype": "video",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

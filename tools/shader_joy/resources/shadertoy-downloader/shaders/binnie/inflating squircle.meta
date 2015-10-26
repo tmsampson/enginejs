@@ -1,0 +1,31 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4lS3RV",
+			"date": "1430229502",
+			"viewed": 435,
+			"name": "inflating squircle",
+			"username": "binnie",
+			"description": "squircle de noob",
+			"likes": 3,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"noob",
+				"squircle"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

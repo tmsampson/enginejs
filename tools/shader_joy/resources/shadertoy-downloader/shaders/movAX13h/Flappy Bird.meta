@@ -1,0 +1,46 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "ls2GRt",
+			"date": "1392511986",
+			"viewed": 1270,
+			"name": "Flappy Bird",
+			"username": "movAX13h",
+			"description": "The bird is composed of bit encoded integer numbers (3bit/px = 8 colors, 24bit/int, 204px => 26 ints).",
+			"likes": 13,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"game",
+				"flappy",
+				"bird",
+				"tribute"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 19,
+						"src": "/presets/mzk02.mp3",
+						"ctype": "music",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

@@ -1,0 +1,31 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "llf3zs",
+			"date": "1424298185",
+			"viewed": 562,
+			"name": "Yet Another Raymarching Template",
+			"username": "elias",
+			"description": ".",
+			"likes": 10,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"raymarching",
+				"template"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

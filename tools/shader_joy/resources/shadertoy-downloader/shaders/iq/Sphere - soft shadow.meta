@@ -1,0 +1,32 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4d2XWV",
+			"date": "1416196452",
+			"viewed": 948,
+			"name": "Sphere - soft shadow",
+			"username": "iq",
+			"description": "Fake plausible soft shadows for spheres. The parameter \"k\" controls the softness.",
+			"likes": 12,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"3d",
+				"shadow",
+				"sphere"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

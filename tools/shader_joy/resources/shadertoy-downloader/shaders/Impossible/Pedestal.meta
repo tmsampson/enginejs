@@ -1,0 +1,65 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4tsGDS",
+			"date": "1425092994",
+			"viewed": 454,
+			"name": "Pedestal",
+			"username": "Impossible",
+			"description": "Reference:<br/>iquilezles.org/www/articles/distfunctions/distfunctions.htm<br/>paulbourke.net/geometry/sphericalh/<br/>www.filmicworlds.com/2014/04/21/optimizing-ggx-shaders-with-dotlh/<br/>Updated for VR!",
+			"likes": 5,
+			"published": 3,
+			"flags": 1,
+			"tags": [
+				"raymarching",
+				"distancefields",
+				"sphericalharmonics",
+				"ggx"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 21,
+						"src": "/presets/mzk04.mp3",
+						"ctype": "music",
+						"channel": 2
+					},
+					{
+						"id": 22,
+						"src": "/presets/cube00_0.jpg",
+						"ctype": "cubemap",
+						"channel": 1
+					},
+					{
+						"id": 23,
+						"src": "/presets/cube01_0.png",
+						"ctype": "cubemap",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

@@ -1,0 +1,33 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "Xt2GRc",
+			"date": "1430977021",
+			"viewed": 411,
+			"name": "coming up on DALT-HCI",
+			"username": "netgrind",
+			"description": "I am comming up on dalt hydrochloride",
+			"likes": 2,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"blackandwhite",
+				"psychedelic",
+				"dalt",
+				"comeup"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

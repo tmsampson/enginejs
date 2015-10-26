@@ -1,0 +1,76 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MdXGW2",
+			"date": "1379503432",
+			"viewed": 6263,
+			"name": "Venice",
+			"username": "reinder",
+			"description": "My attempt to create a procedural city with a lot of lights. The city is inspired by Venice. The shader is a combination of my shaders: https://www.shadertoy.com/view/Mdf3zM and https://www.shadertoy.com/view/lslGDB.<br/>(I have never been in Venice btw)",
+			"likes": 65,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"procedural",
+				"distancefield",
+				"reflection",
+				"water",
+				"city"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 1,
+						"src": "/presets/tex00.jpg",
+						"ctype": "texture",
+						"channel": 1
+					},
+					{
+						"id": 6,
+						"src": "/presets/tex05.jpg",
+						"ctype": "texture",
+						"channel": 3
+					},
+					{
+						"id": 10,
+						"src": "/presets/tex09.jpg",
+						"ctype": "texture",
+						"channel": 2
+					},
+					{
+						"id": 16,
+						"src": "/presets/tex11.png",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

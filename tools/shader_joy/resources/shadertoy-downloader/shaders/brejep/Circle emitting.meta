@@ -1,0 +1,31 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4lsXDH",
+			"date": "1436450930",
+			"viewed": 357,
+			"name": "Circle emitting",
+			"username": "brejep",
+			"description": "A circle with noise-based colour",
+			"likes": 0,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"noise",
+				"circle"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

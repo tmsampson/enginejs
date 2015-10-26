@@ -1,0 +1,33 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XslSRs",
+			"date": "1405780303",
+			"viewed": 1473,
+			"name": "Sharbat Gula",
+			"username": "Dave_Hoskins",
+			"description": "Sharbat Gula. Iconic image from 1984<br/>http://en.wikipedia.org/wiki/Afghan_Girl<br/>Genetic algorithm. Over 1.3M random generations with 64000 chosen iterations to home in on the original image. Overlapping transparencies of 256 triangles with moving dither.",
+			"likes": 21,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"genetic",
+				"sharbatgula",
+				"geneticalgorithm"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

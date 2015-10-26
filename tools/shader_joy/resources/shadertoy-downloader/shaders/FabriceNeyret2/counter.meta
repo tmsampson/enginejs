@@ -1,0 +1,30 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XslGD7",
+			"date": "1372203449",
+			"viewed": 454,
+			"name": "counter",
+			"username": "FabriceNeyret2",
+			"description": "LCD-like counter",
+			"likes": 2,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"text"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

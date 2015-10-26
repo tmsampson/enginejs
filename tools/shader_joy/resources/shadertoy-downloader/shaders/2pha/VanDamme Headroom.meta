@@ -1,0 +1,43 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4tlGRX",
+			"date": "1423814126",
+			"viewed": 464,
+			"name": "VanDamme Headroom",
+			"username": "2pha",
+			"description": "My first shader here. Mixture and alterations of a couple I found here on Shadertoy.<br/>Headroom bg from: https://www.shadertoy.com/view/4sjXW1 by nimitz<br/>Van Damme from: https://www.shadertoy.com/view/4lX3Rf by iq",
+			"likes": 5,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"headroom",
+				"vandamme"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 36,
+						"src": "/presets/vid03.webm",
+						"ctype": "video",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

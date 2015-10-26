@@ -1,0 +1,44 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XtXGDj",
+			"date": "1425040767",
+			"viewed": 432,
+			"name": "Ray Marching Experiment 11",
+			"username": "aiekick",
+			"description": "Mouse X => Splitter (left positive displace / right negative displace with a zoom )<br/>Mouse Y => cells density",
+			"likes": 3,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"raymarching",
+				"voronoi",
+				"experiment"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 23,
+						"src": "/presets/cube01_0.png",
+						"ctype": "cubemap",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

@@ -1,0 +1,47 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "llSGzw",
+			"date": "1427562824",
+			"viewed": 509,
+			"name": "webcam blending",
+			"username": "macbooktall",
+			"description": "messing around <br/>blending functions from GPUImage by Brad Larson",
+			"likes": 1,
+			"published": 3,
+			"flags": 2,
+			"tags": [
+				"webcam",
+				"symmetry",
+				"yolo",
+				"cheeba",
+				"pizza",
+				"cherries"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 31,
+						"src": "/presets/webcam.png",
+						"ctype": "webcam",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

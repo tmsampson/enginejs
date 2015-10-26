@@ -1,0 +1,31 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MlXGRH",
+			"date": "1418426963",
+			"viewed": 382,
+			"name": "Meta Experiment 4",
+			"username": "aiekick",
+			"description": "Meta Experiment 4",
+			"likes": 0,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"meta",
+				"metaholeexperiment"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

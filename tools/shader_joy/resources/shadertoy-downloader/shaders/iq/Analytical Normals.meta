@@ -1,0 +1,46 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MdsSRs",
+			"date": "1406019254",
+			"viewed": 974,
+			"name": "Analytical Normals",
+			"username": "iq",
+			"description": "Left, numerical normals. Right, analytical normals.",
+			"likes": 17,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"3d",
+				"noise",
+				"normals",
+				"analytical",
+				"numerical"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 17,
+						"src": "/presets/tex12.png",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

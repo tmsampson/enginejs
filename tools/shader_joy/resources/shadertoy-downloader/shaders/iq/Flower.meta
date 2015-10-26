@@ -1,0 +1,45 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4dlGD7",
+			"date": "1372213661",
+			"viewed": 5507,
+			"name": "Flower",
+			"username": "iq",
+			"description": "A simple flower (made in a rush really). I'm not very sure about the colors. It probably needs bump, a second layer of petals, some pistils, leaves, and a lady bug. Will do next time!",
+			"likes": 29,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"procedural",
+				"3d",
+				"raymarching",
+				"distancefield"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 26,
+						"src": "/presets/cube04_0.png",
+						"ctype": "cubemap",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

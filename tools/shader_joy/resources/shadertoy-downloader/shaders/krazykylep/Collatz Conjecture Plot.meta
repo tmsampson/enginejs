@@ -1,0 +1,34 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MlsXRN",
+			"date": "1435053499",
+			"viewed": 383,
+			"name": "Collatz Conjecture Plot",
+			"username": "krazykylep",
+			"description": "This is a plot of the Collatz Conjecture. Each \"tower\" of pixels represents the journey that value took to get to 1. (The x pixel value defines the starting number.) The heat of the color (sort of) defines how close the number is to 1.",
+			"likes": 0,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"math",
+				"plot",
+				"collatzconjecture",
+				"collatz",
+				"conjecture"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

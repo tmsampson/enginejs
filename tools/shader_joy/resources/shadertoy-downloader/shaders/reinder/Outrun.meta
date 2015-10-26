@@ -1,0 +1,31 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "Mdf3Dr",
+			"date": "1367336643",
+			"viewed": 1510,
+			"name": "Outrun",
+			"username": "reinder",
+			"description": "Just a quick one. Please don't look at the source of this shader <img src=\"/img/emoticonHappy.png\"/> The math is a mess and full of magical numbers and physical incorrect",
+			"likes": 34,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"raycasting",
+				"outrun"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

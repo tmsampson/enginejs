@@ -1,0 +1,42 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "ltlSzs",
+			"date": "1439147365",
+			"viewed": 440,
+			"name": "GoldenJCVD",
+			"username": "GrosPoulet",
+			"description": "Be warned: this is the biggest looting in history of Shadertoy!!!<br/>90% of code come from aiekick's \"Mike Solo\":<br/><a href=\"https://www.shadertoy.com/view/lls3Dr\" class=\"regular\" target=\"_blank\">https://www.shadertoy.com/view/lls3Dr</a><br/>Remaining code stolen from IQ, as usual :-)",
+			"likes": 3,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"raymarching"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 36,
+						"src": "/presets/vid03.webm",
+						"ctype": "video",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

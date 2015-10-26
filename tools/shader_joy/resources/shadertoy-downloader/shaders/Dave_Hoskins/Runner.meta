@@ -1,0 +1,64 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MdsGRS",
+			"date": "1373648440",
+			"viewed": 980,
+			"name": "Runner",
+			"username": "Dave_Hoskins",
+			"description": "An experiment in segment animation.<br/><br/>DRAG AND DROP MOUSE-X FOR RUNNING SPEED.",
+			"likes": 17,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"animation",
+				"runner"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 1,
+						"src": "/presets/tex00.jpg",
+						"ctype": "texture",
+						"channel": 1
+					},
+					{
+						"id": 5,
+						"src": "/presets/tex04.jpg",
+						"ctype": "texture",
+						"channel": 0
+					},
+					{
+						"id": 30,
+						"src": "/presets/tex16.png",
+						"ctype": "texture",
+						"channel": 2
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

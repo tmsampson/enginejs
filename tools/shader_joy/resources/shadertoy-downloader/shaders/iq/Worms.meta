@@ -1,0 +1,34 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XsjXR1",
+			"date": "1409134954",
+			"viewed": 3883,
+			"name": "Worms",
+			"username": "iq",
+			"description": "Pretty much inspired by nimitz's spiral shader (https://www.shadertoy.com/view/4sfXDs)",
+			"likes": 58,
+			"published": 3,
+			"flags": 1,
+			"tags": [
+				"procedural",
+				"3d",
+				"raymarching",
+				"distancefield",
+				"vr"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

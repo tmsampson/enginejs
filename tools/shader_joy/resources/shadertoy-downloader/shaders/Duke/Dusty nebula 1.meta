@@ -1,0 +1,54 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4lSXD1",
+			"date": "1443129300",
+			"viewed": 861,
+			"name": "Dusty nebula 1",
+			"username": "Duke",
+			"description": "My attempt at creating something that looked like a nebula. The code is messy. I was just having fun.<br/>Upd.: switch to iq's noise because it work faster",
+			"likes": 15,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"explosion",
+				"nebula",
+				"dust"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 28,
+						"src": "/presets/tex15.png",
+						"ctype": "texture",
+						"channel": 0
+					},
+					{
+						"id": 30,
+						"src": "/presets/tex16.png",
+						"ctype": "texture",
+						"channel": 1
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

@@ -1,0 +1,52 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "ldf3Dr",
+			"date": "1367876922",
+			"viewed": 1118,
+			"name": "Stereogram",
+			"username": "P_Malin",
+			"description": "A shader to generate a random dot stereogram or \"magic eye\" picture.<br/><br/>",
+			"likes": 26,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"stereogram"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 7,
+						"src": "/presets/tex06.jpg",
+						"ctype": "texture",
+						"channel": 0
+					},
+					{
+						"id": 15,
+						"src": "/presets/tex10.png",
+						"ctype": "texture",
+						"channel": 1
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

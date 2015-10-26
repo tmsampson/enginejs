@@ -1,0 +1,46 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4t2SzR",
+			"date": "1441051744",
+			"viewed": 913,
+			"name": "Normal Map Blending",
+			"username": "ZigguratVertigo",
+			"description": "Reoriented Normal Mapping (vs other techniques). Hopefully another step in convincing people to stop using Overlay to combine normal maps ;) We spend so much math on awesome lighting (ie.: PBR), source content matters. Please tell your artists! <3",
+			"likes": 13,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"blending",
+				"normal",
+				"detail",
+				"reorientednormalmapping",
+				"rnm"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 4,
+						"src": "/presets/tex03.jpg",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

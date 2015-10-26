@@ -1,0 +1,31 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4slXzr",
+			"date": "1395992923",
+			"viewed": 832,
+			"name": "Multiples",
+			"username": "iq",
+			"description": "Shows the multiples of 2, 3, 4, etc etc",
+			"likes": 3,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"numbers",
+				"primes"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

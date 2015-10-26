@@ -1,0 +1,30 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4tsSzS",
+			"date": "1437696271",
+			"viewed": 510,
+			"name": "squid - Forest",
+			"username": "squid",
+			"description": "Only one loop in map()! Unfortunately also very broken. Suggestions?",
+			"likes": 0,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"3d"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

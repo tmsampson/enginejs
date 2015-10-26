@@ -1,0 +1,44 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "ld23DV",
+			"date": "1393881136",
+			"viewed": 1053,
+			"name": "Box - intersection",
+			"username": "iq",
+			"description": "Intersection of a ray and a box. The ray is transformed to box space, and the returned normal is converted back to ray space upon intersection. If there were many boxes to be intersected oriented the same way, the transformations should be done only once.",
+			"likes": 12,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"3d",
+				"raytracing",
+				"box"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 3,
+						"src": "/presets/tex02.jpg",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

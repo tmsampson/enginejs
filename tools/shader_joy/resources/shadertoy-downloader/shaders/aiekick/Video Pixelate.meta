@@ -1,0 +1,43 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4lXGzS",
+			"date": "1422738180",
+			"viewed": 427,
+			"name": "Video Pixelate",
+			"username": "aiekick",
+			"description": "shadertoy version of pixelate shader from qt540 sample \"qmlvideofx\" integrated in my splitter effect framework<br/>Mouse x => control divider<br/>Mouse Y => control granularity",
+			"likes": 1,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"video",
+				"pixelate"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 12,
+						"src": "/presets/vid01.webm",
+						"ctype": "video",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

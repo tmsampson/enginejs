@@ -1,0 +1,31 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4tlSzl",
+			"date": "1439902848",
+			"viewed": 2150,
+			"name": "Combustible Voronoi",
+			"username": "Shane",
+			"description": "The effect itself is nothing new or exciting, just some moving 3D Voronoi layering. However, the fire palette might prove useful to some.",
+			"likes": 56,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"voronoi",
+				"fire"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

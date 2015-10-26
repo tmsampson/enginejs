@@ -1,0 +1,49 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "llsGRM",
+			"date": "1420421060",
+			"viewed": 470,
+			"name": "Voronoï Experiment 3",
+			"username": "aiekick",
+			"description": "Voronoi Experiment 3<br/>Mouse axis Y : control voronoi cells density (Current number in bottom left)<br/>Mouse axis X : control rugosity density (current number in bottom right)",
+			"likes": 3,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"raymarching",
+				"voronoi",
+				"mouse",
+				"experiment",
+				"sphere",
+				"blob",
+				"mapping",
+				"printing"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 23,
+						"src": "/presets/cube01_0.png",
+						"ctype": "cubemap",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

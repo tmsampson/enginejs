@@ -1,0 +1,52 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "Xs2SzR",
+			"date": "1408490004",
+			"viewed": 1178,
+			"name": "Nebula Flight",
+			"username": "TekF",
+			"description": "Experiment in marching emissive media, to try to get something fast enough to run full screen.",
+			"likes": 21,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"raymarching"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 28,
+						"src": "/presets/tex15.png",
+						"ctype": "texture",
+						"channel": 1
+					},
+					{
+						"id": 30,
+						"src": "/presets/tex16.png",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

@@ -1,0 +1,44 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "ltSSz3",
+			"date": "1445314237",
+			"viewed": 235,
+			"name": "Glitter Effect",
+			"username": "hassoncs",
+			"description": "Using noise to make a glittery effect.",
+			"likes": 3,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"noise",
+				"glitter",
+				"sparkles"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 8,
+						"src": "/presets/tex07.jpg",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

@@ -1,0 +1,46 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XlSSzV",
+			"date": "1444826936",
+			"viewed": 284,
+			"name": "Another Cloudy Tunnel 2",
+			"username": "aiekick",
+			"description": "Variation more cloudy of my https://www.shadertoy.com/view/4lSXRK<br/>you can modify cloudy precision with mouse y axis",
+			"likes": 9,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"3d",
+				"raymarching",
+				"tunnel",
+				"cloud",
+				"cloudy"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 30,
+						"src": "/presets/tex16.png",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

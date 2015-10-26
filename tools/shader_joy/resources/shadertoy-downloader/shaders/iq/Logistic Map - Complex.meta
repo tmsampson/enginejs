@@ -1,0 +1,34 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XdSXWt",
+			"date": "1416917739",
+			"viewed": 1324,
+			"name": "Logistic Map - Complex",
+			"username": "iq",
+			"description": "Logistic map in complex numbers (real numbers superimposed in yellow). It becomes a quadratic, so it's isomorphic to the Mandelbrot set. The smooth iteration count, given by the Green Function, is sn = n + 1 - log2( log2|c| + log2|z| )",
+			"likes": 7,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"fractal",
+				"logistic",
+				"bifurcation",
+				"feigenbaum"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

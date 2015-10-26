@@ -1,0 +1,105 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XsX3DB",
+			"date": "1377969882",
+			"viewed": 2339,
+			"name": "Banished",
+			"username": "Dave_Hoskins",
+			"description": "In the dog house again... .. . Should to be full-screen to see the rain effect properly. <img src=\"/img/emoticonHappy.png\"/> Mouse drag to look.<br/>Press rewind to sync the audio correctly.<br/><br/>",
+			"likes": 45,
+			"published": 3,
+			"flags": 8,
+			"tags": [
+				"3d",
+				"raymarching",
+				"banished",
+				"dog"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 1,
+						"src": "/presets/tex00.jpg",
+						"ctype": "texture",
+						"channel": 2
+					},
+					{
+						"id": 3,
+						"src": "/presets/tex02.jpg",
+						"ctype": "texture",
+						"channel": 0
+					},
+					{
+						"id": 6,
+						"src": "/presets/tex05.jpg",
+						"ctype": "texture",
+						"channel": 1
+					},
+					{
+						"id": 30,
+						"src": "/presets/tex16.png",
+						"ctype": "texture",
+						"channel": 3
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			},
+			{
+				"inputs": [
+					{
+						"id": 10,
+						"src": "/presets/tex09.jpg",
+						"ctype": "texture",
+						"channel": 0
+					},
+					{
+						"id": 17,
+						"src": "/presets/tex12.png",
+						"ctype": "texture",
+						"channel": 1
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "//======================================================================================================\nvec2 Rain(float n)\n{\n    // Splattering on roof sound mixed with ambient noise.\n    float vary = sin(n * .1) * .5;\n    vec2 pos = vec2(n * (5.7331+vary), n * (43.66927 - vary));\n    // High pass the sound by subtracting a lower mipmap...\n    vec2 top = (texture2D( iChannel0, pos, -100.0).xy) * 2.0;\n    vec2 bot = (texture2D( iChannel0, pos,   -5.7).xy) * 2.0;\n    \n\treturn top-bot + (texture2D( iChannel1, pos,   -100.0).xy-.5)* .5;\n}\n\n//======================================================================================================\nvec2 Thunder(float n, float pitch, float time)\n{\n    vec2 top = (texture2D( iChannel0, vec2(n*pitch*4.88238+time, n*pitch*3.834181), -100.0).xz-.5)* 2.0;\n\treturn top;\n}\n\n//======================================================================================================\nfloat Noise(float n)\n{\n    return (texture2D( iChannel1, vec2(n*343.88238, n*153.834181), -100.0).x-.5)* 2.0;\n}\n\n//======================================================================================================\nvec2 mainSound(float time)\n{\n    vec2 audio = Rain(time) * .6;\n    \n    float ti  = mod(time - .4, 12.0);\n\tfloat lightning = smoothstep(1.5, 2.2, ti) * smoothstep(9.0, 2.2, ti);\n    audio += Thunder(ti, lightning + .75, time) * lightning;\n    \n    ti = mod(time, 9.0);\n\tfloat nose = smoothstep(3.0, 3.1, ti)* smoothstep(3.2, 3.1, ti)*.6;\n\tnose += smoothstep(3.2, 3.3, ti)* smoothstep(3.5, 3.3, ti)*.3;\n\tnose += smoothstep(3.7, 3.9, ti)* smoothstep(4.4, 3.8, ti)*.7;\n    float sniff = Noise(time) * nose;\n  \taudio += vec2(sniff);\n\n    return clamp(audio, -1.0, 1.0) * (smoothstep(0.0, 3.0, time) * smoothstep(60.0, 50.0, time));\n}",
+				"name": "",
+				"description": "",
+				"type": "sound"
+			}
+		]
+	}
+}

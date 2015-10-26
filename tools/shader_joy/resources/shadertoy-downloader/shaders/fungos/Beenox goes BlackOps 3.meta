@@ -1,0 +1,35 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "Xt2XzW",
+			"date": "1442017330",
+			"viewed": 553,
+			"name": "Beenox goes BlackOps 3",
+			"username": "fungos",
+			"description": "my first shader toying, had nothing to do and wanted to try distance fields. still need improve this a lot, mostly  reflection and bo3 logo material (maybe some fire), suggestions? <img src=\"/img/emoticonHappy.png\"/><br/><br/>Some machines can't compile the shader, help someone?",
+			"likes": 6,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"logo",
+				"distance",
+				"geometry",
+				"beenox",
+				"blackops3",
+				"cod"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

@@ -1,0 +1,32 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "Xt2XDh",
+			"date": "1443331488",
+			"viewed": 472,
+			"name": "Mechanical Brain",
+			"username": "Flyguy",
+			"description": " Testing a grid of meshing gears.",
+			"likes": 13,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"raymarch",
+				"gears",
+				"gear"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

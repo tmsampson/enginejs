@@ -1,0 +1,30 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "llX3zB",
+			"date": "1422985645",
+			"viewed": 436,
+			"name": "Weird Fractal 1",
+			"username": "aiekick",
+			"description": "//based on shader from coyote => https://www.shadertoy.com/view/ltfGzS",
+			"likes": 3,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"weirdfractal"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

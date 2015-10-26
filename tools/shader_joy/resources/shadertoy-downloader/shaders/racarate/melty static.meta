@@ -1,0 +1,30 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "llBGWR",
+			"date": "1427987164",
+			"viewed": 364,
+			"name": "melty static",
+			"username": "racarate",
+			"description": "coffee plus shader book:<br/><br/>http://patriciogonzalezvivo.com/2015/thebookofshaders/05/",
+			"likes": 0,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

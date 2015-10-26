@@ -1,0 +1,33 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MdlGzn",
+			"date": "1361844229",
+			"viewed": 6663,
+			"name": "Torus Journey",
+			"username": "PauloFalcao",
+			"description": "Torus Journey (shadertoy version)",
+			"likes": 28,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"3d",
+				"raymarching",
+				"reflection",
+				"torus"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

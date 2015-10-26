@@ -1,0 +1,32 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XdjSDG",
+			"date": "1415545852",
+			"viewed": 455,
+			"name": "graphene",
+			"username": "FabriceNeyret2",
+			"description": "mouse controls camera.<br/>If your graphics card allows, change LX,LY,LZ",
+			"likes": 6,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"raytracing",
+				"implicit",
+				"hypertexture"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

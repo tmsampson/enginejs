@@ -1,0 +1,43 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XdS3Wm",
+			"date": "1389008433",
+			"viewed": 2401,
+			"name": "Hello Morph!",
+			"username": "Dave_Hoskins",
+			"description": "Aardman's (from Wallace & Gromit fame) early work. Morph, the plasticine animation from British childhoods in the 70s and 80s.<br/>Episode on YouTube: https://www.youtube.com/watch?v=daQfoN_xXIc",
+			"likes": 31,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"morph",
+				"hellomorph"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 6,
+						"src": "/presets/tex05.jpg",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

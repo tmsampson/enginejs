@@ -1,0 +1,43 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "ldB3Rz",
+			"date": "1401316141",
+			"viewed": 642,
+			"name": "Larval",
+			"username": "P_Malin",
+			"description": "Some kind of alien fractal thingy.<br/>A hacked together KIFS doodle.<br/>The fractal parameters aren't that exciting but I like the pretty colours <img src=\"/img/emoticonLaugh.png\"/>",
+			"likes": 22,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"glow",
+				"kifs"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 22,
+						"src": "/presets/cube00_0.jpg",
+						"ctype": "cubemap",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

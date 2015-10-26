@@ -1,0 +1,32 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4df3Rn",
+			"date": "1358124981",
+			"viewed": 1986,
+			"name": "Mandelbrot - smooth",
+			"username": "iq",
+			"description": "A zoom in the Mandelbrot set, that showcases the difference between the regular iteration count coloring and the smooth iteration count coloring.",
+			"likes": 17,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"fractal",
+				"mandelbrot"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

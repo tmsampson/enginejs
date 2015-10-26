@@ -1,0 +1,46 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MlBSDW",
+			"date": "1443623372",
+			"viewed": 617,
+			"name": "Entangled Vines",
+			"username": "Shane",
+			"description": "Flying through an entangled vine structure at dusk.",
+			"likes": 37,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"raymarching",
+				"bisection",
+				"lattice",
+				"log",
+				"vine"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 2,
+						"src": "/presets/tex01.jpg",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

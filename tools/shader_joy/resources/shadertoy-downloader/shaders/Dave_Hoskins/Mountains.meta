@@ -1,0 +1,34 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4slGD4",
+			"date": "1370540644",
+			"viewed": 12207,
+			"name": "Mountains",
+			"username": "Dave_Hoskins",
+			"description": "A Shader version of my terrain renderer:-<br/>http://www.youtube.com/watch?v=qzkBnCBpQAM<br/>USE MOUSE > TO SHIFT TIME<br/><br/><br/>Video of my OpenGL version that uses streaming texture normals for speed...<br/>http://www.youtube.com/watch?v=qzkBnCBpQAM",
+			"likes": 127,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"raymarching",
+				"terrain",
+				"landscape",
+				"mountains",
+				"vr"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

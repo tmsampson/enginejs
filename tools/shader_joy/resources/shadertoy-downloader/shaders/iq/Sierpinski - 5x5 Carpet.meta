@@ -1,0 +1,32 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XsSGRh",
+			"date": "1385019029",
+			"viewed": 572,
+			"name": "Sierpinski - 5x5 Carpet",
+			"username": "iq",
+			"description": "A Sierpinski-Carpet-like structure, but in a 5x5  arragement. At every iteration, the whole unit square is divided in 5x5 sub-squares and the subsquares subsquares at (1,1), (3,1), (1,3) and (3,3) get removed.",
+			"likes": 2,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"fractal",
+				"sierpinksi"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

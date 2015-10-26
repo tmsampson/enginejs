@@ -1,0 +1,33 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XtSSzD",
+			"date": "1441848594",
+			"viewed": 493,
+			"name": "Playing With Hexes",
+			"username": "TarAlacrin",
+			"description": "Just a test making a cool pattern, trying to learn my way around the system.<br/>(Use the mouse to deform and push stuff around. Ive found it to be surprisingly entertaining)<br/>",
+			"likes": 0,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"test",
+				"interractive",
+				"foolinaround"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

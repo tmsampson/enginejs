@@ -1,0 +1,48 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "ltjSDm",
+			"date": "1444349158",
+			"viewed": 564,
+			"name": "Scanline Noise w/ Mouse Touch",
+			"username": "Retrotation",
+			"description": "http://www.mattolick.com<br/><br/>Clicking the screen will subtly highlight and follow the mouse. ",
+			"likes": 3,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"noise",
+				"mouse",
+				"blending",
+				"scanline",
+				"blend",
+				"tracking",
+				"touch"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 15,
+						"src": "/presets/tex10.png",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

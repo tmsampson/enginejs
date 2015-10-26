@@ -1,0 +1,34 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "ltfXD2",
+			"date": "1441421167",
+			"viewed": 651,
+			"name": "16 Segment Display",
+			"username": "Flyguy",
+			"description": "A 16 segment display with binary-packed characters. <br/>The segment layout was made in Blender and converted into glsl code using Processing.",
+			"likes": 5,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"text",
+				"font",
+				"display",
+				"segment",
+				"16segment"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

@@ -1,0 +1,57 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4ljGz3",
+			"date": "1431502392",
+			"viewed": 532,
+			"name": "Volumetric Club",
+			"username": "Shadiest",
+			"description": "Volumetric approach has been \"inspired\" by GPU Pro 5 : http://bit.ly/1EvLhhS<br/>I would like to thank Iq, TekF and Gouky for their inspirations ! And coyote for fix ! *NOT* clean code :-)<br/>N.B.: In pratice, the random ray march pattern should be blurred<br/>",
+			"likes": 7,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"ray",
+				"sphere",
+				"marching",
+				"volumetric",
+				"cylinder",
+				"3dvolumetric"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 20,
+						"src": "/presets/mzk03.mp3",
+						"ctype": "music",
+						"channel": 1
+					},
+					{
+						"id": 30,
+						"src": "/presets/tex16.png",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

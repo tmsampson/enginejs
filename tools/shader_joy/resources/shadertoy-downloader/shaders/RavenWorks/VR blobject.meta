@@ -1,0 +1,32 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4tjGR3",
+			"date": "1430933546",
+			"viewed": 461,
+			"name": "VR blobject",
+			"username": "RavenWorks",
+			"description": "Saving performance in high-res VR by only raymarching on the pixels that can actually see the raymarched object.<br/>Poly-bg version here: <a href=\"http://raven.works/projects/raymarchObject/\" class=\"regular\" target=\"_blank\">http://raven.works/projects/raymarchObject/</a><br/>I could watch this blob all day :P",
+			"likes": 2,
+			"published": 3,
+			"flags": 1,
+			"tags": [
+				"raymarch",
+				"blob",
+				"vr"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

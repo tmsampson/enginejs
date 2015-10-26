@@ -1,0 +1,42 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MdsXRB",
+			"date": "1403630673",
+			"viewed": 456,
+			"name": "lightbulb screen",
+			"username": "FabriceNeyret2",
+			"description": "inspired from https://www.shadertoy.com/view/MslSRB",
+			"likes": 5,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"mod"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 12,
+						"src": "/presets/vid01.webm",
+						"ctype": "video",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

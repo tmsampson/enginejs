@@ -1,0 +1,47 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4slGWH",
+			"date": "1368915920",
+			"viewed": 4865,
+			"name": "Fractal Nyancat",
+			"username": "iq",
+			"description": "Instead of using a mathematically defined shape for orbit trapping in fractals, a bitmap can be used just as easily ^_^",
+			"likes": 30,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"fractal",
+				"julia",
+				"orbittrap",
+				"orbit",
+				"nyancat"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 14,
+						"src": "/presets/tex14.png",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

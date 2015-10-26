@@ -1,0 +1,42 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MlX3DS",
+			"date": "1424738657",
+			"viewed": 618,
+			"name": "Fractal Inmorality",
+			"username": "Kali",
+			"description": "Don't follow yaz idea, please. It's dangerous.",
+			"likes": 1,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"mathporn"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 36,
+						"src": "/presets/vid03.webm",
+						"ctype": "video",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

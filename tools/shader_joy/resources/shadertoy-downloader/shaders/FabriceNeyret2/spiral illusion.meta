@@ -1,0 +1,42 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MdlXDr",
+			"date": "1399633656",
+			"viewed": 440,
+			"name": "spiral illusion",
+			"username": "FabriceNeyret2",
+			"description": "Only big circles of small squares here !<br/>mouse.x tunes rotation.   mouse.y tunes squares size. 2: toggles 1 every 2 circles.<br/>C:  toggles alternate B/W.   E: toggles empty square.   I: toggles inverse rotation at every circle.",
+			"likes": 4,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"illusion"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 33,
+						"src": "/presets/tex00.jpg",
+						"ctype": "keyboard",
+						"channel": 2
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

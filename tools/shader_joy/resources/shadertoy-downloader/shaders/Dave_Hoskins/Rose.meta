@@ -1,0 +1,33 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "ldBGDh",
+			"date": "1390081184",
+			"viewed": 1456,
+			"name": "Rose",
+			"username": "Dave_Hoskins",
+			"description": "I had to use an X wrapped 2D noise, so the atan result would repeat properly when passing through 360 degrees.<br/>",
+			"likes": 23,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"3d",
+				"raymarching",
+				"flower",
+				"rose"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

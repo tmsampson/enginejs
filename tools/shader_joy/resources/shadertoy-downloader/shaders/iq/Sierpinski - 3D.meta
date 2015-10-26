@@ -1,0 +1,36 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4dl3Wl",
+			"date": "1382770837",
+			"viewed": 2326,
+			"name": "Sierpinski - 3D",
+			"username": "iq",
+			"description": "Sierpinski fractal",
+			"likes": 23,
+			"published": 3,
+			"flags": 1,
+			"tags": [
+				"3d",
+				"raymarching",
+				"fractal",
+				"distancefield",
+				"distance",
+				"sierpinski",
+				"gtc2015"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

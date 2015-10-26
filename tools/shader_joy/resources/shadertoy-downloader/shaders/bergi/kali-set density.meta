@@ -1,0 +1,31 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XlsGDH",
+			"date": "1421729372",
+			"viewed": 416,
+			"name": "kali-set density",
+			"username": "bergi",
+			"description": "Left is a 2d slice, right is the volume of the Kali set. <br/>Click left to navigate right.",
+			"likes": 2,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"kaliset",
+				"volumemarching"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

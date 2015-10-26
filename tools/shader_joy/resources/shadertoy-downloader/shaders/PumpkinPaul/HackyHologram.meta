@@ -1,0 +1,55 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "llSXRK",
+			"date": "1444856641",
+			"viewed": 252,
+			"name": "HackyHologram",
+			"username": "PumpkinPaul",
+			"description": "An hacky attempt at some sort of hologram shader",
+			"likes": 3,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"blur",
+				"scanlines",
+				"hologram"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 14,
+						"src": "/presets/tex14.png",
+						"ctype": "texture",
+						"channel": 0
+					},
+					{
+						"id": 17,
+						"src": "/presets/tex12.png",
+						"ctype": "texture",
+						"channel": 1
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

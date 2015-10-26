@@ -1,0 +1,34 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XlS3Dm",
+			"date": "1429355417",
+			"viewed": 424,
+			"name": "ColorfulCubes",
+			"username": "0x17de",
+			"description": "cubes are rotating around the center and themselfes, some background animations and scanlines",
+			"likes": 4,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"grid",
+				"scanlines",
+				"colorful",
+				"cubes",
+				"rotating"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}
