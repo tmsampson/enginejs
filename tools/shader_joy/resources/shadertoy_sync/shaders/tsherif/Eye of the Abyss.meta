@@ -1,0 +1,44 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "ltjSzW",
+			"date": "1444138657",
+			"viewed": 282,
+			"name": "Eye of the Abyss",
+			"username": "tsherif",
+			"description": "Playing around with the space inversion function from here: https://www.shadertoy.com/view/4dsGD7",
+			"likes": 0,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"3d",
+				"raymarching",
+				"inversion"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 24,
+						"src": "/presets/cube02_0.jpg",
+						"ctype": "cubemap",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

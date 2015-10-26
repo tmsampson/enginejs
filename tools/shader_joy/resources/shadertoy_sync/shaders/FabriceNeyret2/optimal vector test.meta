@@ -1,0 +1,35 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "llsSzj",
+			"date": "1438189502",
+			"viewed": 412,
+			"name": "optimal vector test",
+			"username": "FabriceNeyret2",
+			"description": "sometime you want to test whether 4 components  are all (or any) null (or not null).<br/>What is the optimal way if testing that ? <br/>all/any are powerful for that, even with the casts to bvec and vec back.",
+			"likes": 0,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"test",
+				"optimization",
+				"all",
+				"parallelism",
+				"bvec",
+				"any"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

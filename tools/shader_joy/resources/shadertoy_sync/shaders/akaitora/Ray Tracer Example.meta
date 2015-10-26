@@ -1,0 +1,34 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "Xtf3RS",
+			"date": "1422732953",
+			"viewed": 425,
+			"name": "Ray Tracer Example",
+			"username": "akaitora",
+			"description": "Here is my first ray tracer.  The specular lighting is wrong.  A work in progress...",
+			"likes": 0,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"raytracing",
+				"raytracer",
+				"ray",
+				"tracer",
+				"tracying"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

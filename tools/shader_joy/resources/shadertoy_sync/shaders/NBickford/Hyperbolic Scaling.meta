@@ -1,0 +1,44 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "Xt23zc",
+			"date": "1431734825",
+			"viewed": 369,
+			"name": "Hyperbolic Scaling",
+			"username": "NBickford",
+			"description": "This texture apparently shrinks endlessly on one axis, while stretching on the other - and somehow loops every three seconds. Try to figure out how it's done before looking at the code on the right.<br/>Additionally, this can be done with < 200 characters!",
+			"likes": 0,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"opart",
+				"15tc"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 28,
+						"src": "/presets/tex15.png",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

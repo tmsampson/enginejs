@@ -1,0 +1,32 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "ltf3W2",
+			"date": "1425165856",
+			"viewed": 474,
+			"name": "smooth minimums",
+			"username": "TinyTexel",
+			"description": "Smooth minimum functions. When properly adjusted, SMin2 and SMin3 behave similar. SMin1 features a relatively broad 'region of smoothness'.",
+			"likes": 3,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"function",
+				"smooth",
+				"minimum"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

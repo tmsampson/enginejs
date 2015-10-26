@@ -1,0 +1,30 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "Mlj3RK",
+			"date": "1430541151",
+			"viewed": 392,
+			"name": "A fractal",
+			"username": "Aj_",
+			"description": "A random fractal<br/>",
+			"likes": 3,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"fractal"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

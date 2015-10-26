@@ -1,0 +1,43 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4dsSR2",
+			"date": "1404315905",
+			"viewed": 492,
+			"name": "gauss / poisson process",
+			"username": "FabriceNeyret2",
+			"description": "Poisson process = uniform points distribution (e.g, stars) with average M per pixel.<br/>pixel-average law = Poisson(M) ~ gauss(M-.5,sqrt(M))<br/>density = 2^(10*Mouse.y) , mouse in -1..1<br/>Left: pixel-based Poisson.   Right: recursive Poisson.  ",
+			"likes": 1,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"random",
+				"stars"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 30,
+						"src": "/presets/tex16.png",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

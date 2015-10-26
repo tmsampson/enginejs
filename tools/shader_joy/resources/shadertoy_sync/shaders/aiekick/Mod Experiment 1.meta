@@ -1,0 +1,32 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XtB3WD",
+			"date": "1428945015",
+			"viewed": 368,
+			"name": "Mod Experiment 1",
+			"username": "aiekick",
+			"description": "used in Ray Marching Experiment 16 : https://www.shadertoy.com/view/ll23Wh",
+			"likes": 5,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"experiment",
+				"mod",
+				"1"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

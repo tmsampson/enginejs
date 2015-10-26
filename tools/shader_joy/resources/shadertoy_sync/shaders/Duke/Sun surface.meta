@@ -1,0 +1,44 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XlSSzK",
+			"date": "1444770544",
+			"viewed": 458,
+			"name": "Sun surface",
+			"username": "Duke",
+			"description": "Based on Shanes' Fiery Spikeball https://www.shadertoy.com/view/4lBXzy (I think that his implementation is more understandable than the original <img src=\"/img/emoticonHappy.png\"/> ) Relief come from Siggraph workshop by Beautypi/2015 https://www.shadertoy.com/view/MtsSRf",
+			"likes": 30,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"volume",
+				"sun",
+				"surface"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 30,
+						"src": "/presets/tex16.png",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

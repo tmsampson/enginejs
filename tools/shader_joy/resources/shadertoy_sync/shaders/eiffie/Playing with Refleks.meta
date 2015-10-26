@@ -1,0 +1,38 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "Xtl3DB",
+			"date": "1424895008",
+			"viewed": 1312,
+			"name": "Playing with Refleks",
+			"username": "eiffie",
+			"description": "Uncomment REFLECT_OR_CONTINUE and the march will continue or reflect.",
+			"likes": 17,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"reflectionsmaybe"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			},
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "float ssaw(float t){return 4.0*(abs(fract(t+0.75)-0.5)-0.25);}\n\nfloat snd(float time){\n\tfloat a1=ssaw(50.0*time);\n\ta1=sign(a1)*pow(abs(a1),1.1+sin(time*20.0));\n\treturn a1;\n}\n#define SPEEDOFSOUND 20.0\n#define DAMPING 1.0\nfloat phys(float time, float dist){\n\tfloat tim=time-dist/SPEEDOFSOUND;\n\treturn snd(tim)*exp(-dist*DAMPING);\n}\nvec2 rep(vec2 p, vec2 a){return abs(mod(p+a,a*2.0)-a);}\nfloat DEL(in vec3 z0){\n\tz0.xz=rep(z0.xz,vec2(7.0,6.0));\n\tz0=abs(z0)-vec3(2.74,0.83,2.74);\n\treturn length(z0+vec3(-0.82,0.0,-1.0));\n}\nvec3 herert(vec3 fw,vec3 up){\n\tfw=normalize(fw);return normalize(cross(fw,normalize(up)));\n}\nvec2 mainSound(float time)\n{\n\tfloat tim=time*0.25;\n\tvec3 ro=vec3(sin(tim)*(2.0+tim)-4.0,0.5,cos(tim)-4.0);\n\tvec3 rt=0.1*herert(vec3(-4.0,-0.6,-4.0)-ro,vec3(0.0,1.0,0.0));\n\tfloat d1=DEL(ro),d2=DEL(ro+rt);\n\tfloat a1=phys(time,d1),a2=phys(time,d2);\n\treturn vec2(a1,a2);\n}\n",
+				"name": "",
+				"description": "",
+				"type": "sound"
+			}
+		]
+	}
+}

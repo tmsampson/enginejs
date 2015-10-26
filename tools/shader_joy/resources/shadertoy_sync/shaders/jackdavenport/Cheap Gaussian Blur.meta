@@ -1,0 +1,43 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "lljXDD",
+			"date": "1443921908",
+			"viewed": 330,
+			"name": "Cheap Gaussian Blur",
+			"username": "jackdavenport",
+			"description": "A cheap (but crappy) gaussian blur",
+			"likes": 0,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"blur",
+				"gaussian"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 8,
+						"src": "/presets/tex07.jpg",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

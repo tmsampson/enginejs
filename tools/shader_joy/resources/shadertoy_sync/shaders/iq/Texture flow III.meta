@@ -1,0 +1,53 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "ldjXD3",
+			"date": "1416782906",
+			"viewed": 1143,
+			"name": "Texture flow III",
+			"username": "iq",
+			"description": "Integrating uv coordinates given a noise flow texture.",
+			"likes": 12,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"texture"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 6,
+						"src": "/presets/tex05.jpg",
+						"ctype": "texture",
+						"channel": 1
+					},
+					{
+						"id": 30,
+						"src": "/presets/tex16.png",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

@@ -1,0 +1,42 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "ltjXWW",
+			"date": "1443826751",
+			"viewed": 411,
+			"name": "infinite fall - short",
+			"username": "FabriceNeyret2",
+			"description": "compact version of https://www.shadertoy.com/view/4sl3RX (with less goodies)<br/><br/>NB: comment line #26 for simple zoom noise without bump shading.",
+			"likes": 9,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"procedural"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 17,
+						"src": "/presets/tex12.png",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

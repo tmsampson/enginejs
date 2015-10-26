@@ -1,0 +1,46 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MdSGRW",
+			"date": "1384252545",
+			"viewed": 398,
+			"name": "Colorblind Simulation",
+			"username": "hornet",
+			"description": "Data taken from<br/>http://web.archive.org/web/20081014161121/http://www.colorjack.com/labs/colormatrix/<br/>http://en.wikipedia.org/wiki/Color_blindness<br/>",
+			"likes": 3,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"filter",
+				"post",
+				"postprocess",
+				"colorblind",
+				"colorblindness"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 12,
+						"src": "/presets/vid01.webm",
+						"ctype": "video",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

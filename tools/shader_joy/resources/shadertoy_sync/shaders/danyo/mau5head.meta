@@ -1,0 +1,50 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4l2GRW",
+			"date": "1427255057",
+			"viewed": 1104,
+			"name": "mau5head",
+			"username": "danyo",
+			"description": "My first ray marcher!",
+			"likes": 9,
+			"published": 3,
+			"flags": 8,
+			"tags": [
+				"raymarchingambientocclusionshadowsaudioghostsnstuff"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 30,
+						"src": "/presets/tex16.png",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			},
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "#define TAU 6.283185307179586476925286766559\n#define PI 3.1415926535897932384626433832795\n\n#define C  32.703\n#define CS 34.648\n#define D  36.708\n#define DS 38.891\n#define E  41.203\n#define F  43.654\n#define FS 46.249\n#define G  48.999\n#define GS 51.913\n#define A  55.0\n#define AS 58.270\n#define B  61.735\n\n#define BPM 128.0\n#define SEC_PER_MIN 60.0\n\n//-------------------------------------------------------------------\n//---------------------------Instruments-----------------------------\n//-------------------------------------------------------------------\n\nfloat noise( float x ){return fract(sin(1371.1*x)*43758.5453);}\n\n//Basic waveforms with note and octave input\nfloat sn(float t, float note, float octave)\n{\n\treturn sin(t*note*exp2(octave)*PI);\n}\n\nfloat saw(float t, float note, float octave)\n{\n\treturn fract(t*note*exp2(octave-1.))-0.5;\n}\n\nfloat tri(float t, float note, float octave)\n{\n    //return abs(4.0 * mod(freq * time - 0.25, 1.0) - 2.0) - 1.0;\n\treturn (abs(fract(t*note*exp2(octave-1.))-0.5)*2.-0.5)*2.;\n}\n\nfloat sqr(float t, float note, float octave)\n{\n\treturn step(fract(t*note*exp2(octave-1.)), 0.5)-0.5;\n}\n\n//-------------------------------------------------------------------\n//----------------------------Mixing---------------------------------\n//-------------------------------------------------------------------\n\n//Simple mixing function with balance control  (balance range 0..1)\nvec2 mixb(float x, float bal)\n{\n\tbal = clamp(bal,0.,1.);\n\treturn vec2(x * bal, x*(1.-bal));\n}\n\n// cheap and unrealistic distortion\nfloat dist(float s, float d)\n{\n\treturn clamp(s * d, -1.0, 1.0);\n}\nvec2 dist(vec2 s, float d)\n{\n\treturn clamp(s * d, -1.0, 1.0);\n}\n\n// quantize\nfloat quan(float s, float c)\n{\n\treturn floor(s / c) * c;\n}\n\n// randomize\nfloat nse(float x)\n{\n\treturn fract(sin(x * 110.082) * 19871.8972);\n\t//return fract(sin(x * 110.082) * 13485.8372);\n}\nfloat nse_slide(float x)\n{\n\tfloat fl = floor(x);\n\treturn mix(nse(fl), nse(fl + 1.0), smoothstep(0.0, 1.0, fract(x)));\n}\n\nfloat kick(float tb)\n{\n\tfloat aa = 15.0;\n\ttb = sqrt(tb * aa) / aa;\n\t\n\tfloat amp = exp(max(tb - 0.1, 0.0) * -10.0);\n\tfloat v = sin(tb * 120.0 * TAU) * amp;\n\tv = dist(v, 1.0) * amp;\n\t//v += nse(quan(tb, 0.001)) * nse(quan(tb, 0.00001)) * exp(tb * -20.0) * 2.5;\n\treturn v;\n}\n\nfloat hat(float tb)\n{    \n\tfloat aa = 4.0;\n\ttb = sqrt(tb * aa) / aa;\n\tfloat v = nse(sin(tb * 4000.0) * 0.0001) \n        * smoothstep(0.0, 0.02, tb) \n        * smoothstep(0.02, 0.0, tb - 0.05);//exp(tb * -10.0);\n    \n\tfloat amp = exp(max(tb, 0.0) * -20.0);\n\tv = dist(v, 1.0) * amp;\n    \n    return v;\n}\n\nfloat snare(float tb)\n{\n\tfloat aa = 1.75;\n\ttb = sqrt(tb * aa) / aa;\n    \n    float v = tri(tb, A, 2.0);\n    float env = exp(max(tb, 0.0) * -30.0);\n    float attack = v * env;\n    \n\tfloat v2 = nse(sin(tb * 4000.0) * 0.0001) \n        * smoothstep(0.0, 0.15, tb)\n        * (1.0-smoothstep(0.23, 0.25, tb));\n    float env2 = exp(max(tb - 0.05, 0.0) * -13.0);\n    float decay = v2 * env2;\n    \n    attack = dist(attack, 3.5);\n    decay += dist(attack, 2.5);\n    return attack + decay;\n}\n\nvec2 organ(float tb, float note, float octave)\n{\n    vec2 v = vec2(0);\n    float env = 0.75;///*fract(4.0 * tb) */ exp(max(tb, 0.0) * -0.1);\n    v += 0.33*sn(tb, note, octave) * env;\n    v += 0.33*dist(sqr(tb + 0.0002 * cos(8.0*tb), note, octave + 1.0), 4.0) * env;\n    v += 0.33*dist(saw(tb + 0.0002 * sin(8.0*tb), note, octave + 2.0), 2.0) * env;\n    v += 0.05*nse(sin(tb * 4000.0) * 0.0001) * env;\n    return v;\n}\n\n#define CHORD3(nl, n1, n2, n3) if(floor(beat) >= bc && floor(beat) - bc < nl){mx += 0.33 * sc * organ(tb / 16.0, n1, 3.0);        mx += 0.33 * sc * organ(tb / 16.0, n2, 3.0);        mx += 0.33 * sc * organ(tb / 16.0, n3, 3.0);    }    bc += nl;\n#define CHORD4(nl, n1, n2, n3, n4) if(floor(beat) >= bc && floor(beat) - bc < nl){mx += 0.33 * sc * organ(tb / 16.0, n1, 3.0);        mx += 0.33 * sc * organ(tb / 16.0, n2, 3.0);        mx += 0.33 * sc * organ(tb / 16.0, n3, 3.0);       mx += 0.33 * sc * organ(tb / 16.0, n4, 2.0);    }    bc += nl;\n                                  \nvec2 mainSound(float time)\n{\n    float t = time;\n\tfloat tb = mod(time * 4.0 * BPM / SEC_PER_MIN, 16.0); //fraction of beat?\n    vec2 mx = vec2(0);\n    \n    //mx += hat(fract((tb) / 2.0) * 0.25) * 0.25;\n    float drum_vol = 0.5;\n    mx += 1.0 * kick(fract(tb / 4.0) * 0.5);\n    mx += 1.0 * mixb(hat(fract((tb + 0.002 + 2.0) / 4.0) * 0.5), -1.0);\n    mx += 1.0 * mixb(hat(fract((tb + 2.0) / 4.0) * 0.5), 1.0);\n    mx += 1.0 * mixb(snare(fract((tb + 4.0) / 8.0) * 0.5), -1.0);\n    mx += 1.0 * mixb(snare(fract((tb + 0.002 + 4.0) / 8.0) * 0.5), 1.0);\n    mx *= drum_vol;\n    \n\tfloat sc = 0.75 + 0.25 * smoothstep(0.25, 0.5, fract(tb / 8.0) );//sidechain every 8th\n    //mx += 0.25 * organ(fract((tb + 2.0) / 4.0) * 0.5, D, 2.0) * sc;\n    \n    //F#, C#, A# 4 beats\n    //D#, C, G# 1.5 beats\n    //F#, C#, A#, F# 2 beats\n    //D#, A#, G, D# 8.5 beats\n    \n    //F#, C#, A# 4 beats\n    //D#, C, G# 1.5 beats\n    //F#, C#, A#, F# 2 beats\n    //D#, A#, G, D# 7 beats\n    //D#, G#, C, G# 1.5 beats\n    \n\tfloat beat = mod(time * BPM / SEC_PER_MIN, 32.0); // beat counter\n    float bc = 0.0;\n    \n    CHORD3(4.0, F, CS, AS)\n    CHORD3(1.5, DS, C, GS)\n    CHORD4(2.0, FS, CS, AS, FS)\n    CHORD4(8.5, DS, AS, G, DS)\n        \n    CHORD3(4.0, F, CS, AS)\n    CHORD3(1.5, DS, C, GS)\n    CHORD4(2.0, FS, CS, AS, FS)\n    CHORD4(7.0, DS, AS, G, DS)\n        \n    CHORD4(1.5, DS, C, GS, DS)\n    \n    return vec2(mx);\n}",
+				"name": "",
+				"description": "",
+				"type": "sound"
+			}
+		]
+	}
+}

@@ -1,0 +1,43 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "ltsXzl",
+			"date": "1439096222",
+			"viewed": 442,
+			"name": "Cubic Hermite Rectangle",
+			"username": "demofox",
+			"description": "Using ray marching to render a cubic hermite rectangle.  Raytrace bounding box, raymarch interior.  The control points of the rectangle are 1d, which makes it easier to render, but limits the control points to only moving on the Y axis.",
+			"likes": 1,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"3d",
+				"hermite"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 24,
+						"src": "/presets/cube02_0.jpg",
+						"ctype": "cubemap",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

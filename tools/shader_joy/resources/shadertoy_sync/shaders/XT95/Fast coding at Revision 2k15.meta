@@ -1,0 +1,45 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "lt2GDh",
+			"date": "1428677707",
+			"viewed": 482,
+			"name": "Fast coding at Revision 2k15",
+			"username": "XT95",
+			"description": "My first entry at Shadershowdown competition, Revision 2015.<br/>I really enjoyed this compo, I will participate next year for sure ! But i will learn english before.. ;)<br/>Thank you to organizers and all participants!",
+			"likes": 10,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"distancefield",
+				"revision",
+				"fastcoding",
+				"shadershowdown"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 21,
+						"src": "/presets/mzk04.mp3",
+						"ctype": "music",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

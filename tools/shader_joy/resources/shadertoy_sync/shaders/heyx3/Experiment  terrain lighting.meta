@@ -1,0 +1,55 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MllGW2",
+			"date": "1425401000",
+			"viewed": 489,
+			"name": "Experiment  terrain lighting",
+			"username": "heyx3",
+			"description": "Experimenting with a new idea for lighting terrain without any extra sampling of heightmaps.",
+			"likes": 0,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"3d",
+				"raymarching",
+				"terrain",
+				"diffuselighting"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 7,
+						"src": "/presets/tex06.jpg",
+						"ctype": "texture",
+						"channel": 1
+					},
+					{
+						"id": 17,
+						"src": "/presets/tex12.png",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

@@ -1,0 +1,46 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XtfXRn",
+			"date": "1433871485",
+			"viewed": 476,
+			"name": "hypertexture - trabeculum 3",
+			"username": "FabriceNeyret2",
+			"description": "Trabeculum pattern. (camera follow mouse).<br/><br/>( a variant from https://www.shadertoy.com/view/MlB3Wt ).",
+			"likes": 10,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"procedural",
+				"noise",
+				"perlin",
+				"hypertexture",
+				"trabeculum"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 30,
+						"src": "/presets/tex16.png",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

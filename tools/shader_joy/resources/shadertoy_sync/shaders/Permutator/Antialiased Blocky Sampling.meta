@@ -1,0 +1,46 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "ltfXWS",
+			"date": "1439299130",
+			"viewed": 513,
+			"name": "Antialiased Blocky Sampling",
+			"username": "Permutator",
+			"description": "Since these descriptions have a character limit, I made a big ol' comment at the top of the code instead. Wow, look at how much I wrote about this tiny little shader. I do really pointless things sometimes.",
+			"likes": 6,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"texture",
+				"antialiasing",
+				"filtering",
+				"aa"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 15,
+						"src": "/presets/tex10.png",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

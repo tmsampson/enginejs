@@ -1,0 +1,32 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4tlGDr",
+			"date": "1420997466",
+			"viewed": 383,
+			"name": "timefunc plotter",
+			"username": "wonko_rt",
+			"description": "a simple plotter for timefunctions with a grid and something like a frame",
+			"likes": 0,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"function",
+				"plot",
+				"timefunction"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

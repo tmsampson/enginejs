@@ -1,0 +1,49 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MlXGWM",
+			"date": "1422372506",
+			"viewed": 590,
+			"name": "Blue Star (Pulsar)",
+			"username": "LewisCowles1986",
+			"description": "This shader is a fork of https://www.shadertoy.com/view/4dXGR4#, all credit to the original author, I changed virtually nothing, but it is awesome!",
+			"likes": 12,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"3dnoise",
+				"perlin",
+				"star",
+				"corona",
+				"fork",
+				"first",
+				"pulsar",
+				"stellar"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 4,
+						"src": "/presets/tex03.jpg",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

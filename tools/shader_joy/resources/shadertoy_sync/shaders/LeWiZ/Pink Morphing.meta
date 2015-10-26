@@ -1,0 +1,56 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4tXGDn",
+			"date": "1420903561",
+			"viewed": 519,
+			"name": "Pink Morphing",
+			"username": "LeWiZ",
+			"description": "Morphing sequence with multiple primitives.",
+			"likes": 6,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"3d",
+				"raymarching",
+				"primitives",
+				"pink",
+				"morphing"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 6,
+						"src": "/presets/tex05.jpg",
+						"ctype": "texture",
+						"channel": 1
+					},
+					{
+						"id": 10,
+						"src": "/presets/tex09.jpg",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

@@ -1,0 +1,30 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MlXXRr",
+			"date": "1434018298",
+			"viewed": 485,
+			"name": "test_1",
+			"username": "spiralking",
+			"description": "water!",
+			"likes": 3,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"water"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

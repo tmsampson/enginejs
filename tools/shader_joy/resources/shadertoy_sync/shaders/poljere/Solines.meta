@@ -1,0 +1,56 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MtBGRt",
+			"date": "1434685452",
+			"viewed": 629,
+			"name": "Solines",
+			"username": "poljere",
+			"description": "One more reactive shader in my little collection, in this case just playing around with color and simple shapes.<br/> * Yellow Manipus <a href=\"https://www.shadertoy.com/view/ltB3RK\" class=\"regular\" target=\"_blank\">https://www.shadertoy.com/view/ltB3RK</a><br/> * Twisted Rings <a href=\"https://www.shadertoy.com/view/Xtj3DW\" class=\"regular\" target=\"_blank\">https://www.shadertoy.com/view/Xtj3DW</a>",
+			"likes": 12,
+			"published": 3,
+			"flags": 4,
+			"tags": [
+				"2d",
+				"sound",
+				"music",
+				"audio",
+				"microphone"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 30,
+						"src": "/presets/tex16.png",
+						"ctype": "texture",
+						"channel": 0
+					},
+					{
+						"id": 32,
+						"src": "/presets/mic.png",
+						"ctype": "mic",
+						"channel": 1
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

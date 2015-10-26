@@ -1,0 +1,46 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MtjGDV",
+			"date": "1432736803",
+			"viewed": 455,
+			"name": "Maindemoparty logo",
+			"username": "XT95",
+			"description": "Rest in peace ‎Christian V Artin ",
+			"likes": 4,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"maindemoparty",
+				"massilia",
+				"christian",
+				"artin",
+				"varou"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 19,
+						"src": "/presets/mzk02.mp3",
+						"ctype": "music",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

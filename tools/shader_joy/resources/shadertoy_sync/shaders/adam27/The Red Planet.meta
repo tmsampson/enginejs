@@ -1,0 +1,34 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4lfSD7",
+			"date": "1436984048",
+			"viewed": 692,
+			"name": "The Red Planet",
+			"username": "adam27",
+			"description": "My vision of Mars.",
+			"likes": 4,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"3d",
+				"terrain",
+				"planet",
+				"mars",
+				"warsztat"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

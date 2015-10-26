@@ -1,0 +1,39 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XdsXDf",
+			"date": "1407409988",
+			"viewed": 870,
+			"name": "Constant spectrum melody",
+			"username": "FabriceNeyret2",
+			"description": "This melody is just made of constant tunes interfering with each others.",
+			"likes": 14,
+			"published": 3,
+			"flags": 8,
+			"tags": [
+				"sound",
+				"illusion"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			},
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "#define N      10\n#define harmon 10\n#define df     0.1\n\nvec2 mainSound(float time)\n{\n\tfloat v = 0.; \n    \n\tfor (int i = 0; i <= N; i++) \n        for (int j=1; j <= harmon; j++) {\n            float freq = (55.+float(i)*df)*float(j);\n\t\t    v += sin(2.*3.1415927*freq*time); \n        }\n    \n    return vec2( v/float(N*harmon));  \n}",
+				"name": "",
+				"description": "",
+				"type": "sound"
+			}
+		]
+	}
+}

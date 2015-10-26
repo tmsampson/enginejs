@@ -1,0 +1,57 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MsXGzM",
+			"date": "1365838258",
+			"viewed": 3591,
+			"name": "Voronoi - rocks",
+			"username": "iq",
+			"description": "3D Voronoi (very slow!)",
+			"likes": 44,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"procedural",
+				"3d",
+				"voronoi",
+				"distancefield",
+				"marching",
+				"worley"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 4,
+						"src": "/presets/tex03.jpg",
+						"ctype": "texture",
+						"channel": 3
+					},
+					{
+						"id": 30,
+						"src": "/presets/tex16.png",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

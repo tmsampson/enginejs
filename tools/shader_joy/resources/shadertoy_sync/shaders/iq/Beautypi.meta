@@ -1,0 +1,31 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "lsfGRr",
+			"date": "1360471812",
+			"viewed": 1216,
+			"name": "Beautypi",
+			"username": "iq",
+			"description": "The logo of Beautypi. You can see the steps on the creation process here: ",
+			"likes": 20,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"procedural",
+				"2d"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

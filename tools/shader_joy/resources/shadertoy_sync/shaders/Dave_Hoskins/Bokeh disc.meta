@@ -1,0 +1,64 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4d2Xzw",
+			"date": "1410362903",
+			"viewed": 1111,
+			"name": "Bokeh disc",
+			"username": "Dave_Hoskins",
+			"description": "Uses evenly distributed samples from this idea:- http://blog.marmakoide.org/?p=1 with a few changes, like not using square roots.<br/>Update: Removed trig from the loop.<br/>",
+			"likes": 55,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"blur",
+				"bokeh"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 4,
+						"src": "/presets/tex03.jpg",
+						"ctype": "texture",
+						"channel": 2
+					},
+					{
+						"id": 7,
+						"src": "/presets/tex06.jpg",
+						"ctype": "texture",
+						"channel": 0
+					},
+					{
+						"id": 10,
+						"src": "/presets/tex09.jpg",
+						"ctype": "texture",
+						"channel": 1
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

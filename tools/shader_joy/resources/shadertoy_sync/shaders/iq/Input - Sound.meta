@@ -1,0 +1,47 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "Xds3Rr",
+			"date": "1361680213",
+			"viewed": 5569,
+			"name": "Input - Sound",
+			"username": "iq",
+			"description": "The simplest sound visualized possible. It reads the FFT (frequency analysis) and wave information and displays it. The sound is uploaded as a 512x2 texture. First row is the spectrum, second one is the waveform.",
+			"likes": 57,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"sound",
+				"fft",
+				"wave",
+				"reactive",
+				"music"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 13,
+						"src": "/presets/mzk00.mp3",
+						"ctype": "music",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

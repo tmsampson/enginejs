@@ -1,0 +1,31 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4tfXW8",
+			"date": "1436101033",
+			"viewed": 483,
+			"name": "carpet - 70 chars",
+			"username": "FabriceNeyret2",
+			"description": "70 chars without the anim",
+			"likes": 7,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"halftweet"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

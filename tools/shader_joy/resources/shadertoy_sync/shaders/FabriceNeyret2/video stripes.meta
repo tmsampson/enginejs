@@ -1,0 +1,42 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4dsSR7",
+			"date": "1398544150",
+			"viewed": 487,
+			"name": "video stripes",
+			"username": "FabriceNeyret2",
+			"description": ".",
+			"likes": 3,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"stripes"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 12,
+						"src": "/presets/vid01.webm",
+						"ctype": "video",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

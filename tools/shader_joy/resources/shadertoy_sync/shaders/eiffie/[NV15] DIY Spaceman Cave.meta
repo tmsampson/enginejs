@@ -1,0 +1,39 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "Xlj3Rh",
+			"date": "1426859378",
+			"viewed": 538,
+			"name": "[NV15] DIY Spaceman Cave",
+			"username": "eiffie",
+			"description": "You can tell your under pressure when you turn to glow.",
+			"likes": 17,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"nv15",
+				"spacejunk"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			},
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "//chords to Space Oddity intro used without permission\n\n#define PI 3.1416\nfloat rnd(float t){return 2.0*(fract(sin(t+sin(t))*33113.31541)-.5);}//from Dave Hoskins\nfloat noyz(float t){return mix(rnd(floor(t)),rnd(floor(t)+1.0),fract(t));}\n\n#define SPEEDOFSOUND 10.0\n#define DAMPING 1.0\nfloat snd(float time){\n\tfloat a1=noyz(700.0*time)*clamp(time*0.04-1.0,0.0,2.0);\n\tif(time<17.0)a1+=rnd(1764.6*time)*clamp(0.15-fract(time),0.0,1.0);\n\tif(time>17.0 && time<30.0)a1+=sin(time*2764.6*2.0)*clamp(sin(time*4.0)-0.5,0.0,1.0);\n\treturn a1;\n}\nfloat phys(float time, float dist){\n\tfloat tim=time-dist/SPEEDOFSOUND;\n\treturn snd(tim)*exp(-dist*DAMPING);\n}\nvec3 herert(vec3 fw,vec3 up){\n\tfw=normalize(fw);return normalize(cross(fw,normalize(up)));\n}\n\n\n#define bps 3.0\n\n#define C1 261.63\n#define D1 293.66\n#define E1 329.63\n#define F1 349.23\n#define G1 392.0\n#define A1 440.0\n#define B1 493.88\n\nfloat amp(float t, float b){\n\tt-=b;\n\treturn clamp(t*10.0,0.0,1.0)*exp(-t);\n}\nfloat att(float t){\n\tt=mod(t,32.0);\n\tfloat a=0.0;\n\ta+=amp(t,0.0);\n\ta+=amp(t,3.0);\n\ta+=amp(t,4.0);\n\ta+=amp(t,7.0);\n\ta+=amp(t,9.0);\n\ta+=amp(t,10.0);\n\ta+=amp(t,13.0);\n\ta+=amp(t,14.0);\n\treturn a;\n}\nvec2 mainSound(float time)\n{\n\tfloat tim=time*bps,T=time*PI;\n\tfloat EMinor=sin(T*E1)+sin(T*G1)+sin(T*B1)+sin(T*2.0*D1)+sin(T*2.0*E1);\n\tfloat FMajor=sin(T*F1)+sin(T*A1)+sin(T*2.0*C1)+sin(T*2.0*F1);\n\tEMinor*=att(tim);\n\tFMajor*=att(tim+16.0);\n\t\t\n\ttim=time*0.5;\n\tvec3 ro=vec3(cos(tim),cos(tim*0.3)*0.5,cos(tim*0.7))*min(0.5+tim*0.1+cos(tim*0.4)*0.5,1.5);\n\tvec3 rd=-ro;\n\n\tvec3 rt=0.1*herert(rd,vec3(0.0,1.0,0.0));\n\tfloat d1=length(ro-rt),d2=length(ro+rt);\n\tfloat a1=phys(time,d1),a2=phys(time,d2);\n\n\treturn vec2(EMinor,FMajor)*0.2+vec2(a1,a2);\n}\n",
+				"name": "",
+				"description": "",
+				"type": "sound"
+			}
+		]
+	}
+}

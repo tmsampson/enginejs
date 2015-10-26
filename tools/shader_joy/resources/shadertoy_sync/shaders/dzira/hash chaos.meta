@@ -1,0 +1,31 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XlB3Rt",
+			"date": "1431201421",
+			"viewed": 357,
+			"name": "hash chaos",
+			"username": "dzira",
+			"description": "just an experiment. made a small change to a hash to see what the patterns would be like.",
+			"likes": 1,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"hash"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

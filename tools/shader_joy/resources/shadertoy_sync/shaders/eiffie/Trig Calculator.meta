@@ -1,0 +1,42 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MdXGDf",
+			"date": "1380560205",
+			"viewed": 1337,
+			"name": "Trig Calculator",
+			"username": "eiffie",
+			"description": "A handy desktop emergency trig calculator. Use the mouse to select the angle. Performs the functions Sine, Cosine, ArcSine, ArcCosine and calculates PI (if you lay the rulers on the table). It has an attachable Tangent ruler but it is a bit unwieldly.",
+			"likes": 14,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"triginometry"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 6,
+						"src": "/presets/tex05.jpg",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

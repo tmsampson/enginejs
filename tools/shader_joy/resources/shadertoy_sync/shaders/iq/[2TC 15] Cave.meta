@@ -1,0 +1,45 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "ltlGDN",
+			"date": "1422253137",
+			"viewed": 1509,
+			"name": "[2TC 15] Cave",
+			"username": "iq",
+			"description": "Motionblurred relief/displaced cylinder.",
+			"likes": 23,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"motionblur",
+				"stack",
+				"tweet"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 10,
+						"src": "/presets/tex09.jpg",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

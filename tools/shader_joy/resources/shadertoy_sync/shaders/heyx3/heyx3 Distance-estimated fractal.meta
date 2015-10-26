@@ -1,0 +1,54 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "llf3Wl",
+			"date": "1426094581",
+			"viewed": 434,
+			"name": "heyx3 Distance-estimated fractal",
+			"username": "heyx3",
+			"description": "Playing around with distance-estimated 3D fractals",
+			"likes": 3,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"3d",
+				"fractal",
+				"distancefield"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 8,
+						"src": "/presets/tex07.jpg",
+						"ctype": "texture",
+						"channel": 0
+					},
+					{
+						"id": 23,
+						"src": "/presets/cube01_0.png",
+						"ctype": "cubemap",
+						"channel": 1
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

@@ -1,0 +1,52 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MlX3Ws",
+			"date": "1426117299",
+			"viewed": 462,
+			"name": "Silly Blob Shader",
+			"username": "Craxic",
+			"description": "Just a simple blob shader. I remember reading about this technique in a DirectX SDK many years ago. I thought it was awesome and I still do!",
+			"likes": 7,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"blob"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 24,
+						"src": "/presets/cube02_0.jpg",
+						"ctype": "cubemap",
+						"channel": 0
+					},
+					{
+						"id": 30,
+						"src": "/presets/tex16.png",
+						"ctype": "texture",
+						"channel": 1
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

@@ -1,0 +1,33 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "llfXzN",
+			"date": "1434887786",
+			"viewed": 424,
+			"name": "I Ching",
+			"username": "patriciogv",
+			"description": "I Ching Transformations animation, made with the material of http://thebookofshaders.com/",
+			"likes": 4,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"noise",
+				"distancefields",
+				"binary",
+				"shapes"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

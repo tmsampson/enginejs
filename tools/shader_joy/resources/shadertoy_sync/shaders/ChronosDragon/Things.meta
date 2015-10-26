@@ -1,0 +1,43 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "ltlGzf",
+			"date": "1424061214",
+			"viewed": 454,
+			"name": "Things",
+			"username": "ChronosDragon",
+			"description": "kinda cool",
+			"likes": 7,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"starfield"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 17,
+						"src": "/presets/tex12.png",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

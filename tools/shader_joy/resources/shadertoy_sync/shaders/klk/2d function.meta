@@ -1,0 +1,31 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "ldjXRG",
+			"date": "1425395026",
+			"viewed": 361,
+			"name": "2d function",
+			"username": "klk",
+			"description": "2d math",
+			"likes": 1,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"vect"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

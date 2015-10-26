@@ -1,0 +1,45 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XssGz8",
+			"date": "1362517016",
+			"viewed": 2050,
+			"name": "Barrel Blur Chroma",
+			"username": "hornet",
+			"description": "Simulates Chromatic Aberration by linearly interpolating blur-weights from red to green to blue.<br/>Original idea by Kusma: https://github.com/kusma/vlee/blob/master/data/postprocess.fx",
+			"likes": 40,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"chroma",
+				"blur",
+				"filter",
+				"post"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 11,
+						"src": "/presets/vid00.ogv",
+						"ctype": "video",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

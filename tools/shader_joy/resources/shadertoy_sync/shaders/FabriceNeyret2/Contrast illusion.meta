@@ -1,0 +1,30 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XlBGzc",
+			"date": "1430755675",
+			"viewed": 402,
+			"name": "Contrast illusion",
+			"username": "FabriceNeyret2",
+			"description": "all the diamonds are identical.",
+			"likes": 3,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"illusion"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

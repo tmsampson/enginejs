@@ -1,0 +1,33 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MtXXRB",
+			"date": "1437524059",
+			"viewed": 396,
+			"name": "Gears Animated ",
+			"username": "athlete",
+			"description": "Inspired by the tutorial by iq: https://www.youtube.com/watch?v=0ifChJ0nJfM",
+			"likes": 1,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"tutorial",
+				"distancefunction",
+				"iq"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

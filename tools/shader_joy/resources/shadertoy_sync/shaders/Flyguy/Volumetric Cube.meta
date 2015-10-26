@@ -1,0 +1,32 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XtsGRf",
+			"date": "1423876664",
+			"viewed": 442,
+			"name": "Volumetric Cube",
+			"username": "Flyguy",
+			"description": "Testing a mix of ray marching and volume ray casting.",
+			"likes": 2,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"raymarching",
+				"volume",
+				"cube"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

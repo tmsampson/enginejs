@@ -1,0 +1,33 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4lXSR4",
+			"date": "1434661564",
+			"viewed": 390,
+			"name": "Time-o-matic 4 - 255 chars",
+			"username": "FabriceNeyret2",
+			"description": "shortness challenge against https://www.shadertoy.com/view/MlfXz8<br/>Improvement of  https://www.shadertoy.com/view/ltsXR8 which was improving  https://www.shadertoy.com/view/MlXXzH ",
+			"likes": 3,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2tweets",
+				"short",
+				"timer",
+				"fonts"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

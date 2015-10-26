@@ -1,0 +1,31 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XtjSRm",
+			"date": "1442495185",
+			"viewed": 661,
+			"name": "Weird Canyon",
+			"username": "aiekick",
+			"description": "it was an attempt in my terrain experiment study to do an antelope canyon<br/>but failed to sculpt it realistic, and failed to do a good lighting.<br/>the sand is weird also ^^<br/>I must deepen the learning of light technics<img src=\"/img/emoticonHappy.png\"/>",
+			"likes": 8,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"weird",
+				"canyon"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

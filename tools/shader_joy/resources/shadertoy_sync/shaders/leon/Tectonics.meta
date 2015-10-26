@@ -1,0 +1,53 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XtB3zz",
+			"date": "1426728505",
+			"viewed": 451,
+			"name": "Tectonics",
+			"username": "leon",
+			"description": "Evolving planet with rising and falling buildings.<br/>",
+			"likes": 3,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"planet",
+				"tectonics"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 8,
+						"src": "/presets/tex07.jpg",
+						"ctype": "texture",
+						"channel": 0
+					},
+					{
+						"id": 15,
+						"src": "/presets/tex10.png",
+						"ctype": "texture",
+						"channel": 1
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

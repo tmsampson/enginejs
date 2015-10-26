@@ -1,0 +1,34 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4tsSRj",
+			"date": "1438299299",
+			"viewed": 488,
+			"name": "No Man's Portal",
+			"username": "mech4rhork",
+			"description": "Portal effect from No Man's Sky: Portal gameplay trailer<br/>https://www.youtube.com/watch?v=WQhSP82uhY4",
+			"likes": 1,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"procedural",
+				"2d",
+				"noise",
+				"lighting",
+				"bump"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

@@ -1,0 +1,54 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "ls2GWc",
+			"date": "1394722879",
+			"viewed": 495,
+			"name": "disparity4",
+			"username": "FabriceNeyret2",
+			"description": "C: toggles greyscale vs colors<br/>G: toggles grid vs dots<br/>D: toggles deformations vs displacement<br/>S: toggles stereo (horiz displ only) vs radial disp<br/>M: mark central dots<br/>SPACE: toggles mouse tune center or color<br/>#define NB : number of dots vertically",
+			"likes": 1,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"illusion",
+				"autostereogram",
+				"stereovision"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 5,
+						"src": "/presets/tex04.jpg",
+						"ctype": "texture",
+						"channel": 0
+					},
+					{
+						"id": 33,
+						"src": "/presets/tex00.jpg",
+						"ctype": "keyboard",
+						"channel": 2
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

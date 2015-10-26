@@ -1,0 +1,44 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "Ml2SDD",
+			"date": "1443916070",
+			"viewed": 300,
+			"name": "Black And White Experiment",
+			"username": "jackdavenport",
+			"description": "A test which uses two techniques to create a B/W effect. The left uses a dot product, and the right calculates the mean of the RGB channels. The line in the center inverts the colors.",
+			"likes": 1,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"test",
+				"math",
+				"greyscale"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 11,
+						"src": "/presets/vid00.ogv",
+						"ctype": "video",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

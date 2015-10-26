@@ -1,0 +1,32 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XslXWn",
+			"date": "1399111970",
+			"viewed": 379,
+			"name": "Hyper-lightweight XOR ...",
+			"username": "FabriceNeyret2",
+			"description": "Yes we can :-D<br/><br/>( see https://www.shadertoy.com/view/4ssSWn challenge )",
+			"likes": 2,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"circles",
+				"xor"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

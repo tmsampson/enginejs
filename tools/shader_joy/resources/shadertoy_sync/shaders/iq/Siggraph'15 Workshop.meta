@@ -1,0 +1,46 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MtsSRf",
+			"date": "1439835376",
+			"viewed": 853,
+			"name": "Siggraph'15 Workshop",
+			"username": "iq",
+			"description": "This is the full code for the 90 minutes workshop on Shadertoy creation held last week at Siggraph. Thanks to everybody who attended!",
+			"likes": 19,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"3d",
+				"raymarching",
+				"tutorial",
+				"course",
+				"siggraph"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 10,
+						"src": "/presets/tex09.jpg",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

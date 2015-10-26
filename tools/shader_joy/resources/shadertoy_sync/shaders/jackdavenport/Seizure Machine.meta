@@ -1,0 +1,31 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "Xlj3D3",
+			"date": "1433129855",
+			"viewed": 376,
+			"name": "Seizure Machine",
+			"username": "jackdavenport",
+			"description": "If you are prone to seizures, please watch in fullscreen",
+			"likes": 1,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"flashing",
+				"seizure"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

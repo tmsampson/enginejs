@@ -1,0 +1,64 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4tS3Rw",
+			"date": "1427429353",
+			"viewed": 588,
+			"name": "Preparations",
+			"username": "movAX13h",
+			"description": "An army is moving east. <br/>Mixture of a 3D scene with 2D sprites.",
+			"likes": 13,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"night",
+				"ants",
+				"sandy"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 3,
+						"src": "/presets/tex02.jpg",
+						"ctype": "texture",
+						"channel": 0
+					},
+					{
+						"id": 26,
+						"src": "/presets/cube04_0.png",
+						"ctype": "cubemap",
+						"channel": 2
+					},
+					{
+						"id": 35,
+						"src": "/presets/mzk06.mp3",
+						"ctype": "music",
+						"channel": 1
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

@@ -1,0 +1,30 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "Xls3z2",
+			"date": "1423432680",
+			"viewed": 622,
+			"name": "Another Kaliset Mod",
+			"username": "eiffie",
+			"description": "Inspired by <a href=\"https://www.shadertoy.com/view/XtlGDH\" class=\"regular\" target=\"_blank\">https://www.shadertoy.com/view/XtlGDH</a>",
+			"likes": 13,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"kaliset"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

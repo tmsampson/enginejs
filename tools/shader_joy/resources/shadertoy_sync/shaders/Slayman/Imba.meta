@@ -1,0 +1,42 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4lsXWs",
+			"date": "1440749282",
+			"viewed": 45,
+			"name": "Imba",
+			"username": "Slayman",
+			"description": "mind blown",
+			"likes": 0,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"ecstasy"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 12,
+						"src": "/presets/vid01.webm",
+						"ctype": "video",
+						"channel": 1
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

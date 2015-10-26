@@ -1,0 +1,33 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MdfSDH",
+			"date": "1400139574",
+			"viewed": 726,
+			"name": "SH - directional lights",
+			"username": "iq",
+			"description": "Testing 3-band SH encoding of directional lights. It compares the SH reconstruction to the ground truth.",
+			"likes": 12,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"3d",
+				"sphericalharmonics",
+				"harmonic",
+				"sh"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

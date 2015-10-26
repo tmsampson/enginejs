@@ -1,0 +1,46 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MsjGRt",
+			"date": "1392933372",
+			"viewed": 689,
+			"name": "[NV15] Invader's",
+			"username": "iapafoto",
+			"description": "Try to make a short animation with various sequences, objects, effects, movements, materials and textures<br/>[Mouse] Control camera angle<br/>(code is not cleaned for the moment)",
+			"likes": 10,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"texture",
+				"space",
+				"planet",
+				"animation",
+				"invaders"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 30,
+						"src": "/presets/tex16.png",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

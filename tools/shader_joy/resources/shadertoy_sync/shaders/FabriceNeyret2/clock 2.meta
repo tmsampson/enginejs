@@ -1,0 +1,42 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "ldS3Wt",
+			"date": "1394993852",
+			"viewed": 527,
+			"name": "clock 2",
+			"username": "FabriceNeyret2",
+			"description": "SPACE : 3D version",
+			"likes": 8,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"clock"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 33,
+						"src": "/presets/tex00.jpg",
+						"ctype": "keyboard",
+						"channel": 2
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

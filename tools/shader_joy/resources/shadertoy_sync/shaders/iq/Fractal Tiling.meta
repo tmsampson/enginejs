@@ -1,0 +1,32 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "Ml2GWy",
+			"date": "1432180668",
+			"viewed": 1903,
+			"name": "Fractal Tiling",
+			"username": "iq",
+			"description": "Inspired by the previous <a href=\"https://www.shadertoy.com/view/ll2GWy\"  class=\"regular\" target=\"_blank\">Smooth XOR</a> experiment.",
+			"likes": 43,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"xor",
+				"tiling"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

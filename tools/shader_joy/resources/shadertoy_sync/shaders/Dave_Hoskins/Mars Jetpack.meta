@@ -1,0 +1,44 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "Md23Wz",
+			"date": "1386531457",
+			"viewed": 1926,
+			"name": "Mars Jetpack",
+			"username": "Dave_Hoskins",
+			"description": "Uses sphere tracing to accumulate normals across the landscape. Materials are calculated after the tracing loop, so only the normal can be used as reference. Sphere diameter to create depth of field is distance squared.  http://youtu.be/2eSb8zB4dBo",
+			"likes": 45,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"spheretracing",
+				"mars",
+				"marsjetpack"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 17,
+						"src": "/presets/tex12.png",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

@@ -1,0 +1,53 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "Xl2SRR",
+			"date": "1441277044",
+			"viewed": 469,
+			"name": "Firework Show",
+			"username": "yibojiang",
+			"description": "Experiment particle system and some effects.",
+			"likes": 10,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"firework",
+				"particlesystem"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 16,
+						"src": "/presets/tex11.png",
+						"ctype": "texture",
+						"channel": 0
+					},
+					{
+						"id": 21,
+						"src": "/presets/mzk04.mp3",
+						"ctype": "music",
+						"channel": 1
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

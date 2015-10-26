@@ -1,0 +1,32 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XtsGWH",
+			"date": "1421701883",
+			"viewed": 400,
+			"name": "[2TC 15] Light Wave",
+			"username": "aiekick",
+			"description": "[2TC 15] Light Wave",
+			"likes": 0,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"wave",
+				"light",
+				"2tc15"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

@@ -1,0 +1,62 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XljSRK",
+			"date": "1444965215",
+			"viewed": 333,
+			"name": "Trick!",
+			"username": "iq",
+			"description": "Trick",
+			"likes": 4,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 1,
+						"src": "/presets/tex00.jpg",
+						"ctype": "texture",
+						"channel": 2
+					},
+					{
+						"id": 9,
+						"src": "/presets/tex08.jpg",
+						"ctype": "texture",
+						"channel": 0
+					},
+					{
+						"id": 30,
+						"src": "/presets/tex16.png",
+						"ctype": "texture",
+						"channel": 1
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

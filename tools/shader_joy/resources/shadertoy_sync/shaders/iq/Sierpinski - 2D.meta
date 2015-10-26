@@ -1,0 +1,32 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "Md2GzR",
+			"date": "1386825059",
+			"viewed": 670,
+			"name": "Sierpinski - 2D",
+			"username": "iq",
+			"description": "2D Sierpinski fractal. See  for the 3D version.",
+			"likes": 3,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"fractal",
+				"sierpinski"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

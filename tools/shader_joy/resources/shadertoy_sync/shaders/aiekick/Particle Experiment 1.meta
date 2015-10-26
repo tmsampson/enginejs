@@ -1,0 +1,44 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MtXGDM",
+			"date": "1422386295",
+			"viewed": 422,
+			"name": "Particle Experiment 1",
+			"username": "aiekick",
+			"description": "Particle Experiment 1",
+			"likes": 2,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"experiment",
+				"1",
+				"particle"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 1,
+						"src": "/presets/tex00.jpg",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

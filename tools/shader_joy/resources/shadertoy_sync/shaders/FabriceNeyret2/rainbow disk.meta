@@ -1,0 +1,30 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "Xt2XDW",
+			"date": "1443736938",
+			"viewed": 363,
+			"name": "rainbow disk",
+			"username": "FabriceNeyret2",
+			"description": ".",
+			"likes": 7,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"rainbow"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

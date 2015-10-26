@@ -1,0 +1,63 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XsX3Dr",
+			"date": "1366977990",
+			"viewed": 2936,
+			"name": "Palindrome",
+			"username": "P_Malin",
+			"description": "My attempt at a demo like sequence in a shader.<br/>The code is a bit messy. I was just having fun.<br/>The framerate is low. I may try to optimize some bits and pieces.",
+			"likes": 49,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"demo",
+				"shader"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 15,
+						"src": "/presets/tex10.png",
+						"ctype": "texture",
+						"channel": 1
+					},
+					{
+						"id": 21,
+						"src": "/presets/mzk04.mp3",
+						"ctype": "music",
+						"channel": 3
+					},
+					{
+						"id": 26,
+						"src": "/presets/cube04_0.png",
+						"ctype": "cubemap",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

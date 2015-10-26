@@ -1,0 +1,46 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4lsXWH",
+			"date": "1436429607",
+			"viewed": 461,
+			"name": "texture sampling gamma",
+			"username": "hornet",
+			"description": "inspired by https://www.shadertoy.com/view/4tfXDH - see also https://www.shadertoy.com/view/XtsSzH<br/>Note that the sampled texture is not meant to be used as an image, rather for it's values as a lookup-table.<br/>The result is valid none-the-less.",
+			"likes": 1,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"filtering",
+				"mipmap",
+				"sampling",
+				"gamma",
+				"srgb"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 30,
+						"src": "/presets/tex16.png",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

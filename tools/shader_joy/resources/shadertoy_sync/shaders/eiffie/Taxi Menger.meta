@@ -1,0 +1,33 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XtSGWt",
+			"date": "1433357918",
+			"viewed": 370,
+			"name": "Taxi Menger",
+			"username": "eiffie",
+			"description": "It is new to me - hence play.",
+			"likes": 2,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"menger",
+				"manhattan",
+				"recursion",
+				"taxicab"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

@@ -1,0 +1,32 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XlSGWG",
+			"date": "1431625463",
+			"viewed": 690,
+			"name": "FragCoord",
+			"username": "iq",
+			"description": "FragCoord do not run from 0 to resolution-1. They run from 0.5 to resolution-0.5, for pixels are sampled at their geometrical center.",
+			"likes": 5,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"glfragcoord",
+				"fragcoord"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

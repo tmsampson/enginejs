@@ -1,0 +1,35 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "Xd23Dh",
+			"date": "1389822885",
+			"viewed": 14559,
+			"name": "Voronoise",
+			"username": "iq",
+			"description": "Patterns such as cell-noise, perlin noise and voronoi can be seen as particular cases of a more general pattern, which I call \"voronoise\". More info <a href=\" http://iquilezles.org/www/articles/voronoise/voronoise.htm\"  class=\"regular\" target=\"_blank\">in this article</a>. ",
+			"likes": 63,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"procedural",
+				"2d",
+				"voronoi",
+				"noise",
+				"perlin",
+				"worley"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

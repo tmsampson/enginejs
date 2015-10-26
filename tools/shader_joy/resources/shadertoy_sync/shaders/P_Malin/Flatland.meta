@@ -1,0 +1,31 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "ldXGDr",
+			"date": "1367327090",
+			"viewed": 2239,
+			"name": "Flatland",
+			"username": "P_Malin",
+			"description": "An optical illusion to make a regular grid appear distorted. Click to remove the spots.",
+			"likes": 32,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"illusion"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

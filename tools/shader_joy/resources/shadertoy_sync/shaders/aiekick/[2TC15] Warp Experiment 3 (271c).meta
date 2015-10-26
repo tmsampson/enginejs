@@ -1,0 +1,47 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "ltXSWN",
+			"date": "1436792690",
+			"viewed": 545,
+			"name": "[2TC15] Warp Experiment 3 (271c)",
+			"username": "aiekick",
+			"description": "reduced version of <a href=\"https://www.shadertoy.com/view/ltXXW4\"  class=\"regular\" target=\"_blank\">Warp Experiment 3</a><br/>mouse available (thanks to coyote <img src=\"/img/emoticonHappy.png\"/>)<br/>483 chars for the original and 250 for the shortest version (271 with mouse and mouse test)",
+			"likes": 3,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"experiment",
+				"warp",
+				"code",
+				"3",
+				"short",
+				"reduced"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 2,
+						"src": "/presets/tex01.jpg",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

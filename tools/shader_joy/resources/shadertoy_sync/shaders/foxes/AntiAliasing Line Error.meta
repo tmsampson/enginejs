@@ -1,0 +1,33 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "Xt2XWm",
+			"date": "1444225593",
+			"viewed": 380,
+			"name": "AntiAliasing Line Error",
+			"username": "foxes",
+			"description": "some fing crazy.<br/>first i am write aaLine, and when i try experiment, i received this result when aaLine was a mistake - aaLineError<br/>and i save it like shader on shadertoy.",
+			"likes": 6,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"procedural",
+				"2d",
+				"lines",
+				"splash"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

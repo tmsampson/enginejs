@@ -1,0 +1,31 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4tSSzt",
+			"date": "1445694090",
+			"viewed": 113,
+			"name": "crowded spheres",
+			"username": "FabriceNeyret2",
+			"description": "one more variant of https://www.shadertoy.com/view/ltfXRM ",
+			"likes": 4,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"3d",
+				"raymarching"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

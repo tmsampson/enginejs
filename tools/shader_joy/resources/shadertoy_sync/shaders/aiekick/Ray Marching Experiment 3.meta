@@ -1,0 +1,47 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "Xts3Dn",
+			"date": "1420918668",
+			"viewed": 448,
+			"name": "Ray Marching Experiment 3",
+			"username": "aiekick",
+			"description": "Ray Marching Experiment 3 glassy",
+			"likes": 1,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"3d",
+				"ray",
+				"displacement",
+				"experiment",
+				"marching",
+				"glass"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 22,
+						"src": "/presets/cube00_0.jpg",
+						"ctype": "cubemap",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

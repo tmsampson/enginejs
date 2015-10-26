@@ -1,0 +1,62 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XlXGzS",
+			"date": "1425158361",
+			"viewed": 436,
+			"name": "Martian Elevated",
+			"username": "ForestCSharp",
+			"description": "Modifications to the Elevated Shader created by iq",
+			"likes": 1,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"proceduralterrain"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 7,
+						"src": "/presets/tex06.jpg",
+						"ctype": "texture",
+						"channel": 2
+					},
+					{
+						"id": 17,
+						"src": "/presets/tex12.png",
+						"ctype": "texture",
+						"channel": 0
+					},
+					{
+						"id": 30,
+						"src": "/presets/tex16.png",
+						"ctype": "texture",
+						"channel": 1
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

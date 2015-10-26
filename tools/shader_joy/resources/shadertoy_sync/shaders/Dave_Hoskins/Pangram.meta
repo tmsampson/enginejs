@@ -1,0 +1,33 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XdXGRB",
+			"date": "1372701127",
+			"viewed": 1932,
+			"name": "Pangram",
+			"username": "Dave_Hoskins",
+			"description": "Some text display code I took from Sandbox, thanks Dan!<br/>I've edited some of the letters and removed repeated line segments, and added a moving caret.<br/>I was going to do more phrases, but it ran out of memory because of the same old Windows story.<br/><br/>",
+			"likes": 60,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"text",
+				"alphabet",
+				"pangram"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

@@ -1,0 +1,48 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4slGz4",
+			"date": "1364005898",
+			"viewed": 5979,
+			"name": "Demo - Volumetric Lines",
+			"username": "iq",
+			"description": "Volumetric lines, with a bit of (quickly made) synchronization to JosSs' track.",
+			"likes": 102,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"3d",
+				"sound",
+				"reactive",
+				"music",
+				"demoscene",
+				"volumetric",
+				"demo"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 20,
+						"src": "/presets/mzk03.mp3",
+						"ctype": "music",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

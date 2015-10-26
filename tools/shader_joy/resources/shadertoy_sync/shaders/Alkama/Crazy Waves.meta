@@ -1,0 +1,31 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XtsXRX",
+			"date": "1438554186",
+			"viewed": 618,
+			"name": "Crazy Waves",
+			"username": "Alkama",
+			"description": "A more hectic (and simpler) version of \"waves by bonniem\" https://www.shadertoy.com/view/4dsGzH",
+			"likes": 4,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"waves"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

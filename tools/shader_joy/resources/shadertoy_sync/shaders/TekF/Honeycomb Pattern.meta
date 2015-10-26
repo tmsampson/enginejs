@@ -1,0 +1,30 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "ltXGWS",
+			"date": "1424688972",
+			"viewed": 470,
+			"name": "Honeycomb Pattern",
+			"username": "TekF",
+			"description": "After reading Wikipedia pages about tessellation, I wanted to see what it looked like to use a regular honeycomb of rhombic dodecahedra as a texture. I'm quite pleased with the result, will definitely be using it. ",
+			"likes": 7,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"honeycomb"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

@@ -1,0 +1,31 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XljGR3",
+			"date": "1430923697",
+			"viewed": 410,
+			"name": "Alien Cavern",
+			"username": "aiekick",
+			"description": "Alien Cavern",
+			"likes": 4,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"alien",
+				"cavern"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

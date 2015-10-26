@@ -1,0 +1,44 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MllXzj",
+			"date": "1438205531",
+			"viewed": 446,
+			"name": "swirl 2",
+			"username": "FabriceNeyret2",
+			"description": "trying various swirling functions.",
+			"likes": 2,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"swirl",
+				"short"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 8,
+						"src": "/presets/tex07.jpg",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

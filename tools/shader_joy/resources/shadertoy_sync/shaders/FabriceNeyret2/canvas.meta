@@ -1,0 +1,72 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XdBSWR",
+			"date": "1410613824",
+			"viewed": 430,
+			"name": "canvas",
+			"username": "FabriceNeyret2",
+			"description": "tune with mouse x and y.  <br/>Space to show tiles.",
+			"likes": 2,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"canvas"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 2,
+						"src": "/presets/tex01.jpg",
+						"ctype": "texture",
+						"channel": 0
+					},
+					{
+						"id": 6,
+						"src": "/presets/tex05.jpg",
+						"ctype": "texture",
+						"channel": 1
+					},
+					{
+						"id": 8,
+						"src": "/presets/tex07.jpg",
+						"ctype": "texture",
+						"channel": 2
+					},
+					{
+						"id": 33,
+						"src": "/presets/tex00.jpg",
+						"ctype": "keyboard",
+						"channel": 3
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

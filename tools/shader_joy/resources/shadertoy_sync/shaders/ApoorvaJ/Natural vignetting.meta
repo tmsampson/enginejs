@@ -1,0 +1,30 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4lSXDm",
+			"date": "1444029125",
+			"viewed": 320,
+			"name": "Natural vignetting",
+			"username": "ApoorvaJ",
+			"description": "Based on Keijiro Takahashi's Kino Vignette<br/>https://github.com/keijiro/KinoVignette",
+			"likes": 6,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"vignette"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

@@ -1,0 +1,53 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MdBXR3",
+			"date": "1414360243",
+			"viewed": 5611,
+			"name": "Jack-o'-lantern",
+			"username": "P_Malin",
+			"description": "A shader doodle for halloween",
+			"likes": 63,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"halloween",
+				"pumpkin"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 2,
+						"src": "/presets/tex01.jpg",
+						"ctype": "texture",
+						"channel": 1
+					},
+					{
+						"id": 4,
+						"src": "/presets/tex03.jpg",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

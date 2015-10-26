@@ -1,0 +1,33 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "ltfSWn",
+			"date": "1360571561",
+			"viewed": 1407,
+			"name": "Mandelbulb - derivative",
+			"username": "iq",
+			"description": "A Mandelbulb implementation. Two tricks worth noting: [1] it doesn't use pow() functions to compute complex number powers, but it uses algebra instead.  [2] the distance estimator (DE) is analytic, not based on numerically computed gradient.  ",
+			"likes": 2,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"3d",
+				"raymarching",
+				"fractal",
+				"distancefield"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

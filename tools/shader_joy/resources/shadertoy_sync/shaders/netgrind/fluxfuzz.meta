@@ -1,0 +1,32 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4l2GRc",
+			"date": "1430978701",
+			"viewed": 399,
+			"name": "fluxfuzz",
+			"username": "netgrind",
+			"description": "t+ 1:00 - t+ 1:30",
+			"likes": 2,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"color",
+				"psychedelic",
+				"dalt"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

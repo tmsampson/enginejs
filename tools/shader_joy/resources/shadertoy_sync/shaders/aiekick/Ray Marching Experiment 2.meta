@@ -1,0 +1,52 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4ll3Wn",
+			"date": "1420839557",
+			"viewed": 598,
+			"name": "Ray Marching Experiment 2",
+			"username": "aiekick",
+			"description": "3D Displacement om my \"strawberry milk\" shader https://www.shadertoy.com/view/4tX3R4<br/>by default the displacement is done on a sphere but if you comment the line 4 you can have a box<br/>Mouse control : axis x => camera elevation // axis y => camera distance",
+			"likes": 6,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"3d",
+				"ray",
+				"cube",
+				"texture",
+				"shadow",
+				"experiment",
+				"marching",
+				"ao",
+				"brdf",
+				"soft",
+				"milk"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 22,
+						"src": "/presets/cube00_0.jpg",
+						"ctype": "cubemap",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

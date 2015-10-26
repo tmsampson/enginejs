@@ -1,0 +1,44 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "Xlf3DB",
+			"date": "1424687172",
+			"viewed": 384,
+			"name": "ngWaves03",
+			"username": "netgrind",
+			"description": "mouse moves stuff around",
+			"likes": 0,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"waves",
+				"rgb",
+				"netgrind"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 16,
+						"src": "/presets/tex11.png",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

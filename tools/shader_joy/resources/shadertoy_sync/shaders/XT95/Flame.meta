@@ -1,0 +1,32 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MdX3zr",
+			"date": "1360969512",
+			"viewed": 49862,
+			"name": "Flame",
+			"username": "XT95",
+			"description": "Simple flame in distance field.",
+			"likes": 306,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"3d",
+				"distancefield",
+				"transparency"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

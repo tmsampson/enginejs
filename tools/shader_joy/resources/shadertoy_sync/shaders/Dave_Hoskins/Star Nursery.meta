@@ -1,0 +1,56 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XsfGzH",
+			"date": "1362167366",
+			"viewed": 5813,
+			"name": "Star Nursery",
+			"username": "Dave_Hoskins",
+			"description": "Reminded me of Hubble Star-Nursery images, well, a little bit anyway.<br/><br/>Just sit and watch it full screen for a while, and feel the interstellar beginnings wash over you! <img src=\"/img/emoticonHappy.png\"/> ",
+			"likes": 111,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"procedural",
+				"3d",
+				"raytracing",
+				"3dnoise",
+				"2dnoise"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 30,
+						"src": "/presets/tex16.png",
+						"ctype": "texture",
+						"channel": 0
+					},
+					{
+						"id": 35,
+						"src": "/presets/mzk06.mp3",
+						"ctype": "music",
+						"channel": 1
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

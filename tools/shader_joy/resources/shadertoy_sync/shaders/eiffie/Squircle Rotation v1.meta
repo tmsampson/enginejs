@@ -1,0 +1,43 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XtXSRn",
+			"date": "1433852493",
+			"viewed": 393,
+			"name": "Squircle Rotation v1",
+			"username": "eiffie",
+			"description": "An attempt at rotation that maintains the \"squircle\" (super-quadratic) distance.<br/>This is close but if you know a better way (faster or more accurate or just more logical) please comment.",
+			"likes": 2,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"rotation",
+				"squircle"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 5,
+						"src": "/presets/tex04.jpg",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

@@ -1,0 +1,32 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MsBXWh",
+			"date": "1411331213",
+			"viewed": 344,
+			"name": "Circle - tangents",
+			"username": "Doublefresh",
+			"description": "More circles! This time: how to find tangent lines to circles. You can move the blue circle around.",
+			"likes": 6,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"circles",
+				"geometry",
+				"tangents"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

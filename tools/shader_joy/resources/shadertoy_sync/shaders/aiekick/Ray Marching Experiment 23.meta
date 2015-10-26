@@ -1,0 +1,45 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4lj3Ww",
+			"date": "1430089093",
+			"viewed": 2236,
+			"name": "Ray Marching Experiment 23",
+			"username": "aiekick",
+			"description": "I wanted to explore many other pattern <img src=\"/img/emoticonHappy.png\"/><br/>Click on cell and keep down to see in full size",
+			"likes": 33,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"ray",
+				"experiment",
+				"marching",
+				"23"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 22,
+						"src": "/presets/cube00_0.jpg",
+						"ctype": "cubemap",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

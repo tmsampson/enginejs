@@ -1,0 +1,44 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XlSGzd",
+			"date": "1431274100",
+			"viewed": 451,
+			"name": "ConvolutionMatrices",
+			"username": "SmartPointer",
+			"description": "Convolution matrices - You can change the strength in line 1 and the kernel in line 62.",
+			"likes": 1,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"filter",
+				"convolution"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 36,
+						"src": "/presets/vid03.webm",
+						"ctype": "video",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

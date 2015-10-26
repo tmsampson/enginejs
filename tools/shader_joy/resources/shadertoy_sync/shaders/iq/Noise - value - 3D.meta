@@ -1,0 +1,44 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4sfGzS",
+			"date": "1372878685",
+			"viewed": 8384,
+			"name": "Noise - value - 3D",
+			"username": "iq",
+			"description": "A test for LUT based 3D (value) noise which is much faster than its hash based (purely procedural) counterpart. <a href=\"http://en.wikipedia.org/wiki/Value_noise\" class=\"regular\" target=\"_blank\">http://en.wikipedia.org/wiki/Value_noise</a>",
+			"likes": 69,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"3d",
+				"noise",
+				"perlin"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 30,
+						"src": "/presets/tex16.png",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

@@ -1,0 +1,30 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "lts3Ds",
+			"date": "1426382542",
+			"viewed": 390,
+			"name": "Area of Square Segment",
+			"username": "paniq",
+			"description": "computes the area of a square snippet as cut by a line; Useful to compute how much area a new voronoi cell would steal from a square cell as part of a voronoi / natural neighbor weight computation.",
+			"likes": 1,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"mattdamon"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

@@ -1,0 +1,43 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XtXGWn",
+			"date": "1420590764",
+			"viewed": 457,
+			"name": "Sonar",
+			"username": "jherico",
+			"description": "A work in progress, public so I can test the shadertoy API",
+			"likes": 3,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"3d",
+				"shadertoyvr"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 30,
+						"src": "/presets/tex16.png",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

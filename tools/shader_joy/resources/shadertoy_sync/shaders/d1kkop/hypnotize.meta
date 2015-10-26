@@ -1,0 +1,31 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "Mt2SzW",
+			"date": "1442163872",
+			"viewed": 480,
+			"name": "hypnotize",
+			"username": "d1kkop",
+			"description": "hypnotize",
+			"likes": 0,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"procedural",
+				"2d"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

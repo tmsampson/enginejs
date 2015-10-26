@@ -1,0 +1,57 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MdX3Rr",
+			"date": "1360495251",
+			"viewed": 55787,
+			"name": "Elevated",
+			"username": "iq",
+			"description": "A raymarched version of my demo Elevated from 2009",
+			"likes": 275,
+			"published": 3,
+			"flags": 1,
+			"tags": [
+				"procedural",
+				"3d",
+				"raymarching",
+				"distancefield",
+				"terrain",
+				"vr"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 4,
+						"src": "/presets/tex03.jpg",
+						"ctype": "texture",
+						"channel": 2
+					},
+					{
+						"id": 17,
+						"src": "/presets/tex12.png",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

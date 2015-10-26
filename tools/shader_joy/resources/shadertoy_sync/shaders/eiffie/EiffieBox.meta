@@ -1,0 +1,30 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XlXGWf",
+			"date": "1425500649",
+			"viewed": 1021,
+			"name": "EiffieBox",
+			"username": "eiffie",
+			"description": "EiffieBox by eiffie... its a box... it says eiffie...  so I called it that.",
+			"likes": 18,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"volumelight"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

@@ -1,0 +1,33 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XdBGzd",
+			"date": "1392082162",
+			"viewed": 23288,
+			"name": "Sphere - projection",
+			"username": "iq",
+			"description": "Analytic projection of a sphere to screen pixels. Spheres in world space become ellipses in clip space. The ellipses can be analytically determined from the camera and sphere geometry. This shaders computers their center, axis and area in raster pixels.",
+			"likes": 46,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"3d",
+				"sphere",
+				"projection",
+				"analytic"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

@@ -1,0 +1,38 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MlXGDn",
+			"date": "1420660971",
+			"viewed": 1250,
+			"name": "Palmetto Stalk",
+			"username": "eiffie",
+			"description": "Jack and the Palmetto Stalk by eiffie ... are these supposed to make sense? ",
+			"likes": 20,
+			"published": 3,
+			"flags": 8,
+			"tags": [
+				"plant"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			},
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "//this is a test of fake harmonics, one channel has a typical harmonics generating loop\n//the other channel has the fakey\n\n#define bps 5.0\nfloat nofs(float n){//the song's \"random\" ring\n    n=mod(n,8.0);\n    if(n<1.0)return -4.0;\n    if(n<2.0)return 0.0;\n    if(n<3.0)return -1.0;\n    if(n<4.0)return 3.0;\n    if(n<5.0)return 5.0;\n    if(n<6.0)return 0.0;\n    if(n<7.0)return -4.0;\n    return 2.0;\n}\nfloat scale(float note){//throws out dissonant tones\n\tfloat n2=mod(note,12.0);\n\tif((n2==1.0)||(n2==4.0)||(n2==6.0)||(n2==9.0)||(n2==11.0))note=-100.0;//minor\n\t//if((n2==1.0)||(n2==2.0)||(n2==4.0)||(n2==8.0)||(n2==9.0)||(n2==11.0))note=-100.0;//blues\n\treturn note;\n}\n#define TAO 6.283185\n// note number to frequency  from https://www.shadertoy.com/view/ldfSW2\nfloat ntof(float n){if(n<12.0)return 0.0;return 440.0 * pow(2.0, (n - 67.0) / 12.0);}\nfloat ssaw(float t){return 4.0*abs(fract(t)-0.5)-1.0;}\nfloat rnd(float t){return fract(sin(t*341.545234)*1531.2341);}\nfloat srnd(float t){float t2=fract(t);return mix(rnd(floor(t)),rnd(floor(t+1.0)),t2*t2*(3.0-2.0*t2));}\nvec2 harm(float x,float ps,float hm){//phase shift, # of harmonics\n\tfloat sx=sign(mod(x,2.0)-1.0)+ps,afx=abs(fract(x)-0.5),p3=pow(afx*2.0,3.0);\n\tfloat a=mix(1.0-2.0*fract(x),-0.4+1.333*p3,ps);\n\ta+=sin(TAO*(x*(hm+0.5)+sx*0.25))*(0.3/hm+1.2*p3/hm);\n\ta*=pow(1.0-afx*2.0,0.25/hm);//fake\n\n\tfloat a2=0.0,s=1.0;\n\tfor(int i=0;i<100;i++){//typical loop\n\t\tif(float(i)<hm){\n\t\t\ta2+=sin((x*s+ps)*TAO)/s;\n\t\t\ts+=1.0;\n\t\t}else break;\n\t}\n\ta2*=0.5;\n\treturn vec2(a,a2);\n}\nvec2 inst(float n,float t,float bt,int i){\n\tfloat f=ntof(scale(n)),ps=0.0,hm=0.0;\n\tif(f<24.0)return vec2(0.0);\t\n\tif(i==0){ps=pow(bt*0.5,0.25);hm=floor(4.0+bt*20.0);}\n\t//else if(i==1){ps=bt*0.5;hm=bt*0.05;f*=0.5;}\n\telse if(i==9){ps=bt*rnd(t);hm=100.0-40.0*bt;f*=0.5+0.5*rnd(t);}\n\tvec2 a=harm(f*t,ps,hm);\n\ta=sign(a)*pow(clamp(abs(a),0.0,1.0),vec2(70.0/n));\n\ta*=exp(-bt*(0.8+float(i)))*min(min(bt,2.0-bt)*100.0,1.0)*60.0/n*(0.8+0.2*rnd(n));\n\treturn a;\n}\nvec2 mainSound(float time)\n{\n\tint i0=0,i1=0,i1h=0,i2=0,i2h=0;\n\tfloat tim=time*bps,b=floor(tim);\n\tfloat t0=fract(tim),t1=mod(tim,2.0)*0.5,t2=mod(tim,4.0)*0.25;\n\tfloat n2=nofs(b*0.0625)+nofs(b*0.125)+nofs(b*0.25);\n\tfloat n1=n2+nofs(b*0.5),n0=n1+nofs(b);\n\n\tvec2 a0=inst(n0+72.0,time,t0,i0);\n\tvec2 a1=inst(n1+60.0,time,t1,i1);\n\tvec2 a1h=inst(n1+65.0,time*1.005,t1,i1h);\n\tvec2 a1hb=inst(n1+64.0,time,t1,9);\n\tvec2 a2=inst(n2+48.0,time,t2,i2);\n\tvec2 a2h=inst(n2+53.0,time,t2,i2h);\n\tvec2 v=0.25*(a0+a1+a1h+a1hb+a2+a2h);\n\t\n\t//this is annoying to duplicate but it adds the note tails\n\tb-=1.0;\n\tn2=nofs(b*0.0625)+nofs(b*0.125)+nofs(b*0.25);\n\tn1=n2+nofs(b*0.5);n0=n1+nofs(b);\n\ta0=inst(n0+72.0,time,t0+1.0,i0);\n\tv+=0.25*a0;\n\tb-=1.0;\n\tn2=nofs(b*0.0625)+nofs(b*0.125)+nofs(b*0.25);\n\tn1=n2+nofs(b*0.5);\n\ta1=inst(n1+60.0,time,t1+1.0,i1);\n\ta1h=inst(n1+65.0,time*1.005,t1+1.0,i1h);\n\tv+=0.25*(a1+a1h);\n\tb-=2.0;\n\tn2=nofs(b*0.0625)+nofs(b*0.125)+nofs(b*0.25);\n\ta2=inst(n2+48.0,time,t2+1.0,i2);\n\ta2h=inst(n2+53.0,time,t2+1.0,i2h);\n\tv+=0.25*(a2+a2h);\n\treturn clamp(v,-1.0,1.0);\n}\n",
+				"name": "",
+				"description": "",
+				"type": "sound"
+			}
+		]
+	}
+}

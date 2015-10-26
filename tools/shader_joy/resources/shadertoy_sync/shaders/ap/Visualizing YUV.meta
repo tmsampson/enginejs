@@ -1,0 +1,31 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MlsSDH",
+			"date": "1436568857",
+			"viewed": 413,
+			"name": "Visualizing YUV",
+			"username": "ap",
+			"description": "Just trying to understand color spaces. Using BT.709<br/><br/>Luma is X axis<br/>U is Y axis<br/>V is time",
+			"likes": 0,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"yuv",
+				"visualize"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

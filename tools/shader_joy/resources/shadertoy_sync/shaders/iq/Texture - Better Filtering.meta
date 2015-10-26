@@ -1,0 +1,44 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XsfGDn",
+			"date": "1366756943",
+			"viewed": 8524,
+			"name": "Texture - Better Filtering",
+			"username": "iq",
+			"description": "This shader shows how to avoid the ugly artifacts of bilinear texture filtering. You can find more information here: http://www.iquilezles.org/www/articles/texture/texture.htm",
+			"likes": 48,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"texture",
+				"filtering"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 16,
+						"src": "/presets/tex11.png",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

@@ -1,0 +1,53 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "ltfGDj",
+			"date": "1425137876",
+			"viewed": 531,
+			"name": "White Gold Blue Black",
+			"username": "TekF",
+			"description": "Demonstrating the optical illusion captured by accident in that notorious photograph:<br/>http://www.bbc.co.uk/news/uk-scotland-highlands-islands-31656935<br/>(The lack of) context is everything.",
+			"likes": 1,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"opticalillusion",
+				"colourperception"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 1,
+						"src": "/presets/tex00.jpg",
+						"ctype": "texture",
+						"channel": 0
+					},
+					{
+						"id": 22,
+						"src": "/presets/cube00_0.jpg",
+						"ctype": "cubemap",
+						"channel": 1
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

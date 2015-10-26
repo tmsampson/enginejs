@@ -1,0 +1,33 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "llXSD8",
+			"date": "1436270817",
+			"viewed": 497,
+			"name": "array of threads - 129 chars",
+			"username": "FabriceNeyret2",
+			"description": "a 1 tweet variant of https://www.shadertoy.com/view/llsXWr",
+			"likes": 5,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"short",
+				"tweet",
+				"onetweet"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

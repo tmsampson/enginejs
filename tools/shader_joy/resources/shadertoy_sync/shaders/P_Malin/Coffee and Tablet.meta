@@ -1,0 +1,72 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "lssGzn",
+			"date": "1361875819",
+			"viewed": 4076,
+			"name": "Coffee and Tablet",
+			"username": "P_Malin",
+			"description": "Use the mouse to rotate.<br/>I wanted to combine some raymarching with interesting materials and lighting.<br/>Based on the textureless version here: http://glsl.heroku.com/e#6171.0",
+			"likes": 41,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"raymarching"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 6,
+						"src": "/presets/tex05.jpg",
+						"ctype": "texture",
+						"channel": 0
+					},
+					{
+						"id": 11,
+						"src": "/presets/vid00.ogv",
+						"ctype": "video",
+						"channel": 1
+					},
+					{
+						"id": 14,
+						"src": "/presets/tex14.png",
+						"ctype": "texture",
+						"channel": 2
+					},
+					{
+						"id": 16,
+						"src": "/presets/tex11.png",
+						"ctype": "texture",
+						"channel": 3
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

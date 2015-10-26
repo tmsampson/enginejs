@@ -1,0 +1,37 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "Xtl3z7",
+			"date": "1420301816",
+			"viewed": 392,
+			"name": "Voronoï Experiment 2",
+			"username": "aiekick",
+			"description": "Voronoi Experiment 2<br/>Mouse axis Y : control ray marchin iterations (Current number in bottom left)<br/>Mouse axis X : control rugosity density (current number in bottom right)",
+			"likes": 0,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"raymarching",
+				"voronoi",
+				"mouse",
+				"experiment",
+				"sphere",
+				"blob",
+				"mapping",
+				"printing"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

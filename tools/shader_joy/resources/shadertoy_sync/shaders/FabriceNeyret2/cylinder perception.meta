@@ -1,0 +1,42 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4sBGD3",
+			"date": "1394013246",
+			"viewed": 488,
+			"name": "cylinder perception",
+			"username": "FabriceNeyret2",
+			"description": "a classical experiment to study how eye perceive shape and motion",
+			"likes": 2,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"perception"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 17,
+						"src": "/presets/tex12.png",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

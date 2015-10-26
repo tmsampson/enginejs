@@ -1,0 +1,33 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "ltl3Dj",
+			"date": "1425377379",
+			"viewed": 389,
+			"name": "ngKale0",
+			"username": "netgrind",
+			"description": "so many functions",
+			"likes": 0,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"waves",
+				"psychedelic",
+				"kaleidoscope",
+				"netgrind"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

@@ -1,0 +1,30 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XllSWf",
+			"date": "1440212690",
+			"viewed": 626,
+			"name": "Hyperbolic Mario",
+			"username": "paniq",
+			"description": "Using atanh to compress infinite space onto a disc, greatly expanding visibility; Space can be compressed along any axis, e.g. just along the x-axis (uncomment POLAR to test)",
+			"likes": 5,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"mattdamon"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

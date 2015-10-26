@@ -1,0 +1,30 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4tB3zD",
+			"date": "1427154367",
+			"viewed": 668,
+			"name": "Raymarching Attempt 2",
+			"username": "Craxic",
+			"description": "A much much faster version of my first ray marcher. I've noticed that using continuous functions rather than if statements yields much much better results (way more than I expected). Neat!",
+			"likes": 22,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"raymarching"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

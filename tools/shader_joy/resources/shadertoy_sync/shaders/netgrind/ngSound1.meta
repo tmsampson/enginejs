@@ -1,0 +1,63 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MtX3Dl",
+			"date": "1426096945",
+			"viewed": 406,
+			"name": "ngSound1",
+			"username": "netgrind",
+			"description": "more shader synths",
+			"likes": 1,
+			"published": 3,
+			"flags": 8,
+			"tags": [
+				"sound",
+				"audio",
+				"netgrind",
+				"shaderwave"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 4,
+						"src": "/presets/tex03.jpg",
+						"ctype": "texture",
+						"channel": 1
+					},
+					{
+						"id": 10,
+						"src": "/presets/tex09.jpg",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			},
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "vec2 mainSound(float time){\n    float f = sin(6.2831*240.0*time+sin(6.2831*time)*40.0);\n    f *= pow(sin(time*80.0+cos(time*20.0)*50.0)*.5+.5,5.0);\n    return vec2(sin(time*2.0)*f,cos(time*2.0)*f);\n}",
+				"name": "",
+				"description": "",
+				"type": "sound"
+			}
+		]
+	}
+}

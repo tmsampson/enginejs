@@ -1,0 +1,75 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XsfGD4",
+			"date": "1380494400",
+			"viewed": 11625,
+			"name": "Woods",
+			"username": "iq",
+			"description": "A wonderful place to explore. The structure is very repetitive and regular, I didn't add any big scale variation cause I didn't expect to move the camera in this one, but focus in this one shot. It runs slow too, I'll try to optimize it later.",
+			"likes": 92,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"procedural",
+				"3d",
+				"raymarching",
+				"distancefield"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 7,
+						"src": "/presets/tex06.jpg",
+						"ctype": "texture",
+						"channel": 1
+					},
+					{
+						"id": 8,
+						"src": "/presets/tex07.jpg",
+						"ctype": "texture",
+						"channel": 3
+					},
+					{
+						"id": 10,
+						"src": "/presets/tex09.jpg",
+						"ctype": "texture",
+						"channel": 2
+					},
+					{
+						"id": 30,
+						"src": "/presets/tex16.png",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

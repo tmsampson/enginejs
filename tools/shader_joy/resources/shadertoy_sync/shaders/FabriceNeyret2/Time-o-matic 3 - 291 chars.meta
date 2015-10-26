@@ -1,0 +1,32 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "ltsXR8",
+			"date": "1434542006",
+			"viewed": 392,
+			"name": "Time-o-matic 3 - 291 chars",
+			"username": "FabriceNeyret2",
+			"description": "shortness challenge against https://www.shadertoy.com/view/MlfXz8<br/>This one starts with coyote  340 -> 301 chars improvement in  https://www.shadertoy.com/view/MlXXzH by merging funcs so losing reusability of the display digit function, thus the fork.",
+			"likes": 2,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"short",
+				"timer",
+				"fonts"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

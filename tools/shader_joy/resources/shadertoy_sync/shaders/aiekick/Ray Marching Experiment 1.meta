@@ -1,0 +1,55 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MtfGDn",
+			"date": "1420790809",
+			"viewed": 690,
+			"name": "Ray Marching Experiment 1",
+			"username": "aiekick",
+			"description": "mouse for control camera elevation and camera distance",
+			"likes": 6,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"mouse",
+				"ray",
+				"marching",
+				"experiment2"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 12,
+						"src": "/presets/vid01.webm",
+						"ctype": "video",
+						"channel": 1
+					},
+					{
+						"id": 22,
+						"src": "/presets/cube00_0.jpg",
+						"ctype": "cubemap",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

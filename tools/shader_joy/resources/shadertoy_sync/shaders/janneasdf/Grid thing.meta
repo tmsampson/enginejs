@@ -1,0 +1,31 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "ltlXRX",
+			"date": "1438647228",
+			"viewed": 568,
+			"name": "Grid thing",
+			"username": "janneasdf",
+			"description": "3D raymarching some cubes to create a grid",
+			"likes": 15,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"3d",
+				"raymarching"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

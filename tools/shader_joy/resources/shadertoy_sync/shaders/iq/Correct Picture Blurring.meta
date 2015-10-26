@@ -1,0 +1,45 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XtsSzH",
+			"date": "1434504903",
+			"viewed": 862,
+			"name": "Correct Picture Blurring",
+			"username": "iq",
+			"description": "The correct way to blur/downsample <strong>PICTURES</strong> (as opposed to images in general) is to remove the gamma correction of the picture <strong>before</strong> the linear transform and apply it again <strong>after</strong> the transform. Otherwise brightness is lost.",
+			"likes": 14,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"blur",
+				"gamma",
+				"degamma"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 5,
+						"src": "/presets/tex04.jpg",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

@@ -1,0 +1,30 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MlfGWN",
+			"date": "1422053482",
+			"viewed": 400,
+			"name": "[2TC 15] Strawberry Milk",
+			"username": "aiekick",
+			"description": "simplified version of my shader for 2 Tweet challenge : https://www.shadertoy.com/view/4tX3R4<br/>(1011 char => 308 char) and => 279 with iq help ^^<br/>",
+			"likes": 2,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2tc15"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

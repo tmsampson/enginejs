@@ -1,0 +1,31 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "lsfGzr",
+			"date": "1360964990",
+			"viewed": 1907,
+			"name": "Blobs",
+			"username": "PauloFalcao",
+			"description": "Color blobs using 1/length for color value, changing makePoint function can give very cool results ;)",
+			"likes": 38,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"blobs"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

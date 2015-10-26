@@ -1,0 +1,45 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "llsXzB",
+			"date": "1437753164",
+			"viewed": 534,
+			"name": "Oren Nayar Light Model",
+			"username": "aiekick",
+			"description": "I tried to do the Oren Nayar Light Model explained here :<br/> <a href=\"//https://en.wikipedia.org/wiki/Oren%E2%80%93Nayar_reflectance_model\"  class=\"regular\" target=\"_blank\">Oren Nayar Light Model</a><br/>I dont know if i have well writed the model, because the light change while the cam move..",
+			"likes": 4,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"light",
+				"model",
+				"oren",
+				"nayar"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 22,
+						"src": "/presets/cube00_0.jpg",
+						"ctype": "cubemap",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

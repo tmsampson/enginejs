@@ -1,0 +1,52 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MsfXzM",
+			"date": "1398340227",
+			"viewed": 475,
+			"name": "Gabor3",
+			"username": "FabriceNeyret2",
+			"description": "mouse: freq and dir of Gabor.<br/>A: mouse.y tunes angular spread instead.<br/>T: mouse.x tunes gaussian thickness instead.<br/>Red: Fourier representation of the Gabor function.<br/>Cyan: Signal representation of the Gabor function.",
+			"likes": 4,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"gabor"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 30,
+						"src": "/presets/tex16.png",
+						"ctype": "texture",
+						"channel": 1
+					},
+					{
+						"id": 33,
+						"src": "/presets/tex00.jpg",
+						"ctype": "keyboard",
+						"channel": 2
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

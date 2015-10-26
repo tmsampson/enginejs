@@ -1,0 +1,45 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XljXz3",
+			"date": "1445463142",
+			"viewed": 171,
+			"name": "Shining Supernova",
+			"username": "hassoncs",
+			"description": "Updated https://www.shadertoy.com/view/XdBSDh# to blend over the original texture image.",
+			"likes": 7,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"rays",
+				"texture",
+				"light",
+				"shine"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 4,
+						"src": "/presets/tex03.jpg",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

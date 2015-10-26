@@ -1,0 +1,45 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4tS3Dc",
+			"date": "1432923998",
+			"viewed": 363,
+			"name": "Ray Marching Experiment 26",
+			"username": "aiekick",
+			"description": "Another variation of <a href=\"https://www.shadertoy.com/view/llB3zc\" class=\"regular\" target=\"_blank\">https://www.shadertoy.com/view/llB3zc</a> but on torus<br/>use mouse xy to change pattern",
+			"likes": 3,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"ray",
+				"experiment",
+				"marching",
+				"26"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 26,
+						"src": "/presets/cube04_0.png",
+						"ctype": "cubemap",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

@@ -1,0 +1,30 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XtXGW2",
+			"date": "1425351454",
+			"viewed": 380,
+			"name": "Plasma circles",
+			"username": "mpcomplete",
+			"description": "Testing repeated patterns with shifted coordinates.",
+			"likes": 1,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"empty"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

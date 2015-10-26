@@ -1,0 +1,33 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "Mdf3zM",
+			"date": "1365959156",
+			"viewed": 5324,
+			"name": "Escher's prentententoonstelling",
+			"username": "reinder",
+			"description": "I found this article: http://www.ams.org/notices/200304/fea-escher.pdf describing the transformation used by Escher in the droste-picture: de prentententoonstelling (the picture gallery). The source is a mess atm - I will clean up later.",
+			"likes": 52,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"distancefields",
+				"droste",
+				"escher",
+				"domaintransformation"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

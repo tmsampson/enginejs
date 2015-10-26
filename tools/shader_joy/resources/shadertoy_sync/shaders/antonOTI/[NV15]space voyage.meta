@@ -1,0 +1,45 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4dSXzR",
+			"date": "1426758026",
+			"viewed": 454,
+			"name": "[NV15]space voyage",
+			"username": "antonOTI",
+			"description": "I let us go to the stars",
+			"likes": 5,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"parallax",
+				"noob",
+				"nv15"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 30,
+						"src": "/presets/tex16.png",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

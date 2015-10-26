@@ -1,0 +1,43 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MtjXRV",
+			"date": "1445139718",
+			"viewed": 227,
+			"name": "Fire Tunnel",
+			"username": "aiekick",
+			"description": "Fire Tunnel",
+			"likes": 10,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"tunnel",
+				"fire"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 30,
+						"src": "/presets/tex16.png",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

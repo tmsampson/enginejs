@@ -1,0 +1,45 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "Xtj3DW",
+			"date": "1429548830",
+			"viewed": 635,
+			"name": "Twisted Rings",
+			"username": "poljere",
+			"description": "Lots of rings reacting and dancing with the music. If you do not have a mic you can select any sound in the iChannel0 and it will also react to it  *** Chrome/Firefox only. Sorry Safari and IE ***",
+			"likes": 1,
+			"published": 3,
+			"flags": 4,
+			"tags": [
+				"2d",
+				"sound",
+				"music",
+				"mic"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 32,
+						"src": "/presets/mic.png",
+						"ctype": "mic",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

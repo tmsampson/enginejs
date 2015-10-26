@@ -1,0 +1,32 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XdsGWH",
+			"date": "1368889425",
+			"viewed": 1993,
+			"name": "Mars demo",
+			"username": "reinder",
+			"description": "Tribute to Tim Clarke's Mars demo from 1993. Click and move your mouse to look around.<br/><br/>http://pouet.net/prod.php?which=4662&howmanycomments=25&page=0",
+			"likes": 10,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"mars",
+				"timclarke",
+				"terrainmarching"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

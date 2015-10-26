@@ -1,0 +1,35 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XtsGz7",
+			"date": "1420247765",
+			"viewed": 414,
+			"name": "Voronoï Experiment 1",
+			"username": "aiekick",
+			"description": "Voronoi Experiment 1",
+			"likes": 2,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"raymarching",
+				"voronoi",
+				"experiment",
+				"sphere",
+				"blob",
+				"mapping"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

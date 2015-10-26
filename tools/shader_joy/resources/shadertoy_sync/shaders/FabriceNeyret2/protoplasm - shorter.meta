@@ -1,0 +1,43 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MlSSzG",
+			"date": "1444512541",
+			"viewed": 273,
+			"name": "protoplasm - shorter",
+			"username": "FabriceNeyret2",
+			"description": "short & simplified version of https://www.shadertoy.com/view/lllSWr#",
+			"likes": 7,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"3d",
+				"raymarching"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 30,
+						"src": "/presets/tex16.png",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

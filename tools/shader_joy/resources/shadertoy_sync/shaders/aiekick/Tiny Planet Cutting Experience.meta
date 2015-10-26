@@ -1,0 +1,65 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XtlGzS",
+			"date": "1422994206",
+			"viewed": 438,
+			"name": "Tiny Planet Cutting Experience",
+			"username": "aiekick",
+			"description": "Tiny Planet Cutting Experience",
+			"likes": 3,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"planet",
+				"tiny",
+				"cutting",
+				"experience"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 10,
+						"src": "/presets/tex09.jpg",
+						"ctype": "texture",
+						"channel": 2
+					},
+					{
+						"id": 23,
+						"src": "/presets/cube01_0.png",
+						"ctype": "cubemap",
+						"channel": 0
+					},
+					{
+						"id": 23,
+						"src": "/presets/cube01_0.png",
+						"ctype": "cubemap",
+						"channel": 1
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

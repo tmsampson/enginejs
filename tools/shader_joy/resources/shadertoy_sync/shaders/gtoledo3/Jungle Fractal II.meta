@@ -1,0 +1,31 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MlSXRG",
+			"date": "1444506272",
+			"viewed": 227,
+			"name": "Jungle Fractal II",
+			"username": "gtoledo3",
+			"description": "A progression of my earlier \"Altered Julia Jungle\" post. It seemed different enough in style to merit a separate post.",
+			"likes": 3,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"julia",
+				"jungle"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

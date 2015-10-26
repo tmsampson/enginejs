@@ -1,0 +1,52 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MdlGDM",
+			"date": "1372318899",
+			"viewed": 776,
+			"name": "waterly video - test",
+			"username": "FabriceNeyret2",
+			"description": "distort a texture with noise",
+			"likes": 5,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"procedural"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 10,
+						"src": "/presets/tex09.jpg",
+						"ctype": "texture",
+						"channel": 1
+					},
+					{
+						"id": 29,
+						"src": "/presets/vid02.ogv",
+						"ctype": "video",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

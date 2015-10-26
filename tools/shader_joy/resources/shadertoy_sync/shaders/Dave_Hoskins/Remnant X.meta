@@ -1,0 +1,55 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4sjSW1",
+			"date": "1411505248",
+			"viewed": 5873,
+			"name": "Remnant X",
+			"username": "Dave_Hoskins",
+			"description": "Binary subdivision finds the surface really well with this fractal. Two light sources with shadows, and near surface glows.<br/>MOUSE X TO TIME WARP<br/><a href=\"https://www.youtube.com/watch?v=BjkK9fLXXo0\" class=\"regular\" target=\"_blank\">https://www.youtube.com/watch?v=BjkK9fLXXo0</a>",
+			"likes": 96,
+			"published": 3,
+			"flags": 8,
+			"tags": [
+				"3d",
+				"raymarching",
+				"fractal",
+				"sound",
+				"music",
+				"remnantx"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 30,
+						"src": "/presets/tex16.png",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			},
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "// Remnant X\n// by David Hoskins.\n\n#define TAU  6.28318530718\n\nfloat n1 = 0.0;\nfloat n2 = 0.0;\nfloat n3 = 0.0;\nfloat n4 = 0.0;\nfloat fb_lp = 0.0;\nfloat fb_hp = 0.0;\nfloat hp = 0.0;\nfloat p4=1.0e-24;\n\nfloat gTime;\nfloat beat;\n\n\n#define N(a, b) if(t > a){x = a; n = b;}\n#define K(a) if(t > a) x = a;\n#define BRING_IN\n\nfloat sample = 1.0 / iSampleRate;\n\n// Low pass resonant filter...\nfloat Filter(float inp, float cut_lp, float res_lp)\n{\n\tfb_lp \t= res_lp+res_lp/(1.0-cut_lp + 1e-20);\n\tn1 \t\t= n1+cut_lp*(inp-n1+fb_lp*(n1-n2))+p4;\n\tn2\t\t= n2+cut_lp*(n1-n2);\n    return n2;\n}\n\n//----------------------------------------------------------------------------------\nfloat Tract(float x, float f, float bandwidth)\n{\n    float ret = sin(TAU * f * x) * exp(-bandwidth * 2.14159265359 * x);\n    return ret;\n}\n\n//----------------------------------------------------------------------------------\nfloat Hash(float p)\n{\n\tvec2 p2 = fract(vec2(p * 5.3983, p * 5.4427));\n    p2 += dot(p2.yx, p2.xy + vec2(21.5351, 14.3137));\n\treturn fract(p2.x * p2.y * 3.4337) * .5;\n}\n\n//----------------------------------------------------------------------------------\nfloat Noise(float time, float pitch)\n{\n    float ret = Hash(floor(time * pitch));\n\treturn ret;\n}\n\n//----------------------------------------------------------------------------------\nfloat noteMIDI(float n)\n{\n\treturn 440.0 * pow(2.0, (n - 69.0) / 12.0);\n}\n\n//----------------------------------------------------------------------------------\nfloat Saw(float time, float pitch)\n{\n    float f1 = fract(time * pitch);\n    float f2 = fract(time * pitch * .99);\n    float f3 = fract(time * pitch * 2.01);\n    return (f1+f2+f3) / 1.5 - 1.0;\n}\n\n\n//----------------------------------------------------------------------------------\nfloat Kick()\n{\n    #ifdef BRING_IN\n    if (beat < 24.0) return 0.0;\n    #endif\n    float x = 0.0;\n    float t = mod(beat, 8.0);\n    \n    K(0.0);\n    K(0.5);\n    K(4.0);\n    K(6.0);\n    K(7.5);\n    \n    t = t-x;\n    float vol = exp(-t*.5);\n    \n    float kick = sin(t*220.0* exp(-t* .75));\n    \n    kick = (1.5 * kick - 0.5 * kick * kick * kick);\n    \n    \n    return kick * vol * .4;// * smoothstep(0.0, .3, t);\n}\n\n//----------------------------------------------------------------------------------\nvec2 Cymbals()\n{\n\t#ifdef BRING_IN\n    if (beat < 31.0) return vec2(0.0);\n    #endif\n    \n    float x = 0.0;\n    float n = 0.0;\n    float t = mod(beat+.2, 8.0);\n\n    N(0.0, .2);\n    N(0.5, .5);\n    N(2.5, .75);\n    N(3.0, 1.0);\n    N(4.0, .2);\n    N(4.5, .7);\n    N(6.5, 1.0);\n    N(7.0, .6);\n    N(7.75, .8);\n    t = t-x;\n    \n    float vol = exp(-pow(abs(t), .4)*1.3) * .4 * n * smoothstep(0.0, .3, t);\n\tvec2 cym = vec2(Noise(t, 8000.0), Noise(t, 10000.0));\n   \n    return cym * vol;\n}\n\n//----------------------------------------------------------------------------------\nfloat Snare()\n{\n    float x = 0.0;\n    float n = 0.0;\n    #ifdef BRING_IN\n    if (beat < 40.0) return 0.0;\n    #endif\n    float t = mod(beat, 16.0);\n    \n    N(1.0, 1.0);\n    N(3.0, 1.0);\n    N(3.25, .5);\n    N(5.0, 1.0);\n    N(5.25, .5);\n    N(7.0, 1.0);\n    N(7.25, .5);\n    N(7.5, 1.0);\n    \n    N(9.0, 1.0);\n    N(11.0, 1.0);\n    N(11.25, .5);\n    N(13.0, 1.0);\n    \n    N(13.5, .25);\n    N(13.75, .3);\n    N(14.0, .35);\n    N(14.25, .4);\n    N(14.5, .5);\n    N(14.75, .45);\n    N(15.0,  .7);\n    N(15.25, .6);\n    N(15.5,  1.0);\n    N(15.75, .8);\n\n    t = t-x;\n    \n    float vol = exp(-pow(abs(t), .7) * 1.5) * n * .3;\n    \n    float sna = sin(t * 487.0 * exp(-t*.2)) * .65;\n\tsna += Noise(t+mod(gTime, .521), 1400.0 * exp(-t*.2));    \n    \n    return sna * vol;\n}\n\n//----------------------------------------------------------------------------------\nfloat Bass()\n{\n    float n;\n    float x = 0.0;\n    float t = mod(beat, 16.0);\n    \n    N(0.0, 36.0);\n    N(4.0, 35.0);\n    N(6.0, 34.0);\n    N(8.0, 33.0);\n\n    float p = noteMIDI(float(n));\n    t = t-x;\n    float vol = exp(-t*.25) * smoothstep(0.0, .05, t) * .5;\n    float saw = 0.0;\n    float low = (cos(beat*.15)+1.0) *.45 + .05;\n    float res = .7-(cos(t*2.)) *.2;\n\n    for (int i = 0; i < 80; i++)\n    {\n        float s = Saw(gTime-(float(i)* sample), p) * .7;\n        s += Noise(gTime-(float(i) * sample), p*16.0) *.3;\n        saw = Filter(s, low, res);\n    }\n    return saw*vol;\n}\n\n//----------------------------------------------------------------------------------\nfloat Lead()\n{\n    float n;\n    float x = 0.0;\n    \n    #ifdef BRING_IN\n\tif (beat < 16.0) return 0.0;\n    #endif\n\n    float t = mod(beat+.15, 32.0);\n    \n    N(0.0, 58.0);\n    N(.5, 60.0);\n    N(2.0, 48.0);\n    N(4.0, 59.0);\n    N(6.0, 58.0);\n    N(8.0, 57.0);\n    \n    N(16.0, 58.0);\n    N(16.5, 60.0);\n    N(18.0, 48.0);\n    N(20.0, 59.0);\n    N(22.0, 60.0);\n    N(24.0, 64.0);\n\n    N(31.0, 54.0);\n    N(31.5, 56.0);\n\n    float p = noteMIDI(float(n));\n    t = t-x;\n    float vib = sin(TAU*5.0*gTime) * smoothstep(0.3, 2.0, t) * .001;\n    float vol = exp(-t*.3) * smoothstep(0.0, .4, t) * .05;\n    float t1 = 500.0  + sin(gTime*TAU*.312)*400.0;\n    float t2 = 1200.0 + sin(gTime*TAU*.13)*400.0;\n    \n    // Vocal tract simulating varying vowel sounds...\n\tfloat s = Tract(mod(gTime+vib, 1.0 / p), t1, 90.0);\n   \ts += Tract(mod(gTime+vib, 1.0 / p), t2, 120.0);\n   \ts += Tract(mod(gTime+vib, 1.0 / p), 2500.0, 160.0);\n    // Octave down harmony...\n  \ts += Tract(mod(gTime+vib, 2.0 / p), t1, 90.0);\n   \ts += Tract(mod(gTime+vib, 2.0 / p), t2, 120.0);\n   \ts += Tract(mod(gTime+vib, 2.0 / p), 2500.0, 160.0);\n\n    s+= (Noise(t, t1)+ Noise(t, t2))*.75;\n\n    return s * vol;\n}\n\n//----------------------------------------------------------------------------------\nvec2 mainSound(float time)\n{\n\tgTime = time;\n\tbeat = time * 1.5;\n    \n   \tvec2 audio = vec2(0.0, 0.0);\n    \n    float b1 = Bass();\n    float b2 = -b1;\n    float kick = Kick();\n    float snare = Snare();\n    vec2 cymb = Cymbals();\n    float lead = Lead();\n    \n    audio = vec2(b1, b2);\n    audio += vec2(kick);\n    audio += vec2(snare);\n    audio += cymb;\n    audio += vec2(lead);\n    \n    return clamp(audio * 2. * smoothstep(60.0, 52.0, time) * smoothstep(0.0, 1.0, time), -1.0, 1.0);\n    \n    //return vec2(0.0); // Disabled.\n}",
+				"name": "",
+				"description": "",
+				"type": "sound"
+			}
+		]
+	}
+}

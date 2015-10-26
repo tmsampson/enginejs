@@ -1,0 +1,54 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "lts3zn",
+			"date": "1418244445",
+			"viewed": 790,
+			"name": "Cardboard Waves",
+			"username": "jimbo00000",
+			"description": "A set piece for a school play. Was aiming for Hokusai but landed in a Smashing Pumpkins video.",
+			"likes": 13,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"waves",
+				"flat",
+				"ocean",
+				"cardboard"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 7,
+						"src": "/presets/tex06.jpg",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			},
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "float rand(vec2 n) { \n\treturn fract(sin(dot(n, vec2(12.9898, 4.1414))) * 43758.5453);\n}\n\nvec2 mainSound(float time)\n{\n    float x = .4*time + 11.;\n    return \n        ((sin(x) * sin(1.2*x)) + 1.2) *\n        0.08 *\n        vec2(rand(vec2(300.*time)));\n}\n",
+				"name": "",
+				"description": "",
+				"type": "sound"
+			}
+		]
+	}
+}

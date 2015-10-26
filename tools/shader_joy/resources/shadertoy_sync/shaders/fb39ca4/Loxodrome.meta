@@ -1,0 +1,50 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MsX3D2",
+			"date": "1379555891",
+			"viewed": 1539,
+			"name": "Loxodrome",
+			"username": "fb39ca4",
+			"description": "Loxodromes make quite the shadows. Speaking of shadows, most soft shadows found on Shadertoy increase the size of the umbra, but fail to reduce the size of the penumbra, something this shader takes into account.",
+			"likes": 19,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"raymarching",
+				"shadow",
+				"spiral",
+				"distance",
+				"soft",
+				"loxodrome",
+				"spherical",
+				"polar",
+				"estimator"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 6,
+						"src": "/presets/tex05.jpg",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

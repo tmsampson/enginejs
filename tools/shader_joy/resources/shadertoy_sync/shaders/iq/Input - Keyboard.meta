@@ -1,0 +1,43 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "lsXGzf",
+			"date": "1375672030",
+			"viewed": 942,
+			"name": "Input - Keyboard",
+			"username": "iq",
+			"description": "An example showing how to use the keyboard input. First row of texels contain the current instantaneous state of the 256 keys. The second row contains a toggle for every key. Horizontal texel positions correspond to ASCII codes. Press arrow keys to test.",
+			"likes": 13,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"keyboard"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 33,
+						"src": "/presets/tex00.jpg",
+						"ctype": "keyboard",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

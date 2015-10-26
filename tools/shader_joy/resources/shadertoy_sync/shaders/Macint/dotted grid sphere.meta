@@ -1,0 +1,30 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MlBSRd",
+			"date": "1445824834",
+			"viewed": 28,
+			"name": "dotted grid sphere",
+			"username": "Macint",
+			"description": "tron-like grid on a sphere",
+			"likes": 0,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"3d"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

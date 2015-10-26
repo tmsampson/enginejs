@@ -1,0 +1,43 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "Xd2GR3",
+			"date": "1394360615",
+			"viewed": 5895,
+			"name": "Hexagons - distance",
+			"username": "iq",
+			"description": "Very dirty maths for computing the distance to hexagon borders",
+			"likes": 101,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"hexagons"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 30,
+						"src": "/presets/tex16.png",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

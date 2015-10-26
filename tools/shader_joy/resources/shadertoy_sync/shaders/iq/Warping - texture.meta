@@ -1,0 +1,42 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "Xsl3zn",
+			"date": "1361923265",
+			"viewed": 2847,
+			"name": "Warping - texture",
+			"username": "iq",
+			"description": "Using a texture's range to deform its own domain",
+			"likes": 17,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 9,
+						"src": "/presets/tex08.jpg",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

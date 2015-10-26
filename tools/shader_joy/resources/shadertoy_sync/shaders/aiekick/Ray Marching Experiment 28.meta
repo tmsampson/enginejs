@@ -1,0 +1,55 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "ltB3Wd",
+			"date": "1436918249",
+			"viewed": 505,
+			"name": "Ray Marching Experiment 28",
+			"username": "aiekick",
+			"description": "seems to be a lava sphere (800°C)<br/>mouse control<br/>now i need a fast antialaising ^^",
+			"likes": 1,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"ray",
+				"experiment",
+				"marching",
+				"28"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 10,
+						"src": "/presets/tex09.jpg",
+						"ctype": "texture",
+						"channel": 1
+					},
+					{
+						"id": 23,
+						"src": "/presets/cube01_0.png",
+						"ctype": "cubemap",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

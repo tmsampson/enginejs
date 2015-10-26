@@ -1,0 +1,32 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "Mll3WS",
+			"date": "1424946060",
+			"viewed": 566,
+			"name": "Electro-Prim's",
+			"username": "smb02dunnal",
+			"description": "(Or \"Electro-Granny\")<br/><br/>Simple 2D phase field with RGB band oscillation",
+			"likes": 8,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"procedural",
+				"2d",
+				"electro"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

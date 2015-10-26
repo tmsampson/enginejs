@@ -1,0 +1,44 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "llSGRR",
+			"date": "1428187115",
+			"viewed": 586,
+			"name": "Minimal Bezier vector digits",
+			"username": "klk",
+			"description": "Minimalistic vector font. I planned to do all the letters, but shader limitations did not permit. Or I did not do my best.",
+			"likes": 8,
+			"published": 3,
+			"flags": 16,
+			"tags": [
+				"bezier",
+				"font",
+				"digit"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 33,
+						"src": "/presets/tex00.jpg",
+						"ctype": "keyboard",
+						"channel": 2
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

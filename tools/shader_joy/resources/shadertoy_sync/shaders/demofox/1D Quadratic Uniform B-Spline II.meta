@@ -1,0 +1,31 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MlfSRN",
+			"date": "1434820962",
+			"viewed": 368,
+			"name": "1D Quadratic Uniform B-Spline II",
+			"username": "demofox",
+			"description": "1D Quadratic B-Spline.  Mouse controls the yellow control point.<br/>There are 8 control points P0-P7 and implicitly 11 knots: [0-10]. Only time 2.0 through 8.0 are valid due to how bsplines work.<br/>Signed distance used for rendering curve.",
+			"likes": 3,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"bspline"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

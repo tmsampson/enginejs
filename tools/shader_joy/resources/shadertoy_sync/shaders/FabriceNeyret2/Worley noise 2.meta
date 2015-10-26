@@ -1,0 +1,31 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "Md2SDz",
+			"date": "1411113541",
+			"viewed": 562,
+			"name": "Worley noise 2",
+			"username": "FabriceNeyret2",
+			"description": "3D worley noise sliced at z(t).<br/>Worley noise is close to Perlin but using Voronoï distance as wavelet.",
+			"likes": 6,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"voronoi",
+				"worley"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

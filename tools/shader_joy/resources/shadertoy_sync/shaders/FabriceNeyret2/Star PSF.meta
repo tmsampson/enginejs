@@ -1,0 +1,53 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XdsGWs",
+			"date": "1381824467",
+			"viewed": 1160,
+			"name": "Star PSF",
+			"username": "FabriceNeyret2",
+			"description": "TAB: 1 vs many. <br/>      if 1: col=BlackBody(T) vs RGB ( SPACE: mouse.xy = rGB/RGb )<br/><br/>star proj = fraction of captor pixel.<br/>But lense+aperture diffraction yields Airy spot + cross (diffract on 2ndary mirror handles). <br/>And bright stars saturate filters.",
+			"likes": 6,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"astrophysics",
+				"optics"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 17,
+						"src": "/presets/tex12.png",
+						"ctype": "texture",
+						"channel": 1
+					},
+					{
+						"id": 33,
+						"src": "/presets/tex00.jpg",
+						"ctype": "keyboard",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

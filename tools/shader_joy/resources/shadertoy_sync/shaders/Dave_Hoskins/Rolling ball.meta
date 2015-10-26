@@ -1,0 +1,30 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "lsfXz4",
+			"date": "1397417147",
+			"viewed": 2238,
+			"name": "Rolling ball",
+			"username": "Dave_Hoskins",
+			"description": "I wanted to see if I could trace the grass back from a ball in my 'Rolling Hills' grass shader. Mouse to move through time.<br/>The grass goes back into place after being flattened by ball.",
+			"likes": 56,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"rollingball"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

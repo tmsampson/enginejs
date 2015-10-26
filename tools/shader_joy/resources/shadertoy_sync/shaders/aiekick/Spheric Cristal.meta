@@ -1,0 +1,53 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "Mts3DM",
+			"date": "1422622408",
+			"viewed": 419,
+			"name": "Spheric Cristal",
+			"username": "aiekick",
+			"description": "Spheric Cristal",
+			"likes": 5,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"spheric",
+				"cristal"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 8,
+						"src": "/presets/tex07.jpg",
+						"ctype": "texture",
+						"channel": 1
+					},
+					{
+						"id": 25,
+						"src": "/presets/cube03_0.png",
+						"ctype": "cubemap",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

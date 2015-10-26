@@ -1,0 +1,42 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XlBGzm",
+			"date": "1427513484",
+			"viewed": 662,
+			"name": "Midnight Snow",
+			"username": "RavenWorks",
+			"description": "<strong>I hate winter, except when it does this.</strong> Music is based on George Winston's arrangement of Carol Of The Bells.<br/>Got curious about raytracing a bounding box to skip raymarches; works pretty well, at the cost of crashing WebGL if too many objects…",
+			"likes": 8,
+			"published": 3,
+			"flags": 9,
+			"tags": [
+				"raymarch",
+				"landscape",
+				"snow",
+				"winter",
+				"realism"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			},
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "const int rest = 999;\n\nint imod(int x, int modulo){\n    return int(mod(float(x),float(modulo)));//ewwwww\n}\n\nfloat noteFreq(int note){\n    float oct = 1.0;\n    if (note >= 12) {\n        note -= 12;\n        oct = 2.0;\n    }\n    if (note < 0) {\n        note += 12;\n        oct = 0.5;\n    }\n    if (note ==  0) return oct*391.995;\n    if (note ==  1) return oct*415.305;\n    if (note ==  2) return oct*440.000;\n    if (note ==  3) return oct*466.164;\n    if (note ==  4) return oct*493.883;\n    if (note ==  5) return oct*523.251;\n    if (note ==  6) return oct*554.365;\n    if (note ==  7) return oct*587.330;\n    if (note ==  8) return oct*622.254;\n    if (note ==  9) return oct*659.255;\n    if (note == 10) return oct*698.456;\n    if (note == 11) return oct*739.989;\n    return 0.0;\n}\nint melodyNote(int beat){\n    if (beat < 0) return rest;\n    int melodyBeat = imod(beat,6);\n    if (melodyBeat == 0) return 3;\n    if (melodyBeat == 1) return 7;\n    if (melodyBeat == 2) return 2;\n    if (melodyBeat == 3) return 3;\n    if (melodyBeat == 4) return 0;\n    if (melodyBeat == 5) return 7;\n    return rest;\n}\nfloat melodyVol(int beat){\n    if (beat < 0) return 0.0;\n    int melodyBeat = imod(beat,6);\n    if (melodyBeat == 0) return 1.0;\n    if (melodyBeat == 1) return 0.07;\n    if (melodyBeat == 2) return 0.4;\n    if (melodyBeat == 3) return 0.3;\n    if (melodyBeat == 4) return 0.5;\n    if (melodyBeat == 5) return 0.07;\n    return 0.0;\n}\n\n/*\nint harmonyNote(int bar){\n    if (bar == 0) return 12;\n    if (bar == 1) return 10;\n    if (bar == 2) return 8;\n    if (bar == 3) return 7;\n    if (bar == 4) return 8;\n    if (bar == 5) return 7;\n    if (bar == 6) return 5;\n    if (bar == 7) return 0;\n    return rest;\n}\n*/\n\nint harmonyNoteA(int bar){\n    if (bar > 7) bar = 7;\n    if (bar == 0) return 12;\n    if (bar == 1) return 10;\n    if (bar == 2) return 8;\n    if (bar == 3) return 7;\n    if (bar == 4) return 8;\n    if (bar == 5) return 7;\n    if (bar == 6) return 5;\n    if (bar == 7) return 3;\n    return rest;\n}\nint harmonyNoteB(int bar){\n    if (bar > 7) bar = 7;\n    if (bar == 0) return 7;\n    if (bar == 1) return 5;\n    if (bar == 2) return 3;\n    if (bar == 3) return 3;\n    if (bar == 4) return 3;\n    if (bar == 5) return 3;\n    if (bar == 6) return 0;\n    if (bar == 7) return 0;\n    return rest;\n}\nint harmonyNoteC(int bar){\n    if (bar > 6) {\n        bar = 6+imod(bar,2);\n    }\n    if (bar == 0) return 3;\n    if (bar == 1) return 2;\n    if (bar == 2) return 0;\n    if (bar == 3) return 0;\n    if (bar == 4) return 0;\n    if (bar == 5) return -2;\n    if (bar == 6) return -4;\n    if (bar == 7) return -5;\n    return rest;\n}\n\nconst float beatLength = 0.36;\nconst float ringLength = 3.0;\n\nfloat beatFrac;\nfloat attack(float power){\n\treturn 1.0-pow(1.0-beatFrac,power);\n}\nfloat release(float power){\n\treturn 1.0-pow(beatFrac,power);\n}\n\nvec2 strikeNote(int note, float vol, float time, bool isMelody){\n    \n    if (note == rest) return vec2(0.0);\n    if (time < 0.0) return vec2(0.0);\n    \n    beatFrac = time/(beatLength*(isMelody?ringLength:7.0));\n    float baseFreq = 6.2831*noteFreq(note)*time;\n    \n    vec2 mix = vec2(0.0);\n    \n    if (isMelody) {\n        mix += vec2( sin(baseFreq* 1.0)*attack(100.0)*release(0.25)*vol*0.10 );\n        mix += vec2( sin(baseFreq* 4.0)*attack(200.0)*release(0.125)*vol*0.25 );\n        mix += vec2( sin(baseFreq*10.0)*attack(200.0)*release(0.125)*vol*0.025 );\n        mix += vec2( sin(baseFreq*16.0)*attack(400.0)*release(0.125)*vol*0.02 );\n        mix *= 0.4;\n    } else {\n        baseFreq *= 0.125;\n        mix += vec2( sin(baseFreq* 2.0)*attack(400.0)*release(3.0)*vol*0.004 );\n        mix += vec2( sin(baseFreq* 3.0)*attack(1600.0)*release(2.0)*vol*0.002 );\n        mix += vec2( sin(baseFreq* 4.0)*attack(3200.0)*release(0.5)*vol*0.125 );\n        mix += vec2( sin(baseFreq* 8.0)*attack(400.0)*release(0.25)*vol*0.005 );\n    }\n    \n    \n    return mix;\n    \n}\n\nvec2 mainSound(float time){\n    \n    float songtime = time - 1.0;\n    \n    if (songtime < 0.0) return vec2(0.0);\n    \n    \n    int beat = int(songtime/beatLength);\n    float beatTime = mod(songtime,beatLength);\n    \n    vec2 mix = vec2(0.0);\n    for(float i=0.0; i<ringLength; i++){\n        mix += strikeNote(melodyNote(beat-int(i)),melodyVol(beat-int(i)),beatTime+beatLength*i,true);\n    }\n    \n    \n    int bar = int(songtime/(beatLength*6.0))-4;\n    if (bar >= 0) {\n        \n        float barTime = mod(songtime,(beatLength*6.0));\n\n        mix += strikeNote(harmonyNoteA(bar),0.8,barTime,false);\n        mix += strikeNote(harmonyNoteB(bar),0.3,barTime-0.02,false);\n        mix += strikeNote(harmonyNoteC(bar),0.3,barTime-0.04,false);\n        \n        if (barTime < 1.0) {\n            beatFrac = barTime*1.0;\n            float tom = sin(barTime*pow((1.0-barTime),1.5)*500.0);\n        \tmix += (tom*attack(5000.0)*release(0.02))*0.5;\n        }\n\n    }\n        \n    const float fadeStart = beatLength*6.0*14.0;\n    const float fadeEnd = beatLength*6.0*16.0;\n    float fadeout = max(0.0,min(1.0,1.0-((songtime-fadeStart)/(fadeEnd-fadeStart))));\n    fadeout = pow(fadeout,1.5);\n    \n    return mix*fadeout*4.0;\n    \n}",
+				"name": "",
+				"description": "",
+				"type": "sound"
+			}
+		]
+	}
+}

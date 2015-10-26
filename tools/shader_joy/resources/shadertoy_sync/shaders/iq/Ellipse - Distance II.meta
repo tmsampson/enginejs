@@ -1,0 +1,32 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4lsXDN",
+			"date": "1436942360",
+			"viewed": 602,
+			"name": "Ellipse - Distance II",
+			"username": "iq",
+			"description": "Another way to compute the distance to an ellipse (see <a href=\"https://www.shadertoy.com/view/4sS3zz\" class=\"regular\" target=\"_blank\">https://www.shadertoy.com/view/4sS3zz</a>)",
+			"likes": 1,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"distance",
+				"ellipse"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

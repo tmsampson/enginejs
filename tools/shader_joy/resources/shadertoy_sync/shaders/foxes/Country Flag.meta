@@ -1,0 +1,33 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4tsXWn",
+			"date": "1435845705",
+			"viewed": 525,
+			"name": "Country Flag",
+			"username": "foxes",
+			"description": "I just tried to make a flag of my country (Russia)",
+			"likes": 3,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"procedural",
+				"2d",
+				"wave",
+				"flag"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

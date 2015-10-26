@@ -1,0 +1,53 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XlsXDf",
+			"date": "1440337867",
+			"viewed": 453,
+			"name": "Bloodstream",
+			"username": "tsherif",
+			"description": "Flowing blood cells.",
+			"likes": 1,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"3d",
+				"raymarching"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 6,
+						"src": "/presets/tex05.jpg",
+						"ctype": "texture",
+						"channel": 0
+					},
+					{
+						"id": 25,
+						"src": "/presets/cube03_0.png",
+						"ctype": "cubemap",
+						"channel": 1
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

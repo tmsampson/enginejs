@@ -1,0 +1,46 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XlsSzM",
+			"date": "1436060398",
+			"viewed": 637,
+			"name": "Portal Gameplay",
+			"username": "ciberxtrem",
+			"description": "Inspired in Portal, Chamber 8.<br/><br/>Note: Set the APPLY_COLORS and APPLY_SHADOW to 1 to see all colors and shadows <img src=\"/img/emoticonHappy.png\"/>",
+			"likes": 8,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"procedural",
+				"3d",
+				"raymarching",
+				"portal",
+				"cinematic"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 30,
+						"src": "/presets/tex16.png",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

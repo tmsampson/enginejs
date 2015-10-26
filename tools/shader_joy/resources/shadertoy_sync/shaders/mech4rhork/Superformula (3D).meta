@@ -1,0 +1,34 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XlXXDs",
+			"date": "1440460445",
+			"viewed": 555,
+			"name": "Superformula (3D)",
+			"username": "mech4rhork",
+			"description": "testing Johan Gielis's superformula™ in 3D",
+			"likes": 10,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"3d",
+				"raymarching",
+				"fractal",
+				"superformula",
+				"supershape"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

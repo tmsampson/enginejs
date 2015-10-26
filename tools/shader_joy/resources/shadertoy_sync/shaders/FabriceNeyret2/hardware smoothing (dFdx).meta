@@ -1,0 +1,52 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XdfXzH",
+			"date": "1396446421",
+			"viewed": 535,
+			"name": "hardware smoothing (dFdx)",
+			"username": "FabriceNeyret2",
+			"description": "cheap smoothing using hardware derivative (limited, but basically for free).<br/>Space to toggle ON/OFF",
+			"likes": 0,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"dfdx"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 30,
+						"src": "/presets/tex16.png",
+						"ctype": "texture",
+						"channel": 0
+					},
+					{
+						"id": 33,
+						"src": "/presets/tex00.jpg",
+						"ctype": "keyboard",
+						"channel": 2
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

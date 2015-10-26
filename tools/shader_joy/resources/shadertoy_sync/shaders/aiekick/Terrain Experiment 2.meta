@@ -1,0 +1,54 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XtB3Dm",
+			"date": "1429461339",
+			"viewed": 385,
+			"name": "Terrain Experiment 2",
+			"username": "aiekick",
+			"description": "Terrain Experiment 2",
+			"likes": 0,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"terrain",
+				"experiment",
+				"2"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 8,
+						"src": "/presets/tex07.jpg",
+						"ctype": "texture",
+						"channel": 1
+					},
+					{
+						"id": 23,
+						"src": "/presets/cube01_0.png",
+						"ctype": "cubemap",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

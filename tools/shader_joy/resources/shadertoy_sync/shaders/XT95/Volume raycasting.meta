@@ -1,0 +1,33 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "lss3zr",
+			"date": "1361993376",
+			"viewed": 2500,
+			"name": "Volume raycasting",
+			"username": "XT95",
+			"description": "Simple raycasting into a cloud with one pass of light scattering.",
+			"likes": 29,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"3d",
+				"raycasting",
+				"lightscattering",
+				"cloud"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

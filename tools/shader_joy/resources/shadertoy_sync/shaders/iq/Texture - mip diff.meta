@@ -1,0 +1,42 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XsX3zj",
+			"date": "1379629759",
+			"viewed": 723,
+			"name": "Texture - mip diff",
+			"username": "iq",
+			"description": "Using mipmaps instead of screen space derivatives dFdx/dFdy/width to compute a high pass filter. Subtracting level 0 from level 1, 2 or 3 results in filters of different kernel size.",
+			"likes": 4,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"texture"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 5,
+						"src": "/presets/tex04.jpg",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

@@ -1,0 +1,32 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MllSzM",
+			"date": "1435497214",
+			"viewed": 393,
+			"name": "Particle Experiment 5",
+			"username": "aiekick",
+			"description": "Mouse.x => Zoom<br/>Mouse.y => Particle Duration<br/>i would be great to use this with sound but i dont know how <img src=\"/img/emoticonHappy.png\"/>",
+			"likes": 2,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"experiment",
+				"4",
+				"particle"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

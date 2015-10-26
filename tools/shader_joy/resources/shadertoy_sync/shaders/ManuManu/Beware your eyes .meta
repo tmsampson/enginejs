@@ -1,0 +1,32 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MlBGWK",
+			"date": "1432379559",
+			"viewed": 351,
+			"name": "Beware your eyes ",
+			"username": "ManuManu",
+			"description": "Just to show off to some friends what could be done with 2D shaders, with some simple code to start having things on your screen...<br/>I'm aware that it's ugly <img src=\"/img/emoticonHappy.png\"/><br/>Made on GlSlSandbox here :<br/>http://glslsandbox.com/e#24464.1",
+			"likes": 2,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"ugly",
+				"spiral"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

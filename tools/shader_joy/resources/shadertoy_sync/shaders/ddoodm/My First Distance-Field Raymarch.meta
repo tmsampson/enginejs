@@ -1,0 +1,62 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4d2XD3",
+			"date": "1433584725",
+			"viewed": 461,
+			"name": "My First Distance-Field Raymarch",
+			"username": "ddoodm",
+			"description": "I finished this a good while ago, and figured that I ought to make it public. Thanks for visiting!<br/>(Just a learning experiment <img src=\"/img/emoticonHappy.png\"/> )<br/>I borrowed a good chunk of code from Joates and iq.",
+			"likes": 3,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"raymarcherraymarcherdistancefieldfunction"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 4,
+						"src": "/presets/tex03.jpg",
+						"ctype": "texture",
+						"channel": 1
+					},
+					{
+						"id": 7,
+						"src": "/presets/tex06.jpg",
+						"ctype": "texture",
+						"channel": 0
+					},
+					{
+						"id": 22,
+						"src": "/presets/cube00_0.jpg",
+						"ctype": "cubemap",
+						"channel": 2
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

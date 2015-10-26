@@ -1,0 +1,32 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "Xsf3zX",
+			"date": "1375124646",
+			"viewed": 3236,
+			"name": "Rolling hills",
+			"username": "Dave_Hoskins",
+			"description": "Grassy fields. Ray marches a ray to a smooth hill, then enters detailed stepping through a grass like distance, erm, field. <img src=\"/img/emoticonHappy.png\"/><br/>Now uses eiffie's 'Circle of Confusion' function for blurred ray marching into the grass.<br/>Thanks eiffie!<br/>",
+			"likes": 63,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"3d",
+				"grass",
+				"rollinghills"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

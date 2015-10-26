@@ -1,0 +1,41 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MtS3zD",
+			"date": "1427237743",
+			"viewed": 380,
+			"name": "ngSound2 - SEIZURE WARNING",
+			"username": "netgrind",
+			"description": "my head hurts",
+			"likes": 0,
+			"published": 3,
+			"flags": 8,
+			"tags": [
+				"sound",
+				"seizure",
+				"shadeaday",
+				"netgrind"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			},
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "vec2 mainSound(float time)\n{\n    float s = sin(time*1000.);//+.1*tan(time*40.));\n    s*= floor(sin(time*40.)*1.)+2.;\n    return vec2(s);\n}",
+				"name": "",
+				"description": "",
+				"type": "sound"
+			}
+		]
+	}
+}

@@ -1,0 +1,32 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "Xll3DM",
+			"date": "1422490136",
+			"viewed": 570,
+			"name": "Cube of Cubes",
+			"username": "Flyguy",
+			"description": "Based off a gif I saw somewhere, no idea where it originally came from.",
+			"likes": 11,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"raymarching",
+				"cube",
+				"animation"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

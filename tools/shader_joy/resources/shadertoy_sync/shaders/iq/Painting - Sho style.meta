@@ -1,0 +1,31 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "lsSSzz",
+			"date": "1408413665",
+			"viewed": 2047,
+			"name": "Painting - Sho style",
+			"username": "iq",
+			"description": "A super quick doodling session, using Sho Murase's work as reference.",
+			"likes": 16,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"procedural",
+				"2d"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

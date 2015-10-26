@@ -1,0 +1,42 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4slSWN",
+			"date": "1401365213",
+			"viewed": 1451,
+			"name": "gravity field - 2",
+			"username": "FabriceNeyret2",
+			"description": "inside an homogeneous sphere, only the mass closer to center than you contributes to your gravity.<br/>What about an heterogeneous bag of stars ?<br/>(illustrated with 2D gravity in 1/r).   Mouse.x to force colormap. Clamps stars out of mouse.y radius.",
+			"likes": 24,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"gravity"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 33,
+						"src": "/presets/tex00.jpg",
+						"ctype": "keyboard",
+						"channel": 2
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

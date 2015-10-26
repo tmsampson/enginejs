@@ -1,0 +1,30 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "ltXGzN",
+			"date": "1427496178",
+			"viewed": 370,
+			"name": "Fractal Experiment 3",
+			"username": "aiekick",
+			"description": "Fractal Experiment 3",
+			"likes": 0,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"fractalexperiment3"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

@@ -1,0 +1,34 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MlfXW7",
+			"date": "1437055890",
+			"viewed": 472,
+			"name": "JuliaFractal - 124/150 chars",
+			"username": "FabriceNeyret2",
+			"description": "compaction of https://www.shadertoy.com/view/ltfXW7<br/><br/>one tweet if fix resolution   or  if no animation (comment the *sin) ",
+			"likes": 3,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"fractal",
+				"julia",
+				"2tweets",
+				"short",
+				"onetweet"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

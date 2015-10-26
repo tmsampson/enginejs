@@ -1,0 +1,34 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XlsXDB",
+			"date": "1439419260",
+			"viewed": 603,
+			"name": "cloudy sunset",
+			"username": "miloszmaki",
+			"description": "cloudy sunset, inspired by today's evening sky",
+			"likes": 11,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"procedural",
+				"2d",
+				"noise",
+				"sunset",
+				"clouds"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

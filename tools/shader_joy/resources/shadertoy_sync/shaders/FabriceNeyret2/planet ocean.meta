@@ -1,0 +1,52 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "Mdl3z2",
+			"date": "1374954559",
+			"viewed": 577,
+			"name": "planet ocean",
+			"username": "FabriceNeyret2",
+			"description": "noise(pseudoAdvectedNoise(pos)) on a shape + cubemap + fog.<br/>mouse rotate camera<br/>#define MODE = 0,1,2  0 is cheaper than the default 2 :-)",
+			"likes": 3,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"displacementperlin"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 3,
+						"src": "/presets/tex02.jpg",
+						"ctype": "texture",
+						"channel": 0
+					},
+					{
+						"id": 22,
+						"src": "/presets/cube00_0.jpg",
+						"ctype": "cubemap",
+						"channel": 1
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

@@ -1,0 +1,43 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4lfSRM",
+			"date": "1435081485",
+			"viewed": 484,
+			"name": "2TC 15 Results - 237 char",
+			"username": "FabriceNeyret2",
+			"description": "compacting nimitz's shader \"[2TC 15] Results\" https://www.shadertoy.com/view/Mtf3Rj <br/>294 chars -> 237",
+			"likes": 4,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2tweets",
+				"short"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 7,
+						"src": "/presets/tex06.jpg",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

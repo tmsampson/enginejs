@@ -1,0 +1,35 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4lsSzX",
+			"date": "1438651295",
+			"viewed": 698,
+			"name": "Distance Field Text",
+			"username": "Flyguy",
+			"description": "Distance field based text with an 80's scifi like style. This is based on some shaders I posted on GLSL Sandbox a few days ago.",
+			"likes": 15,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"retro",
+				"text",
+				"logo",
+				"distance",
+				"shadertoy",
+				"scifi"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

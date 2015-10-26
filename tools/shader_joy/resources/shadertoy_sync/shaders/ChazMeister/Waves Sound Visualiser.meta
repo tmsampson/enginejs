@@ -1,0 +1,52 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XtjXDW",
+			"date": "1443732468",
+			"viewed": 363,
+			"name": "Waves Sound Visualiser",
+			"username": "ChazMeister",
+			"description": "This is a remix of ADOB's remix of 'waves' by bonniem. In my version, the waves pulse to the sound, most easily seen with microphone input or the song called 'Most Geometric Person'.",
+			"likes": 6,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"waves",
+				"sound",
+				"reactive",
+				"music",
+				"colors",
+				"fun",
+				"cool",
+				"colours",
+				"remixcolourful",
+				"responsive"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 35,
+						"src": "/presets/mzk06.mp3",
+						"ctype": "music",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

@@ -1,0 +1,64 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "ltf3WH",
+			"date": "1421530209",
+			"viewed": 444,
+			"name": "mega-lo-march",
+			"username": "superplek",
+			"description": "Doomsday trip to 1995 (or: what happens if you let an engine programmer do effects).",
+			"likes": 3,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"3d",
+				"1995"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 3,
+						"src": "/presets/tex02.jpg",
+						"ctype": "texture",
+						"channel": 2
+					},
+					{
+						"id": 7,
+						"src": "/presets/tex06.jpg",
+						"ctype": "texture",
+						"channel": 1
+					},
+					{
+						"id": 35,
+						"src": "/presets/mzk06.mp3",
+						"ctype": "music",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

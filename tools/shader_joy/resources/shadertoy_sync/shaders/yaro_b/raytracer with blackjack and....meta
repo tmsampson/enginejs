@@ -1,0 +1,31 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XtsSWH",
+			"date": "1436405888",
+			"viewed": 365,
+			"name": "raytracer with blackjack and...",
+			"username": "yaro_b",
+			"description": "My first raytracer.<br/><br/>NOTE: Click&drag mouse to change camera position.",
+			"likes": 1,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"raytracing",
+				"brdf"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

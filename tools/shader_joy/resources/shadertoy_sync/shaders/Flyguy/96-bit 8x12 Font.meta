@@ -1,0 +1,34 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "Mt2GWD",
+			"date": "1429218439",
+			"viewed": 786,
+			"name": "96-bit 8x12 Font",
+			"username": "Flyguy",
+			"description": "Testing a higher resolution font which uses 24 bits of \"integer\" precision for each component which seems to be the maximum without losing information.",
+			"likes": 25,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"text",
+				"font",
+				"digit",
+				"character",
+				"bits"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

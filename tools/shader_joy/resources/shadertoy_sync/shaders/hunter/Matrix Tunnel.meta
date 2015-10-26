@@ -1,0 +1,43 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XlXGDf",
+			"date": "1425520235",
+			"viewed": 406,
+			"name": "Matrix Tunnel",
+			"username": "hunter",
+			"description": "orginal by: Iain Melvin ( https://www.shadertoy.com/view/4dfSRS )",
+			"likes": 2,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"audio"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 13,
+						"src": "/presets/mzk00.mp3",
+						"ctype": "music",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

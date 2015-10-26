@@ -1,0 +1,42 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "ltBSzV",
+			"date": "1445045370",
+			"viewed": 214,
+			"name": "Another Cloudy Tunnel 3",
+			"username": "aiekick",
+			"description": "Vairation of <a href=\"https://www.shadertoy.com/view/XlSSzV\"  class=\"regular\" target=\"_blank\">Another Cloudy 2</a> <br/>More cloudy, smoothy, less artefact, and better optimised for fullscreen..<br/>but close to cam there is some artefact some time. how can i do antialiased on this ?",
+			"likes": 10,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"anothercloudytunnel3"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 30,
+						"src": "/presets/tex16.png",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

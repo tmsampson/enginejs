@@ -1,0 +1,43 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XsSXDy",
+			"date": "1415342767",
+			"viewed": 806,
+			"name": "Bicubic - comparison",
+			"username": "iq",
+			"description": "Comparison of BSpline, \"typical\" and  Catmull-Rom bicubic texture filtering. This is done the slow way (16 samples) instead of the optimized GPU bilinear based filtering. Bottom part shows derivatives of the above.",
+			"likes": 9,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"bicubicfiltering"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 30,
+						"src": "/presets/tex16.png",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

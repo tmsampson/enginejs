@@ -1,0 +1,43 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4tfXz2",
+			"date": "1437861550",
+			"viewed": 537,
+			"name": "Cubic Bezier Rectangle",
+			"username": "demofox",
+			"description": "Using ray marching to render a bezier rectangle.  Raytrace bounding box, raymarch interior.  The control points of the rectangle are 1d, which makes it easier to render, but limits the control points to only moving on the Y axis.",
+			"likes": 8,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"3d",
+				"bezier"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 24,
+						"src": "/presets/cube02_0.jpg",
+						"ctype": "cubemap",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

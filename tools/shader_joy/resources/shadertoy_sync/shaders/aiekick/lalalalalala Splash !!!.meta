@@ -1,0 +1,43 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4tlXWl",
+			"date": "1440612393",
+			"viewed": 550,
+			"name": "lalalalalala Splash !!!",
+			"username": "aiekick",
+			"description": "<img src=\"/img/emoticonHappy.png\"/>",
+			"likes": 9,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"splash",
+				"nbritney"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 12,
+						"src": "/presets/vid01.webm",
+						"ctype": "video",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

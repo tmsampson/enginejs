@@ -1,0 +1,32 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MsX3WH",
+			"date": "1368551143",
+			"viewed": 2021,
+			"name": "Mona Lisa in triangles",
+			"username": "Dave_Hoskins",
+			"description": "Mona Lisa in triangles. Note that the triangles overlap and are transparent.<br/>",
+			"likes": 17,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"triangles",
+				"monalisa",
+				"genetic"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

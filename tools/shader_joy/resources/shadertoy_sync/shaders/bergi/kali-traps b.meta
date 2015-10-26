@@ -1,0 +1,36 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "Mtf3W7",
+			"date": "1422418644",
+			"viewed": 418,
+			"name": "kali-traps b",
+			"username": "bergi",
+			"description": "variation of https://www.shadertoy.com/view/MtX3DM<br/>called \"patients is rewarded\"",
+			"likes": 3,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"3d",
+				"fractal",
+				"volume",
+				"kali",
+				"surface",
+				"hybrid",
+				"neon"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

@@ -1,0 +1,31 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XtjSzR",
+			"date": "1441050653",
+			"viewed": 564,
+			"name": "Worley Tunnely",
+			"username": "akaitora",
+			"description": "A Worley Tunnel",
+			"likes": 7,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"tunnel",
+				"worely"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

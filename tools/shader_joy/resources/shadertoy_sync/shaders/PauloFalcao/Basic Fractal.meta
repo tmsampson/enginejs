@@ -1,0 +1,31 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "Mss3Wf",
+			"date": "1381182698",
+			"viewed": 5101,
+			"name": "Basic Fractal",
+			"username": "PauloFalcao",
+			"description": "A very very simple fractal, just mirror, rotate and scale ;)",
+			"likes": 36,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"fractal"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

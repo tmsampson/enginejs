@@ -1,0 +1,34 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "Xdf3z4",
+			"date": "1363260944",
+			"viewed": 1324,
+			"name": "3D Spheres !",
+			"username": "Eybor",
+			"description": "A fractal composed of spheres with an Anaglyph effect.",
+			"likes": 16,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"3d",
+				"raymarching",
+				"distancefields",
+				"spheres",
+				"anaglyph"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}
