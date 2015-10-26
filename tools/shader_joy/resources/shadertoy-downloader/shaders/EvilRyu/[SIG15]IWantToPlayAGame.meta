@@ -1,0 +1,58 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XlsSDM",
+			"date": "1438265929",
+			"viewed": 750,
+			"name": "[SIG15]IWantToPlayAGame",
+			"username": "EvilRyu",
+			"description": "Jigsaw puppet mask from movie \"saw\"<br/>",
+			"likes": 12,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"raymarching",
+				"scary",
+				"head",
+				"saw",
+				"siggraph",
+				"sig15",
+				"jigsaw"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 10,
+						"src": "/presets/tex09.jpg",
+						"ctype": "texture",
+						"channel": 0
+					},
+					{
+						"id": 23,
+						"src": "/presets/cube01_0.png",
+						"ctype": "cubemap",
+						"channel": 1
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

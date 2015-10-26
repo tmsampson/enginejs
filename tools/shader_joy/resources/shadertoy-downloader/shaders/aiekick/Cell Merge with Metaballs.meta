@@ -1,0 +1,30 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MllXDH",
+			"date": "1436578277",
+			"viewed": 373,
+			"name": "Cell Merge with Metaballs",
+			"username": "aiekick",
+			"description": "you can use mouse  for moving the last blob",
+			"likes": 0,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"cellmergewithmetaballs"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

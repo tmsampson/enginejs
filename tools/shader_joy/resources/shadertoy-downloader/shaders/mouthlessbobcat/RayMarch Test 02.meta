@@ -1,0 +1,42 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4lsSWB",
+			"date": "1439592942",
+			"viewed": 512,
+			"name": "RayMarch Test 02",
+			"username": "mouthlessbobcat",
+			"description": "A raymarch-generated sphere with run-time generated spec and normal maps. <br/>Click and drag to move the light around.",
+			"likes": 1,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"siggraph2015"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 1,
+						"src": "/presets/tex00.jpg",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

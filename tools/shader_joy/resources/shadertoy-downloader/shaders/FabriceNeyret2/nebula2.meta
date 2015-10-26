@@ -1,0 +1,52 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4dBGDR",
+			"date": "1385625563",
+			"viewed": 514,
+			"name": "nebula2",
+			"username": "FabriceNeyret2",
+			"description": "rendering of a nebula.<br/>SPACE: toggle volume cut.<br/>B: toggle blue center <br/>O:  toggle shadowing",
+			"likes": 8,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"volumelighting"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 30,
+						"src": "/presets/tex16.png",
+						"ctype": "texture",
+						"channel": 0
+					},
+					{
+						"id": 33,
+						"src": "/presets/tex00.jpg",
+						"ctype": "keyboard",
+						"channel": 1
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

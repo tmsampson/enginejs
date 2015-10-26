@@ -1,0 +1,30 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "lt23Rh",
+			"date": "1426966710",
+			"viewed": 448,
+			"name": "all the moirès",
+			"username": "scirvir",
+			"description": "Thinking about moires, ",
+			"likes": 2,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"moire"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

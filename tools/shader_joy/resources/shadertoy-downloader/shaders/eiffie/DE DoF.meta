@@ -1,0 +1,32 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MsBGRh",
+			"date": "1383425375",
+			"viewed": 2092,
+			"name": "DE DoF",
+			"username": "eiffie",
+			"description": "This is distance estimated DoF. Now SoC. Why? Well the idea came from knighty and IQ that what I was doing with AA could be used to create DoF so I had to try. It works! With knighty's improvements it is quite fast too! Fast enough for shadows now!",
+			"likes": 19,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"dof",
+				"fakedof",
+				"soc"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

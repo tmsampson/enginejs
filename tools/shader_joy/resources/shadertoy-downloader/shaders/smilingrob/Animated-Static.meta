@@ -1,0 +1,30 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4lfSWl",
+			"date": "1440375195",
+			"viewed": 467,
+			"name": "Animated-Static",
+			"username": "smilingrob",
+			"description": "A noise function that shows some mildly interesting animations in the lower left.  But otherwise appears like TV static.<br/>e isn't necessary, it could also be 2.001 or many other numbers.",
+			"likes": 2,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"noise"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

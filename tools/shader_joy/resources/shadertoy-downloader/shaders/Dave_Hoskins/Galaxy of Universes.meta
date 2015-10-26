@@ -1,0 +1,31 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MdXSzS",
+			"date": "1403191786",
+			"viewed": 3065,
+			"name": "Galaxy of Universes",
+			"username": "Dave_Hoskins",
+			"description": "Big Bang? *pfft* It's just a small explosion somewhere in a rotating Galaxy of Universes!<br/>Thanks to Kali for his fractal formula.",
+			"likes": 60,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"galaxy",
+				"universes"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

@@ -1,0 +1,38 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "lsXSzn",
+			"date": "1396119056",
+			"viewed": 526,
+			"name": "Visual dFdx",
+			"username": "HLorenzi",
+			"description": "Visually showing GLSL's partial derivative functions! Function is in red, derivative is in blue. On my computer, at extreme cases, the blue line displays as 2-pixel-wide dashes, revealing my GPU's fragment shader architecture.",
+			"likes": 6,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"glsl",
+				"derivative",
+				"dfdx",
+				"dfdy",
+				"function",
+				"partial",
+				"dx",
+				"dy",
+				"visual"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

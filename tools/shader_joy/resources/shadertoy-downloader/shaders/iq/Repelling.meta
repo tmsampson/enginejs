@@ -1,0 +1,44 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XdjXWK",
+			"date": "1416039866",
+			"viewed": 4816,
+			"name": "Repelling",
+			"username": "iq",
+			"description": "Testing collisions. Too slow if made this way.",
+			"likes": 26,
+			"published": 3,
+			"flags": 1,
+			"tags": [
+				"3d",
+				"spheres",
+				"repelling"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 6,
+						"src": "/presets/tex05.jpg",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

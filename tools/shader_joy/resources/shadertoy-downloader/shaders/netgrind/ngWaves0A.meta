@@ -1,0 +1,31 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "lll3Ds",
+			"date": "1426367918",
+			"viewed": 379,
+			"name": "ngWaves0A",
+			"username": "netgrind",
+			"description": "wavey",
+			"likes": 1,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"waves",
+				"netgrind"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

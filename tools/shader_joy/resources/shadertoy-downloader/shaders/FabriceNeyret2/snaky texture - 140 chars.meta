@@ -1,0 +1,44 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MtfSWH",
+			"date": "1436303293",
+			"viewed": 419,
+			"name": "snaky texture - 140 chars",
+			"username": "FabriceNeyret2",
+			"description": ".",
+			"likes": 2,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"short",
+				"tweet",
+				"onetweet"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 8,
+						"src": "/presets/tex07.jpg",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

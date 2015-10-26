@@ -1,0 +1,31 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XsBSRV",
+			"date": "1413586923",
+			"viewed": 2688,
+			"name": "On/Off Spikes",
+			"username": "movAX13h",
+			"description": "My first rm shader with shadow pass. No AA. Mouse enabled.<br/>Thank you srtuss for support. Thank you morgan3d for the nebula function.",
+			"likes": 31,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"shadows",
+				"raymarcher"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

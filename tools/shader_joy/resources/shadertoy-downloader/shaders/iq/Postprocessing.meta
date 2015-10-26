@@ -1,0 +1,44 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4dfGzn",
+			"date": "1358124981",
+			"viewed": 2008,
+			"name": "Postprocessing",
+			"username": "iq",
+			"description": "Image postprocessing in GLSL. Includes zooming, contrast, vigneting, color separation, tint, tv lines and brightness flicker",
+			"likes": 34,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"postpro",
+				"vigneting"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 5,
+						"src": "/presets/tex04.jpg",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

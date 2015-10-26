@@ -1,0 +1,31 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MtfSR4",
+			"date": "1434816534",
+			"viewed": 359,
+			"name": "1D Linear Uniform B-Spline",
+			"username": "demofox",
+			"description": "1D Linear B-Spline.  Use the mouse to control the yellow control point.<br/>There are 4 control points A,B,C,D and implicitly 6 knots: [0,1,2,3,4,5].  Only time 1.0 through 4.0 are valid due to how bsplines work.<br/>Signed distance used for rendering curve.",
+			"likes": 0,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"bspline"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

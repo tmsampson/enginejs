@@ -1,0 +1,33 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4tlXzH",
+			"date": "1434513354",
+			"viewed": 487,
+			"name": "ngRay3",
+			"username": "netgrind",
+			"description": "null",
+			"likes": 6,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"ray",
+				"raycast",
+				"rainbow",
+				"colorfu"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

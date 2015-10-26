@@ -1,0 +1,30 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4tBGWV",
+			"date": "1432318147",
+			"viewed": 511,
+			"name": "test loading screen",
+			"username": "skaven",
+			"description": "the loading screen for my pet project. click inside gl view for changing \"loading progress\" value.",
+			"likes": 7,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"loadingscreencube"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

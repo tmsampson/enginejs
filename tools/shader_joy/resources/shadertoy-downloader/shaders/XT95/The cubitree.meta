@@ -1,0 +1,33 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4dXSzn",
+			"date": "1395538677",
+			"viewed": 3824,
+			"name": "The cubitree",
+			"username": "XT95",
+			"description": "A fractal tree with 15 cubes and 1 sphere",
+			"likes": 54,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"fractal",
+				"distancefield",
+				"sky",
+				"tree"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

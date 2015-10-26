@@ -1,0 +1,31 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4ds3D7",
+			"date": "1372250420",
+			"viewed": 654,
+			"name": "Fire Counter",
+			"username": "FabriceNeyret2",
+			"description": "combine counter[1] and noise[2]<br/>[1]: https://www.shadertoy.com/view/XslGD7<br/>[2]: https://www.shadertoy.com/view/XslGRr",
+			"likes": 6,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"procedural",
+				"text"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

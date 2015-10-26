@@ -1,0 +1,30 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "ltXXDN",
+			"date": "1436817530",
+			"viewed": 638,
+			"name": "[2TC15] Starfield! (258c)",
+			"username": "aiekick",
+			"description": "Reduced version of <a href=\"https://www.shadertoy.com/view/ltXSDN\"  class=\"regular\" target=\"_blank\">Starfield!</a><br/><br/>908c to 271c",
+			"likes": 2,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"starfield"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

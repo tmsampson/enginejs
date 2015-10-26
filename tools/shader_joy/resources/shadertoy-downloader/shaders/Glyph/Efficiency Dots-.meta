@@ -1,0 +1,32 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MtlGRs",
+			"date": "1424495718",
+			"viewed": 391,
+			"name": "Efficiency Dots?",
+			"username": "Glyph",
+			"description": "I was playing around with the Android app version of Shadertoy and I found that my initial attempts at creating this effect were extremely slow. This is my attempt to make it as optimized as possible. Please tell me if you have tips. ",
+			"likes": 0,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"optimization",
+				"dot",
+				"efficiency"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

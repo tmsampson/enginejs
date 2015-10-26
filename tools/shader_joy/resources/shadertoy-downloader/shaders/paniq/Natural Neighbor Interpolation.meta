@@ -1,0 +1,42 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XlSGRR",
+			"date": "1426386386",
+			"viewed": 749,
+			"name": "Natural Neighbor Interpolation",
+			"username": "paniq",
+			"description": "Interpolating texels using 3x3 natural neighbor interpolation, a technique for interpolating voronoi cells that also works for regular grids.",
+			"likes": 7,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"mattdamon"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 16,
+						"src": "/presets/tex11.png",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

@@ -1,0 +1,74 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "Xsl3Rl",
+			"date": "1378947554",
+			"viewed": 2184,
+			"name": "Jelly thing",
+			"username": "iq",
+			"description": "Again, some moving 3d noise + cosines.  ",
+			"likes": 17,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"procedural",
+				"3d",
+				"raymarching"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 2,
+						"src": "/presets/tex01.jpg",
+						"ctype": "texture",
+						"channel": 1
+					},
+					{
+						"id": 26,
+						"src": "/presets/cube04_0.png",
+						"ctype": "cubemap",
+						"channel": 2
+					},
+					{
+						"id": 27,
+						"src": "/presets/cube05_0.png",
+						"ctype": "cubemap",
+						"channel": 3
+					},
+					{
+						"id": 30,
+						"src": "/presets/tex16.png",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

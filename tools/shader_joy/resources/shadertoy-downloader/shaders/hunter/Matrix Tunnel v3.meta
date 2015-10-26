@@ -1,0 +1,47 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4lj3W1",
+			"date": "1428601307",
+			"viewed": 431,
+			"name": "Matrix Tunnel v3",
+			"username": "hunter",
+			"description": "audio multiplied by itself.  red color is bass, green mids, blue treb.",
+			"likes": 1,
+			"published": 3,
+			"flags": 4,
+			"tags": [
+				"2d",
+				"fft",
+				"color",
+				"audio",
+				"visualizer",
+				"microphone"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 32,
+						"src": "/presets/mic.png",
+						"ctype": "mic",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

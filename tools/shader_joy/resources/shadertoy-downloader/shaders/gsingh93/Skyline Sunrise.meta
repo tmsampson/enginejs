@@ -1,0 +1,31 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4lfSzM",
+			"date": "1435099597",
+			"viewed": 380,
+			"name": "Skyline Sunrise",
+			"username": "gsingh93",
+			"description": "Based off of https://www.shadertoy.com/view/4tXSRM (which contains a detailed explanation) and inspired by https://www.shadertoy.com/view/MlX3DM.",
+			"likes": 2,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"sunrise",
+				"skyline"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

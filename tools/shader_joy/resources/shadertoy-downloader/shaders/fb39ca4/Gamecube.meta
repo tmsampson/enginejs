@@ -1,0 +1,34 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4sf3Dj",
+			"date": "1379099558",
+			"viewed": 4674,
+			"name": "Gamecube",
+			"username": "fb39ca4",
+			"description": "Phew. That took a while to get looking right. I apologize for the lack of optimization. Anyone good at doing text? All that's missing is the words \"Nintendo Gamecube.\"<br/><br/>If it doesn't work and you are using Windows, please disable ANGLE in your browser. ",
+			"likes": 42,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"raymarching",
+				"cube",
+				"logo",
+				"animation",
+				"gamecube"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

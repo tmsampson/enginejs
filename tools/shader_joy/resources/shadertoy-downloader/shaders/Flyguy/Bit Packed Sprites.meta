@@ -1,0 +1,33 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XtsGRl",
+			"date": "1424308881",
+			"viewed": 465,
+			"name": "Bit Packed Sprites",
+			"username": "Flyguy",
+			"description": "Testing packing character sprites into the bits of an integer.",
+			"likes": 8,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"binary",
+				"sprite",
+				"letters",
+				"bits"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

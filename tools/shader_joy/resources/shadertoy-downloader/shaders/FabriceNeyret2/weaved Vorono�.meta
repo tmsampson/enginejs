@@ -1,0 +1,43 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "ltsXRM",
+			"date": "1435506484",
+			"viewed": 416,
+			"name": "weaved Voronoï",
+			"username": "FabriceNeyret2",
+			"description": "2 interweaved Voronoï meshes.",
+			"likes": 4,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"procedural",
+				"voronoi"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 22,
+						"src": "/presets/cube00_0.jpg",
+						"ctype": "cubemap",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

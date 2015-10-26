@@ -1,0 +1,30 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "lt2GDy",
+			"date": "1432208425",
+			"viewed": 521,
+			"name": "Funky tentacles",
+			"username": "ManuManu",
+			"description": "Ok, I must confess it : it was totally out of control<br/>I made this from testing something from this demo http://glslsandbox.com/e#25403.2 and its parent here http://glslsandbox.com/e#25400.0<br/><br/>original : http://glslsandbox.com/e#25442.7",
+			"likes": 10,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"raymarching"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

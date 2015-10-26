@@ -1,0 +1,33 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "Xlf3D8",
+			"date": "1421287180",
+			"viewed": 598,
+			"name": "scifi",
+			"username": "bergi",
+			"description": "More explorations of the Kali set. <br/>Watch for at least 5 hours, or play with the offset in line 39.",
+			"likes": 5,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"raymarching",
+				"space",
+				"alien",
+				"science"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

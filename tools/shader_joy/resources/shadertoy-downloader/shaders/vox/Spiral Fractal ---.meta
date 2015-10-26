@@ -1,0 +1,30 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XtSSWD",
+			"date": "1443541879",
+			"viewed": 361,
+			"name": "Spiral Fractal (?)",
+			"username": "vox",
+			"description": "Can someone describe what the hell I've managed to do here? Has anyone seen anything similar? Does anyone know the name for this type of approach? Can it easily be extended to a 3D flower fractal?! Let me know, I'm here to learn!",
+			"likes": 5,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"spiralfractalspiralfractalflowerflowervoxvoxvoxinityvoxinity"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

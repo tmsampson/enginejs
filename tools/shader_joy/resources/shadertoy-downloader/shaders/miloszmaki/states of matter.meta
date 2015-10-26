@@ -1,0 +1,32 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "ltlXzS",
+			"date": "1437677520",
+			"viewed": 557,
+			"name": "states of matter",
+			"username": "miloszmaki",
+			"description": "Shader presenting different states of matter (solid, liquid, gas / plasma). Made for competition on warsztat.gd",
+			"likes": 1,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"3d",
+				"physics",
+				"warsztat"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

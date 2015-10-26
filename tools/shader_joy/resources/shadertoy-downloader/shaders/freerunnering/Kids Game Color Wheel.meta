@@ -1,0 +1,33 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "ltjSRV",
+			"date": "1445127218",
+			"viewed": 134,
+			"name": "Kids Game Color Wheel",
+			"username": "freerunnering",
+			"description": "An improved version of my simple color wheel designed for kids games.",
+			"likes": 0,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"simple",
+				"hue",
+				"hsl",
+				"colorwheel"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

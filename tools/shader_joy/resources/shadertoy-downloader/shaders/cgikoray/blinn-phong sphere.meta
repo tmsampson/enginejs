@@ -1,0 +1,46 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "ll2GW1",
+			"date": "1428734688",
+			"viewed": 457,
+			"name": "blinn-phong sphere",
+			"username": "cgikoray",
+			"description": "An adaption of the Blinn-Phong shading model for use in education.",
+			"likes": 2,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"phong",
+				"sphere",
+				"metal",
+				"blinn",
+				"learn"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 3,
+						"src": "/presets/tex02.jpg",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

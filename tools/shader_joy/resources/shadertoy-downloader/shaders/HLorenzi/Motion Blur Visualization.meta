@@ -1,0 +1,37 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XdXXz4",
+			"date": "1397136691",
+			"viewed": 1256,
+			"name": "Motion Blur Visualization",
+			"username": "HLorenzi",
+			"description": "Importance of motion blur under three different frame rates (60, 30 and 15 FPS -- Shadertoy must be running at full 60 FPS for correct blurring). You can click on the shader to hide the jittering or the blurred circles.",
+			"likes": 20,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"blur",
+				"fast",
+				"sphere",
+				"circle",
+				"ball",
+				"motion",
+				"sample"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

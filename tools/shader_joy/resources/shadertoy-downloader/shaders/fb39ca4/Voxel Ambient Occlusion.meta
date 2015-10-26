@@ -1,0 +1,35 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "ldl3DS",
+			"date": "1378761304",
+			"viewed": 1000,
+			"name": "Voxel Ambient Occlusion",
+			"username": "fb39ca4",
+			"description": "Wrote this a while back, and forgot to release it. As seen in Reinder's Minecraft shader: https://www.shadertoy.com/view/4ds3WS",
+			"likes": 8,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"raycasting",
+				"voxel",
+				"occlusion",
+				"ambient",
+				"dda",
+				"branchless"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

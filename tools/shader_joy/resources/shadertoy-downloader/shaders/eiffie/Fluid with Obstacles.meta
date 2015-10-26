@@ -1,0 +1,31 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "lllGDl",
+			"date": "1426274066",
+			"viewed": 697,
+			"name": "Fluid with Obstacles",
+			"username": "eiffie",
+			"description": "Thanks to andregc we have fluid! Use the mouse to position some \"movers\".<br/>The original is found here: <a href=\"https://www.shadertoy.com/view/4llGWl\" class=\"regular\" target=\"_blank\">https://www.shadertoy.com/view/4llGWl</a>",
+			"likes": 21,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"fluid",
+				"fluidsolver"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

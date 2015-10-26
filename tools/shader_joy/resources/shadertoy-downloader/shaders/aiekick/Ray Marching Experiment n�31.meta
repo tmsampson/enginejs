@@ -1,0 +1,45 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XtsXWX",
+			"date": "1440170567",
+			"viewed": 578,
+			"name": "Ray Marching Experiment n°31",
+			"username": "aiekick",
+			"description": "iq shader https://www.shadertoy.com/view/Ml2GWy displaced on ball",
+			"likes": 9,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"ray",
+				"experiment",
+				"marching",
+				"n31"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 27,
+						"src": "/presets/cube05_0.png",
+						"ctype": "cubemap",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

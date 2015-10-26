@@ -1,0 +1,30 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XdsSRN",
+			"date": "1397597044",
+			"viewed": 687,
+			"name": "glsl bug ?",
+			"username": "FabriceNeyret2",
+			"description": "mouse to explore the field.<br/><br/>mod(x,y) is not always correct: sometimes it gives y !!! <br/>Here is a small test code. none-grey pixels are abnormals. tiles=32x32",
+			"likes": 1,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"bug"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

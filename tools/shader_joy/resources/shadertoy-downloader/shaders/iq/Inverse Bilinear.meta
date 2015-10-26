@@ -1,0 +1,44 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "lsBSDm",
+			"date": "1412646115",
+			"viewed": 4384,
+			"name": "Inverse Bilinear",
+			"username": "iq",
+			"description": "Inverse bilinear interpolation: given a point p and a quad compute the bilinear coordinates of p in the quad. More info <a href=\"http://www.iquilezles.org/www/articles/ibilinear/ibilinear.htm\"  class=\"regular\" target=\"_blank\">in this article</a>.",
+			"likes": 9,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"interpolation",
+				"bilinear"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 2,
+						"src": "/presets/tex01.jpg",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

@@ -1,0 +1,30 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "Mll3zB",
+			"date": "1423181380",
+			"viewed": 459,
+			"name": "Archimedean Solids",
+			"username": "paniq",
+			"description": "Regular solids formed by intersections between cube, octahedron (the cube's dual) and rhombic dodecahedron, an interpolation of the cube and its dual. Uses IQ's 3D template.<br/><br/>based on the 3D template by iq",
+			"likes": 2,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"mattdamon"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

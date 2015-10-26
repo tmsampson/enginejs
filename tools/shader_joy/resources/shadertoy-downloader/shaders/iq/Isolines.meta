@@ -1,0 +1,55 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MsXGz8",
+			"date": "1363318954",
+			"viewed": 2583,
+			"name": "Isolines",
+			"username": "iq",
+			"description": "Yet another meta-ball based isoline effect. Basically, a regular potential based scalar field is computed (based in 10 charges) and used to index into a 1D texture (in this case, a slice of a 2D texture). ",
+			"likes": 21,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"sound",
+				"fft",
+				"metaballs"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 8,
+						"src": "/presets/tex07.jpg",
+						"ctype": "texture",
+						"channel": 0
+					},
+					{
+						"id": 21,
+						"src": "/presets/mzk04.mp3",
+						"ctype": "music",
+						"channel": 1
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

@@ -1,0 +1,30 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "lssSRn",
+			"date": "1396028001",
+			"viewed": 500,
+			"name": "clipped disc hypertexture 1",
+			"username": "FabriceNeyret2",
+			"description": "hypertexture (here, sphere clipped by plane) with well controlled thickness, i.e., noise saturating the \"skin\" range.<br/>mouse.x tune noise layer thickness<br/>mouse.y tune noise bluriness<br/>See #define for more tunings",
+			"likes": 5,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"procedural"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

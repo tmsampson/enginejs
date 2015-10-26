@@ -1,0 +1,46 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XdjSRw",
+			"date": "1410283972",
+			"viewed": 501,
+			"name": "Hashed blur",
+			"username": "Dave_Hoskins",
+			"description": "Samples evenly in a circular area. <br/><br/>",
+			"likes": 13,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"blur",
+				"post",
+				"effects",
+				"hashedblur"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 5,
+						"src": "/presets/tex04.jpg",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

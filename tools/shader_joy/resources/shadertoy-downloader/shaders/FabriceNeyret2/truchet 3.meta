@@ -1,0 +1,62 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XsS3Dc",
+			"date": "1394128115",
+			"viewed": 534,
+			"name": "truchet 3",
+			"username": "FabriceNeyret2",
+			"description": "variations upon https://www.shadertoy.com/view/4d2GzV<br/>B: toggles border vs plain<br/>C: toggles colors vs B&W<br/>I: toggles inverse colors<br/>H: toggles saturation",
+			"likes": 11,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"truchet"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 17,
+						"src": "/presets/tex12.png",
+						"ctype": "texture",
+						"channel": 0
+					},
+					{
+						"id": 30,
+						"src": "/presets/tex16.png",
+						"ctype": "texture",
+						"channel": 1
+					},
+					{
+						"id": 33,
+						"src": "/presets/tex00.jpg",
+						"ctype": "keyboard",
+						"channel": 2
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

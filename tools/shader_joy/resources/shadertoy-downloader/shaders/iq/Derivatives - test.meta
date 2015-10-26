@@ -1,0 +1,43 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "Msl3RH",
+			"date": "1363000001",
+			"viewed": 1134,
+			"name": "Derivatives - test",
+			"username": "iq",
+			"description": "Abusing the derivative functions of GLSL to do dirty emboss/bump/cartoon shading. Typically you want to use these functions for antialiasing procedural patterns by taking derivatives of the domain of your procedural function and removing detail.",
+			"likes": 12,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"glsl"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 5,
+						"src": "/presets/tex04.jpg",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

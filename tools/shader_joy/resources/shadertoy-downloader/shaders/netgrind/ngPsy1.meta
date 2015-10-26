@@ -1,0 +1,44 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "Mt23zz",
+			"date": "1426722269",
+			"viewed": 558,
+			"name": "ngPsy1",
+			"username": "netgrind",
+			"description": "#woah",
+			"likes": 4,
+			"published": 3,
+			"flags": 4,
+			"tags": [
+				"colorful",
+				"psychedelic",
+				"netgrind"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 32,
+						"src": "/presets/mic.png",
+						"ctype": "mic",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

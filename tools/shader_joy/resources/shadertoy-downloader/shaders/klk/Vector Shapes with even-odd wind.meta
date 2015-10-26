@@ -1,0 +1,45 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "ltS3Rm",
+			"date": "1427803554",
+			"viewed": 400,
+			"name": "Vector Shapes with even-odd wind",
+			"username": "klk",
+			"description": "2D shapes with even-odd winding rule and antialiasing<br/>Keys 1 and 2 toggle outline and blur respectively<br/>LMB pressed -- draw red triangles and change some params<br/>Enjoy.",
+			"likes": 4,
+			"published": 3,
+			"flags": 16,
+			"tags": [
+				"2d",
+				"antialiasing",
+				"vector",
+				"windingrule"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 33,
+						"src": "/presets/tex00.jpg",
+						"ctype": "keyboard",
+						"channel": 2
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

@@ -1,0 +1,31 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4t23RG",
+			"date": "1429920595",
+			"viewed": 383,
+			"name": "Blue ballz",
+			"username": "tuhoojabotti",
+			"description": "Blue balls on the screen. Original work: https://www.shadertoy.com/view/Xds3Ws",
+			"likes": 1,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"ball",
+				"blue"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

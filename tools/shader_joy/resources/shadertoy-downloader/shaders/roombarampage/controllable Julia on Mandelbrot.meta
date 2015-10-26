@@ -1,0 +1,34 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MtjSRw",
+			"date": "1442552709",
+			"viewed": 271,
+			"name": "controllable Julia on Mandelbrot",
+			"username": "roombarampage",
+			"description": "inspired by ichko's Mandelbrot Set & Julia... https://www.shadertoy.com/view/4tjSRw<br/><br/>instructions: click and move the mouse around the screen to display the julia set for that location.<br/><br/>background video: https://www.youtube.com/watch?v=oCkQ7WK7vuY",
+			"likes": 2,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"julia",
+				"mandelbrot",
+				"controllable",
+				"whoa",
+				"mousefractal"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

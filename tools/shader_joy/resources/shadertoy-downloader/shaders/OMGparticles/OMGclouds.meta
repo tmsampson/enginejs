@@ -1,0 +1,49 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "llXSW2",
+			"date": "1439770041",
+			"viewed": 615,
+			"name": "OMGclouds",
+			"username": "OMGparticles",
+			"description": "My first contribution to ShaderToy after following the tutorial at SIGGRAPH 2015. Most of this shader code is taken directly from iq's \"Clouds\" (shadertoy.com/view/XslGRr). I just added some turbulence/movement in the clouds, and a day/night cycle.",
+			"likes": 14,
+			"published": 3,
+			"flags": 1,
+			"tags": [
+				"procedural",
+				"3d",
+				"raymarching",
+				"volumetric",
+				"iq",
+				"lod",
+				"iteration",
+				"vr"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 30,
+						"src": "/presets/tex16.png",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

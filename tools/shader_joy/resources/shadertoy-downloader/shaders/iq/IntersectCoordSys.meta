@@ -1,0 +1,32 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "ldfGDB",
+			"date": "1378265618",
+			"viewed": 652,
+			"name": "IntersectCoordSys",
+			"username": "iq",
+			"description": "intersectRect(): intersects arbitrarily oriented 2D rectangles (or any other planar shape) in 3D. The rectangle/domain is defined by its center position and two orthogonal axes. The 2D intersection coordinates are computed by the function.",
+			"likes": 5,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"3d",
+				"raytracing",
+				"rectangle"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

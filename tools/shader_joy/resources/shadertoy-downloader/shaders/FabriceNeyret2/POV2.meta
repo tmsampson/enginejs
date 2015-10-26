@@ -1,0 +1,43 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XssGRX",
+			"date": "1375799727",
+			"viewed": 499,
+			"name": "POV2",
+			"username": "FabriceNeyret2",
+			"description": "try pressing pause/play to understand what you've seen... or not :-D",
+			"likes": 5,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"illusion",
+				"persistancy"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 17,
+						"src": "/presets/tex12.png",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

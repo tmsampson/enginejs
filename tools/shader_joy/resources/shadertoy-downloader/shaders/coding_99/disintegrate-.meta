@@ -1,0 +1,42 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "ltSSz1",
+			"date": "1441492496",
+			"viewed": 453,
+			"name": "disintegrate?",
+			"username": "coding_99",
+			"description": "Trying to make a disintegrator (i.e. preserve texture fragments, but disperse them in a neat way).  First attempt.  Any suggestions / pointers to better examples would be appreciated.  Thanks!",
+			"likes": 1,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 1,
+						"src": "/presets/tex00.jpg",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

@@ -1,0 +1,30 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "ltj3Ww",
+			"date": "1429631513",
+			"viewed": 428,
+			"name": "LRSK - Lame Raymarch Scene Kit",
+			"username": "citruslee",
+			"description": "I got fed up with the awkward math where positive direction from camera was a negative number, also juggling with operators and ugly one liners with millions of unite operators. So this framework is the result.",
+			"likes": 1,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"basic3dframeworkformyownprojects"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

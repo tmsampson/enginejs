@@ -1,0 +1,32 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4sS3zz",
+			"date": "1382430978",
+			"viewed": 4045,
+			"name": "Ellipse - Distance",
+			"username": "iq",
+			"description": "Analytical distance to a ellipse. Same as I wrote for  but standalone for linking to it from my ",
+			"likes": 10,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"distance",
+				"ellipse"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

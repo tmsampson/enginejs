@@ -1,0 +1,33 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "ldBGz3",
+			"date": "1391752598",
+			"viewed": 949,
+			"name": "Oren-Nayar",
+			"username": "iq",
+			"description": "Oren-Nayar diffuse model, compared to regular Lambert",
+			"likes": 15,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"shading",
+				"model",
+				"material",
+				"orennayar"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

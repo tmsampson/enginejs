@@ -1,0 +1,55 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4ls3D4",
+			"date": "1422123351",
+			"viewed": 426,
+			"name": "[2TC 15] Dearly departed",
+			"username": "Dave_Hoskins",
+			"description": "An exaltation into the Spirit Realm!<br/>At fullscreen it's quite hypnotic. <br/>Thanks to TekF for his idea with <a href=\"https://www.shadertoy.com/view/4tf3WN\" class=\"regular\" target=\"_blank\">https://www.shadertoy.com/view/4tf3WN</a>",
+			"likes": 11,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"3d",
+				"raymarching",
+				"2tc15",
+				"dearly"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 30,
+						"src": "/presets/tex16.png",
+						"ctype": "texture",
+						"channel": 0
+					},
+					{
+						"id": 35,
+						"src": "/presets/mzk06.mp3",
+						"ctype": "music",
+						"channel": 1
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

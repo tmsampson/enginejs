@@ -1,0 +1,33 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "llsSzn",
+			"date": "1434492763",
+			"viewed": 455,
+			"name": "Ellipsoid - soft shadow",
+			"username": "iq",
+			"description": "Ellipsoid - soft shadow (approximation)",
+			"likes": 4,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"3d",
+				"shadow",
+				"ellipsoid",
+				"softshadow"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

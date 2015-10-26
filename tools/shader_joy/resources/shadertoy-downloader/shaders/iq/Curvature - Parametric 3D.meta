@@ -1,0 +1,32 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XlfXR4",
+			"date": "1434657962",
+			"viewed": 1376,
+			"name": "Curvature - Parametric 3D",
+			"username": "iq",
+			"description": "Curvature computation for parametric curves (same as <a href=\"https://www.shadertoy.com/view/Mlf3zl\" class=\"regular\" target=\"_blank\">https://www.shadertoy.com/view/Mlf3zl</a>. but in 3D in this case), and displays it with colors (red is high curvature, yellow is medium, green is low)",
+			"likes": 19,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"3d",
+				"curvature",
+				"parametric"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

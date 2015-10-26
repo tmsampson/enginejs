@@ -1,0 +1,33 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4sX3Rn",
+			"date": "1358124981",
+			"viewed": 8378,
+			"name": "Menger Sponge",
+			"username": "iq",
+			"description": "Four iterations of the famous fractal structure. See <a href=\"http://www.iquilezles.org/www/articles/menger/menger.htm\"  class=\"regular\" target=\"_blank\">http://www.iquilezles.org/www/articles/menger/menger.htm</a> for the full explanation of how this was done.",
+			"likes": 29,
+			"published": 3,
+			"flags": 1,
+			"tags": [
+				"3d",
+				"raymarching",
+				"fractal",
+				"vr"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

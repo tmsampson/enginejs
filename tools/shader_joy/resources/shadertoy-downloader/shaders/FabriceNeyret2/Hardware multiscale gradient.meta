@@ -1,0 +1,62 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "ldsSzN",
+			"date": "1397996625",
+			"viewed": 478,
+			"name": "Hardware multiscale gradient",
+			"username": "FabriceNeyret2",
+			"description": "cheap texture gradiant using hardware derivative at each MIPmap level.<br/>mouse = parameter tuning. No mouse -> auto-demo.<br/>C: add the ultra-lowres image<br/>M: uses module(grad) instead<br/>SPACE: show base texture<br/>G: shows grad at MIPmap level = mouse.x",
+			"likes": 2,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"dfdx"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 4,
+						"src": "/presets/tex03.jpg",
+						"ctype": "texture",
+						"channel": 1
+					},
+					{
+						"id": 5,
+						"src": "/presets/tex04.jpg",
+						"ctype": "texture",
+						"channel": 0
+					},
+					{
+						"id": 33,
+						"src": "/presets/tex00.jpg",
+						"ctype": "keyboard",
+						"channel": 2
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

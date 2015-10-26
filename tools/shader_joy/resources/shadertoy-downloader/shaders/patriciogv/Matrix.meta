@@ -1,0 +1,31 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MlfXzN",
+			"date": "1434888465",
+			"viewed": 557,
+			"name": "Matrix",
+			"username": "patriciogv",
+			"description": "Shader used on http://www.thebookofshaders.com/08 and in http://patriciogonzalezvivo.github.io/tangram-sandbox/tangram.html?styles/matrix",
+			"likes": 8,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"random",
+				"matrix"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

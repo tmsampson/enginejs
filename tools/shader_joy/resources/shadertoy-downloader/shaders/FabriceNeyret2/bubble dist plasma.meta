@@ -1,0 +1,31 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "lt23Dt",
+			"date": "1433782349",
+			"viewed": 500,
+			"name": "bubble dist plasma",
+			"username": "FabriceNeyret2",
+			"description": "Well, it first was a bug in a Worley/Voronoi shader... :-)<br/><br/>NB: try #define NOISE  1 or 3 if you wish.",
+			"likes": 9,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"voronoi",
+				"distance"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

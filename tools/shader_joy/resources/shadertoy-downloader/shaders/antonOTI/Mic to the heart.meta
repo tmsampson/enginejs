@@ -1,0 +1,54 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4lBGDW",
+			"date": "1428867043",
+			"viewed": 474,
+			"name": "Mic to the heart",
+			"username": "antonOTI",
+			"description": "trying the new microphone feature. I've plugged the audio into the microphone so I can experiment with whatever pass on my computer.<br/>I don't have notion in sound so I still don't really understand how frequency differentiate from the sound wave",
+			"likes": 1,
+			"published": 3,
+			"flags": 4,
+			"tags": [
+				"noise",
+				"noob",
+				"microphone"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 30,
+						"src": "/presets/tex16.png",
+						"ctype": "texture",
+						"channel": 1
+					},
+					{
+						"id": 32,
+						"src": "/presets/mic.png",
+						"ctype": "mic",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

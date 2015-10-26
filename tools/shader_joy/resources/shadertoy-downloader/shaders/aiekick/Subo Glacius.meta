@@ -1,0 +1,55 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "Ml2XRW",
+			"date": "1442156224",
+			"viewed": 558,
+			"name": "Subo Glacius",
+			"username": "aiekick",
+			"description": " Subo Glacius (Under The Ice in latin)<br/>The X axis of the mouse can be used for translate on x the camera ",
+			"likes": 8,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"terrain",
+				"ice",
+				"voronesque",
+				"submarine"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 8,
+						"src": "/presets/tex07.jpg",
+						"ctype": "texture",
+						"channel": 1
+					},
+					{
+						"id": 23,
+						"src": "/presets/cube01_0.png",
+						"ctype": "cubemap",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

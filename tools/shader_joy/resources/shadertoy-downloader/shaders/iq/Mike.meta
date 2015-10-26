@@ -1,0 +1,44 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MsXGWr",
+			"date": "1367548764",
+			"viewed": 25020,
+			"name": "Mike",
+			"username": "iq",
+			"description": "Raymarching (a simplified version of) Mike's procedural distance field. Modeling and shading are pretty arbitrary, and made after the first picture you get in google image when you type his name. You can see him in 3D if you uncomment line 9.",
+			"likes": 62,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"3d",
+				"raymarching",
+				"distancefield"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 16,
+						"src": "/presets/tex11.png",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

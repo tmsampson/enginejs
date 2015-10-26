@@ -1,0 +1,30 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MssSDH",
+			"date": "1400605310",
+			"viewed": 460,
+			"name": "parabolic mirror",
+			"username": "FabriceNeyret2",
+			"description": "reflection by a parabolic mirror<br/><br/>(tune light position with mouse)",
+			"likes": 4,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"optic"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

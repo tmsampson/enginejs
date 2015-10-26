@@ -1,0 +1,31 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "llfSzH",
+			"date": "1434454925",
+			"viewed": 558,
+			"name": "Raymarch 199 chars",
+			"username": "coyote",
+			"description": "Spheres in myst.",
+			"likes": 15,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"raymarching",
+				"short"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

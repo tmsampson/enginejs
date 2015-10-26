@@ -1,0 +1,45 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4djSDy",
+			"date": "1415594977",
+			"viewed": 3660,
+			"name": "Sphere - occlusion",
+			"username": "iq",
+			"description": "Analytical ambient occlusion of a sphere. Left side, stochastically sampled occlusion. Right, analytical solution, no rays casted. More info in <a href=\"http://iquilezles.org/www/articles/sphereao/sphereao.htm\"  class=\"regular\" target=\"_blank\">this article</a>. Move the mouse to compare.",
+			"likes": 14,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"3d",
+				"triangle",
+				"occlusion",
+				"analytic"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 30,
+						"src": "/presets/tex16.png",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

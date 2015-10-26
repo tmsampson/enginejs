@@ -1,0 +1,53 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "Xt2GRD",
+			"date": "1428019002",
+			"viewed": 386,
+			"name": "ripple7",
+			"username": "ap",
+			"description": "simple shader",
+			"likes": 2,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"test",
+				"ripple"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 13,
+						"src": "/presets/mzk00.mp3",
+						"ctype": "music",
+						"channel": 1
+					},
+					{
+						"id": 30,
+						"src": "/presets/tex16.png",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

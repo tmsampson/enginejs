@@ -1,0 +1,55 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "ltsGWn",
+			"date": "1421118932",
+			"viewed": 1207,
+			"name": "Nyan Cat in Mode 7",
+			"username": "poljere",
+			"description": "The Nyan Cat goes for an infinite walk around this \"mode 7\"-based world. Mode 7 was used in the SNES days <a href=\"http://en.wikipedia.org/wiki/Mode_7\" class=\"regular\" target=\"_blank\">http://en.wikipedia.org/wiki/Mode_7</a>. If anyone got the chance to work with it, I'd love to learn more about it!",
+			"likes": 4,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"nyan",
+				"nyancat",
+				"snes",
+				"mode7"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 1,
+						"src": "/presets/tex00.jpg",
+						"ctype": "texture",
+						"channel": 0
+					},
+					{
+						"id": 14,
+						"src": "/presets/tex14.png",
+						"ctype": "texture",
+						"channel": 1
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

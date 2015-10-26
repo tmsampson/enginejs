@@ -1,0 +1,50 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "ldXGW4",
+			"date": "1370669730",
+			"viewed": 1425,
+			"name": "Distorted TV",
+			"username": "ehj1",
+			"description": "Horizontal wiggle distortion effect combined with, static, vertical movement, scanlines and an rgb offset.<br/><br/>Updated from the last version to add static and vertical movement.",
+			"likes": 30,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"noise",
+				"distortion",
+				"perlin",
+				"scanlines",
+				"tv",
+				"crt",
+				"monitor",
+				"static",
+				"analog"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 29,
+						"src": "/presets/vid02.ogv",
+						"ctype": "video",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

@@ -1,0 +1,34 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MlS3Rt",
+			"date": "1431333417",
+			"viewed": 516,
+			"name": "ngRay1",
+			"username": "netgrind",
+			"description": "slo<br/>a t o m",
+			"likes": 3,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"3d",
+				"ray",
+				"blackandwhite",
+				"grey",
+				"rad"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

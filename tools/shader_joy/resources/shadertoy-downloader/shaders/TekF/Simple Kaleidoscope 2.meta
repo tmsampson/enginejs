@@ -1,0 +1,42 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "Xll3Wj",
+			"date": "1425234407",
+			"viewed": 399,
+			"name": "Simple Kaleidoscope 2",
+			"username": "TekF",
+			"description": "A stranger symmetry.",
+			"likes": 5,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"kaleidoscope"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 28,
+						"src": "/presets/tex15.png",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

@@ -1,0 +1,30 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "ldfSWr",
+			"date": "1399050711",
+			"viewed": 393,
+			"name": "dipole",
+			"username": "FabriceNeyret2",
+			"description": "interferences from a dipole (mouse + it's center-symmetric)",
+			"likes": 1,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"interference"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

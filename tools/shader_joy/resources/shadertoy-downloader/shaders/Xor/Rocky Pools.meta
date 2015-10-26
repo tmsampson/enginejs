@@ -1,0 +1,41 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4tB3Wm",
+			"date": "1429920446",
+			"viewed": 459,
+			"name": "Rocky Pools",
+			"username": "Xor",
+			"description": "3D Water test.",
+			"likes": 2,
+			"published": 3,
+			"flags": 1,
+			"tags": [
+				"procedural",
+				"3d",
+				"raymarching",
+				"reflection",
+				"sun",
+				"refraction",
+				"water",
+				"sky",
+				"rocks",
+				"xor",
+				"rocky",
+				"pools"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

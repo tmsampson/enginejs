@@ -1,0 +1,35 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4lfSzS",
+			"date": "1437405566",
+			"viewed": 877,
+			"name": "Awesome star",
+			"username": "foxes",
+			"description": "i found in http://game.interstellarmovie.com/ planet generator and simulated generation of stars with the noise<br/>you can rotate with mouse.",
+			"likes": 16,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"procedural",
+				"3d",
+				"noise",
+				"ray",
+				"sun",
+				"star"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

@@ -1,0 +1,37 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MtlXDS",
+			"date": "1439459977",
+			"viewed": 507,
+			"name": "Asa no ha",
+			"username": "Xender",
+			"description": "An ancient pattern, known in Japan as 麻の葉.",
+			"likes": 4,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"distancefield",
+				"static",
+				"pattern",
+				"symmetry",
+				"p6m",
+				"asanoha",
+				"japanese"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

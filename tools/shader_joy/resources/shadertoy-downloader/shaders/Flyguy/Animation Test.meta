@@ -1,0 +1,31 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "ltl3DB",
+			"date": "1424996209",
+			"viewed": 588,
+			"name": "Animation Test",
+			"username": "Flyguy",
+			"description": " Testing some smooth animation stuff. Change ANIM_FUNC to see the other animation functions.",
+			"likes": 7,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"animation",
+				"shapes"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

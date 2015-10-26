@@ -1,0 +1,33 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4tsSWs",
+			"date": "1440661891",
+			"viewed": 644,
+			"name": "Voronoi Portal",
+			"username": "akaitora",
+			"description": "Running a cellular base texture through an fbm.",
+			"likes": 9,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"voronoi",
+				"noise",
+				"cellular",
+				"portal"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

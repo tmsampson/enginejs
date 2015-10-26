@@ -1,0 +1,32 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MlsGWS",
+			"date": "1433896901",
+			"viewed": 568,
+			"name": "Distance - PN Static",
+			"username": "iq",
+			"description": "Statically subdividing a set of segments into 8 times the number of segments in a cubic manner. See <a href=\"https://www.shadertoy.com/view/4ts3DB\" class=\"regular\" target=\"_blank\">https://www.shadertoy.com/view/4ts3DB</a> for more information.",
+			"likes": 8,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"tesselation",
+				"pn"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

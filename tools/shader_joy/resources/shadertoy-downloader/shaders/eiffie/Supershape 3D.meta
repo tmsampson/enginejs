@@ -1,0 +1,32 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4llGWM",
+			"date": "1422458071",
+			"viewed": 1826,
+			"name": "Supershape 3D",
+			"username": "eiffie",
+			"description": "I just wanted to see what it looks like but actually this method works ok-ish. If anyone knows of a DE for these things let me know - or if you spot improvements!!",
+			"likes": 32,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"3d",
+				"superformula",
+				"supershape"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

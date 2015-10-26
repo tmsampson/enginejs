@@ -1,0 +1,33 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MdjXDV",
+			"date": "1416338272",
+			"viewed": 539,
+			"name": "Folding",
+			"username": "reinder",
+			"description": "I was hoping that 'folding' the input domain of the distance function would lead to some elegant math. Unfortunately, the math isn't that elegant at all, and also it isn't stable for large folding-angles (hence the 'clipping hack' at lines 90 to 99).",
+			"likes": 8,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"distancefields",
+				"folding",
+				"paper",
+				"inputdomain"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

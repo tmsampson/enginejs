@@ -1,0 +1,43 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4lSXzR",
+			"date": "1440955127",
+			"viewed": 464,
+			"name": "Flower at night",
+			"username": "yibojiang",
+			"description": "experiment math painting <img src=\"/img/emoticonHappy.png\"/>",
+			"likes": 17,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"flower",
+				"pattern"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 16,
+						"src": "/presets/tex11.png",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

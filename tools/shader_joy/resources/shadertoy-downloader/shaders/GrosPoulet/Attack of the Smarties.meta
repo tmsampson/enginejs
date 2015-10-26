@@ -1,0 +1,44 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XlfGzB",
+			"date": "1422809344",
+			"viewed": 457,
+			"name": "Attack of the Smarties",
+			"username": "GrosPoulet",
+			"description": "Shadertoy rocks :-)",
+			"likes": 4,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"pixelate",
+				"fordcircles",
+				"smarties"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 8,
+						"src": "/presets/tex07.jpg",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

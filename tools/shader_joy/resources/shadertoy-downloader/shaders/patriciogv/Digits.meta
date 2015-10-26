@@ -1,0 +1,32 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XlXSz2",
+			"date": "1437848807",
+			"viewed": 434,
+			"name": "Digits",
+			"username": "patriciogv",
+			"description": "Example of http://patriciogonzalezvivo.com/2015/thebookofshaders/10/",
+			"likes": 6,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"random",
+				"numbers",
+				"serial"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

@@ -1,0 +1,31 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4tj3Dy",
+			"date": "1432089451",
+			"viewed": 512,
+			"name": "2D Quadratic Bezier II",
+			"username": "demofox",
+			"description": "Use mouse to control the green control point.<br/>This creates a triangle between the three control points, and then uses the Blinn & Loop method.  This is nice for knowing inside vs outside. Shows curve outside of the triangle as well.",
+			"likes": 6,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"bezier"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

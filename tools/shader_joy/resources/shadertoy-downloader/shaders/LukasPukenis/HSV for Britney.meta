@@ -1,0 +1,44 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "Xlf3zs",
+			"date": "1424196086",
+			"viewed": 392,
+			"name": "HSV for Britney",
+			"username": "LukasPukenis",
+			"description": "HSV For Britney!",
+			"likes": 0,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"rgb",
+				"hsv",
+				"britney"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 12,
+						"src": "/presets/vid01.webm",
+						"ctype": "video",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

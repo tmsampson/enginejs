@@ -1,0 +1,44 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "lt2GDt",
+			"date": "1433769827",
+			"viewed": 430,
+			"name": "iq-bad Voronoi distance ",
+			"username": "FabriceNeyret2",
+			"description": "dmin2-dmin1=0 gives Voronoi diagram, but  dmin2-dmin1 is not what you think.<br/>SPACE: iq-good dist .  R: round dist.  C: col vs isovals.  T: stop time.<br/>(still, for natural textures you might prefer Worley noise and its deformed distances).",
+			"likes": 7,
+			"published": 3,
+			"flags": 16,
+			"tags": [
+				"voronoi",
+				"worley",
+				"distance"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 33,
+						"src": "/presets/tex00.jpg",
+						"ctype": "keyboard",
+						"channel": 2
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

@@ -1,0 +1,32 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "ltj3zh",
+			"date": "1426987025",
+			"viewed": 360,
+			"name": "Gloopy",
+			"username": "flypig",
+			"description": "Three lumps of lava-lamp style gloop.",
+			"likes": 0,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"lava",
+				"liquid",
+				"gloop"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

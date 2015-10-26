@@ -1,0 +1,30 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "lts3W8",
+			"date": "1422008720",
+			"viewed": 349,
+			"name": "[2TC 15] Colored Circles",
+			"username": "aiekick",
+			"description": "Colored Circles",
+			"likes": 0,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2tc15"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

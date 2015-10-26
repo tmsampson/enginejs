@@ -1,0 +1,54 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4s2Xzc",
+			"date": "1414495914",
+			"viewed": 2028,
+			"name": "Cave",
+			"username": "iq",
+			"description": "A 2D texture effect really, made by applying TekF's \"Retro Parallax\" shader's technique (https://www.shadertoy.com/view/4sSGD1) to my \"Fly\" shader (https://www.shadertoy.com/view/XsX3Rn). Motion blur added for fun. No raymarching used for this.",
+			"likes": 15,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"procedural",
+				"2d",
+				"motionblur"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 10,
+						"src": "/presets/tex09.jpg",
+						"ctype": "texture",
+						"channel": 0
+					},
+					{
+						"id": 17,
+						"src": "/presets/tex12.png",
+						"ctype": "texture",
+						"channel": 1
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

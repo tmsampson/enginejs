@@ -1,0 +1,32 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "Mds3R8",
+			"date": "1362788595",
+			"viewed": 782,
+			"name": "Lyapunov",
+			"username": "iq",
+			"description": "Markus-Lyapunov diagram for AABAB. More info: http://www.iquilezles.org/www/articles/lyapunovfractals/lyapunovfractals.htm. It was 12 years I didn't code one of these <img src=\"/img/emoticonHappy.png\"/>",
+			"likes": 9,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"fractal",
+				"lyapunov"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

@@ -1,0 +1,30 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4ljSW1",
+			"date": "1443345168",
+			"viewed": 386,
+			"name": "Chessboard without IFs",
+			"username": "arhad",
+			"description": "Uniformly scaled chessboard material, created with no conditional branches.",
+			"likes": 0,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"branchless"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

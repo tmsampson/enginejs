@@ -1,0 +1,46 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "llX3zr",
+			"date": "1417882206",
+			"viewed": 1119,
+			"name": "Space Jewels",
+			"username": "Dave_Hoskins",
+			"description": "Uses a stack of 8 samples on each pixel to render the fractal. Please watch in full-screen if your GPU is up to it!! <img src=\"/img/emoticonHappy.png\"/><br/>It uses near field out of focus effects.",
+			"likes": 22,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"3d",
+				"raymarching",
+				"antialiasing",
+				"dof",
+				"spacejewels"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 10,
+						"src": "/presets/tex09.jpg",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

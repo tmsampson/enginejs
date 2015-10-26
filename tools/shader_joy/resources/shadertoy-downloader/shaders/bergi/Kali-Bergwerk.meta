@@ -1,0 +1,31 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MlfGD8",
+			"date": "1421448217",
+			"viewed": 467,
+			"name": "Kali-Bergwerk",
+			"username": "bergi",
+			"description": "After a hit on the head, the dwarf seems to forgotten where she came from. Use the mouse to help her find the exit.",
+			"likes": 1,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"raymarching",
+				"kaliset"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

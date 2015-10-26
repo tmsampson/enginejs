@@ -1,0 +1,30 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XtsSRB",
+			"date": "1437598652",
+			"viewed": 450,
+			"name": "Halftweet Illusion",
+			"username": "coyote",
+			"description": "Careful! Can mess your eyes after prolonged watching...",
+			"likes": 0,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"halftweet"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

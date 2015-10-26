@@ -1,0 +1,52 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "lssSRj",
+			"date": "1404482312",
+			"viewed": 438,
+			"name": "conformal polar",
+			"username": "FabriceNeyret2",
+			"description": "Mouse: move   SPACE: switch parametric / texture   T: time<br/>A conformal space transform keeps local angles and proportions.<br/>Here, polar transform is made conformal to avoid stretching in x at poles and in y at circumference (but sizes are not preserved).",
+			"likes": 2,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"transform"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 5,
+						"src": "/presets/tex04.jpg",
+						"ctype": "texture",
+						"channel": 0
+					},
+					{
+						"id": 33,
+						"src": "/presets/tex00.jpg",
+						"ctype": "keyboard",
+						"channel": 2
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

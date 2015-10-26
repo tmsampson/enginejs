@@ -1,0 +1,53 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4tsGRS",
+			"date": "1423225349",
+			"viewed": 445,
+			"name": "Billboard Ball",
+			"username": "aiekick",
+			"description": "Billboard effect from my shader https://www.shadertoy.com/view/Xlf3RS displaced on ball",
+			"likes": 0,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"ball",
+				"billboard"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 27,
+						"src": "/presets/cube05_0.png",
+						"ctype": "cubemap",
+						"channel": 0
+					},
+					{
+						"id": 30,
+						"src": "/presets/tex16.png",
+						"ctype": "texture",
+						"channel": 2
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

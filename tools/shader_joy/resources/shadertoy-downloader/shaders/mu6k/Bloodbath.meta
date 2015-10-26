@@ -1,0 +1,70 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MsXXW7",
+			"date": "1402254568",
+			"viewed": 629,
+			"name": "Bloodbath",
+			"username": "mu6k",
+			"description": "Bloodbath",
+			"likes": 8,
+			"published": 3,
+			"flags": 8,
+			"tags": [
+				"bloodbath"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 7,
+						"src": "/presets/tex06.jpg",
+						"ctype": "texture",
+						"channel": 2
+					},
+					{
+						"id": 25,
+						"src": "/presets/cube03_0.png",
+						"ctype": "cubemap",
+						"channel": 1
+					},
+					{
+						"id": 30,
+						"src": "/presets/tex16.png",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			},
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "\nfloat w(float x)\n{\n    return x - floor(x);\n}\n\nfloat timbre(float x)\n{\n    return w(x*.99)-w(x*1.03+41.51)+w(x+.7);\n}\n\n\nvec2 mainSound(float time)\n{\n    float s = .0;\n    for (int i=0; i<20; i++)\n    {\n        float fi = float(i);\n        s += timbre((sin(fi+sin(time*.05131)*1.0)*(sin(time*.04197)*.5+.5)+1.0)*100.0*time);\n    }\n    s = min(max(-.1,s*.009),.1)*2.0;\n    return vec2(s);\n}",
+				"name": "",
+				"description": "",
+				"type": "sound"
+			}
+		]
+	}
+}

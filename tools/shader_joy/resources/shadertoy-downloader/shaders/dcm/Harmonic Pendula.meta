@@ -1,0 +1,31 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4tX3DH",
+			"date": "1421362607",
+			"viewed": 421,
+			"name": "Harmonic Pendula",
+			"username": "dcm",
+			"description": "An array of pendula at various lengths such that their periods sync up in various harmonies.  ",
+			"likes": 0,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"raycasting",
+				"pendulum"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

@@ -1,0 +1,31 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "ltXGW2",
+			"date": "1425141951",
+			"viewed": 431,
+			"name": "dr2's knots, iq approx",
+			"username": "eiffie",
+			"description": "Just a mashup.",
+			"likes": 3,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"knot",
+				"cubicapproximation"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

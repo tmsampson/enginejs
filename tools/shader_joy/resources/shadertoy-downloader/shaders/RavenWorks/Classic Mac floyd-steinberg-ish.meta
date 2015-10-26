@@ -1,0 +1,45 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4sjGRD",
+			"date": "1384629256",
+			"viewed": 934,
+			"name": "Classic Mac floyd-steinberg-ish",
+			"username": "RavenWorks",
+			"description": "Fake floyd-steinberg dithering; each pixel's error should flow into the next, but I'm getting close enough by looking up the previous few for each pixel. Not having a consistent (or square) history introduces some artifacts, but still looks pretty cool!",
+			"likes": 12,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"retro",
+				"grayscale",
+				"filter",
+				"bw"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 5,
+						"src": "/presets/tex04.jpg",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

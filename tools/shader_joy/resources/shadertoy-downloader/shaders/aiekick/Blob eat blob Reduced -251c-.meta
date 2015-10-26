@@ -1,0 +1,31 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MtfXDN",
+			"date": "1436835063",
+			"viewed": 525,
+			"name": "Blob eat blob Reduced (251c)",
+			"username": "aiekick",
+			"description": "Reduced version of <a href=\"https://www.shadertoy.com/view/ldjSWD\"  class=\"regular\" target=\"_blank\">Blob eat blob</a><br/><br/>1092c to 258c",
+			"likes": 1,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"blob",
+				"eat"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

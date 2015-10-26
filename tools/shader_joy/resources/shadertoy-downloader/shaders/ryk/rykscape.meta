@@ -1,0 +1,32 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "Mt23R1",
+			"date": "1427050332",
+			"viewed": 457,
+			"name": "rykscape",
+			"username": "ryk",
+			"description": "An idea so stupid I had to implement it. My shader equivalent of a theme song.",
+			"likes": 4,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"space",
+				"dither",
+				"netscape"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

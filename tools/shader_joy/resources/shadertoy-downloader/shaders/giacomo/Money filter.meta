@@ -1,0 +1,45 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XlsXDN",
+			"date": "1437359966",
+			"viewed": 441,
+			"name": "Money filter",
+			"username": "giacomo",
+			"description": "Money filter based on \"Free Engraved Illustration Effect Action for Photoshop\" - http://snip.ly/j0gq",
+			"likes": 5,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"filter",
+				"effect",
+				"money",
+				"engraved"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 11,
+						"src": "/presets/vid00.ogv",
+						"ctype": "video",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

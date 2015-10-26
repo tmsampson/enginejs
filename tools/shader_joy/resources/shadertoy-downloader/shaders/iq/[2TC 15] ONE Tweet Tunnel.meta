@@ -1,0 +1,45 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "ltXGW4",
+			"date": "1421972270",
+			"viewed": 1425,
+			"name": "[2TC 15] ONE Tweet Tunnel",
+			"username": "iq",
+			"description": "In fact, it's <strong>ONE</strong> tweet long, inspired by <a href=\"https://www.shadertoy.com/view/4tfGDN\" class=\"regular\" target=\"_blank\">https://www.shadertoy.com/view/4tfGDN</a><br/>I sacrificed texture mapping precision by using iDate.w instead of iGlobalTime which saved 4 chars. So you better watch this shader soon after midnight...",
+			"likes": 4,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"tunnel",
+				"deform",
+				"onetweet"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 7,
+						"src": "/presets/tex06.jpg",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

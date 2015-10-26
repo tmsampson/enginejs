@@ -1,0 +1,34 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4tsGDN",
+			"date": "1422156445",
+			"viewed": 869,
+			"name": "[2TC 15] Funky Tunnel",
+			"username": "elias",
+			"description": ".",
+			"likes": 15,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"challenge",
+				"short",
+				"compo",
+				"tweet"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

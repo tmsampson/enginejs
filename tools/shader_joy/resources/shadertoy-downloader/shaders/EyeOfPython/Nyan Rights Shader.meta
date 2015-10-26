@@ -1,0 +1,42 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MtlSzM",
+			"date": "1435491020",
+			"viewed": 389,
+			"name": "Nyan Rights Shader",
+			"username": "EyeOfPython",
+			"description": "For the recent events in gay rights.",
+			"likes": 0,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"nyancatnyanrightsgay"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 14,
+						"src": "/presets/tex14.png",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

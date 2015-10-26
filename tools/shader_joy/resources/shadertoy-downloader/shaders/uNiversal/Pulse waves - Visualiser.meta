@@ -1,0 +1,44 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4tS3W3",
+			"date": "1432811566",
+			"viewed": 433,
+			"name": "Pulse waves - Visualiser",
+			"username": "uNiversal",
+			"description": "A simpler multiple waveform type visualiser based on Waves Remix by: ADOB<br/><br/>Made to work with Kodi Shadertoy https://github.com/topfs2/visualization.shadertoy",
+			"likes": 2,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"audio",
+				"visualiser"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 34,
+						"src": "/presets/mzk05.mp3",
+						"ctype": "music",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

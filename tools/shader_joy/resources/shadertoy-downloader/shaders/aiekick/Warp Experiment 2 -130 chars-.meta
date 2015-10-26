@@ -1,0 +1,44 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MlfSW4",
+			"date": "1436751451",
+			"viewed": 454,
+			"name": "Warp Experiment 2 (130 chars)",
+			"username": "aiekick",
+			"description": "Warp Experiment 2",
+			"likes": 1,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"experiment",
+				"warp",
+				"2"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 2,
+						"src": "/presets/tex01.jpg",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

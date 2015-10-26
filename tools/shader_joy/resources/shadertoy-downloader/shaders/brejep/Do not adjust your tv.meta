@@ -1,0 +1,43 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "llsXW7",
+			"date": "1437339602",
+			"viewed": 468,
+			"name": "Do not adjust your tv",
+			"username": "brejep",
+			"description": "Rgb splitting",
+			"likes": 3,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"tv",
+				"rgbsplitter"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 29,
+						"src": "/presets/vid02.ogv",
+						"ctype": "video",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

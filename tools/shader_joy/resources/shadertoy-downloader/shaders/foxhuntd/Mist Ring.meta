@@ -1,0 +1,30 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "llXXR8",
+			"date": "1434376719",
+			"viewed": 497,
+			"name": "Mist Ring",
+			"username": "foxhuntd",
+			"description": "I really don't know how it works....",
+			"likes": 15,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"fbm"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

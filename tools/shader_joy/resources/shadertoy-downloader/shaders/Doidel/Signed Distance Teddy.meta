@@ -1,0 +1,34 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4lsXzj",
+			"date": "1438089429",
+			"viewed": 484,
+			"name": "Signed Distance Teddy",
+			"username": "Doidel",
+			"description": "A floating teddy designed with some trigonometry in a signed distance field. Based on otaviogood's \"Straticum\".<br/>Please go easy on me, it's my very first shader ^^ That's also why there's no real material or clouds (yet)...",
+			"likes": 5,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"procedural",
+				"fractal",
+				"raymarch",
+				"signeddistancefield",
+				"teddybear"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

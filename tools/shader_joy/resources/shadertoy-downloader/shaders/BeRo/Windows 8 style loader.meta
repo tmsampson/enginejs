@@ -1,0 +1,44 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "ltBGzG",
+			"date": "1429855916",
+			"viewed": 494,
+			"name": "Windows 8 style loader",
+			"username": "BeRo",
+			"description": "The Windows 8 style loader from the fr-078: Sweet night dreams 64k",
+			"likes": 8,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"windows",
+				"loader",
+				"fr078"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 35,
+						"src": "/presets/mzk06.mp3",
+						"ctype": "music",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

@@ -1,0 +1,31 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XtlXRB",
+			"date": "1437601299",
+			"viewed": 467,
+			"name": "crowded gyros - 425 chars",
+			"username": "FabriceNeyret2",
+			"description": " compact simplified version of https://www.shadertoy.com/view/MllXz7",
+			"likes": 6,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"3d",
+				"raymarching"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

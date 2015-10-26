@@ -1,0 +1,46 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4dsXWn",
+			"date": "1399216397",
+			"viewed": 5424,
+			"name": "Weather",
+			"username": "Dave_Hoskins",
+			"description": "Adjust cloud layer thickness with the upper and lower defines.<br/>Mouse X to move through time.<br/>It ray-casts to the bottom layer then steps through to the top layer. The larger steps at the horizon are not really noticeable.",
+			"likes": 102,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"3d",
+				"fractal",
+				"noise",
+				"clouds",
+				"weather"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 30,
+						"src": "/presets/tex16.png",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

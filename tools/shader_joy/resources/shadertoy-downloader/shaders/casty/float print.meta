@@ -1,0 +1,32 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4tl3D2",
+			"date": "1425323005",
+			"viewed": 430,
+			"name": "float print",
+			"username": "casty",
+			"description": "yet another float print tool, use the mouse. Nothing special, I just needed one for my work.",
+			"likes": 5,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"float",
+				"print",
+				"sevensegments"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

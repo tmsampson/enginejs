@@ -1,0 +1,44 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "Xl23zR",
+			"date": "1426863086",
+			"viewed": 349,
+			"name": "[NV15] UFBs",
+			"username": "andr00",
+			"description": "Who are these mysterious invaders? What do they want?",
+			"likes": 0,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"space",
+				"nv15",
+				"unidentified"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 30,
+						"src": "/presets/tex16.png",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

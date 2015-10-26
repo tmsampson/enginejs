@@ -1,0 +1,32 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4tsGW7",
+			"date": "1422506451",
+			"viewed": 359,
+			"name": "Black wave",
+			"username": "danjinxiangsi",
+			"description": "This simple shader is created by Xiao Wu. <br/>It is inspired by Flower shader.<br/>Everyone is welcome to use/modified it.",
+			"likes": 0,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"curve",
+				"blackwave"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

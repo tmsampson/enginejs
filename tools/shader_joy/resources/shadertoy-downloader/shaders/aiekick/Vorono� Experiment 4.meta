@@ -1,0 +1,31 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "llX3Wj",
+			"date": "1427549912",
+			"viewed": 411,
+			"name": "Voronoï Experiment 4",
+			"username": "aiekick",
+			"description": "Voronoï Experiment 4",
+			"likes": 2,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"voronoi",
+				"experiment4"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

@@ -1,0 +1,32 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XtBXzD",
+			"date": "1441856794",
+			"viewed": 541,
+			"name": "arc segment",
+			"username": "makoConstruct",
+			"description": "Renders smoothed arc segments.",
+			"likes": 2,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"circle",
+				"arc",
+				"smoothed"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

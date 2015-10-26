@@ -1,0 +1,43 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XdlGzH",
+			"date": "1362869245",
+			"viewed": 4348,
+			"name": "Reprojection",
+			"username": "P_Malin",
+			"description": "Projecting a 2d texture onto a 3d scene. Click in window to see grid over 3d scene.<br/>",
+			"likes": 72,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"3d"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 5,
+						"src": "/presets/tex04.jpg",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

@@ -1,0 +1,33 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "Mtl3R2",
+			"date": "1423513705",
+			"viewed": 529,
+			"name": "kalizulmodul",
+			"username": "bergi",
+			"description": "mod of https://www.shadertoy.com/view/MtlGR2<br/>called \"less techdemo\"",
+			"likes": 8,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"3d",
+				"raymarching",
+				"fractal",
+				"kaliset"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

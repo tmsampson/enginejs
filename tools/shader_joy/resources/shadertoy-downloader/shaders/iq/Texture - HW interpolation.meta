@@ -1,0 +1,44 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "Xsf3Dr",
+			"date": "1366995581",
+			"viewed": 1530,
+			"name": "Texture - HW interpolation",
+			"username": "iq",
+			"description": "HW linear interpolation vs manual interpolation. Depending on your display the two might or might not look the same. However, taking derivatives highlights the problem - HW interpolation does not produce the expected constant derivative.",
+			"likes": 10,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"interpolation",
+				"hw"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 16,
+						"src": "/presets/tex11.png",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

@@ -1,0 +1,47 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4sl3z4",
+			"date": "1364249310",
+			"viewed": 3241,
+			"name": "Moonlight",
+			"username": "reinder",
+			"description": "If your using a Mac or Linux please uncomment line 1 to view the full shader with mountains and a floating bottle (screenshot: http://imgur.com/KKPZsj4). <br/><br/>Part of the code is copy-pasted from shaders by inigo quilez and dave hoskins.",
+			"likes": 45,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"procedural",
+				"noise",
+				"reflection",
+				"raymarch",
+				"water",
+				"raytrace"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 30,
+						"src": "/presets/tex16.png",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

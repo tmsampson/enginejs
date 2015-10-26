@@ -1,0 +1,33 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MdfGDH",
+			"date": "1378184080",
+			"viewed": 1765,
+			"name": "Image - Will",
+			"username": "iq",
+			"description": "Another gaussian-dot-compressed image. 150 strokes (105 of them symmetric). More info: <a href=\"http://www.iquilezles.org/www/articles/genetic/genetic.htm\"  class=\"regular\" target=\"_blank\">http://www.iquilezles.org/www/articles/genetic/genetic.htm</a>",
+			"likes": 7,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"compression",
+				"genetic",
+				"image"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

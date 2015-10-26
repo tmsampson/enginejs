@@ -1,0 +1,32 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "ltSSDh",
+			"date": "1443161254",
+			"viewed": 55,
+			"name": "Space versus Time.",
+			"username": "qwert33",
+			"description": "Without time, space is nothing",
+			"likes": 0,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"time",
+				"space",
+				"homestuck"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

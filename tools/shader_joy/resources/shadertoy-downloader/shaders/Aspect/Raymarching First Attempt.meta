@@ -1,0 +1,31 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MtfSzX",
+			"date": "1438430675",
+			"viewed": 345,
+			"name": "Raymarching First Attempt",
+			"username": "Aspect",
+			"description": "Updates: Fixed reflection colors. Soft shadows. Cleaned up my main.  Improved the speed a bit.",
+			"likes": 0,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"raymarching",
+				"distancefields"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

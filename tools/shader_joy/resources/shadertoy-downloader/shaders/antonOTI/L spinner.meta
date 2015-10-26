@@ -1,0 +1,30 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "ldBSD3",
+			"date": "1416442326",
+			"viewed": 411,
+			"name": "L spinner",
+			"username": "antonOTI",
+			"description": "inspired by the lollipop spinner on android",
+			"likes": 1,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"spinnercircle"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

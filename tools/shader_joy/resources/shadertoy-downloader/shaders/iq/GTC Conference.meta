@@ -1,0 +1,32 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "lsBXD1",
+			"date": "1400113883",
+			"viewed": 1117,
+			"name": "GTC Conference",
+			"username": "iq",
+			"description": "A live coded shader during our talk at GTC 2014. You can see the live narration during the coding in this video: http://on-demand.gputechconf.com/gtc/2014/video/S4550-shadertoy-fragment-shader.mp4",
+			"likes": 4,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"procedural",
+				"3d",
+				"conference"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

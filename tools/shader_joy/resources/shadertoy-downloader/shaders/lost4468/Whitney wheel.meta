@@ -1,0 +1,40 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "lsfXDl",
+			"date": "1407863432",
+			"viewed": 469,
+			"name": "Whitney wheel",
+			"username": "lost4468",
+			"description": "Based on http://whitneymusicbox.org/",
+			"likes": 7,
+			"published": 3,
+			"flags": 8,
+			"tags": [
+				"sound",
+				"wheel",
+				"whitney"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			},
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "#define PI 3.14159265359\n#define PI2 PI*2.0\n\nconst int numBalls = 25;\nconst float cycleTime = 50.0;\n\nvec2 mainSound(float time)\n{\n    vec2 retSound = vec2(0.0,0.0);\n    \n    for(int i = 0; i < numBalls + 1; i++)\n    {\n        float ballPos = mod(float(i) * time * PI2 / cycleTime, PI2);\n        retSound += vec2(sin(PI2*440.0 * ballPos)*exp(-3.0*ballPos));\n    }\n    \n    return retSound;\n}",
+				"name": "",
+				"description": "",
+				"type": "sound"
+			}
+		]
+	}
+}

@@ -1,0 +1,43 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MtBGWh",
+			"date": "1428702702",
+			"viewed": 447,
+			"name": "Flake Sea",
+			"username": "aiekick",
+			"description": "Flake Sea",
+			"likes": 7,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"sea",
+				"flake"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 10,
+						"src": "/presets/tex09.jpg",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

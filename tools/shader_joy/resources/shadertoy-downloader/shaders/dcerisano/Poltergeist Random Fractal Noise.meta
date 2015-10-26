@@ -1,0 +1,33 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "ltB3zD",
+			"date": "1427241319",
+			"viewed": 980,
+			"name": "Poltergeist Random Fractal Noise",
+			"username": "dcerisano",
+			"description": "A simple noise generator based on pseudo random fractal ",
+			"likes": 5,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"fractal",
+				"noise",
+				"random",
+				"static"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

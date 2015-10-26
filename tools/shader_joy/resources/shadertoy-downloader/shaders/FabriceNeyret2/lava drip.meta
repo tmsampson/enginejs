@@ -1,0 +1,53 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "ldl3z2",
+			"date": "1374943219",
+			"viewed": 1138,
+			"name": "lava drip",
+			"username": "FabriceNeyret2",
+			"description": "heightfield = interferences between 2 drips, +noise, + shader + 2D smoke<br/><br/>mouse to rotate camera",
+			"likes": 4,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"perlin",
+				"fluid"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 10,
+						"src": "/presets/tex09.jpg",
+						"ctype": "texture",
+						"channel": 0
+					},
+					{
+						"id": 25,
+						"src": "/presets/cube03_0.png",
+						"ctype": "cubemap",
+						"channel": 1
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

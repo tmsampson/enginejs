@@ -1,0 +1,32 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XlfXWB",
+			"date": "1439244489",
+			"viewed": 472,
+			"name": "Red Space (NMS)",
+			"username": "mech4rhork",
+			"description": "No Man's Sky inspired",
+			"likes": 2,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"3d",
+				"raymarching",
+				"distancefields"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

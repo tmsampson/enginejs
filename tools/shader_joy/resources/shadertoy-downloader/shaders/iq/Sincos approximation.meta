@@ -1,0 +1,34 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XsjXzt",
+			"date": "1414983953",
+			"viewed": 699,
+			"name": "Sincos approximation",
+			"username": "iq",
+			"description": "Improving boundary values for cos (and sin) approximation with some extra normalization. The magic number is sqrt(2)·8/11. True sin/cos in yellow, approximate sin/cos (with and without normalization) in red.",
+			"likes": 5,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"approximation",
+				"cos",
+				"sincos",
+				"trigonometry"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

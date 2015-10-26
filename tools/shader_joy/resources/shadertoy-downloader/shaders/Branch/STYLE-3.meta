@@ -1,0 +1,30 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "ltS3zz",
+			"date": "1426624117",
+			"viewed": 354,
+			"name": "STYLE?3",
+			"username": "Branch",
+			"description": "STYLE?3",
+			"likes": 0,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"style3"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

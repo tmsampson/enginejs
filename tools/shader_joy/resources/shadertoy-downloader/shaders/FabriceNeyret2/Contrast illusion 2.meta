@@ -1,0 +1,30 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4lBGzc",
+			"date": "1430756406",
+			"viewed": 424,
+			"name": "Contrast illusion 2",
+			"username": "FabriceNeyret2",
+			"description": "Constrast disappear if boundary disappears.<br/>",
+			"likes": 3,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"illusion"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

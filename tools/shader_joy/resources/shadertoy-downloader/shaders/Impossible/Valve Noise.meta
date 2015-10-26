@@ -1,0 +1,30 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4tfGWl",
+			"date": "1426047041",
+			"viewed": 506,
+			"name": "Valve Noise",
+			"username": "Impossible",
+			"description": "Quick implementation of noise from valve's vr talk. Subtle but it actually does reduce the banding if you look closely.<br/>http://media.steampowered.com/apps/valve/2015/Alex_Vlachos_Advanced_VR_Rendering_GDC2015.pdf",
+			"likes": 9,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"noise"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

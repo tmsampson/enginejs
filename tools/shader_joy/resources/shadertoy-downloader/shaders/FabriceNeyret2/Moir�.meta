@@ -1,0 +1,42 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MdsSRM",
+			"date": "1398602818",
+			"viewed": 448,
+			"name": "Moiré",
+			"username": "FabriceNeyret2",
+			"description": "A: anti aliasing       C: toggles colors                  M: draw mode = max vs sum<br/>mouse: translate.   Z: mouse.y zoom instead.     S: mouse.x tunes wires step instead.",
+			"likes": 3,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"moire"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 33,
+						"src": "/presets/tex00.jpg",
+						"ctype": "keyboard",
+						"channel": 2
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

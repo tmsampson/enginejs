@@ -1,0 +1,30 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4lfSzn",
+			"date": "1433881128",
+			"viewed": 368,
+			"name": "iterated square 2",
+			"username": "FabriceNeyret2",
+			"description": ".",
+			"likes": 2,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"ifs"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

@@ -1,0 +1,45 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4tlGzS",
+			"date": "1423033513",
+			"viewed": 1154,
+			"name": "Sine deformation",
+			"username": "iq",
+			"description": "Another weird sculpture. It's one cylinder distorted by a composition of sine waves deformation. Similar to <a href=\"https://www.shadertoy.com/view/Mdl3RH\"  class=\"regular\" target=\"_blank\">https://www.shadertoy.com/view/Mdl3RH</a>, but in 3D.",
+			"likes": 8,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"3d",
+				"raymarching",
+				"distancefield",
+				"sine"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 10,
+						"src": "/presets/tex09.jpg",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

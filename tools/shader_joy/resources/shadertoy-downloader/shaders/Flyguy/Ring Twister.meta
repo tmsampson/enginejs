@@ -1,0 +1,33 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "Xt23z3",
+			"date": "1430963214",
+			"viewed": 1075,
+			"name": "Ring Twister",
+			"username": "Flyguy",
+			"description": " Classic twister effect applied to a ring.",
+			"likes": 27,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"distort",
+				"shading",
+				"ring",
+				"twist"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

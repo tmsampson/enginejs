@@ -1,0 +1,30 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "ltXGWn",
+			"date": "1420600568",
+			"viewed": 419,
+			"name": "crazy stupid fractal",
+			"username": "pflowsoftware",
+			"description": "this is an abomination. used the linear interpolation from http://en.wikipedia.org/wiki/Mandelbrot_set#Histogram_coloring and the algorithm shown is (z^z+z)/ln(z) + c<br/><br/>log(complex number) is confusing on wikipedia<br/>tldr:<br/>real: log(|c|)<br/>imag: atan(i/r)",
+			"likes": 0,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"fractaljulia"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

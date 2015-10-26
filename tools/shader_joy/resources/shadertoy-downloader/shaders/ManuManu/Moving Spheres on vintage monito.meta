@@ -1,0 +1,31 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MlB3WK",
+			"date": "1432381290",
+			"viewed": 361,
+			"name": "Moving Spheres on vintage monito",
+			"username": "ManuManu",
+			"description": "Here I wanted two things :<br/>* Apply the same transformation to all the pixel of one sphere ( so the sphere is not deformed ) in a repetition operator.<br/>* Apply a vintage monitor effect.<br/><br/>Made on GlSlSandbox here :<br/>http://glslsandbox.com/e#24816.10<br/>",
+			"likes": 2,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"raymarching",
+				"vintage"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

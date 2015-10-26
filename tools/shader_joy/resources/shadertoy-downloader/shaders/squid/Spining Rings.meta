@@ -1,0 +1,32 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "lll3zl",
+			"date": "1424485535",
+			"viewed": 926,
+			"name": "Spining Rings",
+			"username": "squid",
+			"description": "Like a gyroscope type thing, but with a lot of rings. Code based on eiffie's DDE shader and iq's stuff (like everybody) [Mouse enabled]",
+			"likes": 16,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"3d",
+				"torus",
+				"dde"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

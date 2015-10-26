@@ -1,0 +1,30 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "Msl3Rn",
+			"date": "1361826257",
+			"viewed": 2426,
+			"name": "Chains and Gears",
+			"username": "P_Malin",
+			"description": "Yet another raymarching shader.",
+			"likes": 45,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"raymarching"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

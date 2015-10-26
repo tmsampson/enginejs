@@ -1,0 +1,44 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XlfXzM",
+			"date": "1436473084",
+			"viewed": 548,
+			"name": "Reactive Sphere",
+			"username": "glk7",
+			"description": "A reactive ray marched sphere. The typical sphere perturbed by a couple ceiled sin waves based on some frequencies of the music played.",
+			"likes": 6,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"raymarch",
+				"reactive",
+				"sphere"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 19,
+						"src": "/presets/mzk02.mp3",
+						"ctype": "music",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

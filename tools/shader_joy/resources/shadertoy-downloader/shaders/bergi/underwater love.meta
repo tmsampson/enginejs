@@ -1,0 +1,34 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4tfGD8",
+			"date": "1421280553",
+			"viewed": 529,
+			"name": "underwater love",
+			"username": "bergi",
+			"description": "Humans tend to like watching these things in the winter sometimes.<br/>Dedicated to Katta <img src=\"/img/emoticonLaugh.png\"/>",
+			"likes": 5,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"raymarching",
+				"fractal",
+				"kaliset",
+				"duckball",
+				"findingnemo"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

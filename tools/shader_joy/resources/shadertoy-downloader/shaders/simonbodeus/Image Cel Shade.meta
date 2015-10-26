@@ -1,0 +1,45 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XlSSRW",
+			"date": "1441787086",
+			"viewed": 515,
+			"name": "Image Cel Shade",
+			"username": "simonbodeus",
+			"description": "Pass RGB color to HSV then posterize the Saturation and Value components before repass modified HSV to RGB colors.<br/>Posterize directly RGB(right image) values gives a bad result with color banding particulary with low colors values",
+			"likes": 3,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"rgb",
+				"hsv",
+				"toon",
+				"posterizecolor"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 36,
+						"src": "/presets/vid03.webm",
+						"ctype": "video",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

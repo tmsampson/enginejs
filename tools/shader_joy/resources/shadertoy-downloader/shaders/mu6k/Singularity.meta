@@ -1,0 +1,46 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4lj3zG",
+			"date": "1429961026",
+			"viewed": 518,
+			"name": "Singularity",
+			"username": "mu6k",
+			"description": "The supermassive gravity is bending the light. I made them glow so that it's not boring. You can undefine glow if you want. Rotate with mouse.",
+			"likes": 12,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"3d",
+				"raymarch",
+				"glow",
+				"distorsion",
+				"gravity"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 22,
+						"src": "/presets/cube00_0.jpg",
+						"ctype": "cubemap",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

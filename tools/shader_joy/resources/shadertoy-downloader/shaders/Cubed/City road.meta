@@ -1,0 +1,31 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MtXSRj",
+			"date": "1437863139",
+			"viewed": 523,
+			"name": "City road",
+			"username": "Cubed",
+			"description": "New to raymarching, playing around with stuff. <br/>Credit to Iñigo Quílez for the distance field functions, which I've mutilated horribly. <img src=\"/img/emoticonHappy.png\"/>",
+			"likes": 7,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"basic",
+				"raymarch"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

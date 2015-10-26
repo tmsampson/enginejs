@@ -1,0 +1,57 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4sXGDH",
+			"date": "1368333236",
+			"viewed": 1941,
+			"name": "Lemminvade",
+			"username": "movAX13h",
+			"description": "Sprite animation: 6x10, 4 colors, 8 frames; 1 frame is defined by 5 numbers; One number contains 12px (24bit); 2 bit per pixel. Click+drag mouse to change landing zone and direction.",
+			"likes": 27,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"2d",
+				"mouse",
+				"music",
+				"animation",
+				"sprite",
+				"beatsync"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 10,
+						"src": "/presets/tex09.jpg",
+						"ctype": "texture",
+						"channel": 0
+					},
+					{
+						"id": 19,
+						"src": "/presets/mzk02.mp3",
+						"ctype": "music",
+						"channel": 1
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

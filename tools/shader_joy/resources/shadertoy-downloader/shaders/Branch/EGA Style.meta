@@ -1,0 +1,42 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XlS3zt",
+			"date": "1431217459",
+			"viewed": 468,
+			"name": "EGA Style",
+			"username": "Branch",
+			"description": "EGA Style<br/>I was trying to get oldschool system style with sprite outlines to this video by using fairly crude edge detection tech.",
+			"likes": 6,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"egastylepixelartvideo"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 36,
+						"src": "/presets/vid03.webm",
+						"ctype": "video",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

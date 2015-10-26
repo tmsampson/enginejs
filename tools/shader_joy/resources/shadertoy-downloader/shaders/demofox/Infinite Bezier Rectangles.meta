@@ -1,0 +1,43 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4lsSzj",
+			"date": "1438055717",
+			"viewed": 478,
+			"name": "Infinite Bezier Rectangles",
+			"username": "demofox",
+			"description": "The same shader as https://www.shadertoy.com/view/4tfXz2, but tiled.  Ray vs plane to figure out where to start raymarching.  This would look way cooler using wang tiling (https://www.shadertoy.com/view/XsSXzR)",
+			"likes": 4,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"3d",
+				"bezier"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 24,
+						"src": "/presets/cube02_0.jpg",
+						"ctype": "cubemap",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

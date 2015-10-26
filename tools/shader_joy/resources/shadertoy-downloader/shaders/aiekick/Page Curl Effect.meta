@@ -1,0 +1,44 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XlX3RS",
+			"date": "1422730282",
+			"viewed": 563,
+			"name": "Page Curl Effect",
+			"username": "aiekick",
+			"description": "Shadertoy version of shader from qt540 project sample \"qmlvideofx\" himself inspired from <br/>http://rectalogic.github.com/webvfx/examples_2transition-shader-pagecurl_8html-example.html<br/>you can use mouse for control curl effect",
+			"likes": 11,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"curl",
+				"effect",
+				"page"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 12,
+						"src": "/presets/vid01.webm",
+						"ctype": "video",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

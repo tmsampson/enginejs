@@ -1,0 +1,32 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "Xt23Rw",
+			"date": "1427663452",
+			"viewed": 759,
+			"name": "Draw with mouse (paintbrush)",
+			"username": "klk",
+			"description": "If your system support discard (chrome on Linux does), then you can draw something with mouse. Rewind to clear, press LMB and move to draw. Enjoy.",
+			"likes": 19,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"paint",
+				"draw",
+				"paintbrush"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

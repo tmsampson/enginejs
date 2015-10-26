@@ -1,0 +1,43 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "lssGDj",
+			"date": "1379886198",
+			"viewed": 2496,
+			"name": "Ascii Art",
+			"username": "movAX13h",
+			"description": "basic bitmap to (mouse clicked ? grayscale : color) ascii (8 characters) art shader",
+			"likes": 54,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"mouse",
+				"ascii"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 12,
+						"src": "/presets/vid01.webm",
+						"ctype": "video",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

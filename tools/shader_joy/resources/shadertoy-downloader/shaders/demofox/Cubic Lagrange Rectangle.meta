@@ -1,0 +1,43 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "MtlSzX",
+			"date": "1438660021",
+			"viewed": 533,
+			"name": "Cubic Lagrange Rectangle",
+			"username": "demofox",
+			"description": "Emulating the shader https://www.shadertoy.com/view/4tfXz2, but using lagrange interpolation instead of Bezier, which makes the surface pass through all control points.",
+			"likes": 8,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"3d",
+				"lagrange"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 24,
+						"src": "/presets/cube02_0.jpg",
+						"ctype": "cubemap",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

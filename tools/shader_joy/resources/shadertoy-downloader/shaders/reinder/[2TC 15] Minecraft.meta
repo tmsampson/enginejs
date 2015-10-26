@@ -1,0 +1,33 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4tsGD7",
+			"date": "1422535702",
+			"viewed": 2151,
+			"name": "[2TC 15] Minecraft",
+			"username": "reinder",
+			"description": "A voxel landscape in two tweets (280 chars). (Remake of this shader: <a href=\"https://www.shadertoy.com/view/4ds3WS\" class=\"regular\" target=\"_blank\">https://www.shadertoy.com/view/4ds3WS</a>)",
+			"likes": 7,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"3d",
+				"raymarching",
+				"voxel",
+				"2tc15"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

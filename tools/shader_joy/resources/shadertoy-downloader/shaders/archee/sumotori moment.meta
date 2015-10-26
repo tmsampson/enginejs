@@ -1,0 +1,33 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "Xts3z2",
+			"date": "1423442774",
+			"viewed": 498,
+			"name": "sumotori moment",
+			"username": "archee",
+			"description": "exported scene from the game Sumotori Dreams. <br/>Comment out #define SIMPLESCENE to see more details.<br/>",
+			"likes": 4,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"raytracing",
+				"cubes",
+				"shadows",
+				"sumotori"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

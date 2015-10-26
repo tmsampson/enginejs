@@ -1,0 +1,54 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4sfGR7",
+			"date": "1365161571",
+			"viewed": 1786,
+			"name": "Abandoned base on Mars",
+			"username": "reinder",
+			"description": "Complete rewrite of old shader.<br/>You're exploring an abandoned base on Mars. The base is covered with dirt.<br/>Shader shows procedural levels and materials, a doom-like pseudo 3d-engine, dynamics lights & shadows, bumpmapping, specular maps and reflections.",
+			"likes": 23,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"raycasting",
+				"procedurallevel",
+				"proceduralmaterial"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 2,
+						"src": "/presets/tex01.jpg",
+						"ctype": "texture",
+						"channel": 0
+					},
+					{
+						"id": 17,
+						"src": "/presets/tex12.png",
+						"ctype": "texture",
+						"channel": 1
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

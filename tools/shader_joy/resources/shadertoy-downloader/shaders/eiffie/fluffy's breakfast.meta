@@ -1,0 +1,39 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XsSGRD",
+			"date": "1384180513",
+			"viewed": 6472,
+			"name": "fluffy's breakfast",
+			"username": "eiffie",
+			"description": "Now I like the name \"Confusion Marching\".",
+			"likes": 23,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"dof",
+				"confusionmarching"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			},
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "//i thought this needed some suspense, maybe that is not fluffy\n\nfloat sawtooth(float time){return fract(time)-0.5;}\n// note number to frequency  from https://www.shadertoy.com/view/ldfSW2\nfloat ntof(float n){return 440.0 * pow(2.0, (n - 67.0) / 12.0);}\n\nvec2 mainSound(float time)\n{\n    float bps=1.8+time*0.01;\n    float tim=time*bps;\n    float b=floor(tim);\n    float t=fract(tim);\n    float n=37.0+mod(b,2.0);\n    float f=ntof(n);\n    float a=0.5,r=0.0,a2=time*0.018;\n    for(int i=0;i<6;i++){\n        r+=(sawtooth(f*time)+sawtooth(f*time*1.01))*a;\n        f*=1.666;a*=a2;\n    }\n    return vec2( r*exp(-2.0*t) )*time*0.01;\n}",
+				"name": "",
+				"description": "",
+				"type": "sound"
+			}
+		]
+	}
+}

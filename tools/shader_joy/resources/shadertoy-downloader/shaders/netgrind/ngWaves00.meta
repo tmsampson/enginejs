@@ -1,0 +1,33 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "XllGzl",
+			"date": "1424347890",
+			"viewed": 389,
+			"name": "ngWaves00",
+			"username": "netgrind",
+			"description": "simple phasing waves",
+			"likes": 0,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"waves",
+				"sine",
+				"matrix",
+				"netgrind"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [],
+				"outputs": [],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

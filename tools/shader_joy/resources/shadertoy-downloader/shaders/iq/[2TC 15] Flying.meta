@@ -1,0 +1,44 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4ts3DH",
+			"date": "1421822198",
+			"viewed": 2016,
+			"name": "[2TC 15] Flying",
+			"username": "iq",
+			"description": "My entry for the \"2 tweet\" challenge 2015, organized by nimitz: <a href=\"https://www.shadertoy.com/view/4tl3W8\"  class=\"regular\" target=\"_blank\">4tl3W8</a>. Raymarched, textured, lit and colored stuff, in exactly 280 characters.",
+			"likes": 10,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"3d",
+				"raymarching",
+				"tweet"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 2,
+						"src": "/presets/tex01.jpg",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

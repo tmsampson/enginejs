@@ -1,0 +1,52 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "ldlXDN",
+			"date": "1401643370",
+			"viewed": 516,
+			"name": "drop splash",
+			"username": "FabriceNeyret2",
+			"description": "Real drop splashes are *not* sin(k(d-ct)) !<br/>- wave speed depends on wavelenght (dispertion). slowest=.4 cm; faster for larger (gravity) and smaller (capillary)<br/>- vertical displ = A.sin, horiz displ = A.cos -> trochoids, not sinusoids (not drawn here).",
+			"likes": 0,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"waves"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 26,
+						"src": "/presets/cube04_0.png",
+						"ctype": "cubemap",
+						"channel": 0
+					},
+					{
+						"id": 33,
+						"src": "/presets/tex00.jpg",
+						"ctype": "keyboard",
+						"channel": 2
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					},
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}

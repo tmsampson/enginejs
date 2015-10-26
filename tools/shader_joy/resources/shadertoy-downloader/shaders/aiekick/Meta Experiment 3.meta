@@ -1,0 +1,45 @@
+{
+	"Shader": {
+		"ver": "0.1",
+		"info": {
+			"id": "4lf3RH",
+			"date": "1418318534",
+			"viewed": 413,
+			"name": "Meta Experiment 3",
+			"username": "aiekick",
+			"description": "Two metaholes with one texture. <br/>You can try another texture. may be funny !",
+			"likes": 1,
+			"published": 3,
+			"flags": 0,
+			"tags": [
+				"experiment",
+				"meta",
+				"hole",
+				"metahole"
+			],
+			"hasliked": 0
+		},
+		"renderpass": [
+			{
+				"inputs": [
+					{
+						"id": 1,
+						"src": "/presets/tex00.jpg",
+						"ctype": "texture",
+						"channel": 0
+					}
+				],
+				"outputs": [
+					{
+						"channel": "0",
+						"dst": "-1"
+					}
+				],
+				"code": "",
+				"name": "",
+				"description": "",
+				"type": "image"
+			}
+		]
+	}
+}
