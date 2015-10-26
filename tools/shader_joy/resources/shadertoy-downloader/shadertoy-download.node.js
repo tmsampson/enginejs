@@ -51,7 +51,7 @@ request(shadertoy_api_list_all, function (error, response, body)
 					var item = JSON.parse(body);
 					var code = item.Shader.renderpass[0].code;
 					var author = item.Shader.info.username;
-					var name = item.Shader.info.name.replace(/[?*|&;$%@"<>()+,\\\/]/g, "-").trim();
+					var name = item.Shader.info.name.replace(/[?*|&;$%@"<>()+,\\\/]/g, "-").trim().replace("..", "-");
 
 					// Log
 					console.log("=======================================================================");
