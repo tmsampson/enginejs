@@ -22,7 +22,7 @@
 		var resources =
 		{
 			fs_plasma    : { file: "shaders/plasma.fs" },
-			txt_template : { file: "template.fs.txt"   },
+			txt_template : { file: "resources/template.fs.txt"   },
 		};
 
 		var template_code = "";
@@ -102,9 +102,19 @@
 					shader_toy_ids = data.Results;
 				});
 
-				Engine.Net.FetchResource("help.htm", function(data)
+				Engine.Net.FetchResource("resources/help.htm", function(data)
 				{
 					$(".tab-content.usage").html(data);
+				});
+
+				Engine.Net.FetchResource("resources/colour.htm", function(data)
+				{
+					$(".tab-content.colour").html(data);
+				});
+
+				Engine.Net.FetchResource("resources/about.htm", function(data)
+				{
+					$(".tab-content.about").html(data);
 				});
 
 				template_code = resources["txt_template"].text;
