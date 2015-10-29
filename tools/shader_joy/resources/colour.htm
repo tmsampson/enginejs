@@ -1,3 +1,29 @@
+<!-- http://bgrins.github.io/spectrum/ -->
 <h2>Colour Picker</h2>
 <hr/>
-http://bgrins.github.io/spectrum/
+<span style="font-size:1.2em; font-family: monospace;">
+Values accessible directly from shader.
+</span>
+<br/>
+<br/>
+
+<input type='text' id="flat0" />
+<input type='text' id="flat1" />
+<input type='text' id="flat2" />
+<input type='text' id="flat3" />
+
+<script language="javascript">
+var config = 
+{
+    flat: true,
+    showInput: true,
+    showAlpha: true,
+    showButtons: false,
+    preferredFormat: "rgb"
+};
+
+$("#flat0").spectrum($.extend({}, config, { move : function(color) {  } }));
+$("#flat1").spectrum(config);
+$("#flat2").spectrum(config);
+$("#flat3").spectrum(config);
+</script>
