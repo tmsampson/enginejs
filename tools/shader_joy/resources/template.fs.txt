@@ -4,6 +4,11 @@ varying vec2 v_uv;
 uniform vec3      iResolution;           // The viewport resolution (z is pixel aspect ratio, usually 1.0)
 uniform float     iGlobalTime;           // Current time in seconds
 
+uniform vec4      iColour0;
+uniform vec4      iColour1;
+uniform vec4      iColour2;
+uniform vec4      iColour3;
+
 // uniform float     iChannelTime[4];       // Time for channel (if video or sound), in seconds
 // uniform vec3      iChannelResolution[4]; // Input texture resolution for each channel
 

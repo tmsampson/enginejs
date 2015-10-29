@@ -119,19 +119,13 @@ html, body
 	display: block;
 }
 
-.tab-content.tweaker
+.tab-content.tweaker, .tab-content.about
 {
 	font-family: monospace;
 	font-size:1.2em;
 }
 
-.tab-content.about
-{
-	font-family: monospace;
-	font-size:1.2em;
-}
-
-.tab-content.usage h2, .tab-content.tweaker h2, .tab-content.about h2
+.tab-content.usage h2, .tab-content.tweaker h2, .tab-content.about h2, .tab-content.colour h2
 {
 	font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
 	color:#474747;
@@ -152,4 +146,11 @@ html, body
 .tab-content.tweaker table
 {
 	border-spacing: 0 10px;
+}
+
+.sp-container
+{
+	border : 0px !important;
+	margin-left:-5.9px;
+	background-color:transparent !important;
 }
