@@ -30,6 +30,7 @@ html, body
 	background: -ms-linear-gradient(top,  #f2f5f6 0%,#e3eaed 37%,#c8d7dc 100%); /* IE10+ */
 	background: linear-gradient(to bottom,  #f2f5f6 0%,#e3eaed 37%,#c8d7dc 100%); /* W3C */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f2f5f6', endColorstr='#c8d7dc',GradientType=0 ); /* IE6-9 */
+	border-bottom:6px solid rgb(86,140,189);
 }
 
 .box .row.content
@@ -153,4 +154,40 @@ html, body
 	border : 0px !important;
 	margin-left:-5.9px;
 	background-color:transparent !important;
+}
+
+.toolbar
+{
+	margin:0px;
+	padding:0px;
+	height:25px;
+	padding-top:5px;
+	border-left:6px solid rgb(86,140,189);
+	background-color:#c8d7dc;
+}
+
+.icon
+{
+	width:20px;
+	height:20px;
+	margin-left:6px;
+	cursor: pointer;
+	background-size: 100%;
+	float:left;
+	clear:right;
+}
+
+.icon-new
+{
+	background-image: url("../img/new.png");
+}
+
+.icon-recompile
+{
+	background-image: url("../img/recompile.png");
+}
+
+.icon-fetch
+{
+	background-image: url("../img/fetch.png");
 }
