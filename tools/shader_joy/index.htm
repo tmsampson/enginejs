@@ -12,6 +12,10 @@
 		<!-- Shader Joy -->
 		<link rel="stylesheet" href="style/shaderjoy.css"/>
 
+		<!-- Spectrum -->
+		<script src='resources/spectrum/spectrum.js'></script>
+		<link rel='stylesheet' href='resources/spectrum/spectrum.css' />
+
 		<!-- Codemirror -->
 		<script src="enginejs/resources/misc/codemirror/lib/codemirror.js"></script>
 		<script src="enginejs/resources/misc/codemirror/mode/clike/clike.js"></script>
@@ -22,7 +26,7 @@
 		var resources =
 		{
 			fs_plasma    : { file: "shaders/plasma.fs" },
-			txt_template : { file: "template.fs.txt"   },
+			txt_template : { file: "resources/template.fs.txt"   },
 		};
 
 		var template_code = "";
@@ -55,6 +59,12 @@
 				editor.setValue(code);
 				RecompileShader(code);
 			});
+		}
+
+		function GetColour(index)
+		{
+			var c = $("#flat" + index).spectrum("get").toRgb();
+			return [ c.r / 255, c.g / 255, c.b / 255, c.a / 255 ];
 		}
 
 		$(document).ready(function()
@@ -102,9 +112,19 @@
 					shader_toy_ids = data.Results;
 				});
 
-				Engine.Net.FetchResource("help.htm", function(data)
+				Engine.Net.FetchResource("resources/help.htm", function(data)
 				{
 					$(".tab-content.usage").html(data);
+				});
+
+				Engine.Net.FetchResource("resources/colour.htm", function(data)
+				{
+					$(".tab-content.colour").html(data);
+				});
+
+				Engine.Net.FetchResource("resources/about.htm", function(data)
+				{
+					$(".tab-content.about").html(data);
 				});
 
 				template_code = resources["txt_template"].text;
@@ -114,7 +134,6 @@
 
 				RecompileShader(editor.getValue());
 
-				
 				var on_render = function(info)
 				{
 					Engine.Gfx.BindShaderProgram(program);
@@ -137,8 +156,13 @@
 
 					var mouse = [ mpos[0], mpos[1], mpressed? click_pos[0] : -click_pos[0], mpressed? click_pos[1] : -click_pos[1] ];
 					Engine.Gfx.SetShaderConstant("iMouse", mouse, Engine.Gfx.SC_VEC4);
-					
-					
+
+					// Colours
+					Engine.Gfx.SetShaderConstant("iColour0", GetColour(0), Engine.Gfx.SC_VEC4);
+					Engine.Gfx.SetShaderConstant("iColour1", GetColour(1), Engine.Gfx.SC_VEC4);
+					Engine.Gfx.SetShaderConstant("iColour2", GetColour(2), Engine.Gfx.SC_VEC4);
+					Engine.Gfx.SetShaderConstant("iColour3", GetColour(3), Engine.Gfx.SC_VEC4);
+
 					Engine.Gfx.DrawQuad();
 				};
 				return on_render;
@@ -215,8 +239,8 @@ const float SEA_HEIGHT = 0.6;
 const float SEA_CHOPPY = 4.0;
 uniform float SEA_SPEED; // [EDITOR] { group : "Sea", label : "SEA_SPEED", value: 1,     min: 0,   max: 1,   step: 0.01 }
 uniform float SEA_FREQ; // [EDITOR] { group : "Sea", label : "SEA_FREQ", value: 0.16,     min: 0,   max: 1,   step: 0.01 }
-const vec3 SEA_BASE = vec3(0.1,0.19,0.22);
-const vec3 SEA_WATER_COLOR = vec3(0.8,0.9,0.6);
+//const vec3 SEA_BASE = vec3(0.1,0.19,0.22);
+//const vec3 SEA_WATER_COLOR = vec3(0.8,0.9,0.6);
 float SEA_TIME = iGlobalTime * SEA_SPEED;
 mat2 octave_m = mat2(1.6,1.2,-1.2,1.6);
 
@@ -308,6 +332,9 @@ float map_detailed(vec3 p) {
 }
 
 vec3 getSeaColor(vec3 p, vec3 n, vec3 l, vec3 eye, vec3 dist) {  
+	vec3 SEA_BASE = vec3(iColour0);
+	vec3 SEA_WATER_COLOR = vec3(iColour1);
+
     float fresnel = 1.0 - max(dot(n,-eye),0.0);
     fresnel = pow(fresnel,3.0) * 0.65;
         
