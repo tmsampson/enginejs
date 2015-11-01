@@ -2,15 +2,15 @@
 <h2>Colour Picker</h2>
 <hr/>
 <span style="font-size:1.2em; font-family: monospace;">
-Values accessible directly from shader.
+Colour palette values accessible via <strong>iColour[4]</strong>. Click <a href="javascript:RandomiseColours()">here</a> to randomise.
 </span>
 <br/>
 <br/>
 
-<input type='text' id="flat0" />
-<input type='text' id="flat1" />
-<input type='text' id="flat2" />
-<input type='text' id="flat3" />
+<input type='text' id="colour0" />
+<input type='text' id="colour1" />
+<input type='text' id="colour2" />
+<input type='text' id="colour3" />
 
 <script language="javascript">
 var config = 
@@ -22,8 +22,27 @@ var config =
     preferredFormat: "rgb"
 };
 
-$("#flat0").spectrum($.extend({}, config, { move : function(color) {  } }));
-$("#flat1").spectrum(config);
-$("#flat2").spectrum(config);
-$("#flat3").spectrum(config);
+function RandomColour()
+{
+	return "rgba " + Math.round(Math.random() * 255) + " " +
+	                 Math.round(Math.random() * 255) + " " +
+	                 Math.round(Math.random() * 255) + " 255";
+}
+
+$("#colour0").spectrum($.extend({}, config, { move : function(color) { } }));
+$("#colour1").spectrum($.extend({}, config, { move : function(color) { } }));
+$("#colour2").spectrum($.extend({}, config, { move : function(color) { } }));
+$("#colour3").spectrum($.extend({}, config, { move : function(color) { } }));
+
+RandomiseColours();
+
+function RandomiseColours()
+{
+	for(var i = 0; i < 4; ++i)
+	{
+		$("#colour" + i).spectrum("set", RandomColour());
+		$("#colour" + i).spectrum("reflow");
+	}
+}
+
 </script>

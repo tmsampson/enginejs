@@ -25,15 +25,23 @@
 		<script language="javascript">
 		var resources =
 		{
-			fs_plasma    : { file: "shaders/plasma.fs" },
-			txt_template : { file: "resources/template.fs.txt"   },
+			fs_plasma    : { file: "shaders/plasma.fs"         },
+			txt_template : { file: "resources/template.fs.txt" },
+			txt_new      : { file: "resources/new.fs.txt"      },
 		};
 
 		var template_code = "";
-		var editor = null;
+		var editor = null; 
 		var shader_toy_ids = [];
 		var shader_toy_index = -1;
 		var program = null;
+
+		function StartNewShader()
+		{
+			var code = resources["txt_new"].text;
+			editor.setValue(code);
+			RecompileShader(code);
+		}
 
 		function NextShaderToy(index)
 		{
@@ -48,7 +56,7 @@
 			});
 		}
 
-		function RandomShaderToy(index)
+		function RandomShaderToy()
 		{
 			shader_toy_index = Engine.Math.RandomInteger(0, shader_toy_ids.length -1);
 			var get_id = shader_toy_ids[shader_toy_index];
@@ -61,10 +69,16 @@
 			});
 		}
 
-		function GetColour(index)
+		function GetColours()
 		{
-			var c = $("#flat" + index).spectrum("get").toRgb();
-			return [ c.r / 255, c.g / 255, c.b / 255, c.a / 255 ];
+			var colours = [];
+			for(var i = 0; i < 4; ++i)
+			{
+				var c = $("#colour" + i).spectrum("get").toRgb();
+				colours.push(c.r / 255); colours.push(c.g / 255);
+				colours.push(c.b / 255); colours.push(c.a / 255);
+			}
+			return colours;
 		}
 
 		$(document).ready(function()
@@ -82,12 +96,13 @@
 				autofocus     : true,
 				mode          : "x-shader/x-fragment",
 				theme         : "mdn-like",
-				extraKeys:
+				extraKeys     :
 				{
 					"Alt-Enter" : function(instance) { RecompileShader(editor.getValue()); return true; },
 					"Ctrl-U" : function(instance) { NextShaderToy(-1); return true; },
 					"Ctrl-I" : function(instance) { NextShaderToy(1); return true; },
 					"Ctrl-Q" : function(instance) { RandomShaderToy(1); return true; },
+					"Ctrl-N" : function(instance) { StartNewShader(); return true; }
 				}
 			});
 
@@ -95,9 +110,9 @@
 			$(window).resize(function()
 			{
 				var h = $(".content").height();
-				$(".CodeMirror").height(h);
+				$(".CodeMirror").height(h-30);
 				editor.refresh()
-				$(".tab-content-container").height(h - 450-50-6-20);
+				$(".tab-content-container").height(h - 450 - 50 - 6 - 20);
 			}).trigger('resize');
 
 			var click_pos = [0, 0];
@@ -158,11 +173,7 @@
 					Engine.Gfx.SetShaderConstant("iMouse", mouse, Engine.Gfx.SC_VEC4);
 
 					// Colours
-					Engine.Gfx.SetShaderConstant("iColour0", GetColour(0), Engine.Gfx.SC_VEC4);
-					Engine.Gfx.SetShaderConstant("iColour1", GetColour(1), Engine.Gfx.SC_VEC4);
-					Engine.Gfx.SetShaderConstant("iColour2", GetColour(2), Engine.Gfx.SC_VEC4);
-					Engine.Gfx.SetShaderConstant("iColour3", GetColour(3), Engine.Gfx.SC_VEC4);
-
+					Engine.Gfx.SetShaderConstant("iColour", GetColours(), Engine.Gfx.SC_VEC4_ARRAY);
 					Engine.Gfx.DrawQuad();
 				};
 				return on_render;
@@ -226,6 +237,11 @@
 			</div>
 
 			<div style="overflow:hidden; flex: 1 1 auto; margin: 0px 0px; background-color:black">
+					<div class="toolbar">
+						<div title="New shader" class="icon icon-new" onclick="StartNewShader()"></div>
+						<div title="Recompile shader (Alt+Enter)" class="icon icon-recompile" onclick="RecompileShader(editor.getValue());"></div>
+						<div title="Fetch random shader from ShaderToy (Ctrl+Q)" class="icon icon-fetch" onclick="RandomShaderToy();"></div>
+					</div>
 					<textarea id="textarea-code">
 const int NUM_STEPS = 8;
 const float PI	 	= 3.1415;
@@ -332,8 +348,8 @@ float map_detailed(vec3 p) {
 }
 
 vec3 getSeaColor(vec3 p, vec3 n, vec3 l, vec3 eye, vec3 dist) {  
-	vec3 SEA_BASE = vec3(iColour0);
-	vec3 SEA_WATER_COLOR = vec3(iColour1);
+	vec3 SEA_BASE = vec3(iColour[0]);
+	vec3 SEA_WATER_COLOR = vec3(iColour[1]);
 
     float fresnel = 1.0 - max(dot(n,-eye),0.0);
     fresnel = pow(fresnel,3.0) * 0.65;
