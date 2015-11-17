@@ -9,50 +9,165 @@
 		<script type="text/javascript" src="enginejs/engine.js"></script>
 
 		<script language="javascript">
-		var resources =
+		var resources = { tx_flower : { file : "img/flower.png" } };
+		var bg_colour;
+
+		// --------------------------------------------------------------------------
+		// Poisson config
+		var poisson_config =
 		{
-			tx_flower : { file : "img/flower.png" }
+			min_separation : 100,
+			max_separation : 300,
+			spawn_attempts : 3
 		};
 
-		var stamps = [];
-		var positions = [];
+		// --------------------------------------------------------------------------
+		// Grid config
+		var grid_cell_size = poisson_config.min_separation / Math.sqrt(2);
+		var grid_row_count, grid_col_count;
 
 		$(document).ready(function()
 		{
 			Engine.Init(function()
 			{
-				var scene = new Engine.Game2D.Scene();
+				var cam = new Engine.Camera.Orthographic();
+				var mtx_trans = mat4.create();
+				var program  = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_basic_transformed"],
+				                                              Engine.Resources["fs_basic_textured"]);
 
-				// Setup stamp entities
-				for(var i = 0; i < 150; ++i)
-				{
-					stamps.push(new Engine.Game2D.Entity(resources["tx_flower"]));
-				}
+				grid_row_count = Math.floor(Engine.Canvas.GetHeight() / grid_cell_size);
+				grid_col_count = Math.floor(Engine.Canvas.GetWidth() / grid_cell_size);
+				bg_colour = Engine.Colour.Black;
 
 				var on_render = function(info)
 				{
-					for(var i = 0; i < positions.length; ++i)
-					{
-						stamps[i].MoveTo(positions[i]);
-						scene.Add(stamps[i]);
-					}
+					Engine.Gfx.Clear(bg_colour);
 
-					scene.Render(info);
+					// Update & bind camera
+					cam.Update(info);
+					Engine.Gfx.BindCamera(cam);
+
+					// Bind state
+					Engine.Gfx.BindShaderProgram(program);
+					Engine.Gfx.SetBlendMode(Engine.GL.SRC_ALPHA, Engine.GL.ONE_MINUS_SRC_ALPHA, true);
+					Engine.Gfx.BindTexture(resources["tx_flower"], 0);
+
+					for(var i = 0; i < output_queue.length; ++i)
+					{
+						mat4.translate(mtx_trans, Engine.Math.IdentityMatrix, [output_queue[i][0], output_queue[i][1], 0]);
+						mat4.scale(mtx_trans, mtx_trans, [32, 32, 0]);
+						Engine.Gfx.SetShaderConstant("u_trans_model", mtx_trans, Engine.Gfx.SC_MATRIX4);
+						Engine.Gfx.DrawQuad();
+					}
 				};
 				return on_render;
 			}, resources);
 		});
 
+		function GridToSlot(row, col)
+		{
+			return (row * grid_col_count) + col;
+		}
+
+		function PointToSlot(x, y)
+		{
+			var grid = PointToGrid(x, y);
+			return GridToSlot(grid[0], grid[1]);
+		}
+
+		function PointToGrid(x, y)
+		{
+			var col = Math.floor(x / grid_cell_size);
+			var row = Math.floor(y / grid_cell_size);
+			return [row, col];
+		}
+
+		var processing_queue = [];
+		var output_queue = [];
+
 		function Generate()
 		{
-			positions = [];
-			for(var i = 0; i < 15; ++i)
+			var grid = { };
+			output_queue = [];
+
+			// Add start point for processing
+			var start_x = Engine.Math.RandomInteger(0, Engine.Canvas.GetWidth());
+			var start_y = Engine.Math.RandomInteger(0, Engine.Canvas.GetHeight());
+			var start_pos = [start_x, start_y];
+			var start_slot = PointToSlot(start_x, start_y);
+			processing_queue.push(start_pos);
+			output_queue.push(start_pos);
+			grid[start_slot] = start_pos;
+
+			// Generate positions
+			while(processing_queue.length > 0)
 			{
-				for(var j = 0; j < 10; ++j)
+				var point = processing_queue.pop();
+				var slot = PointToSlot(point);
+
+				// Spawn new points
+				for(var i = 0; i < poisson_config.spawn_attempts; ++i)
 				{
-					positions.push([i * 100, j * 100]);
+					var angle = Engine.Math.RandomInteger(0, 360);
+					var dist = Engine.Math.RandomInteger(poisson_config.min_separation, poisson_config.max_separation);
+					var spawn_point = Engine.Vec2.Add(point, [(dist * Math.sin(angle)), (dist * Math.cos(angle))]);
+
+					// Error check
+					var check_dist = Engine.Vec2.Distance(point, spawn_point);
+					Engine.Log(check_dist);
+					if(check_dist < poisson_config.min_separation || check_dist > poisson_config.max_separation)
+					{
+						Engine.LogError("oops1");
+					}
+
+					// Keep?
+					var spawn_slot = PointToSlot(spawn_point[0], spawn_point[1]);
+					if(spawn_slot in grid)
+					{
+						continue;
+					}
+
+					var spawn_grid = PointToGrid(spawn_point[0], spawn_point[1]);
+					if(spawn_grid[0] < 0 || spawn_grid[0] > grid_row_count)
+						continue;
+					if(spawn_grid[1] < 0 || spawn_grid[1] > grid_col_count)
+						continue;
+
+					var keep = true;
+					for(var j = spawn_grid[0] - 2; j <= spawn_grid[0] + 2; ++j)
+					{
+						for(var k = spawn_grid[1] - 2; k <= spawn_grid[1] + 2; ++k)
+						{
+							if(!keep)
+							{
+								break;
+							}
+
+							var test_slot = GridToSlot(j, k);
+							if(test_slot in grid)
+							{
+								var other = grid[test_slot];
+								var other_dist = Engine.Vec2.Distance(spawn_point, other);
+								if(other_dist < poisson_config.min_separation)
+								{
+									keep = false;
+									break;
+								}
+							}
+						}
+					}
+
+					if(keep)
+					{
+						grid[spawn_slot] = spawn_point;
+						output_queue.push(spawn_point);
+						processing_queue.push(spawn_point);
+					}
 				}
 			}
+
+			// Random bg colour
+			bg_colour = [ Engine.Math.Random(0, 1), Engine.Math.Random(0, 1), Engine.Math.Random(0, 1)];
 		}
 
 		</script>
