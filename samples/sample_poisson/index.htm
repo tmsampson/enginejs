@@ -35,8 +35,6 @@
 				var program  = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_basic_transformed"],
 				                                              Engine.Resources["fs_basic_textured"]);
 
-				grid_row_count = Math.floor(Engine.Canvas.GetHeight() / grid_cell_size);
-				grid_col_count = Math.floor(Engine.Canvas.GetWidth() / grid_cell_size);
 				bg_colour = Engine.Colour.Black;
 
 				var on_render = function(info)
@@ -58,6 +56,17 @@
 						mat4.scale(mtx_trans, mtx_trans, [32, 32, 0]);
 						Engine.Gfx.SetShaderConstant("u_trans_model", mtx_trans, Engine.Gfx.SC_MATRIX4);
 						Engine.Gfx.DrawQuad();
+					}
+
+					if(Engine.Mouse.IsPressed("left", true))
+					{
+						Generate();
+					}
+
+					if(Engine.Mouse.IsPressed("right", true))
+					{
+						var image = Engine.Canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");  // here is the most important part because if you dont replace you will get a DOM 18 exception.
+						window.location.href=image; // it will save locally
 					}
 				};
 				return on_render;
@@ -89,6 +98,9 @@
 		{
 			var grid = { };
 			output_queue = [];
+
+			grid_row_count = Math.floor(Engine.Canvas.GetHeight() / grid_cell_size);
+			grid_col_count = Math.floor(Engine.Canvas.GetWidth() / grid_cell_size);
 
 			// Add start point for processing
 			var start_x = Engine.Math.RandomInteger(0, Engine.Canvas.GetWidth());
