@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>Engine Sample: Basic 2D Scene</title>
+
+		<!-- EngineJS -->
+		<script type="text/javascript" src="enginejs/jquery.js"></script>
+		<script type="text/javascript" src="enginejs/engine.js"></script>
+
+		<script language="javascript">
+		var resources =
+		{
+			tx_flower : { file : "img/flower.png" }
+		};
+
+		var stamps = [];
+		var positions = [];
+
+		$(document).ready(function()
+		{
+			Engine.Init(function()
+			{
+				var scene = new Engine.Game2D.Scene();
+
+				// Setup stamp entities
+				for(var i = 0; i < 150; ++i)
+				{
+					stamps.push(new Engine.Game2D.Entity(resources["tx_flower"]));
+				}
+
+				var on_render = function(info)
+				{
+					for(var i = 0; i < positions.length; ++i)
+					{
+						stamps[i].MoveTo(positions[i]);
+						scene.Add(stamps[i]);
+					}
+
+					scene.Render(info);
+				};
+				return on_render;
+			}, resources);
+		});
+
+		function Generate()
+		{
+			positions = [];
+			for(var i = 0; i < 15; ++i)
+			{
+				for(var j = 0; j < 10; ++j)
+				{
+					positions.push([i * 100, j * 100]);
+				}
+			}
+		}
+
+		</script>
+	</head>
+
+	<body>
+		<div style="float:left; clear:right">
+			<canvas width="1200" height="800"></canvas>
+		</div>
+		<div style="float:left; margin:10px">
+			<button onclick="Generate()">Generate</button>
+		</div>
+	</body>
+</html>
