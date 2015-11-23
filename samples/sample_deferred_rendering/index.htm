@@ -53,13 +53,6 @@
 					mtx_normal = Engine.Gfx.MakeNormalMatrix(mtx_trans, cam);
 					Engine.Gfx.SetShaderConstant("u_trans_normal", mtx_normal, Engine.Gfx.SC_MATRIX3);
 					Engine.Gfx.BindTexture(resources["tx_lava"], 0);
-					Engine.Gfx.BindTexture(resources["tx_normal"], 1);
-
-					var mtx_view_inverse = mat3.create();
-					var mtx_view_inverse2 = mat3.create();
-					mat3.fromMat4(mtx_view_inverse, cam.mtx_view);
-					Engine.Gfx.SetShaderConstant("u_view_inverse", mtx_view_inverse, Engine.Gfx.SC_MATRIX3);
-
 					Engine.Gfx.SetShaderConstant("u_light", [light_x, light_y, light_z], Engine.Gfx.SC_VEC3);
 					Engine.Gfx.DrawModel(model_cube);
 				};

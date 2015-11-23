@@ -17,7 +17,6 @@ attribute vec3 a_normal;
 #ifdef ENGINEJS_ENABLE_TRANSFORM
 uniform mat4 u_trans_model;
 uniform mat4 u_trans_view;
-uniform mat4 u_trans_view_inverse;
 uniform mat4 u_trans_proj;
 #endif
 
