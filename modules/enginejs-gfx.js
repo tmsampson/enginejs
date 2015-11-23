@@ -219,8 +219,8 @@ Engine.Gfx =
 		// Bind camera?
 		if(this.active_camera)
 		{
-			this.SetShaderConstant("u_trans_view",   this.active_camera.mtx_view,   Engine.Gfx.SC_MATRIX4);
-			this.SetShaderConstant("u_trans_proj",   this.active_camera.mtx_proj,   Engine.Gfx.SC_MATRIX4);
+			this.SetShaderConstant("u_trans_view", this.active_camera.mtx_view, Engine.Gfx.SC_MATRIX4);
+			this.SetShaderConstant("u_trans_proj", this.active_camera.mtx_proj, Engine.Gfx.SC_MATRIX4);
 		}
 	},
 
@@ -238,13 +238,22 @@ Engine.Gfx =
 		else
 		{
 			uniform_location = Engine.GL.getUniformLocation(program.resource, constant_name);
-			program.uniform_location_cache[constant_name] = uniform_location; // Cache for later
+
+			// Cache for later?
+			if(uniform_location != null)
+			{
+				program.uniform_location_cache[constant_name] = uniform_location;
+			}
 		}
 
 		// Set the constant
-		if(uniform_location != -1)
+		if(uniform_location != null)
 		{
 			setter_func(Engine.GL, uniform_location, constant_value);
+		}
+		else
+		{
+			Engine.LogErrorOnce("Failed setting shader constant: " + constant_name);
 		}
 	},
 
