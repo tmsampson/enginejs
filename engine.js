@@ -59,26 +59,26 @@ var Engine =
 		vs_basic_transformed_uv_normals : { file: "enginejs/resources/shaders/basic.vs", define : [ "ENGINEJS_ENABLE_TRANSFORM", "ENGINEJS_ENABLE_UV_COORDS", "ENGINEJS_ENABLE_NORMALS" ] },
 
 		// Fragment shaders
-		fs_basic                  : { file: "enginejs/resources/shaders/basic.fs" },
-		fs_basic_colour           : { file: "enginejs/resources/shaders/basic-colour.fs" },
-		fs_basic_textured         : { file: "enginejs/resources/shaders/basic-textured.fs" },
-		fs_grid                   : { file: "enginejs/resources/shaders/grid.fs" },
-		fs_grid_3d                : { file: "enginejs/resources/shaders/grid-3d.fs" },
-		fs_grid_3d_fog            : { file: "enginejs/resources/shaders/grid-3d-fog.fs" },
+		fs_basic                        : { file: "enginejs/resources/shaders/basic.fs" },
+		fs_basic_colour                 : { file: "enginejs/resources/shaders/basic-colour.fs" },
+		fs_basic_textured               : { file: "enginejs/resources/shaders/basic-textured.fs" },
+		fs_grid                         : { file: "enginejs/resources/shaders/grid.fs" },
+		fs_grid_3d                      : { file: "enginejs/resources/shaders/grid-3d.fs" },
+		fs_grid_3d_fog                  : { file: "enginejs/resources/shaders/grid-3d-fog.fs" },
 
 		// Game-2D shaders
-		fs_2d_background          : { file: "enginejs/resources/shaders/2d/background.fs" },
-		fs_2d_sprite              : { file: "enginejs/resources/shaders/2d/sprite.fs" },
+		fs_2d_background                : { file: "enginejs/resources/shaders/2d/background.fs" },
+		fs_2d_sprite                    : { file: "enginejs/resources/shaders/2d/sprite.fs" },
 
 		// Models
-		ml_quad                   : { file: "enginejs/resources/models/quad.model"       },
-		ml_floor_tile             : { file: "enginejs/resources/models/floor_tile.model" },
-		ml_tri                    : { file: "enginejs/resources/models/tri.model"        },
-		ml_cube                   : { file: "enginejs/resources/models/cube.model"       },
+		ml_quad                         : { file: "enginejs/resources/models/quad.model"       },
+		ml_floor_tile                   : { file: "enginejs/resources/models/floor_tile.model" },
+		ml_tri                          : { file: "enginejs/resources/models/tri.model"        },
+		ml_cube                         : { file: "enginejs/resources/models/cube.model"       },
 
 		// Misc
-		tx_white                  : { file: "enginejs/resources/img/white.png"   },
-		sfx_blank                 : { file: "enginejs/resources/audio/blank.mp3" }
+		tx_white                        : { file: "enginejs/resources/img/white.png"   },
+		sfx_blank                       : { file: "enginejs/resources/audio/blank.mp3" }
 	},
 
 	// *************************************************************************************
