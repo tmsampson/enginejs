@@ -5,7 +5,6 @@ varying vec3 v_normal;
 varying vec2 v_uv;
 varying vec4 v_world_pos;
 uniform sampler2D u_tx0;
-uniform mat4 u_trans_view;
 uniform vec3 u_light;
 uniform mat3 u_view_inverse;
 
