@@ -22,8 +22,8 @@
 				                                          look_at  : [0.0, 0.5, 0.0] });
 				var program_floor  = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_basic_transformed"],
 				                                                    Engine.Resources["fs_grid_3d_fog"]);
-				var program_cube   = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_basic_transformed"],
-				                                                    Engine.Resources["fs_basic"]);
+				var program_cube   = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_basic_transformed_uv"],
+				                                                    Engine.Resources["fs_unlit_uvs"]);
 
 				var on_render = function(info)
 				{

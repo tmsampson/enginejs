@@ -219,12 +219,12 @@ Engine.Gfx =
 		// Bind camera?
 		if(this.active_camera)
 		{
-			this.SetShaderConstant("u_trans_view", this.active_camera.mtx_view, Engine.Gfx.SC_MATRIX4);
-			this.SetShaderConstant("u_trans_proj", this.active_camera.mtx_proj, Engine.Gfx.SC_MATRIX4);
+			this.SetShaderConstant("u_trans_view", this.active_camera.mtx_view, Engine.Gfx.SC_MATRIX4, true);
+			this.SetShaderConstant("u_trans_proj", this.active_camera.mtx_proj, Engine.Gfx.SC_MATRIX4, true);
 		}
 	},
 
-	SetShaderConstant : function(constant_name, constant_value, setter_func)
+	SetShaderConstant : function(constant_name, constant_value, setter_func, ignore_errors)
 	{
 		var uniform_location = null;
 		var program = this.current_shader_program;
@@ -251,7 +251,7 @@ Engine.Gfx =
 		{
 			setter_func(Engine.GL, uniform_location, constant_value);
 		}
-		else
+		else if(!ignore_errors)
 		{
 			Engine.LogErrorOnce("Failed setting shader constant: " + constant_name);
 		}

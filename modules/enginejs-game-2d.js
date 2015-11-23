@@ -474,7 +474,7 @@ Engine.Game2D =
 		// Setup shader programs
 		this.program_grid   = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_basic_transformed"],
 		                                                     Engine.Resources["fs_grid"]);
-		this.program_sprite = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_basic_transformed"],
+		this.program_sprite = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_basic_transformed_uv"],
 		                                                     Engine.Resources["fs_2d_sprite"]);
 
 		this.Add = function(entity)
@@ -894,7 +894,7 @@ Engine.Game2D =
 	Background : function()
 	{
 		this.MAX_LAYERS = 7;
-		this.program = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_basic"],
+		this.program = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_basic_uv"],
 					                                  Engine.Resources["fs_2d_background"]);
 		this.layers = [];
 		this.repeat = [false, false];

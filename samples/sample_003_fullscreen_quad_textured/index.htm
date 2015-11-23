@@ -16,8 +16,8 @@
 		{
 			var on_init = function()
 			{
-				var program  = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_basic"],
-				                                              Engine.Resources["fs_basic_textured"]);
+				var program  = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_basic_uv"],
+				                                              Engine.Resources["fs_unlit_textured"]);
 				var on_render = function()
 				{
 					Engine.Gfx.BindShaderProgram(program);

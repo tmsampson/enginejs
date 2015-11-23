@@ -32,8 +32,8 @@
 			{
 				var cam = new Engine.Camera.Orthographic();
 				var mtx_trans = mat4.create();
-				var program  = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_basic_transformed"],
-				                                              Engine.Resources["fs_basic_textured"]);
+				var program  = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_basic_transformed_uv"],
+				                                              Engine.Resources["fs_unlit_textured"]);
 
 				bg_colour = Engine.Colour.Black;
 
@@ -125,7 +125,7 @@
 					var spawn_point = Engine.Vec2.Add(point, [(dist * Math.sin(angle)), (dist * Math.cos(angle))]);
 
 					// Error check
-					var check_dist = Engine.Vec2.Distance(point, spawn_point);
+					var check_dist = Math.round(Engine.Vec2.Distance(point, spawn_point), 2);
 					Engine.Log(check_dist);
 					if(check_dist < poisson_config.min_separation || check_dist > poisson_config.max_separation)
 					{
