@@ -569,15 +569,12 @@ Engine.Gfx =
 		}
 	},
 
-	MakeNormalMatrix : function(model_trans, camera)
+	MakeNormalMatrix : function(model_trans, camera, mtx_normal_out)
 	{
-		// Generate 3x3 "normal" matrix to transform normals
-		// from model space to view space
-		var mtx_result = mat3.create();
-		mat3.normalFromMat4(mtx_result, mat4.multiply(
-           mat4.create(), camera.mtx_view, model_trans
-       ));
-		return mtx_result;
+		// Generate 3x3 "normal" matrix to transform normals from model --> view space
+		var result = mat3.create();
+		mat3.normalFromMat4(result, mat4.multiply(Engine.Gfx.mtx4_scratch, camera.mtx_view, model_trans));
+		return result;
 	},
 
 	// **********************************************
@@ -623,6 +620,11 @@ Engine.Gfx =
 	// Cache
 	// **********************************************
 	ShaderProgramCache : { },
+
+	// **********************************************
+	// Scratch pad
+	// **********************************************
+	mtx4_scratch : mat4.create(),
 };
 
 // **********************************************
