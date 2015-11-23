@@ -73,18 +73,18 @@
 			}, resources);
 		});
 
-		function GridToSlot(row, col)
+		function CellToSlot(row, col)
 		{
 			return (row * grid_col_count) + col;
 		}
 
 		function PointToSlot(x, y)
 		{
-			var grid = PointToGrid(x, y);
-			return GridToSlot(grid[0], grid[1]);
+			var grid = PointToCell(x, y);
+			return CellToSlot(grid[0], grid[1]);
 		}
 
-		function PointToGrid(x, y)
+		function PointToCell(x, y)
 		{
 			var col = Math.floor(x / grid_cell_size);
 			var row = Math.floor(y / grid_cell_size);
@@ -139,7 +139,7 @@
 						continue;
 					}
 
-					var spawn_grid = PointToGrid(spawn_point[0], spawn_point[1]);
+					var spawn_grid = PointToCell(spawn_point[0], spawn_point[1]);
 					if(spawn_grid[0] < 0 || spawn_grid[0] > grid_row_count)
 						continue;
 					if(spawn_grid[1] < 0 || spawn_grid[1] > grid_col_count)
@@ -155,7 +155,7 @@
 								break;
 							}
 
-							var test_slot = GridToSlot(j, k);
+							var test_slot = CellToSlot(j, k);
 							if(test_slot in grid)
 							{
 								var other = grid[test_slot];
