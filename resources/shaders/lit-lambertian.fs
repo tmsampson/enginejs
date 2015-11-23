@@ -18,10 +18,6 @@ void main(void)
 {
 	vec2 uv = v_uv.xy;
 
-	// #ifdef FLIP_Y
-	// 	uv.y = 1.0 - uv.y;
-	// #endif
-
 	vec3 to_light = normalize(u_light - v_world_pos.xyz);
 	to_light = u_view_inverse * to_light; // u_view_inverse * to_light;
 

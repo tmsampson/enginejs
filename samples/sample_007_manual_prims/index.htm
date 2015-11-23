@@ -76,7 +76,7 @@
 				// Setup camera / shader program
 				var cam = new Engine.Camera.Orthographic();
 				var program = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_basic_transformed"],
-				                                             Engine.Resources["fs_basic_colour"]);
+				                                             Engine.Resources["fs_unlit_colour"]);
 
 				var on_render = function(info)
 				{

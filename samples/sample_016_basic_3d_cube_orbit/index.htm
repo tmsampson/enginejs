@@ -20,8 +20,8 @@
 				var model_floor = Engine.Resources["ml_floor_tile"];
 				var program_floor  = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_basic_transformed"],
 				                                                    Engine.Resources["fs_grid_3d_fog"]);
-				var program_cube   = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_basic_transformed"],
-				                                                    Engine.Resources["fs_basic"]);
+				var program_cube   = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_basic_transformed_uv"],
+				                                                    Engine.Resources["fs_unlit_uvs"]);
 
 				// Setup orbit cam
 				var cam = new Engine.Camera.Perspective();

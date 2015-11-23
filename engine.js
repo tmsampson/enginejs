@@ -53,15 +53,17 @@ var Engine =
 	{
 		// Vertex shaders
 		vs_basic                        : { file: "enginejs/resources/shaders/basic.vs" },
+		vs_basic_uv                     : { file: "enginejs/resources/shaders/basic.vs", define : [ "ENGINEJS_ENABLE_UV_COORDS" ] },
 		vs_basic_transformed            : { file: "enginejs/resources/shaders/basic.vs", define : [ "ENGINEJS_ENABLE_TRANSFORM" ] },
 		vs_basic_transformed_uv         : { file: "enginejs/resources/shaders/basic.vs", define : [ "ENGINEJS_ENABLE_TRANSFORM", "ENGINEJS_ENABLE_UV_COORDS" ] },
 		vs_basic_transformed_normals    : { file: "enginejs/resources/shaders/basic.vs", define : [ "ENGINEJS_ENABLE_TRANSFORM", "ENGINEJS_ENABLE_NORMALS" ] },
 		vs_basic_transformed_uv_normals : { file: "enginejs/resources/shaders/basic.vs", define : [ "ENGINEJS_ENABLE_TRANSFORM", "ENGINEJS_ENABLE_UV_COORDS", "ENGINEJS_ENABLE_NORMALS" ] },
 
 		// Fragment shaders
-		fs_basic                        : { file: "enginejs/resources/shaders/basic.fs" },
-		fs_basic_colour                 : { file: "enginejs/resources/shaders/basic-colour.fs" },
-		fs_basic_textured               : { file: "enginejs/resources/shaders/basic-textured.fs" },
+		fs_unlit_uvs                    : { file: "enginejs/resources/shaders/unlit-uvs.fs" },
+		fs_unlit_colour                 : { file: "enginejs/resources/shaders/unlit-colour.fs" },
+		fs_unlit_textured               : { file: "enginejs/resources/shaders/unlit-textured.fs" },
+		fs_lit_lambertian               : { file: "enginejs/resources/shaders/lit-lambertian.fs" },
 		fs_grid                         : { file: "enginejs/resources/shaders/grid.fs" },
 		fs_grid_3d                      : { file: "enginejs/resources/shaders/grid-3d.fs" },
 		fs_grid_3d_fog                  : { file: "enginejs/resources/shaders/grid-3d-fog.fs" },
