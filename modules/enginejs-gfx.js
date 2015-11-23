@@ -219,8 +219,8 @@ Engine.Gfx =
 		// Bind camera?
 		if(this.active_camera)
 		{
-			this.SetShaderConstant("u_trans_view", this.active_camera.mtx_view, Engine.Gfx.SC_MATRIX4);
-			this.SetShaderConstant("u_trans_proj", this.active_camera.mtx_proj, Engine.Gfx.SC_MATRIX4);
+			this.SetShaderConstant("u_trans_view",   this.active_camera.mtx_view,   Engine.Gfx.SC_MATRIX4);
+			this.SetShaderConstant("u_trans_proj",   this.active_camera.mtx_proj,   Engine.Gfx.SC_MATRIX4);
 		}
 	},
 
@@ -242,7 +242,10 @@ Engine.Gfx =
 		}
 
 		// Set the constant
-		setter_func(Engine.GL, uniform_location, constant_value);
+		if(uniform_location != -1)
+		{
+			setter_func(Engine.GL, uniform_location, constant_value);
+		}
 	},
 
 	// **********************************************
@@ -566,6 +569,17 @@ Engine.Gfx =
 		}
 	},
 
+	MakeNormalMatrix : function(model_trans, camera)
+	{
+		// Generate 3x3 "normal" matrix to transform normals
+		// from model space to view space
+		var mtx_result = mat3.create();
+		mat3.normalFromMat4(mtx_result, mat4.multiply(
+           mat4.create(), camera.mtx_view, model_trans
+       ));
+		return mtx_result;
+	},
+
 	// **********************************************
 	// Properties
 	// **********************************************
@@ -602,6 +616,7 @@ Engine.Gfx =
 	SC_VEC4          : function(gl, uniform_location, new_value) { gl.uniform4fv(uniform_location,       new_value); },
 	SC_VEC4_ARRAY    : function(gl, uniform_location, new_value) { gl.uniform4fv(uniform_location,       new_value); },
 	SC_COLOUR        : function(gl, uniform_location, new_value) { gl.uniform4fv(uniform_location,       new_value); },
+	SC_MATRIX3       : function(gl, uniform_location, new_value) { gl.uniformMatrix3fv(uniform_location, false, new_value); },
 	SC_MATRIX4       : function(gl, uniform_location, new_value) { gl.uniformMatrix4fv(uniform_location, false, new_value); },
 
 	// **********************************************

@@ -52,9 +52,11 @@ var Engine =
 	Resources :
 	{
 		// Vertex shaders
-		vs_basic                  : { file: "enginejs/resources/shaders/basic.vs" },
-		vs_basic_transformed      : { file: "enginejs/resources/shaders/basic-transformed.vs" },
-		vs_basic_transformed_nouv : { file: "enginejs/resources/shaders/basic-transformed-nouv.vs" },
+		vs_basic                        : { file: "enginejs/resources/shaders/basic.vs" },
+		vs_basic_transformed            : { file: "enginejs/resources/shaders/basic.vs", define : [ "ENGINEJS_ENABLE_TRANSFORM" ] },
+		vs_basic_transformed_uv         : { file: "enginejs/resources/shaders/basic.vs", define : [ "ENGINEJS_ENABLE_TRANSFORM", "ENGINEJS_ENABLE_UV_COORDS" ] },
+		vs_basic_transformed_normals    : { file: "enginejs/resources/shaders/basic.vs", define : [ "ENGINEJS_ENABLE_TRANSFORM", "ENGINEJS_ENABLE_NORMALS" ] },
+		vs_basic_transformed_uv_normals : { file: "enginejs/resources/shaders/basic.vs", define : [ "ENGINEJS_ENABLE_TRANSFORM", "ENGINEJS_ENABLE_UV_COORDS", "ENGINEJS_ENABLE_NORMALS" ] },
 
 		// Fragment shaders
 		fs_basic                  : { file: "enginejs/resources/shaders/basic.fs" },
