@@ -288,6 +288,16 @@ var Engine =
 		console.error("[engine] ERROR: " + msg);
 	},
 
+	log_once_registry : { },
+	LogErrorOnce : function(msg)
+	{
+		if(!(msg in Engine.log_once_registry))
+		{
+			console.error("[engine] ERROR: " + msg);
+			Engine.log_once_registry[msg] = 1;
+		}
+	},
+
 	LogWarning : function(msg)
 	{
 		console.warn("[engine] WARNING: " + msg);
