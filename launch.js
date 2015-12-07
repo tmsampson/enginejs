@@ -160,6 +160,16 @@ server.post('/server/launcher/set_project_folder', function (req, res)
 	ApplyConfigChanges(config);
 });
 
+server.post('/server/launcher/create_new_project', function (req, res)
+{
+	if(fs.existsSync(config.project_folder + "/" req.name))
+	{
+		res.send("already exists!");
+	}
+
+	console.log(req.body);
+});
+
 // Start Webserver
 server.listen(config.port);
 
