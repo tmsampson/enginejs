@@ -55,10 +55,55 @@
 		</nav>
 
 		<div class="container" style="margin-top:60px; padding-top:24px">
-			<button class="btn btn-default" type="submit"><span class="glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span> New Project</button>
+			<button class="btn btn-default" type="submit" data-toggle="modal" data-target="#newProjectModal"><span class="glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span> New Project</button>
 			<button class="btn btn-default" type="submit" data-toggle="modal" data-target="#projectFolderModal"><span class="glyphicon glyphicon glyphicon glyphicon-folder-open" aria-hidden="true"></span>&nbsp;&nbsp;Set Project Folder</button>
 			<br/>
 			<h3>Existing Projects</h3>
+		</div>
+
+		<div id="newProjectModal" class="modal fade">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title">New Project Wizard</h4>
+					</div>
+					<div class="modal-body">
+						<p>Please configure the new project below</p>
+						<form>
+							<div class="form-group">
+								<label for="newProjectNameInput">Project Name</label>
+								<input type="text" class="form-control" id="newProjectNameInput">
+							</div>
+							<div class="form-group" id="projectTemplate">
+								<label for="newProjectNameInput">Template</label>
+								<div class="radio">
+									<label>
+										<input type="radio" name="optionsRadios" id="projectTemplateRadio1" value="empty" checked>
+										Empty (blank project)
+									</label>
+								</div>
+								<div class="radio">
+									<label>
+										<input type="radio" name="optionsRadios" id="projectTemplateRadio2" value="2d">
+										2D
+									</label>
+								</div>
+								<div class="radio">
+									<label>
+										<input type="radio" name="optionsRadios" id="projectTemplateRadio3" value="3d">
+										3D
+									</label>
+								</div>
+							</div>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						<button type="button" class="btn btn-primary" data-dismiss="modal" onclick="CreateNewProject()">Create</button>
+					</div>
+				</div>
+			</div>
 		</div>
 
 		<div id="projectFolderModal" class="modal fade">
@@ -81,9 +126,9 @@
 						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 						<button type="button" class="btn btn-primary" data-dismiss="modal" onclick="PostProjectFolder()">Save changes</button>
 					</div>
-				</div><!-- /.modal-content -->
-			</div><!-- /.modal-dialog -->
-		</div><!-- /.modal -->
+				</div>
+			</div>
+		</div>
 
 		<script type="text/javascript" src="../jquery.js"></script>
 		<script src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
@@ -99,8 +144,19 @@
 
 		function PostProjectFolder()
 		{
+			
 			var data = { folder: $("#projectFolderInput").val() };
 			$.post("../server/launcher/set_project_folder", JSON.stringify(data)).done(function(data)
+			{
+				alert(data);
+			});
+		}
+
+		function CreateNewProject()
+		{
+			var data = { name: $("#newProjectNameInput").val(), template : $("#projectTemplate input:checked").val() };
+			alert(data);
+			$.post("../server/launcher/create_new_project", JSON.stringify(data)).done(function(data)
 			{
 				alert(data);
 			});
