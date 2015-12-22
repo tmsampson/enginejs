@@ -12,6 +12,8 @@ Engine.Camera =
 		this.viewport = { size : [1, 1], position: [0, 0] };
 		this.mtx_view = mat4.create();
 		this.mtx_proj = mat4.create();
+		this.viewport_pos  = [ 0, 0 ];
+		this.viewport_size = [ 0, 0 ];
 
 		this.AttachHelper = function(helper_class)
 		{
@@ -21,11 +23,21 @@ Engine.Camera =
 		this.BindViewport = function()
 		{
 			// Setup viewport
-			var viewport_x  = this.viewport.position[0] * Engine.Canvas.GetWidth();
-			var viewport_y  = this.viewport.position[1] * Engine.Canvas.GetHeight();
-			var viewport_width  = this.viewport.size[0] * Engine.Canvas.GetWidth();
-			var viewport_height = this.viewport.size[1] * Engine.Canvas.GetHeight();
-			Engine.GL.viewport(viewport_x, viewport_y, viewport_width, viewport_height);
+			this.viewport_pos =
+			[
+				this.viewport.position[0] * Engine.Canvas.GetWidth(),
+				this.viewport.position[1] * Engine.Canvas.GetHeight()
+			];
+
+			this.viewport_size =
+			[
+				this.viewport.size[0] * Engine.Canvas.GetWidth(),
+				this.viewport.size[1] * Engine.Canvas.GetHeight()
+			];
+
+			// Bind with webgl
+			Engine.GL.viewport(this.viewport_pos[0],  this.viewport_pos[1],
+			                   this.viewport_size[0], this.viewport_size[1]);
 		};
 
 		this.Update = function(info)
@@ -97,6 +109,15 @@ Engine.Camera =
 		this.Follow = function(some_object)
 		{
 			this.follow = some_object;
+		};
+
+		this.WorldToCanvas = function(world_pos)
+		{
+			var world_pos = vec3.fromValues(world_pos[0], world_pos[1], 0);
+			var screen_point = vec3.create();
+			vec3.transformMat4(screen_point, world_pos, this.mtx_proj);
+			return [ this.viewport_pos[0] + (screen_point[0] * this.viewport_size[0]),
+					 this.viewport_pos[1] + (screen_point[1] * this.viewport_size[1]) ];
 		};
 	},
 

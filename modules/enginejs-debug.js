@@ -88,6 +88,11 @@ Engine.Debug =
 		}
 	},
 
+	DrawLine3D : function(camera, start, end, colour, thickness)
+	{
+
+	},
+
 	DrawPolygon : function(vertices, colour)
 	{
 		Engine.Debug.RegisterDrawCommand({ vertices : vertices, colour : colour, draw_mode : "triangle_fan" });
