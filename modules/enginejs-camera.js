@@ -12,6 +12,7 @@ Engine.Camera =
 		this.viewport = { size : [1, 1], position: [0, 0] };
 		this.mtx_view = mat4.create();
 		this.mtx_proj = mat4.create();
+		this.mtx_view_proj = mat4.create();
 		this.viewport_pos  = [ 0, 0 ];
 		this.viewport_size = [ 0, 0 ];
 
@@ -50,6 +51,9 @@ Engine.Camera =
 
 			// Update matrices
 			this.UpdateMatrices();
+
+			// Maintain view * proj
+			mat4.multiply(this.mtx_view_proj, this.mtx_proj, this.mtx_view);
 		};
 	},
 
@@ -144,6 +148,18 @@ Engine.Camera =
 			mat4.lookAt(this.mtx_view, this.position, this.look_at, this.up);
 			mat4.perspective(this.mtx_proj, this.fov, this.aspect, this.near, this.far);
 		};
+
+		this.WorldToCanvas = function(world_pos)
+		{
+			var pos = vec4.fromValues(world_pos[0],
+			                          world_pos[1],
+			                          world_pos[2],
+			                          world_pos.length <= 3? 1.0 : world_pos[3]);
+			var device_pos = vec4.create();
+			vec4.transformMat4(device_pos, pos, this.mtx_view_proj);
+			return [ this.viewport_pos[0] + ((((device_pos[0] / device_pos[3]) + 1) / 2) * this.viewport_size[0]),
+			         this.viewport_pos[1] + ((((device_pos[1] / device_pos[3]) + 1) / 2) * this.viewport_size[1]) ];
+		}
 	},
 };
 

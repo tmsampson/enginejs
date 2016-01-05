@@ -31,5 +31,5 @@ void main(void)
 
 	float dot = max(0.0, dot(normalize(v_normal), normalize(to_light))) * attenuation(25.0, 0.5, length(u_light - v_world_pos.xyz));
 	vec4 tex = texture2D(u_tx0, uv);
-	gl_FragColor = (tex * 0.2) + (tex * (max(0.0, dot) * vec4(1.0, 0.0, 0.0, 1.0)));
+	gl_FragColor = (tex * 0.2) + (tex * (max(0.0, dot) * vec4(1.0, 1.0, 1.0, 1.0)));
 }
