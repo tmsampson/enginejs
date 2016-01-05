@@ -66,6 +66,10 @@ Engine.Debug =
 
 	DrawLine : function(start, end, colour, thickness)
 	{
+		// Default params
+		colour = Engine.Util.IsDefined(colour)? colour : Engine.Colour.Red;
+		thickness = Engine.Util.IsDefined(thickness)? thickness : 1.0;
+
 		// Draw main line
 		Engine.Debug.RegisterDrawCommand({ vertices : [start, end], colour : colour, draw_mode : "lines" });
 
@@ -90,7 +94,61 @@ Engine.Debug =
 
 	DrawLine3D : function(camera, start, end, colour, thickness)
 	{
+		// Default params
+		colour = Engine.Util.IsDefined(colour)? colour : Engine.Colour.Red;
+		thickness = Engine.Util.IsDefined(thickness)? thickness : 1.0;
 
+		// Convert to canvas space
+		var start_pos = camera.WorldToCanvas(start);
+		var end_pos = camera.WorldToCanvas(end);
+
+		// Draw in 2D
+		Engine.Debug.DrawLine(start_pos, end_pos, colour, thickness);
+	},
+
+	DrawArrow : function(start, end, colour, thickness, head_angle, head_length)
+	{
+		// Default params
+		colour = Engine.Util.IsDefined(colour)? colour : Engine.Colour.Red;
+		thickness = Engine.Util.IsDefined(colour)? thickness : 1.0;
+		head_angle = Engine.Util.IsDefined(head_angle)? head_angle : 30.0 * (Math.PI / 180);
+		head_length = Engine.Util.IsDefined(head_length)? head_length : 10.0;
+
+		// Draw main line
+		Engine.Debug.DrawLine(start, end, colour, thickness);
+
+		// Calculat arrow head
+		var reverse = vec2.fromValues(start[0] - end[0], start[1] - end[1]);
+		vec2.normalize(reverse, reverse);
+		vec2.scale(reverse, reverse, head_length);
+
+		// Draw arrow head 1
+		var s = Math.sin(head_angle);
+		var c = Math.cos(head_angle);
+		var tip = [ end[0] + (reverse[0] * c - reverse[1] * s), end[1] + (reverse[0] * s + reverse[1] * c)];
+		Engine.Debug.DrawLine(end, tip, colour);
+
+		// Draw arrow head 2
+		s = Math.sin(-head_angle);
+		c = Math.cos(-head_angle);
+		tip = [ end[0] + (reverse[0] * c - reverse[1] * s), end[1] + (reverse[0] * s + reverse[1] * c)];
+		Engine.Debug.DrawLine(end, tip, colour);
+	},
+
+	DrawArrow3D : function(camera, start, end, colour, thickness, head_angle, head_length)
+	{
+		// Default params
+		colour = Engine.Util.IsDefined(colour)? colour : Engine.Colour.Red;
+		thickness = Engine.Util.IsDefined(colour)? thickness : 1.0;
+		head_angle = Engine.Util.IsDefined(head_angle)? head_angle : 30.0 * (Math.PI / 180);
+		head_length = Engine.Util.IsDefined(head_length)? head_length : 10.0;
+
+		// Convert to canvas space
+		var start_pos = camera.WorldToCanvas(start);
+		var end_pos = camera.WorldToCanvas(end);
+
+		// Draw in 2D
+		Engine.Debug.DrawArrow(start_pos, end_pos, colour, thickness, head_angle, head_length);
 	},
 
 	DrawPolygon : function(vertices, colour)
