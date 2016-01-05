@@ -61,22 +61,19 @@
 
 				var draw_light = function(x, y, z)
 				{
-					// Draw cube
-					mat4.translate(mtx_trans, Engine.Math.IdentityMatrix, [x, y, z]);
+					// Draw light as cube
+					var light_pos = [x, y, z];
+					mat4.translate(mtx_trans, Engine.Math.IdentityMatrix, light_pos);
 					mat4.scale(mtx_trans, mtx_trans, [0.5, 0.5, 0.5]);
 					Engine.Gfx.BindShaderProgram(program_light);
 					Engine.Gfx.SetShaderConstant("u_trans_model", mtx_trans, Engine.Gfx.SC_MATRIX4);
 					Engine.Gfx.SetShaderConstant("u_colour", [1, 1, 1, 1], Engine.Gfx.SC_COLOUR);
 					Engine.Gfx.DrawModel(model_cube);
 
-					var dbg_light_pos = cam.WorldToCanvas([x, y, z]);
-					var dbg_light_right = cam.WorldToCanvas([x + 3, y, z]);
-					var dbg_light_up = cam.WorldToCanvas([x, y + 3, z]);
-					var dbg_light_forward = cam.WorldToCanvas([x, y, z + 3]);
-
-					Engine.Debug.DrawLine(dbg_light_pos, dbg_light_right, Engine.Colour.Red, 1);
-					Engine.Debug.DrawLine(dbg_light_pos, dbg_light_up, Engine.Colour.Green, 1);
-					Engine.Debug.DrawLine(dbg_light_pos, dbg_light_forward, Engine.Colour.Blue, 1);
+					// Draw light basis
+					Engine.Debug.DrawArrow3D(cam, light_pos, [x + 3, y, z], Engine.Colour.Red, 1);
+					Engine.Debug.DrawArrow3D(cam, light_pos, [x, y + 3, z], Engine.Colour.Green, 1);
+					Engine.Debug.DrawArrow3D(cam, light_pos, [x, y, z + 3], Engine.Colour.Blue, 1);
 				};
 
 				var light_x = 0, light_y = 10, light_z = 0;
