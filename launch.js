@@ -162,7 +162,7 @@ server.post('/server/launcher/set_project_folder', function (req, res)
 
 server.post('/server/launcher/create_new_project', function (req, res)
 {
-	if(fs.existsSync(config.project_folder + "/" req.name))
+	if(fs.existsSync(config.project_folder + "/" + req.name))
 	{
 		res.send("already exists!");
 	}
