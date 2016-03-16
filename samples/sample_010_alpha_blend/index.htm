@@ -25,7 +25,7 @@
 				{
 					mat4.translate(mtx_trans, Engine.Math.IdentityMatrix, pos);
 					mat4.scale(mtx_trans, mtx_trans, [size, size, 0.0]);
-					Engine.Gfx.SetShaderConstant("u_trans_model", mtx_trans, Engine.Gfx.SC_MATRIX4);
+					Engine.Gfx.SetShaderConstant("u_trans_world", mtx_trans, Engine.Gfx.SC_MATRIX4);
 					Engine.Gfx.SetShaderConstant("u_colour", colour, Engine.Gfx.SC_COLOUR);
 					Engine.Gfx.DrawModel(model);
 				};

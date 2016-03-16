@@ -210,7 +210,7 @@ Engine.Debug =
 		var mtx_proj = mat4.create(); mat4.identity(mtx_proj);
 		var canvas_size = Engine.Canvas.GetSize();
 		mat4.ortho(mtx_proj, 0, canvas_size[0], 0, canvas_size[1], -1, 1);
-		Engine.Gfx.SetShaderConstant("u_trans_model", Engine.Math.IdentityMatrix, Engine.Gfx.SC_MATRIX4);
+		Engine.Gfx.SetShaderConstant("u_trans_world", Engine.Math.IdentityMatrix, Engine.Gfx.SC_MATRIX4);
 		Engine.Gfx.SetShaderConstant("u_trans_view",  Engine.Math.IdentityMatrix, Engine.Gfx.SC_MATRIX4);
 		Engine.Gfx.SetShaderConstant("u_trans_proj",  mtx_proj, Engine.Gfx.SC_MATRIX4);
 
@@ -228,7 +228,7 @@ Engine.Debug =
 		{
 			var prim = Engine.Debug.prim_queue[i];
 			Engine.Gfx.SetShaderConstant("u_colour", prim.colour, Engine.Gfx.SC_COLOUR);
-			Engine.Gfx.SetShaderConstant("u_trans_model", prim.mtx, Engine.Gfx.SC_MATRIX4);
+			Engine.Gfx.SetShaderConstant("u_trans_world", prim.mtx, Engine.Gfx.SC_MATRIX4);
 			switch(prim.type)
 			{
 				case "rect":

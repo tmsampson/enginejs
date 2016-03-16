@@ -49,9 +49,9 @@
 					mat4.translate(mtx_trans, Engine.Math.IdentityMatrix, [x,  y, z]);
 					mat4.rotate(mtx_trans, mtx_trans, rot, [1, 1, 1]);
 					Engine.Gfx.BindShaderProgram(program_cube);
-					Engine.Gfx.SetShaderConstant("u_trans_model", mtx_trans, Engine.Gfx.SC_MATRIX4);
-					mtx_normal = Engine.Gfx.MakeNormalMatrix(mtx_trans, cam);
-					Engine.Gfx.SetShaderConstant("u_trans_normal", mtx_normal, Engine.Gfx.SC_MATRIX3);
+					Engine.Gfx.SetShaderConstant("u_trans_world", mtx_trans, Engine.Gfx.SC_MATRIX4);
+					//mtx_normal = Engine.Gfx.MakeNormalMatrix(mtx_trans, cam);
+					//Engine.Gfx.SetShaderConstant("u_trans_normal", mtx_normal, Engine.Gfx.SC_MATRIX3);
 					Engine.Gfx.BindTexture(resources["tx_lava"], 0);
 					Engine.Gfx.SetShaderConstant("u_light", [light_x, light_y, light_z], Engine.Gfx.SC_VEC3);
 					Engine.Gfx.DrawModel(model_cube);
@@ -64,7 +64,7 @@
 					mat4.translate(mtx_trans, Engine.Math.IdentityMatrix, light_pos);
 					mat4.scale(mtx_trans, mtx_trans, [0.5, 0.5, 0.5]);
 					Engine.Gfx.BindShaderProgram(program_light);
-					Engine.Gfx.SetShaderConstant("u_trans_model", mtx_trans, Engine.Gfx.SC_MATRIX4);
+					Engine.Gfx.SetShaderConstant("u_trans_world", mtx_trans, Engine.Gfx.SC_MATRIX4);
 					Engine.Gfx.SetShaderConstant("u_colour", [1, 1, 1, 1], Engine.Gfx.SC_COLOUR);
 					Engine.Gfx.DrawModel(model_cube);
 
@@ -124,7 +124,7 @@
 					// Draw floor
 					mat4.scale(mtx_trans, Engine.Math.IdentityMatrix, [100, 0, 100]);
 					Engine.Gfx.BindShaderProgram(program_floor);
-					Engine.Gfx.SetShaderConstant("u_trans_model", mtx_trans, Engine.Gfx.SC_MATRIX4);
+					Engine.Gfx.SetShaderConstant("u_trans_world", mtx_trans, Engine.Gfx.SC_MATRIX4);
 					Engine.Gfx.DrawModel(model_floor);
 
 					// Draw cubes

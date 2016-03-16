@@ -15,7 +15,7 @@ attribute vec3 a_normal;
 // -----------------------------------------------------------------------------
 // Per-draw input
 #ifdef ENGINEJS_ENABLE_TRANSFORM
-uniform mat4 u_trans_model;
+uniform mat4 u_trans_world;
 uniform mat4 u_trans_view;
 uniform mat4 u_trans_proj;
 #endif
@@ -35,19 +35,25 @@ varying vec2 v_uv;
 #endif
 
 #ifdef ENGINEJS_ENABLE_NORMALS
-varying vec3 v_normal;
+varying vec3 v_world_normal;
 #endif
 
 // -----------------------------------------------------------------------------
 // Main routine
 void main(void)
 {
-	// Transform point?
+	// Transform position from model-->world space?
 	#ifdef ENGINEJS_ENABLE_TRANSFORM
-	v_world_pos = u_trans_model * vec4(a_pos, 1.0);
+	v_world_pos = u_trans_world * vec4(a_pos, 1.0);
 	gl_Position = u_trans_proj * u_trans_view * v_world_pos;
 	#else
 	gl_Position = vec4(a_pos, 1.0);
+	#endif
+
+	// Transform normal from model --> world space?
+	#ifdef ENGINEJS_ENABLE_NORMALS
+	mat3 normal_world_mtx = mat3(u_trans_world);
+	v_world_normal = normalize(normal_world_mtx * a_normal);
 	#endif
 
 	// Pass-through UV co-ordinates?
@@ -56,10 +62,5 @@ void main(void)
 	#ifdef FLIP_Y
 	v_uv.y = 1.0 - v_uv.y;
 	#endif
-	#endif
-
-	// Transform normal?
-	#ifdef ENGINEJS_ENABLE_NORMALS
-	v_normal = u_trans_normal * a_normal;
 	#endif
 }
