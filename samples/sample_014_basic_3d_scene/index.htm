@@ -32,7 +32,7 @@
 
 					// Render floor
 					Engine.Gfx.BindShaderProgram(program_floor);
-					Engine.Gfx.SetShaderConstant("u_trans_model", mtx_trans, Engine.Gfx.SC_MATRIX4);
+					Engine.Gfx.SetShaderConstant("u_trans_world", mtx_trans, Engine.Gfx.SC_MATRIX4);
 					Engine.Gfx.DrawModel(model_floor);
 				};
 				return on_render;

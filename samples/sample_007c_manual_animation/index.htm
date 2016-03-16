@@ -54,7 +54,7 @@
 					// Play anim (top, first 4 frames only)
 					mat4.translate(mtx_trans, Engine.Math.IdentityMatrix, [centre[0] - offset, centre[1], 0]);
 					mat4.scale(mtx_trans, mtx_trans, [scale, scale, 0]);
-					Engine.Gfx.SetShaderConstant("u_trans_model", mtx_trans, Engine.Gfx.SC_MATRIX4);
+					Engine.Gfx.SetShaderConstant("u_trans_world", mtx_trans, Engine.Gfx.SC_MATRIX4);
 					var anim_config = [tile_count_horizontal, tile_count_vertical, current_frame % 4];
 					Engine.Gfx.SetShaderConstant("u_anim_config", anim_config, Engine.Gfx.SC_VEC3);
 					Engine.Gfx.DrawQuad();
@@ -63,7 +63,7 @@
 					mat4.translate(mtx_trans, Engine.Math.IdentityMatrix, [centre[0], centre[1], 0]);
 					mat4.scale(mtx_trans, mtx_trans, [scale * 2, scale * 2, 0]);
 					mat4.rotate(mtx_trans, mtx_trans, info.elapsed_s, [0, 0, 1]);
-					Engine.Gfx.SetShaderConstant("u_trans_model", mtx_trans, Engine.Gfx.SC_MATRIX4);
+					Engine.Gfx.SetShaderConstant("u_trans_world", mtx_trans, Engine.Gfx.SC_MATRIX4);
 					anim_config[2] = current_frame_fast;
 					Engine.Gfx.SetShaderConstant("u_anim_config", anim_config, Engine.Gfx.SC_VEC3);
 					Engine.Gfx.DrawQuad();
@@ -71,7 +71,7 @@
 					// Play anim (bottom, last 4 frames only)
 					mat4.translate(mtx_trans, Engine.Math.IdentityMatrix, [centre[0] + offset, centre[1], 0]);
 					mat4.scale(mtx_trans, mtx_trans, [scale, scale, 0]);
-					Engine.Gfx.SetShaderConstant("u_trans_model", mtx_trans, Engine.Gfx.SC_MATRIX4);
+					Engine.Gfx.SetShaderConstant("u_trans_world", mtx_trans, Engine.Gfx.SC_MATRIX4);
 					anim_config[2] = 8 + current_frame % 4;
 					Engine.Gfx.SetShaderConstant("u_anim_config", anim_config, Engine.Gfx.SC_VEC3);
 					Engine.Gfx.DrawQuad();

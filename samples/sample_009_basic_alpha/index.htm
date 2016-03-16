@@ -34,7 +34,7 @@
 					// Draw grid
 					mat4.scale(mtx_trans, mtx_trans, [Engine.Canvas.GetWidth(), Engine.Canvas.GetHeight(), 0.0]);
 					Engine.Gfx.BindShaderProgram(program_grid);
-					Engine.Gfx.SetShaderConstant("u_trans_model", mtx_trans, Engine.Gfx.SC_MATRIX4);
+					Engine.Gfx.SetShaderConstant("u_trans_world", mtx_trans, Engine.Gfx.SC_MATRIX4);
 					Engine.Gfx.DrawQuad();
 
 					// Draw sprite
@@ -42,7 +42,7 @@
 					Engine.Gfx.BindShaderProgram(program_basic);
 					mat4.translate(mtx_trans, Engine.Math.IdentityMatrix, Engine.Canvas.GetCentre());
 					mat4.scale(mtx_trans, mtx_trans, [min_dimension / 4, min_dimension / 4, 0.0]);
-					Engine.Gfx.SetShaderConstant("u_trans_model", mtx_trans, Engine.Gfx.SC_MATRIX4);
+					Engine.Gfx.SetShaderConstant("u_trans_world", mtx_trans, Engine.Gfx.SC_MATRIX4);
 					Engine.Gfx.BindTexture(resources["tx_ironman"], 0);
 					Engine.Gfx.DrawQuad();
 				};
