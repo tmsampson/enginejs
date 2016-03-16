@@ -37,7 +37,7 @@
 					mat4.translate(mtx_trans, Engine.Math.IdentityMatrix, Engine.Canvas.GetCentre());
 					mat4.rotate(mtx_trans, mtx_trans, info.elapsed_s, [0, 0, 1]);
 					mat4.scale(mtx_trans, mtx_trans, [scale, scale, 0.0]);
-					Engine.Gfx.SetShaderConstant("u_trans_model", mtx_trans, Engine.Gfx.SC_MATRIX4);
+					Engine.Gfx.SetShaderConstant("u_trans_world", mtx_trans, Engine.Gfx.SC_MATRIX4);
 					Engine.Gfx.SetShaderConstant("u_colour", [1.0, 0.0, 0.0, 1.0], Engine.Gfx.SC_COLOUR);
 					Engine.Gfx.DrawQuad();
 				};
