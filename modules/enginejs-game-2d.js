@@ -641,8 +641,8 @@ Engine.Game2D =
 					Engine.Gfx.EnableDepthTest(false);
 					mat4.scale(mtx_trans, mtx_trans, [this.max_size[0], this.max_size[1], 0.0]);
 					Engine.Gfx.BindShaderProgram(this.program_grid);
-					Engine.Gfx.SetShaderConstant("u_trans_model", mtx_trans, Engine.Gfx.SC_MATRIX4);
 					Engine.Gfx.DrawQuad();
+					Engine.Gfx.SetShaderConstant("u_trans_world", mtx_trans, Engine.Gfx.SC_MATRIX4);
 				}
 
 				// Render setup
@@ -668,7 +668,7 @@ Engine.Game2D =
 					var scale = entity.sprite? Engine.Vec2.DivideScalar(entity.original_size, 2) : entity.size;
 					mat4.scale(mtx_trans, mtx_trans, Engine.Vec3.FromVec2(scale));
 					mat4.translate(mtx_trans, mtx_trans, [1, 1, 0]);
-					Engine.Gfx.SetShaderConstant("u_trans_model", mtx_trans, Engine.Gfx.SC_MATRIX4);
+					Engine.Gfx.SetShaderConstant("u_trans_world", mtx_trans, Engine.Gfx.SC_MATRIX4);
 
 					// Setup tint
 					if(entity.tint != last_bound_tint)
