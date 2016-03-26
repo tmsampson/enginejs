@@ -38,6 +38,7 @@ void main(void)
 
 	// Sample texel colours per-layer
 	vec4 layer_0_col = sample_layer(uv, u_layer_tx[0], u_layer_config_1[0], u_layer_config_2[0], u_layer_config_3[0]);
+
 	vec4 layer_1_col = sample_layer(uv, u_layer_tx[1], u_layer_config_1[1], u_layer_config_2[1], u_layer_config_3[1]);
 	vec4 layer_2_col = sample_layer(uv, u_layer_tx[2], u_layer_config_1[2], u_layer_config_2[2], u_layer_config_3[2]);
 	vec4 layer_3_col = sample_layer(uv, u_layer_tx[3], u_layer_config_1[3], u_layer_config_2[3], u_layer_config_3[3]);
@@ -47,11 +48,11 @@ void main(void)
 
 	// Blend layers (from back to front)
 	gl_FragColor = u_background_color;
-	gl_FragColor = vec4(layer_6_col.a) * layer_6_col + vec4(1.0 - layer_6_col.a) * gl_FragColor;
-	gl_FragColor = vec4(layer_5_col.a) * layer_5_col + vec4(1.0 - layer_5_col.a) * gl_FragColor;
-	gl_FragColor = vec4(layer_4_col.a) * layer_4_col + vec4(1.0 - layer_4_col.a) * gl_FragColor;
-	gl_FragColor = vec4(layer_3_col.a) * layer_3_col + vec4(1.0 - layer_3_col.a) * gl_FragColor;
-	gl_FragColor = vec4(layer_2_col.a) * layer_2_col + vec4(1.0 - layer_2_col.a) * gl_FragColor;
-	gl_FragColor = vec4(layer_1_col.a) * layer_1_col + vec4(1.0 - layer_1_col.a) * gl_FragColor;
-	gl_FragColor = vec4(layer_0_col.a) * layer_0_col + vec4(1.0 - layer_0_col.a) * gl_FragColor;
+	gl_FragColor = (layer_6_col.a * u_layer_config_3[6].w * layer_6_col) + ((1.0 - (layer_6_col.a * u_layer_config_3[6].w)) * gl_FragColor);
+	gl_FragColor = (layer_5_col.a * u_layer_config_3[5].w * layer_5_col) + ((1.0 - (layer_5_col.a * u_layer_config_3[5].w)) * gl_FragColor);
+	gl_FragColor = (layer_4_col.a * u_layer_config_3[4].w * layer_4_col) + ((1.0 - (layer_4_col.a * u_layer_config_3[4].w)) * gl_FragColor);
+	gl_FragColor = (layer_3_col.a * u_layer_config_3[3].w * layer_3_col) + ((1.0 - (layer_3_col.a * u_layer_config_3[3].w)) * gl_FragColor);
+	gl_FragColor = (layer_2_col.a * u_layer_config_3[2].w * layer_2_col) + ((1.0 - (layer_2_col.a * u_layer_config_3[2].w)) * gl_FragColor);
+	gl_FragColor = (layer_1_col.a * u_layer_config_3[1].w * layer_1_col) + ((1.0 - (layer_1_col.a * u_layer_config_3[1].w)) * gl_FragColor);
+	gl_FragColor = (layer_0_col.a * u_layer_config_3[0].w * layer_0_col) + ((1.0 - (layer_0_col.a * u_layer_config_3[0].w)) * gl_FragColor);
 }
