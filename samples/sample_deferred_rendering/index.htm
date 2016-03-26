@@ -50,8 +50,6 @@
 					mat4.rotate(mtx_trans, mtx_trans, rot, [1, 1, 1]);
 					Engine.Gfx.BindShaderProgram(program_cube);
 					Engine.Gfx.SetShaderConstant("u_trans_world", mtx_trans, Engine.Gfx.SC_MATRIX4);
-					//mtx_normal = Engine.Gfx.MakeNormalMatrix(mtx_trans, cam);
-					//Engine.Gfx.SetShaderConstant("u_trans_normal", mtx_normal, Engine.Gfx.SC_MATRIX3);
 					Engine.Gfx.BindTexture(resources["tx_lava"], 0);
 					Engine.Gfx.SetShaderConstant("u_light", [light_x, light_y, light_z], Engine.Gfx.SC_VEC3);
 					Engine.Gfx.DrawModel(model_cube);
