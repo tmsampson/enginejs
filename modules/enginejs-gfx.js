@@ -584,14 +584,6 @@ Engine.Gfx =
 		}
 	},
 
-	MakeNormalMatrix : function(model_trans, camera, mtx_normal_out)
-	{
-		// Generate 3x3 "normal" matrix to transform normals from model --> view space
-		var result = mat3.create();
-		mat3.normalFromMat4(result, mat4.multiply(Engine.Gfx.mtx4_scratch, camera.mtx_view, model_trans));
-		return result;
-	},
-
 	// **********************************************
 	// Properties
 	// **********************************************
