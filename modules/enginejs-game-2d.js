@@ -934,7 +934,7 @@ Engine.Game2D =
 					u_config_3[i * 4 + 0] = layer.repeat[0]? 0 : 1;                                          // layer repeat-x
 					u_config_3[i * 4 + 1] = layer.repeat[1]? 0 : 1;                                          // layer repeat-y
 					u_config_3[i * 4 + 2] = layer.depth;                                                     // layer depth
-					u_config_3[i * 4 + 3] = 0;
+					u_config_3[i * 4 + 3] = Math.pow(layer.alpha, 2.2);                                      // layer alpha (gamma-corrected)
 				}
 				else
 				{
@@ -1096,39 +1096,44 @@ Engine.Resource.RegisterLoadFunction("background", function(descriptor, callback
 		$.extend(background_object, json);
 
 		// Load in textures
-		Engine.Resource.LoadBatch(background_object.textures, function()
+		if(Object.keys(background_object.textures).length > 0)
 		{
-			// Validate background
-			var layer_count = background_object.layers.length;
-			if(background_object.layers.length > background_object.MAX_LAYERS)
+			Engine.Resource.LoadBatch(background_object.textures, function()
 			{
-				Engine.LogError("Background '" + descriptor.file +
-				                "' exceeds maximum layer count of " + background_object.MAX_LAYERS);
-				return;
-			}
-
-			// Process layers
-			for(var i = 0; i < layer_count; ++i)
-			{
-				Engine.Log("    Validating background layer " + i);
-				var layer = background_object.layers[i];
-
-				// Hookup texture references
-				if(layer.texture in background_object.textures)
+				// Validate background
+				var layer_count = background_object.layers.length;
+				if(background_object.layers.length > background_object.MAX_LAYERS)
 				{
-					layer.texture = background_object.textures[layer.texture];
+					Engine.LogError("Background '" + descriptor.file +
+					                "' exceeds maximum layer count of " + background_object.MAX_LAYERS);
+					return;
 				}
-				else
-				{
-					// Broken reference
-					var msg = "    Unknown texture '" + layer.texture +
-					          "' referenced in background '" + descriptor.file + "' layer " + i;
-					Engine.LogError(msg);
-				}
-			}
 
-			callback(background_object);
-		});
+				// Process layers
+				for(var i = 0; i < layer_count; ++i)
+				{
+					Engine.Log("    Validating background layer " + i);
+					var layer = background_object.layers[i];
+					if(!Engine.Util.IsDefined(layer.alpha))
+						layer.alpha = 1.0;
+
+					// Hookup texture references
+					if(layer.texture in background_object.textures)
+					{
+						layer.texture = background_object.textures[layer.texture];
+					}
+					else
+					{
+						// Broken reference
+						var msg = "    Unknown texture '" + layer.texture +
+						          "' referenced in background '" + descriptor.file + "' layer " + i;
+						Engine.LogError(msg);
+					}
+				}
+			});
+		}
+
+		callback(background_object);
 	});
 });
 
