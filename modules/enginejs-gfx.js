@@ -342,6 +342,12 @@ Engine.Gfx =
 		this.SetShaderConstant(sampler_name, sampler_indices, Engine.Gfx.SC_SAMPLER_ARRAY);
 	},
 
+	SetTextureFiltering : function(mag, min)
+	{
+		Engine.GL.texParameteri(Engine.GL.TEXTURE_2D, Engine.GL.TEXTURE_MAG_FILTER, mag);
+		Engine.GL.texParameteri(Engine.GL.TEXTURE_2D, Engine.GL.TEXTURE_MIN_FILTER, min);
+	},
+
 	// **********************************************
 	// Render target functionality
 	// **********************************************
