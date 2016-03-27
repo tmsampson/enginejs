@@ -14,7 +14,7 @@ Engine.Spatial =
 		// Global constants
 		this.DEFAULT_WORLD_MIN = [-10000000, -10000000];
 		this.DEFAULT_WORLD_MAX = [ 10000000,  10000000];
-		this.DEFAULT_MAX_NODE_COUNT = 50000;
+		this.DEFAULT_MAX_NODE_COUNT = 5000;
 		this.DEFAULT_MAX_ITEMS_PER_NODE = 4;
 
 		// ------------------------------------------------------------------------------------------------------
