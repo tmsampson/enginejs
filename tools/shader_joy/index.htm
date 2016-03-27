@@ -143,7 +143,7 @@
 				});
 
 				template_code = resources["txt_template"].text;
-				program  = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_basic"],
+				program  = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_general_uv"],
 				                                              resources["fs_plasma"]);
 				//param_editor = Engine.Editor.BuildParamEditor(resources["fs_plasma"]);
 
@@ -186,7 +186,7 @@
 			var code = template_code + "\n\n" + user_code;
 			// editor.setValue(code);
 			var shader = Engine.Gfx.CompileFragmentShader(code, []);
-			program = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_basic"], shader);
+			program = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_general_uv"], shader);
 
 			// sliders
 			param_editor = Engine.Editor.BuildParamEditor(shader);

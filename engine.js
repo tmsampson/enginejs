@@ -51,36 +51,45 @@ var Engine =
 	// *************************************************************************************
 	Resources :
 	{
-		// Vertex shaders
-		vs_basic                        : { file: "enginejs/resources/shaders/basic.vs" },
-		vs_basic_uv                     : { file: "enginejs/resources/shaders/basic.vs", define : [ "ENGINEJS_ENABLE_UV_COORDS" ] },
-		vs_basic_transformed            : { file: "enginejs/resources/shaders/basic.vs", define : [ "ENGINEJS_ENABLE_TRANSFORM" ] },
-		vs_basic_transformed_uv         : { file: "enginejs/resources/shaders/basic.vs", define : [ "ENGINEJS_ENABLE_TRANSFORM", "ENGINEJS_ENABLE_UV_COORDS" ] },
-		vs_basic_transformed_normals    : { file: "enginejs/resources/shaders/basic.vs", define : [ "ENGINEJS_ENABLE_TRANSFORM", "ENGINEJS_ENABLE_NORMALS" ] },
-		vs_basic_transformed_uv_normals : { file: "enginejs/resources/shaders/basic.vs", define : [ "ENGINEJS_ENABLE_TRANSFORM", "ENGINEJS_ENABLE_UV_COORDS", "ENGINEJS_ENABLE_NORMALS" ] },
+		// General vertex shader flavours
+		vs_general                        : { file: "enginejs/resources/shaders/general.vs" },
+		vs_general_uv                     : { file: "enginejs/resources/shaders/general.vs", define : [ "ENGINEJS_ENABLE_UV_COORDS" ] },
+		vs_general_transformed            : { file: "enginejs/resources/shaders/general.vs", define : [ "ENGINEJS_ENABLE_TRANSFORM" ] },
+		vs_general_transformed_uv         : { file: "enginejs/resources/shaders/general.vs", define : [ "ENGINEJS_ENABLE_TRANSFORM", "ENGINEJS_ENABLE_UV_COORDS" ] },
+		vs_general_transformed_normals    : { file: "enginejs/resources/shaders/general.vs", define : [ "ENGINEJS_ENABLE_TRANSFORM", "ENGINEJS_ENABLE_NORMALS" ] },
+		vs_general_transformed_uv_normals : { file: "enginejs/resources/shaders/general.vs", define : [ "ENGINEJS_ENABLE_TRANSFORM", "ENGINEJS_ENABLE_UV_COORDS", "ENGINEJS_ENABLE_NORMALS" ] },
 
-		// Fragment shaders
-		fs_unlit_uvs                    : { file: "enginejs/resources/shaders/unlit-uvs.fs" },
-		fs_unlit_colour                 : { file: "enginejs/resources/shaders/unlit-colour.fs" },
-		fs_unlit_textured               : { file: "enginejs/resources/shaders/unlit-textured.fs" },
-		fs_lit_lambertian               : { file: "enginejs/resources/shaders/lit-lambertian.fs" },
-		fs_grid                         : { file: "enginejs/resources/shaders/grid.fs" },
-		fs_grid_3d                      : { file: "enginejs/resources/shaders/grid-3d.fs" },
-		fs_grid_3d_fog                  : { file: "enginejs/resources/shaders/grid-3d-fog.fs" },
+		// Misc basic shaders
+		fs_unlit_colour                   : { file: "enginejs/resources/shaders/basic/unlit-colour.fs" },
+		fs_unlit_textured                 : { file: "enginejs/resources/shaders/basic/unlit-textured.fs" },
+
+		// Debug pass-through shaders
+		fs_debug_normals                  : { file: "enginejs/resources/shaders/debug/debug-normals.fs" },
+		fs_debug_uvs                      : { file: "enginejs/resources/shaders/debug/debug-uvs.fs" },
+
+		// Misc fragment shaders
+		fs_grid_xy                        : { file: "enginejs/resources/shaders/misc/grid-xy.fs" },
+		fs_grid_xz                        : { file: "enginejs/resources/shaders/misc/grid-xz.fs" },
+		fs_grid_xz_fog                    : { file: "enginejs/resources/shaders/misc/grid-xz-fog.fs" },
 
 		// Game-2D shaders
-		fs_2d_background                : { file: "enginejs/resources/shaders/2d/background.fs" },
-		fs_2d_sprite                    : { file: "enginejs/resources/shaders/2d/sprite.fs" },
+		fs_2d_background                  : { file: "enginejs/resources/shaders/2d/background.fs" },
+		fs_2d_sprite                      : { file: "enginejs/resources/shaders/2d/sprite.fs" },
+
+		// "Easy" material / lighting system
+		fs_simple_ambient_only            : { file: "enginejs/resources/shaders/3d/simple/simple-ambient-only.fs" },
+		fs_simple_diffuse                 : { file: "enginejs/resources/shaders/3d/simple/simple-diffuse.fs" },
+		fs_simple_lambertian              : { file: "enginejs/resources/shaders/3d/simple/simple-lambertian.fs" },
 
 		// Models
-		ml_quad                         : { file: "enginejs/resources/models/quad.model"       },
-		ml_floor_tile                   : { file: "enginejs/resources/models/floor_tile.model" },
-		ml_tri                          : { file: "enginejs/resources/models/tri.model"        },
-		ml_cube                         : { file: "enginejs/resources/models/cube.model"       },
+		ml_quad                           : { file: "enginejs/resources/models/quad.model"       },
+		ml_floor_tile                     : { file: "enginejs/resources/models/floor_tile.model" },
+		ml_tri                            : { file: "enginejs/resources/models/tri.model"        },
+		ml_cube                           : { file: "enginejs/resources/models/cube.model"       },
 
 		// Misc
-		tx_white                        : { file: "enginejs/resources/img/white.png"   },
-		sfx_blank                       : { file: "enginejs/resources/audio/blank.mp3" }
+		tx_white                          : { file: "enginejs/resources/img/white.png"   },
+		sfx_blank                         : { file: "enginejs/resources/audio/blank.mp3" }
 	},
 
 	// *************************************************************************************
