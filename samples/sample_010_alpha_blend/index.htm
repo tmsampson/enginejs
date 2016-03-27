@@ -18,7 +18,7 @@
 				var mtx_trans = mat4.create();
 				var circle = Engine.Geometry.MakeCircle({segment_count : 60, generate_uvs : false});
 				var cam = new Engine.Camera.Orthographic();
-				var program  = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_basic_transformed"],
+				var program  = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_general_transformed"],
 				                                              Engine.Resources["fs_unlit_colour"]);
 
 				var RenderCircle = function(model, pos, size, colour)

@@ -27,7 +27,7 @@ Engine.Debug =
 
 	PreGameLoopInit : function()
 	{
-		Engine.Debug.shader_program = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_basic_transformed"],
+		Engine.Debug.shader_program = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_general_transformed"],
 		                                                             Engine.Resources["fs_unlit_colour"]);
 		Engine.Debug.circle_model = Engine.Geometry.MakeCircle({ segment_count : 50 });
 

@@ -17,7 +17,7 @@
 				var param_editor = Engine.Editor.BuildParamEditor(resources["fs_plasma"]);
 				$("#param_editor_window").append(param_editor);
 
-				var program  = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_basic_uv"],
+				var program  = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_general_uv"],
 				                                              resources["fs_plasma"]);
 				var on_render = function(info)
 				{

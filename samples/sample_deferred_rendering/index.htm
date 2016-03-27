@@ -2,13 +2,16 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8" />
-		<link rel="stylesheet" href="../sample.css">
-		
+
 		<title>Engine Sample: Deferred Rendering (requires WEBGL_draw_buffers)</title>
 
 		<!-- EngineJS -->
 		<script type="text/javascript" src="enginejs/jquery.js"></script>
 		<script type="text/javascript" src="enginejs/engine.js"></script>
+
+		<!-- Spectrum colour picker -->
+		<script src='enginejs/resources/misc/spectrum/spectrum.js'></script>
+		<link rel='stylesheet' href='enginejs/resources/misc/spectrum/spectrum.css' />
 
 		<script language="javascript">
 		var resources =
@@ -25,35 +28,90 @@
 				var mtx_normal = mat3.create();
 				var model_cube  = Engine.Resources["ml_cube"];
 				var model_floor = Engine.Resources["ml_floor_tile"];
-				var program_floor  = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_basic_transformed"],
-				                                                    Engine.Resources["fs_grid_3d_fog"]);
-				var program_cube   = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_basic_transformed_uv_normals"],
-				                                                    Engine.Resources["fs_lit_lambertian"]);
-				var program_light  = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_basic_transformed"],
-				                                                    Engine.Resources["fs_unlit_colour"]);
+				var program_floor = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_general_transformed"],
+				                                                   Engine.Resources["fs_grid_xz_fog"]);
+				var program_cube_ambient_only  = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_general_transformed_uv_normals"],
+				                                                   Engine.Resources["fs_simple_ambient_only"]);
+				var program_cube_diffuse  = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_general_transformed_uv_normals"],
+				                                                   Engine.Resources["fs_simple_diffuse"]);
+				var program_light = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_general_transformed"],
+				                                                   Engine.Resources["fs_unlit_colour"]);
 
 				// Setup orbit cam
 				var cam = new Engine.Camera.Perspective();
 				cam.AttachHelper(new Engine.Camera.Helper.Orbit(
 				{
 					look_at : [0, 5, 0],
-					radius  : [7, 2.5, 30],
+					radius  : [25, 2.5, 30],
 					angles  : [Math.PI / 2, Math.PI / 4],
 					min_y   : 0.1,
 					max_y   : (Math.PI / 2) - 0.1
 				}));
 
-				var draw_cube = function(x, y, z, rot)
+				// Setup colour pickers
+				var config =
 				{
-					// Draw cube
-					mat4.translate(mtx_trans, Engine.Math.IdentityMatrix, [x,  y, z]);
-					mat4.rotate(mtx_trans, mtx_trans, rot, [1, 1, 1]);
-					Engine.Gfx.BindShaderProgram(program_cube);
+					flat: true,
+					showInput: false,
+					showButtons: false,
+					preferredFormat: "rgb"
+				};
+
+				$("#sun_ambient").spectrum($.extend({}, config, { move : function(color) { } }));
+				$("#sun_diffuse").spectrum($.extend({}, config, { move : function(color) { } }));
+				$("#material_colour").spectrum($.extend({}, config, { move : function(color) { } }));
+				$("#sun_ambient").spectrum("set", "rgba 255 255 255 255");
+				$("#sun_diffuse").spectrum("set", "rgba 255 255 255 255");
+				$("#material_colour").spectrum("set", "rgba 255 255 255 255");
+
+				var draw_cube_ambient_only = function(mtx_trans, sun_ambient, sun_diffuse, material_colour)
+				{
+					// Bind transform
+					Engine.Gfx.BindShaderProgram(program_cube_ambient_only);
 					Engine.Gfx.SetShaderConstant("u_trans_world", mtx_trans, Engine.Gfx.SC_MATRIX4);
-					Engine.Gfx.BindTexture(resources["tx_lava"], 0);
-					Engine.Gfx.SetShaderConstant("u_light", [light_x, light_y, light_z], Engine.Gfx.SC_VEC3);
+
+					// Bind global "sun" params
+					Engine.Gfx.SetShaderConstant("u_sun_ambient", sun_ambient, Engine.Gfx.SC_VEC3);
+
+					// Bind material properties
+					Engine.Gfx.SetShaderConstant("u_material_colour", material_colour, Engine.Gfx.SC_VEC4);
+					Engine.Gfx.BindTexture(resources["tx_lava"], 0, "u_material_tx_albedo");
+
+					// Draw cube
 					Engine.Gfx.DrawModel(model_cube);
 				};
+
+				var draw_cube_diffuse = function(mtx_trans, sun_ambient, sun_diffuse, material_colour)
+				{
+					// Bind transform
+					Engine.Gfx.BindShaderProgram(program_cube_diffuse);
+					Engine.Gfx.SetShaderConstant("u_trans_world", mtx_trans, Engine.Gfx.SC_MATRIX4);
+
+					// Bind global "sun" params
+					Engine.Gfx.SetShaderConstant("u_sun_ambient", sun_ambient, Engine.Gfx.SC_VEC3);
+					Engine.Gfx.SetShaderConstant("u_sun_diffuse", sun_diffuse, Engine.Gfx.SC_VEC3);
+					Engine.Gfx.SetShaderConstant("u_sun_dir", [0.5, -0.5, 0], Engine.Gfx.SC_VEC3);
+
+					// Bind material properties
+					Engine.Gfx.SetShaderConstant("u_material_colour", material_colour, Engine.Gfx.SC_VEC4);
+					Engine.Gfx.BindTexture(resources["tx_lava"], 0, "u_material_tx_albedo");
+
+					//Engine.Gfx.SetShaderConstant("u_light", [light_x, light_y, light_z], Engine.Gfx.SC_VEC3);
+
+					// Draw cube
+					Engine.Gfx.DrawModel(model_cube);
+				};
+
+				// Handle lighting model change
+				var lighting_func = draw_cube_ambient_only;
+				$("select").change(function()
+				{
+					var lighting_model = $('select').val();
+					if(lighting_model == "simple-ambient-only")
+						lighting_func = draw_cube_ambient_only
+					else if(lighting_model == "simple-diffuse")
+						lighting_func = draw_cube_diffuse
+				});
 
 				var draw_light = function(x, y, z)
 				{
@@ -130,7 +188,17 @@
 					{
 						for(var j = -5; j <= 5; ++j)
 						{
-							draw_cube(i * 3, 5, j * 3, info.elapsed_s);
+							mat4.translate(mtx_trans, Engine.Math.IdentityMatrix, [i * 3, 5, j * 3]);
+							mat4.rotate(mtx_trans, mtx_trans, info.elapsed_s, [1, 1, 1]);
+
+							var sun_ambient = $("#sun_ambient").spectrum("get").toRgb();
+							sun_ambient.r /= 255; sun_ambient.g /= 255; sun_ambient.b /= 255;
+							var sun_diffuse = $("#sun_diffuse").spectrum("get").toRgb();
+							sun_diffuse.r /= 255; sun_diffuse.g /= 255; sun_diffuse.b /= 255;
+							var material_colour = $("#material_colour").spectrum("get").toRgb();
+							material_colour.r /= 255; material_colour.g /= 255; material_colour.b /= 255;
+
+							lighting_func(mtx_trans, [sun_ambient.r, sun_ambient.g, sun_ambient.b], [sun_diffuse.r, sun_diffuse.g, sun_diffuse.b], [material_colour.r, material_colour.g, material_colour.b, material_colour.a]);
 						}
 					}
 				};
@@ -141,7 +209,28 @@
 		</script>
 	</head>
 
-	<body style="background-color:black">
-		<canvas width="512" height="512"></canvas>
+	<body>
+		<table style="width:100%">
+			<tr>
+				<td style="width:1400px"><canvas width="1400" height="1000"></canvas></td>
+				<td id="param_editor_window" style="background-color:white;padding:20px;vertical-align:top">
+					<h2>Lighting Model</h2>
+					<select>
+						<option value="simple-ambient-only">simple-ambient-only</option>
+						<option value="simple-diffuse">simple-diffuse</option>
+					</select>
+
+					<h2>Global Light Properties</h2>
+					Sun Ambient<br/>
+					<div id="sun_ambient"></div><br/>
+					Sun Diffuse<br/>
+					<div id="sun_diffuse"></div>
+
+					<h2>Material Properties</h2>
+					Material colour<br/>
+					<div id="material_colour"/></div>
+				</td>
+			</tr>
+		</table>
 	</body>
 </html>

@@ -17,7 +17,7 @@
 			{
 				var mtx_trans = mat4.create();
 				var cam = new Engine.Camera.Orthographic();
-				var program  = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_basic_transformed"],
+				var program  = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_general_transformed"],
 				                                              Engine.Resources["fs_unlit_colour"]);
 
 				var on_render = function(info)

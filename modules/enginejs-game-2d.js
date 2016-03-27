@@ -461,7 +461,8 @@ Engine.Game2D =
 					scale   : [1, 1],
 					offset  : [0, 0],
 					scroll  : [0, 0],
-					repeat  : [true, true]
+					repeat  : [true, true],
+					alpha   : 1,
 				});
 			}
 		}
@@ -472,9 +473,9 @@ Engine.Game2D =
 		}
 
 		// Setup shader programs
-		this.program_grid   = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_basic_transformed"],
-		                                                     Engine.Resources["fs_grid"]);
-		this.program_sprite = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_basic_transformed_uv"],
+		this.program_grid   = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_general_transformed"],
+		                                                     Engine.Resources["fs_grid_xy"]);
+		this.program_sprite = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_general_transformed_uv"],
 		                                                     Engine.Resources["fs_2d_sprite"]);
 
 		this.Add = function(entity)
@@ -894,10 +895,16 @@ Engine.Game2D =
 	Background : function()
 	{
 		this.MAX_LAYERS = 7;
-		this.program = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_basic_uv"],
+		this.program = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_general_uv"],
 					                                  Engine.Resources["fs_2d_background"]);
 		this.layers = [];
 		this.repeat = [false, false];
+
+		// Data for GPU
+		this.u_textures = [];
+		this.u_config_1 = new Float32Array(this.MAX_LAYERS * 4);
+		this.u_config_2 = new Float32Array(this.MAX_LAYERS * 4);
+		this.u_config_3 = new Float32Array(this.MAX_LAYERS * 4);
 
 		this.Render = function(info)
 		{
@@ -908,12 +915,6 @@ Engine.Game2D =
 			// Sort layers from back to front
 			this.layers.sort(function(a,b){ return a.depth - b.depth; });
 
-			// Init shader params
-			var u_textures = [];
-			var u_config_1 = new Float32Array(this.MAX_LAYERS * 4);
-			var u_config_2 = new Float32Array(this.MAX_LAYERS * 4);
-			var u_config_3 = new Float32Array(this.MAX_LAYERS * 4);
-
 			// Pack per-layer data into shader params
 			for(var i = 0; i < this.MAX_LAYERS; ++i)
 			{
@@ -922,25 +923,25 @@ Engine.Game2D =
 					var layer = this.layers[i];
 					var layer_texture_width  = layer.texture.width;
 					var layer_texture_height = layer.texture.height;
-					u_textures[i] = layer.texture;
-					u_config_1[i * 4 + 0] = (1.0 / layer.scale[0]) * (canvas_width / layer_texture_width);   // x-scale
-					u_config_1[i * 4 + 1] = (1.0 / layer.scale[1]) * (canvas_height / layer_texture_height); // y-scale
-					u_config_1[i * 4 + 2] = (-layer.offset[0] / (layer_texture_width * layer.scale[0]));     // x-offset
-					u_config_1[i * 4 + 3] = (layer.offset[1] / (layer_texture_height * layer.scale[1]));     // y-offset
-					u_config_2[i * 4 + 0] = layer_texture_width;                                             // layer texture width
-					u_config_2[i * 4 + 1] = layer_texture_height;                                            // layer texture height
-					u_config_2[i * 4 + 2] = -layer.scroll[0];                                                // layer uv scroll x
-					u_config_2[i * 4 + 3] = layer.scroll[1];                                                 // layer uv scroll y
-					u_config_3[i * 4 + 0] = layer.repeat[0]? 0 : 1;                                          // layer repeat-x
-					u_config_3[i * 4 + 1] = layer.repeat[1]? 0 : 1;                                          // layer repeat-y
-					u_config_3[i * 4 + 2] = layer.depth;                                                     // layer depth
-					u_config_3[i * 4 + 3] = Math.pow(layer.alpha, 2.2);                                      // layer alpha (gamma-corrected)
+					this.u_textures[i] = layer.texture;
+					this.u_config_1[i * 4 + 0] = (1.0 / layer.scale[0]) * (canvas_width / layer_texture_width);   // x-scale
+					this.u_config_1[i * 4 + 1] = (1.0 / layer.scale[1]) * (canvas_height / layer_texture_height); // y-scale
+					this.u_config_1[i * 4 + 2] = (-layer.offset[0] / (layer_texture_width * layer.scale[0]));     // x-offset
+					this.u_config_1[i * 4 + 3] = (layer.offset[1] / (layer_texture_height * layer.scale[1]));     // y-offset
+					this.u_config_2[i * 4 + 0] = layer_texture_width;                                             // layer texture width
+					this.u_config_2[i * 4 + 1] = layer_texture_height;                                            // layer texture height
+					this.u_config_2[i * 4 + 2] = -layer.scroll[0];                                                // layer uv scroll x
+					this.u_config_2[i * 4 + 3] = layer.scroll[1];                                                 // layer uv scroll y
+					this.u_config_3[i * 4 + 0] = layer.repeat[0]? 0 : 1;                                          // layer repeat-x
+					this.u_config_3[i * 4 + 1] = layer.repeat[1]? 0 : 1;                                          // layer repeat-y
+					this.u_config_3[i * 4 + 2] = layer.depth;                                                     // layer depth
+					this.u_config_3[i * 4 + 3] = Math.pow(layer.alpha, 2.2);                                      // layer alpha (gamma-corrected)
 				}
 				else
 				{
 					// Need to pass default x/y repeat values to shader for non-existent layers
-					u_config_3[i * 4 + 0] = 1; // layer repeat-x
-					u_config_3[i * 4 + 1] = 1; // layer repeat-y
+					this.u_config_3[i * 4 + 0] = 1; // layer repeat-x
+					this.u_config_3[i * 4 + 1] = 1; // layer repeat-y
 				}
 			}
 
@@ -958,12 +959,12 @@ Engine.Game2D =
 				Engine.Gfx.SetShaderConstant("u_time", info.elapsed_s, Engine.Gfx.SC_FLOAT);
 
 				// Bind per-layer textures
-				Engine.Gfx.BindTextureArray(u_textures, "u_layer_tx");
+				Engine.Gfx.BindTextureArray(this.u_textures, "u_layer_tx");
 
 				// Bind packed per-layer data
-				Engine.Gfx.SetShaderConstant("u_layer_config_1", u_config_1, Engine.Gfx.SC_VEC4_ARRAY);
-				Engine.Gfx.SetShaderConstant("u_layer_config_2", u_config_2, Engine.Gfx.SC_VEC4_ARRAY);
-				Engine.Gfx.SetShaderConstant("u_layer_config_3", u_config_3, Engine.Gfx.SC_VEC4_ARRAY);
+				Engine.Gfx.SetShaderConstant("u_layer_config_1", this.u_config_1, Engine.Gfx.SC_VEC4_ARRAY);
+				Engine.Gfx.SetShaderConstant("u_layer_config_2", this.u_config_2, Engine.Gfx.SC_VEC4_ARRAY);
+				Engine.Gfx.SetShaderConstant("u_layer_config_3", this.u_config_3, Engine.Gfx.SC_VEC4_ARRAY);
 
 				// Draw all layers in single pass
 				Engine.Gfx.DrawQuad();

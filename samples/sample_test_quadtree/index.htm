@@ -18,8 +18,9 @@
 			{
 				var scene = new Engine.Game2D.Scene();
 				var text_box = new Engine.Text2D.TextBox("0", { dock : ["top", "left"], size : 20 });
-
 				var selected_ship = null;
+				scene.enable_debug_render_quadtree = true;
+
 				var on_render = function(info)
 				{
 					// Update on-screen text
