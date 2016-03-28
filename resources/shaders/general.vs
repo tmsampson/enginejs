@@ -15,8 +15,10 @@ attribute vec3 a_normal;
 // -----------------------------------------------------------------------------
 // Per-draw input
 #ifdef ENGINEJS_ENABLE_TRANSFORM
+uniform vec3 u_cam_pos;
 uniform mat4 u_trans_world;
 uniform mat4 u_trans_view;
+uniform mat4 u_trans_view_inverse;
 uniform mat4 u_trans_proj;
 #endif
 

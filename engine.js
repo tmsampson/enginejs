@@ -79,7 +79,7 @@ var Engine =
 		// "Easy" material / lighting system
 		fs_simple_ambient_only            : { file: "enginejs/resources/shaders/3d/simple/simple-ambient-only.fs" },
 		fs_simple_diffuse                 : { file: "enginejs/resources/shaders/3d/simple/simple-diffuse.fs" },
-		fs_simple_lambertian              : { file: "enginejs/resources/shaders/3d/simple/simple-lambertian.fs" },
+		fs_simple_phong                   : { file: "enginejs/resources/shaders/3d/simple/simple-phong.fs" },
 
 		// Models
 		ml_quad                           : { file: "enginejs/resources/models/quad.model"       },
