@@ -36,6 +36,7 @@
 				                                              Engine.Resources["fs_unlit_textured"]);
 
 				bg_colour = Engine.Colour.Black;
+				Generate();
 
 				var on_render = function(info)
 				{
@@ -58,7 +59,7 @@
 						Engine.Gfx.DrawQuad();
 					}
 
-					if(Engine.Mouse.IsPressed("left", true))
+					if(Engine.Mouse.IsPressed("left", true) || Engine.Touch.IsPressed(0, true))
 					{
 						Generate();
 					}
@@ -186,11 +187,6 @@
 	</head>
 
 	<body>
-		<div style="float:left; clear:right">
-			<canvas width="1200" height="800"></canvas>
-		</div>
-		<div style="float:left; margin:10px">
-			<button onclick="Generate()">Generate</button>
-		</div>
+		<canvas width="1200" height="800"></canvas>
 	</body>
 </html>
