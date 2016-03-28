@@ -153,7 +153,7 @@
 					Engine.Gfx.BindShaderProgram(program_light);
 					Engine.Gfx.SetShaderConstant("u_trans_world", mtx_trans, Engine.Gfx.SC_MATRIX4);
 					Engine.Gfx.SetShaderConstant("u_colour", [1, 1, 1, 1], Engine.Gfx.SC_COLOUR);
-					Engine.Gfx.DrawModel(model_cube);
+					Engine.Gfx.DrawModel(model_sphere);
 
 					// Draw light basis
 					Engine.Debug.DrawArrow3D(cam, light_pos, [x + 3, y, z], Engine.Colour.Red, 1);
