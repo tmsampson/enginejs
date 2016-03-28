@@ -219,7 +219,9 @@ Engine.Gfx =
 		// Bind camera?
 		if(this.active_camera)
 		{
+			this.SetShaderConstant("u_cam_pos", this.active_camera.position, Engine.Gfx.SC_VEC3, true);
 			this.SetShaderConstant("u_trans_view", this.active_camera.mtx_view, Engine.Gfx.SC_MATRIX4, true);
+			this.SetShaderConstant("u_trans_view_inverse", this.active_camera.mtx_view_inverse, Engine.Gfx.SC_MATRIX4, true);
 			this.SetShaderConstant("u_trans_proj", this.active_camera.mtx_proj, Engine.Gfx.SC_MATRIX4, true);
 		}
 	},
