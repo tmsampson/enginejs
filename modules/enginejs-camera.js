@@ -11,6 +11,7 @@ Engine.Camera =
 		this.helpers  = [];
 		this.viewport = { size : [1, 1], position: [0, 0] };
 		this.mtx_view = mat4.create();
+		this.mtx_view_inverse = mat4.create();
 		this.mtx_proj = mat4.create();
 		this.mtx_view_proj = mat4.create();
 		this.viewport_pos  = [ 0, 0 ];
@@ -54,6 +55,9 @@ Engine.Camera =
 
 			// Maintain view * proj
 			mat4.multiply(this.mtx_view_proj, this.mtx_proj, this.mtx_view);
+
+			// Maintain inverse view matrix
+			mat4.invert(this.mtx_view_inverse, this.mtx_view);
 		};
 	},
 
