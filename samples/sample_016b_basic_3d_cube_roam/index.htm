@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="stylesheet" href="../sample.css">
+		
+		<title>Engine Sample: Basic 3D Cube (with roam cam helper)</title>
+
+		<!-- EngineJS -->
+		<script type="text/javascript" src="enginejs/jquery.js"></script>
+		<script type="text/javascript" src="enginejs/engine.js"></script>
+
+		<script language="javascript">
+		$(document).ready(function()
+		{
+			Engine.Init(function()
+			{
+				var mtx_trans = mat4.create();
+				var model_cube  = Engine.Resources["ml_cube"];
+				var model_floor = Engine.Resources["ml_floor_tile"];
+				var program_floor  = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_general_transformed"],
+				                                                    Engine.Resources["fs_grid_xz_fog"]);
+				var program_cube   = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_general_transformed_uv"],
+				                                                    Engine.Resources["fs_debug_uvs"]);
+
+				// Setup orbit cam
+				var cam = new Engine.Camera.Perspective();
+				cam.AttachHelper(new Engine.Camera.Helper.Roam({}));
+				cam.position = [0, 1, -5];
+
+				var on_render = function(info)
+				{
+					Engine.Gfx.Clear(Engine.Colour.Black);
+					Engine.Gfx.SetDepthTestMode(Engine.GL.LESS, true);
+
+					// Update & bind camera
+					cam.Update(info);
+					Engine.Gfx.BindCamera(cam);
+
+					// Draw floor
+					mat4.scale(mtx_trans, Engine.Math.IdentityMatrix, [100, 0, 100]);
+					Engine.Gfx.BindShaderProgram(program_floor);
+					Engine.Gfx.SetShaderConstant("u_trans_world", mtx_trans, Engine.Gfx.SC_MATRIX4);
+					Engine.Gfx.DrawModel(model_floor);
+
+					// Draw cube
+					mat4.translate(mtx_trans, Engine.Math.IdentityMatrix, [0, 1, 0]);
+					Engine.Gfx.BindShaderProgram(program_cube);
+					Engine.Gfx.SetShaderConstant("u_trans_world", mtx_trans, Engine.Gfx.SC_MATRIX4);
+					Engine.Gfx.DrawModel(model_cube);
+				};
+				return on_render;
+			});
+		});
+		</script>
+	</head>
+
+	<body>
+		<canvas width="512" height="512"></canvas>
+	</body>
+</html>
