@@ -6,6 +6,12 @@ Engine.Math =
 {
 	// Constants
 	IdentityMatrix : mat4.create(),
+	PI             : Math.PI,
+
+	Abs : function(x)
+	{
+		return x > 0? x : -x;
+	},
 
 	Clamp : function(x, min, max)
 	{
@@ -25,6 +31,16 @@ Engine.Math =
 	RandomInteger : function(min, max)
 	{
 		return Math.floor(Math.random() * (max - min + 1) + min);
+	},
+	
+	DegToRad : function(degrees)
+	{
+		return (degrees * Engine.Math.PI) / 180;
+	},
+	
+	RadToDeg : function(radians)
+	{
+		return (radians * 180) / Engine.Math.PI;
 	},
 
 	AABB2D : function(min, max)
