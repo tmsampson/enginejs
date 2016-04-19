@@ -249,7 +249,7 @@ Engine.Camera.Helper =
 			}
 
 			// Apply strafe?
-			var strafe_speed = (Engine.Keyboard.IsPressed("shift") || gamepad.IsPressed("rt"))? this.strafe_speed_fast : this.strafe_speed;
+			var strafe_speed = (Engine.Keyboard.IsPressed("shift") || (gamepad && gamepad.IsPressed("rt")))? this.strafe_speed_fast : this.strafe_speed;
 			if(gamepad)
 			{
 				var left_stick = gamepad.GetLeftStick();
