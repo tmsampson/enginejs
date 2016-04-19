@@ -7,6 +7,7 @@ Engine.Math =
 	// Constants
 	IdentityMatrix : mat4.create(),
 	PI             : Math.PI,
+	Tau            : Math.PI * 2,
 
 	Abs : function(x)
 	{
