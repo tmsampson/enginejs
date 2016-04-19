@@ -210,4 +210,103 @@ Engine.Camera.Helper =
 			                   this.look_at[2] + this.radius[0] * Math.sin(this.angles[0]) * Math.cos(this.angles[1])];
 		};
 	},
+
+	// *************************************
+	// 3D Roam
+	Roam : function(user_config)
+	{
+		this.forward           = [0.0, 0.0, 1.0];
+		this.right             = [0.0, 0.0, 0.0];
+		this.strafe_speed      = 3;
+		this.strafe_speed_fast = 10;
+		this.look_speed        = [6, 6];
+		this.gamepad_deadzone  = 0.1;
+		this.mtx_look          = mat4.create();
+
+		// Override defaults
+		$.extend(this, user_config);
+
+		// Disable canvas right-click menu as we handle right-click manually
+		Engine.Canvas.EnableContextMenu(false);
+
+		this.Update = function(camera, info)
+		{
+			var gamepad = Engine.Gamepad.Pads[0];
+			vec3.cross(this.right, this.forward, camera.up);
+
+			// Apply mouse look?
+			if(Engine.Mouse.IsPressed() || Engine.Mouse.IsPressed("right"))
+			{
+				this.ApplyLook(Engine.Mouse.GetDelta(), info)
+			}
+
+			// Apply gamepad look
+			if(gamepad)
+			{
+				var delta = gamepad.GetRightStick();
+				delta[0] *= 20; delta[1] *= 20;
+				this.ApplyLook(delta, info);
+			}
+
+			// Apply strafe?
+			var strafe_speed = (Engine.Keyboard.IsPressed("shift") || gamepad.IsPressed("rt"))? this.strafe_speed_fast : this.strafe_speed;
+			if(gamepad)
+			{
+				var left_stick = gamepad.GetLeftStick();
+				if(Engine.Math.Abs(gamepad.GetLeftStick()[0]) > this.gamepad_deadzone)
+				{
+					camera.position[0] += (this.right[0] * info.delta_s * strafe_speed * left_stick[0]);
+					camera.position[1] += (this.right[1] * info.delta_s * strafe_speed * left_stick[0]);
+					camera.position[2] += (this.right[2] * info.delta_s * strafe_speed * left_stick[0]);
+				}
+
+				if(Engine.Math.Abs(gamepad.GetLeftStick()[1]) > this.gamepad_deadzone)
+				{
+					camera.position[0] += (this.forward[0] * info.delta_s * strafe_speed * left_stick[1]);
+					camera.position[1] += (this.forward[1] * info.delta_s * strafe_speed * left_stick[1]);
+					camera.position[2] += (this.forward[2] * info.delta_s * strafe_speed * left_stick[1]);
+				}
+			}
+
+			if(Engine.Keyboard.IsPressed("w"))
+			{
+				camera.position[0] += (this.forward[0] * info.delta_s * strafe_speed);
+				camera.position[1] += (this.forward[1] * info.delta_s * strafe_speed);
+				camera.position[2] += (this.forward[2] * info.delta_s * strafe_speed);
+			}
+
+			if(Engine.Keyboard.IsPressed("s"))
+			{
+				camera.position[0] -= (this.forward[0] * info.delta_s * strafe_speed);
+				camera.position[1] -= (this.forward[1] * info.delta_s * strafe_speed);
+				camera.position[2] -= (this.forward[2] * info.delta_s * strafe_speed);
+			}
+
+			if(Engine.Keyboard.IsPressed("a"))
+			{
+				camera.position[0] -= (this.right[0] * info.delta_s * strafe_speed);
+				camera.position[1] -= (this.right[1] * info.delta_s * strafe_speed);
+				camera.position[2] -= (this.right[2] * info.delta_s * strafe_speed);
+			}
+
+			if(Engine.Keyboard.IsPressed("d"))
+			{
+				camera.position[0] += (this.right[0] * info.delta_s * strafe_speed);
+				camera.position[1] += (this.right[1] * info.delta_s * strafe_speed);
+				camera.position[2] += (this.right[2] * info.delta_s * strafe_speed);
+			}
+
+			// Update lookat
+			camera.look_at[0] = camera.position[0] + this.forward[0];
+			camera.look_at[1] = camera.position[1] + this.forward[1];
+			camera.look_at[2] = camera.position[2] + this.forward[2];
+		};
+
+		this.ApplyLook = function(delta, info)
+		{
+			mat4.rotate(this.mtx_look, Engine.Math.IdentityMatrix, Engine.Math.DegToRad(-delta[0] * this.look_speed[0] * info.delta_s), [0, 1, 0]);
+			mat4.rotate(this.mtx_look, this.mtx_look, Engine.Math.DegToRad(delta[1] * this.look_speed[1] * info.delta_s), this.right);
+			vec3.transformMat4(this.forward, this.forward, this.mtx_look);
+		};
+	},
 };
