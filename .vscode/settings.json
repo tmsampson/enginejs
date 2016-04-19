@@ -1,0 +1,12 @@
+// Place your settings in this file to overwrite default and user settings.
+{
+	"files.exclude":
+	{
+		"**/.git": true,
+		"**/.hg": true,
+		"**/.DS_Store": true,
+		"tools/shader_joy/resources/shadertoy-downloader/shaders": true,
+		"**/enginejs": true,
+		"node_modules": true
+	}
+}
