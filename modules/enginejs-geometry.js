@@ -68,7 +68,6 @@ Engine.Geometry =
 		// Constants
 		var vertex_count = (longditude_count + 1) * latitude_count + 2;
 		var pi = Math.PI;
-		var tau = Math.PI * 2;
 
 		// Setup empty model with 1 prim
 		var prim = { name : "Sphere faces", vertex_buffers : [] }
@@ -86,7 +85,7 @@ Engine.Geometry =
 
 			for(var lon = 0; lon <= longditude_count; lon++)
 			{
-				var a2 = tau * (lon == longditude_count ? 0 : lon) / longditude_count;
+				var a2 = Engine.Math.Tau * (lon == longditude_count ? 0 : lon) / longditude_count;
 				var sin2 = Math.sin(a2);
 				var cos2 = Math.cos(a2);
 				vertex_stream.push(sin1 * cos2 * radius, cos1 * radius, sin1 * sin2 * radius);
