@@ -2,11 +2,19 @@
 {
 	"files.exclude":
 	{
-		"**/.git": true,
-		"**/.hg": true,
-		"**/.DS_Store": true,
-		"tools/shader_joy/resources/shadertoy-downloader/shaders": true,
-		"**/enginejs": true,
-		"node_modules": true
+		"**/.git"      : true,
+		"**/.hg"       : true,
+		"**/.DS_Store" : true,
+		"tools/shader_joy/resources/shadertoy-downloader/shaders" : true,
+		"**/enginejs"  : true,
+		"node_modules" : true
+	},
+	"files.associations":
+	{
+		"*.sprite"     : "json",
+		"*.model"      : "json",
+		"*.background" : "json",
+		"*.vs"         : "c",
+		"*.fs"         : "c"
 	}
 }
