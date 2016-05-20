@@ -21,5 +21,12 @@ Engine.Time =
 				break;
 			}
 		}
-	}
+	},
+
+	// Useful game / frame timers
+	elapsed_ms   : 0.0,
+	elapsed_s    : 0.0,
+	delta_ms     : 0.0,
+	delta_s      : 0.0,
+	frame_number : 0
 };
