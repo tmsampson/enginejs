@@ -4,6 +4,119 @@
 
 Engine.Geometry =
 {
+	// --------------------------------------------------------------------------------------------------------------------------------------------------------
+	// --------------------------------------------------------------------------------------------------------------------------------------------------------
+	// Plane
+	// --------------------------------------------------------------------------------------------------------------------------------------------------------
+	// --------------------------------------------------------------------------------------------------------------------------------------------------------
+	// Notes  : Generates a plane mesh on the x-z plane
+	// Params : segment_count | Number of trianglular segments used to form circle
+	// --------------------------------------------------------------------------------------------------------------------------------------------------------
+	// --------------------------------------------------------------------------------------------------------------------------------------------------------
+	MakePlane : function(params)
+	{
+		// Defaults
+		var x_size = 1;
+		var z_size = 1
+		var x_repeat = 2;
+		var z_repeat = 2;
+
+		// User overrides?
+		var have_params = Engine.Util.IsDefined(params);
+		if(have_params)
+		{
+			x_size = Engine.Util.IsDefined(params.x_size)? params.x_size : x_size;
+			z_size = Engine.Util.IsDefined(params.z_size)? params.z_size : z_size;
+			x_repeat = Engine.Util.IsDefined(params.x_repeat)? params.x_repeat : x_repeat;
+			z_repeat = Engine.Util.IsDefined(params.z_repeat)? params.z_repeat : z_repeat;
+		}
+
+		// Constants
+		var vertex_count = x_repeat * z_repeat;
+		var x_delta = x_size / (x_repeat - 1);
+		var z_delta = z_size / (z_repeat - 1);
+		var half_x_size = x_size / 2;
+		var half_z_size = z_size / 2;
+
+		// Setup empty model with 1 prim
+		var prim = { name : "Plane mesh", vertex_buffers : [] }
+		var model = { name : "Plane", is_loaded : true, model_data : { primitives : [prim] } };
+
+		// Generate verts
+		var vertex_stream = [];
+		var vertex_buffer = { name : "vertices", attribute_name : "a_pos", item_size : 3, draw_mode : "triangles", stream : vertex_stream };
+		var x_delta = x_size / (x_repeat - 1);
+		var z_delta = z_size / (z_repeat - 1);
+		for(var z = 0; z < z_repeat; ++z)
+		{
+			var z_pos = (z * z_delta) - half_z_size;
+			for(var x = 0; x < x_repeat; ++x)
+			{
+				var x_pos = (x * x_delta) - half_x_size;
+				vertex_buffer.stream.push(x_pos, 0, z_pos);
+			}
+		}
+		prim.vertex_buffers.push(vertex_buffer);
+
+		// Generate normals
+		if(!have_params || !Engine.Util.IsDefined(params.generate_normals) || params.generate_normals)
+		{
+			var normal_stream = [];
+			var normal_buffer = { name : "normals", attribute_name : "a_normal", item_size : 3, draw_mode : "triangles", stream : normal_stream };
+			for(var i = 0; i < vertex_count; ++i)
+			{
+				normal_buffer.stream.push(0, 1, 0); // surface is x-z plane
+			}
+			prim.vertex_buffers.push(normal_buffer);
+		}
+
+		// Generate UVs?
+		if(!have_params || !Engine.Util.IsDefined(params.generate_uvs) || params.generate_uvs)
+		{
+			var uv_stream = [];
+			var uv_buffer = { name : "texture-coordinates", attribute_name : "a_uv", item_size : 2, draw_mode : "triangles", stream : uv_stream };
+			for(var z = 0; z < z_repeat; ++z)
+			{
+				var v = (z * z_delta) / z_size;
+				for(var x = 0; x < x_repeat; ++x)
+				{
+					var u = (x * x_delta) / x_size;
+					uv_buffer.stream.push(u, v);
+				}
+			}
+			prim.vertex_buffers.push(uv_buffer);
+		}
+
+		// Generate indices
+		var index_stream = [];
+		var index_buffer = { name : "indices", attribute_name : "", item_size : 1, draw_mode : "triangles", stream : index_stream };
+		var face_count = (x_repeat - 1) * (z_repeat - 1);
+		var triangle_count = face_count * 6;
+		for(var face = 0; face < face_count; ++face)
+		{
+			var row = Math.floor(face / (x_repeat - 1));
+			var col = face % (x_repeat - 1);
+			var v0 = (row * x_repeat) + col;
+			var v1 = v0 + x_repeat;
+			var v2 = v0 + 1;
+			index_buffer.stream.push(v0, v1, v2);
+			index_buffer.stream.push(v2, v1, v1 + 1);
+		}
+		prim.vertex_buffers.push(index_buffer);
+
+		// Generate and return model
+		return Engine.Model.Generate(model);
+	},
+
+	// --------------------------------------------------------------------------------------------------------------------------------------------------------
+	// --------------------------------------------------------------------------------------------------------------------------------------------------------
+	// Circle
+	// --------------------------------------------------------------------------------------------------------------------------------------------------------
+	// --------------------------------------------------------------------------------------------------------------------------------------------------------
+	// Notes  : Generates a circle mesh on the x-y plane
+	// Params : segment_count | Number of trianglular segments used to form circle
+	// --------------------------------------------------------------------------------------------------------------------------------------------------------
+	// --------------------------------------------------------------------------------------------------------------------------------------------------------
 	MakeCircle : function(params)
 	{
 		// Default params
@@ -49,6 +162,17 @@ Engine.Geometry =
 		return Engine.Model.Generate(model);
 	},
 
+	// --------------------------------------------------------------------------------------------------------------------------------------------------------
+	// --------------------------------------------------------------------------------------------------------------------------------------------------------
+	// Sphere
+	// --------------------------------------------------------------------------------------------------------------------------------------------------------
+	// --------------------------------------------------------------------------------------------------------------------------------------------------------
+	// Notes  : Generates a three dimensional sphere
+	// Params : radius               | Sphere radius
+	//          longditude_count     | Segments generated around longditude
+	//          latitude_count_count | Segments generated around lattitude
+	// --------------------------------------------------------------------------------------------------------------------------------------------------------
+	// --------------------------------------------------------------------------------------------------------------------------------------------------------
 	MakeSphere : function(params)
 	{
 		// Default params
