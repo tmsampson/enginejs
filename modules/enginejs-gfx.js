@@ -224,6 +224,9 @@ Engine.Gfx =
 			this.SetShaderConstant("u_trans_view_inverse", this.active_camera.mtx_view_inverse, Engine.Gfx.SC_MATRIX4, true);
 			this.SetShaderConstant("u_trans_proj", this.active_camera.mtx_proj, Engine.Gfx.SC_MATRIX4, true);
 		}
+		
+		// Set time
+		this.SetShaderConstant("u_time", Engine.Time.elapsed_s, Engine.Gfx.SC_FLOAT, true);
 	},
 
 	SetShaderConstant : function(constant_name, constant_value, setter_func, ignore_errors)
