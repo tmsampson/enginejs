@@ -22,6 +22,8 @@ uniform mat4 u_trans_view_inverse;
 uniform mat4 u_trans_proj;
 #endif
 
+uniform float u_time;
+
 #ifdef ENGINEJS_ENABLE_NORMALS
 uniform mat3 u_trans_normal;
 #endif
