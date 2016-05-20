@@ -16,5 +16,6 @@
 		"*.background" : "json",
 		"*.vs"         : "c",
 		"*.fs"         : "c"
-	}
+	},
+	"editor.wrappingColumn": -1
 }
