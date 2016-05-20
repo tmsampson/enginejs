@@ -226,8 +226,11 @@ var Engine =
 		var on_render_internal = function()
 		{
 			// Generate frame stats
-			var elapsed_ms = Engine.Time.Now() - first_frame_time;
-			var delta_ms   = Engine.Time.Now() - last_frame_time;
+			Engine.Time.elapsed_ms   = Engine.Time.Now() - first_frame_time 
+			Engine.Time.elapsed_s    = Engine.Time.elapsed_ms / 1000;
+			Engine.Time.delta_ms     = Engine.Time.Now() - last_frame_time;
+			Engine.Time.delta_s      = Engine.Time.delta_ms / 1000;
+			Engine.Time.frame_number = frame_number;
 
 			// Request next render frame
 			Engine.SetRenderCallback(on_render_internal);
@@ -247,10 +250,10 @@ var Engine =
 			// Setup per-frame info for client
 			var info =
 			{
-				elapsed_s    : elapsed_ms / 1000,
-				elapsed_ms   : elapsed_ms,
-				delta_s      : delta_ms / 1000,
-				delta_ms     : delta_ms,
+				elapsed_s    : Engine.Time.elapsed_s,
+				elapsed_ms   : Engine.Time.elapsed_ms,
+				delta_s      : Engine.Time.delta_s,
+				delta_ms     : Engine.Time.delta_ms,
 				frame_number : frame_number
 			};
 
