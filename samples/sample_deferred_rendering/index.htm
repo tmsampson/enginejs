@@ -26,8 +26,14 @@
 			{
 				var mtx_trans = mat4.create();
 				var mtx_normal = mat3.create();
-				var model_cube  = Engine.Resources["ml_cube"];
-				var model_sphere = Engine.Geometry.MakeSphere();
+
+				var models =
+				[
+					Engine.Resources["ml_cube"],
+					Engine.Geometry.MakePlane({ x_size : 2, z_size : 2}),
+					Engine.Geometry.MakeSphere(),
+				];
+
 				var model_floor = Engine.Resources["ml_floor_tile"];
 				var program_floor = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_general_transformed"],
 				                                                   Engine.Resources["fs_grid_xz_fog"]);
@@ -63,7 +69,7 @@
 				$("#material_colour").spectrum("set", "rgba 255 255 255 255");
 				$("#material_shininess").slider({ label : "Shininess", value: 20, min: -100,   max: 100,   step: 0.2 })
 
-				var draw_cube_ambient_only = function(mtx_trans, sun_ambient, sun_diffuse, sun_phong, material_colour)
+				var draw_mesh_ambient_only = function(model, mtx_trans, sun_ambient, sun_diffuse, sun_phong, material_colour)
 				{
 					// Bind transform
 					Engine.Gfx.BindShaderProgram(program_cube_ambient_only);
@@ -77,10 +83,10 @@
 					Engine.Gfx.BindTexture(resources["tx_lava"], 0, "u_material_tx_albedo");
 
 					// Draw cube
-					Engine.Gfx.DrawModel(model_sphere);
+					Engine.Gfx.DrawModel(model);
 				};
 
-				var draw_cube_diffuse = function(mtx_trans, sun_ambient, sun_diffuse, sun_phong, material_colour)
+				var draw_mesh_diffuse = function(model, mtx_trans, sun_ambient, sun_diffuse, sun_phong, material_colour)
 				{
 					// Bind transform
 					Engine.Gfx.BindShaderProgram(program_cube_diffuse);
@@ -98,10 +104,10 @@
 					//Engine.Gfx.SetShaderConstant("u_light", [light_x, light_y, light_z], Engine.Gfx.SC_VEC3);
 
 					// Draw cube
-					Engine.Gfx.DrawModel(model_sphere);
+					Engine.Gfx.DrawModel(model);
 				};
 
-				var draw_cube_phong = function(mtx_trans, sun_ambient, sun_diffuse, sun_phong, material_colour)
+				var draw_mesh_phong = function(model, mtx_trans, sun_ambient, sun_diffuse, sun_phong, material_colour)
 				{
 					// Bind transform
 					Engine.Gfx.BindShaderProgram(program_cube_phong);
@@ -121,20 +127,20 @@
 					//Engine.Gfx.SetShaderConstant("u_light", [light_x, light_y, light_z], Engine.Gfx.SC_VEC3);
 
 					// Draw cube
-					Engine.Gfx.DrawModel(model_sphere);
+					Engine.Gfx.DrawModel(model);
 				};
 
 				// Handle lighting model change
-				var lighting_func = draw_cube_ambient_only;
+				var lighting_func = draw_mesh_ambient_only;
 				$("select").change(function()
 				{
 					var lighting_model = $('select').val();
 					if(lighting_model == "simple-ambient-only")
-						lighting_func = draw_cube_ambient_only;
+						lighting_func = draw_mesh_ambient_only;
 					else if(lighting_model == "simple-diffuse")
-						lighting_func = draw_cube_diffuse;
+						lighting_func = draw_mesh_diffuse;
 					else if(lighting_model == "simple-phong")
-						lighting_func = draw_cube_phong;
+						lighting_func = draw_mesh_phong;
 				});
 
 				var draw_light = function(x, y, z)
@@ -146,7 +152,7 @@
 					Engine.Gfx.BindShaderProgram(program_light);
 					Engine.Gfx.SetShaderConstant("u_trans_world", mtx_trans, Engine.Gfx.SC_MATRIX4);
 					Engine.Gfx.SetShaderConstant("u_colour", [1, 1, 1, 1], Engine.Gfx.SC_COLOUR);
-					Engine.Gfx.DrawModel(model_sphere);
+					Engine.Gfx.DrawModel(models[2]);
 
 					// Draw light basis
 					Engine.Debug.DrawArrow3D(cam, light_pos, [x + 3, y, z], Engine.Colour.Red, 1);
@@ -195,6 +201,7 @@
 				{
 					Engine.Gfx.Clear(Engine.Colour.Black);
 					Engine.Gfx.SetDepthTestMode(Engine.GL.LESS, true);
+					//Engine.Gfx.EnableWireframeMode(true);
 
 					// Update & bind camera
 					cam.Update(info);
@@ -208,6 +215,7 @@
 					Engine.Gfx.DrawModel(model_floor);
 
 					// Draw cubes
+					var model_index = 0;
 					for(var i = -5; i <= 5; ++i)
 					{
 						for(var j = -5; j <= 5; ++j)
@@ -224,7 +232,7 @@
 							var material_colour = $("#material_colour").spectrum("get").toRgb();
 							material_colour.r /= 255; material_colour.g /= 255; material_colour.b /= 255;
 
-							lighting_func(mtx_trans, [sun_ambient.r, sun_ambient.g, sun_ambient.b], [sun_diffuse.r, sun_diffuse.g, sun_diffuse.b], [sun_phong.r, sun_phong.g, sun_phong.b], [material_colour.r, material_colour.g, material_colour.b, material_colour.a]);
+							lighting_func(models[model_index++ % models.length], mtx_trans, [sun_ambient.r, sun_ambient.g, sun_ambient.b], [sun_diffuse.r, sun_diffuse.g, sun_diffuse.b], [sun_phong.r, sun_phong.g, sun_phong.b], [material_colour.r, material_colour.g, material_colour.b, material_colour.a]);
 						}
 					}
 				};
