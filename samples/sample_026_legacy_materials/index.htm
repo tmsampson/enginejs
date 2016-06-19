@@ -27,6 +27,7 @@
 				var mtx_trans = mat4.create();
 				var mtx_stone_normal = mat3.create();
 
+				var model_floor = Engine.Resources["ml_floor_tile"];
 				var models =
 				[
 					Engine.Resources["ml_cube"],
@@ -34,24 +35,23 @@
 					Engine.Geometry.MakeSphere(),
 				];
 
-				var model_floor = Engine.Resources["ml_floor_tile"];
-				var program_floor = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_general_transformed"],
-				                                                   Engine.Resources["fs_grid_xz_fog"]);
+				// Compile shaders
+				var program_floor       = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_general_transformed"],
+				                                                         Engine.Resources["fs_grid_xz_fog"]);
+				var program_ambient     = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_general_transformed_uv_normals"],
+				                                                         Engine.Resources["fs_legacy_ambient"]);
+				var program_diffuse     = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_general_transformed_uv_normals"],
+				                                                         Engine.Resources["fs_legacy_diffuse"]);
+				var program_specular    = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_general_transformed_uv_normals"],
+				                                                         Engine.Resources["fs_legacy_specular"]);
+				var program_white_unlit = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_general_transformed"],
+				                                                         Engine.Resources["fs_unlit_colour"]);
 
-				var program_cube_ambient  = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_general_transformed_uv_normals"],
-				                                                   Engine.Resources["fs_legacy_ambient"]);
-				var program_cube_diffuse  = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_general_transformed_uv_normals"],
-				                                                   Engine.Resources["fs_legacy_diffuse"]);
-				var program_cube_phong  = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_general_transformed_uv_normals"],
-				                                                   Engine.Resources["fs_legacy_specular"]);
-				var program_light = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_general_transformed"],
-				                                                   Engine.Resources["fs_unlit_colour"]);
-
-				// Setup orbit cam
+				// Setup roam cam
 				var cam = new Engine.Camera.Perspective({ position: [0, 10, -10] });
 				cam.AttachHelper(new Engine.Camera.Helper.Roam({ forward : [0, -1, 1] }));
 
-				// Setup colour pickers
+				// Setup UI colour pickers
 				var config =
 				{
 					flat: true,
@@ -70,12 +70,14 @@
 				$("#sun_specular").spectrum("set", "rgba 255 255 255 255");
 				$("#material_colour").spectrum("set", "rgba 255 255 255 255");
 				$("#material_specular").spectrum("set", "rgba 255 255 255 255");
+
+				// Setup UI sliders
 				$("#material_shininess").slider({ label : "Shininess", value: 50, min: 1,   max: 100,   step: 1 })
 
 				var draw_mesh_ambient_only = function(model, mtx_trans, sun_ambient, sun_diffuse, sun_specular, material_colour, material_specular)
 				{
 					// Bind transform
-					Engine.Gfx.BindShaderProgram(program_cube_ambient);
+					Engine.Gfx.BindShaderProgram(program_ambient);
 					Engine.Gfx.SetShaderConstant("u_trans_world", mtx_trans, Engine.Gfx.SC_MATRIX4);
 
 					// Bind global "sun" params
@@ -92,7 +94,7 @@
 				var draw_mesh_diffuse = function(model, mtx_trans, sun_ambient, sun_diffuse, sun_specular, material_colour, material_specular)
 				{
 					// Bind transform
-					Engine.Gfx.BindShaderProgram(program_cube_diffuse);
+					Engine.Gfx.BindShaderProgram(program_diffuse);
 					Engine.Gfx.SetShaderConstant("u_trans_world", mtx_trans, Engine.Gfx.SC_MATRIX4);
 
 					// Bind global "sun" params
@@ -113,7 +115,7 @@
 				var draw_mesh_specular = function(model, mtx_trans, sun_ambient, sun_diffuse, sun_specular, material_colour, material_specular)
 				{
 					// Bind transform
-					Engine.Gfx.BindShaderProgram(program_cube_phong);
+					Engine.Gfx.BindShaderProgram(program_specular);
 					Engine.Gfx.SetShaderConstant("u_trans_world", mtx_trans, Engine.Gfx.SC_MATRIX4);
 
 					// Bind global "sun" params
@@ -153,7 +155,7 @@
 					var light_pos = [x, y, z];
 					mat4.translate(mtx_trans, Engine.Math.IdentityMatrix, light_pos);
 					mat4.scale(mtx_trans, mtx_trans, [0.5, 0.5, 0.5]);
-					Engine.Gfx.BindShaderProgram(program_light);
+					Engine.Gfx.BindShaderProgram(program_white_unlit);
 					Engine.Gfx.SetShaderConstant("u_trans_world", mtx_trans, Engine.Gfx.SC_MATRIX4);
 					Engine.Gfx.SetShaderConstant("u_colour", [1, 1, 1, 1], Engine.Gfx.SC_COLOUR);
 					Engine.Gfx.DrawModel(models[2]);
@@ -205,7 +207,6 @@
 				{
 					Engine.Gfx.Clear(Engine.Colour.Black);
 					Engine.Gfx.SetDepthTestMode(Engine.GL.LESS, true);
-					//Engine.Gfx.EnableWireframeMode(true);
 
 					// Update & bind camera
 					cam.Update(info);
