@@ -76,10 +76,10 @@ var Engine =
 		fs_2d_background                  : { file: "enginejs/resources/shaders/2d/background.fs" },
 		fs_2d_sprite                      : { file: "enginejs/resources/shaders/2d/sprite.fs" },
 
-		// "Easy" material / lighting system
-		fs_simple_ambient_only            : { file: "enginejs/resources/shaders/3d/simple/simple-ambient-only.fs" },
-		fs_simple_diffuse                 : { file: "enginejs/resources/shaders/3d/simple/simple-diffuse.fs" },
-		fs_simple_phong                   : { file: "enginejs/resources/shaders/3d/simple/simple-phong.fs" },
+		// Legacy material system
+		fs_legacy_ambient                 : { file: "enginejs/resources/shaders/3d/material-legacy.fs", define : [] },
+		fs_legacy_diffuse                 : { file: "enginejs/resources/shaders/3d/material-legacy.fs", define : [ "USE_DIFFUSE" ] },
+		fs_legacy_specular                : { file: "enginejs/resources/shaders/3d/material-legacy.fs", define : [ "USE_DIFFUSE", "USE_SPECULAR"] },
 
 		// Models
 		ml_quad                           : { file: "enginejs/resources/models/quad.model"       },
