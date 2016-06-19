@@ -16,8 +16,8 @@
 		<script language="javascript">
 		var resources =
 		{
-			tx_lava   : { file : "img/lava.jpg" },
-			tx_normal : { file : "img/normal.jpg" },
+			tx_stone_albedo : { file : "img/stone-albedo.jpg" },
+			tx_stone_normal : { file : "img/stone-normal.jpg" },
 		};
 
 		$(document).ready(function()
@@ -25,7 +25,7 @@
 			var on_init = function()
 			{
 				var mtx_trans = mat4.create();
-				var mtx_normal = mat3.create();
+				var mtx_stone_normal = mat3.create();
 
 				var models =
 				[
@@ -83,7 +83,7 @@
 
 					// Bind material properties
 					Engine.Gfx.SetShaderConstant("u_material_colour", material_colour, Engine.Gfx.SC_VEC4);
-					Engine.Gfx.BindTexture(resources["tx_lava"], 0, "u_material_tx_albedo");
+					Engine.Gfx.BindTexture(resources["tx_stone_albedo"], 0, "u_material_tx_albedo");
 
 					// Draw cube
 					Engine.Gfx.DrawModel(model);
@@ -102,7 +102,7 @@
 
 					// Bind material properties
 					Engine.Gfx.SetShaderConstant("u_material_colour", material_colour, Engine.Gfx.SC_VEC4);
-					Engine.Gfx.BindTexture(resources["tx_lava"], 0, "u_material_tx_albedo");
+					Engine.Gfx.BindTexture(resources["tx_stone_albedo"], 0, "u_material_tx_albedo");
 
 					//Engine.Gfx.SetShaderConstant("u_light", [light_x, light_y, light_z], Engine.Gfx.SC_VEC3);
 
@@ -126,7 +126,7 @@
 					Engine.Gfx.SetShaderConstant("u_material_colour", material_colour, Engine.Gfx.SC_VEC4);
 					Engine.Gfx.SetShaderConstant("u_material_specular", material_specular, Engine.Gfx.SC_VEC4);
 					Engine.Gfx.SetShaderConstant("u_material_shininess", $("#material_shininess").slider("value"), Engine.Gfx.SC_FLOAT);				
-					Engine.Gfx.BindTexture(resources["tx_lava"], 0, "u_material_tx_albedo");
+					Engine.Gfx.BindTexture(resources["tx_stone_albedo"], 0, "u_material_tx_albedo");
 
 					//Engine.Gfx.SetShaderConstant("u_light", [light_x, light_y, light_z], Engine.Gfx.SC_VEC3);
 
