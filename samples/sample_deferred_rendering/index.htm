@@ -37,18 +37,19 @@
 				var model_floor = Engine.Resources["ml_floor_tile"];
 				var program_floor = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_general_transformed"],
 				                                                   Engine.Resources["fs_grid_xz_fog"]);
-				var program_cube_ambient_only  = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_general_transformed_uv_normals"],
-				                                                   Engine.Resources["fs_simple_ambient_only"]);
+
+				var program_cube_ambient  = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_general_transformed_uv_normals"],
+				                                                   Engine.Resources["fs_legacy_ambient"]);
 				var program_cube_diffuse  = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_general_transformed_uv_normals"],
-				                                                   Engine.Resources["fs_simple_diffuse"]);
+				                                                   Engine.Resources["fs_legacy_diffuse"]);
 				var program_cube_phong  = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_general_transformed_uv_normals"],
-				                                                   Engine.Resources["fs_simple_phong"]);
+				                                                   Engine.Resources["fs_legacy_specular"]);
 				var program_light = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_general_transformed"],
 				                                                   Engine.Resources["fs_unlit_colour"]);
 
 				// Setup orbit cam
-				var cam = new Engine.Camera.Perspective();
-				cam.AttachHelper(new Engine.Camera.Helper.Roam({}));
+				var cam = new Engine.Camera.Perspective({ position: [0, 10, -10] });
+				cam.AttachHelper(new Engine.Camera.Helper.Roam({ forward : [0, -1, 1] }));
 
 				// Setup colour pickers
 				var config =
@@ -60,19 +61,21 @@
 				};
 
 				$("#sun_ambient").spectrum($.extend({}, config, { move : function(color) { } }));
-				$("#sun_phong").spectrum($.extend({}, config, { move : function(color) { } }));
+				$("#sun_specular").spectrum($.extend({}, config, { move : function(color) { } }));
 				$("#sun_diffuse").spectrum($.extend({}, config, { move : function(color) { } }));
 				$("#material_colour").spectrum($.extend({}, config, { move : function(color) { } }));
+				$("#material_specular").spectrum($.extend({}, config, { move : function(color) { } }));
 				$("#sun_ambient").spectrum("set", "rgba 70 70 70 255");
 				$("#sun_diffuse").spectrum("set", "rgba 255 255 255 255");
-				$("#sun_phong").spectrum("set", "rgba 255 255 255 255");
+				$("#sun_specular").spectrum("set", "rgba 255 255 255 255");
 				$("#material_colour").spectrum("set", "rgba 255 255 255 255");
-				$("#material_shininess").slider({ label : "Shininess", value: 20, min: -100,   max: 100,   step: 0.2 })
+				$("#material_specular").spectrum("set", "rgba 255 255 255 255");
+				$("#material_shininess").slider({ label : "Shininess", value: 50, min: 1,   max: 100,   step: 1 })
 
-				var draw_mesh_ambient_only = function(model, mtx_trans, sun_ambient, sun_diffuse, sun_phong, material_colour)
+				var draw_mesh_ambient_only = function(model, mtx_trans, sun_ambient, sun_diffuse, sun_specular, material_colour, material_specular)
 				{
 					// Bind transform
-					Engine.Gfx.BindShaderProgram(program_cube_ambient_only);
+					Engine.Gfx.BindShaderProgram(program_cube_ambient);
 					Engine.Gfx.SetShaderConstant("u_trans_world", mtx_trans, Engine.Gfx.SC_MATRIX4);
 
 					// Bind global "sun" params
@@ -86,7 +89,7 @@
 					Engine.Gfx.DrawModel(model);
 				};
 
-				var draw_mesh_diffuse = function(model, mtx_trans, sun_ambient, sun_diffuse, sun_phong, material_colour)
+				var draw_mesh_diffuse = function(model, mtx_trans, sun_ambient, sun_diffuse, sun_specular, material_colour, material_specular)
 				{
 					// Bind transform
 					Engine.Gfx.BindShaderProgram(program_cube_diffuse);
@@ -107,7 +110,7 @@
 					Engine.Gfx.DrawModel(model);
 				};
 
-				var draw_mesh_phong = function(model, mtx_trans, sun_ambient, sun_diffuse, sun_phong, material_colour)
+				var draw_mesh_specular = function(model, mtx_trans, sun_ambient, sun_diffuse, sun_specular, material_colour, material_specular)
 				{
 					// Bind transform
 					Engine.Gfx.BindShaderProgram(program_cube_phong);
@@ -116,12 +119,13 @@
 					// Bind global "sun" params
 					Engine.Gfx.SetShaderConstant("u_sun_ambient", sun_ambient, Engine.Gfx.SC_VEC3);
 					Engine.Gfx.SetShaderConstant("u_sun_diffuse", sun_diffuse, Engine.Gfx.SC_VEC3);
-					Engine.Gfx.SetShaderConstant("u_sun_phong", sun_phong, Engine.Gfx.SC_VEC3);
+					Engine.Gfx.SetShaderConstant("u_sun_specular", sun_specular, Engine.Gfx.SC_VEC3);
 					Engine.Gfx.SetShaderConstant("u_sun_dir", [0.71, -0.71, 0], Engine.Gfx.SC_VEC3);
 
 					// Bind material properties
 					Engine.Gfx.SetShaderConstant("u_material_colour", material_colour, Engine.Gfx.SC_VEC4);
-					Engine.Gfx.SetShaderConstant("u_material_shininess", $("#material_shininess").slider("value"), Engine.Gfx.SC_FLOAT);
+					Engine.Gfx.SetShaderConstant("u_material_specular", material_specular, Engine.Gfx.SC_VEC4);
+					Engine.Gfx.SetShaderConstant("u_material_shininess", $("#material_shininess").slider("value"), Engine.Gfx.SC_FLOAT);				
 					Engine.Gfx.BindTexture(resources["tx_lava"], 0, "u_material_tx_albedo");
 
 					//Engine.Gfx.SetShaderConstant("u_light", [light_x, light_y, light_z], Engine.Gfx.SC_VEC3);
@@ -140,7 +144,7 @@
 					else if(lighting_model == "simple-diffuse")
 						lighting_func = draw_mesh_diffuse;
 					else if(lighting_model == "simple-phong")
-						lighting_func = draw_mesh_phong;
+						lighting_func = draw_mesh_specular;
 				});
 
 				var draw_light = function(x, y, z)
@@ -227,12 +231,14 @@
 							sun_ambient.r /= 255; sun_ambient.g /= 255; sun_ambient.b /= 255;
 							var sun_diffuse = $("#sun_diffuse").spectrum("get").toRgb();
 							sun_diffuse.r /= 255; sun_diffuse.g /= 255; sun_diffuse.b /= 255;
-							var sun_phong = $("#sun_phong").spectrum("get").toRgb();
-							sun_phong.r /= 255; sun_phong.g /= 255; sun_phong.b /= 255;
+							var sun_specular = $("#sun_specular").spectrum("get").toRgb();
+							sun_specular.r /= 255; sun_specular.g /= 255; sun_specular.b /= 255;
 							var material_colour = $("#material_colour").spectrum("get").toRgb();
 							material_colour.r /= 255; material_colour.g /= 255; material_colour.b /= 255;
+							var material_specular = $("#material_specular").spectrum("get").toRgb();
+							material_specular.r /= 255; material_specular.g /= 255; material_specular.b /= 255;
 
-							lighting_func(models[model_index++ % models.length], mtx_trans, [sun_ambient.r, sun_ambient.g, sun_ambient.b], [sun_diffuse.r, sun_diffuse.g, sun_diffuse.b], [sun_phong.r, sun_phong.g, sun_phong.b], [material_colour.r, material_colour.g, material_colour.b, material_colour.a]);
+							lighting_func(models[model_index++ % models.length], mtx_trans, [sun_ambient.r, sun_ambient.g, sun_ambient.b], [sun_diffuse.r, sun_diffuse.g, sun_diffuse.b], [sun_specular.r, sun_specular.g, sun_specular.b], [material_colour.r, material_colour.g, material_colour.b, material_colour.a], [material_specular.r, material_specular.g, material_specular.b, material_specular.a]);
 						}
 					}
 				};
@@ -246,7 +252,7 @@
 	<body>
 		<table style="width:100%">
 			<tr>
-				<td style="width:1000px;vertical-align:top"><canvas width="1000" height="750"></canvas></td>
+				<td style="width:1000px;vertical-align:top"><canvas width="800" height="600"></canvas></td>
 				<td id="param_editor_window" style="background-color:white;padding:20px;vertical-align:top">
 					<h2>Lighting Model</h2>
 					<select>
@@ -258,6 +264,8 @@
 					<h2>Material Properties</h2>
 					Material colour<br/>
 					<div id="material_colour"/></div><br/>
+					Material specular<br/>					
+					<div id="material_specular"/></div><br/>
 					Shininess:
 					<div id="material_shininess" style="width:200px"/>
 					<br/>
@@ -267,8 +275,8 @@
 					<div id="sun_ambient"></div><br/>
 					Sun Diffuse<br/>
 					<div id="sun_diffuse"></div><br/>
-					Sun Phong<br/>
-					<div id="sun_phong"></div>
+					Sun Specular<br/>
+					<div id="sun_specular"></div>
 
 					
 				</td>
