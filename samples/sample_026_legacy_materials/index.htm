@@ -78,9 +78,9 @@
 					Engine.Gfx.DrawModel(models[2]);
 
 					// Draw light basis
-					Engine.Debug.DrawArrow3D(cam, light_pos, [light_pos[0] + 3, light_pos[1],     light_pos[2]],     Engine.Colour.Red, 1);
-					Engine.Debug.DrawArrow3D(cam, light_pos, [light_pos[0],     light_pos[1] + 3, light_pos[2]],     Engine.Colour.Green, 1);
-					Engine.Debug.DrawArrow3D(cam, light_pos, [light_pos[0],     light_pos[1],     light_pos[2] + 3], Engine.Colour.Blue, 1);
+					//Engine.Debug.DrawArrow3D(cam, light_pos, [light_pos[0] + 3, light_pos[1],     light_pos[2]],     Engine.Colour.Red, 1);
+					//Engine.Debug.DrawArrow3D(cam, light_pos, [light_pos[0],     light_pos[1] + 3, light_pos[2]],     Engine.Colour.Green, 1);
+					//Engine.Debug.DrawArrow3D(cam, light_pos, [light_pos[0],     light_pos[1],     light_pos[2] + 3], Engine.Colour.Blue, 1);
 				};
 
 				var light_pos = [0, 5, 0];
@@ -125,20 +125,22 @@
 					mat4.scale(mtx_trans, Engine.Math.IdentityMatrix, [100, 0, 100]);
 					Engine.Gfx.BindShaderProgram(program_floor);
 					Engine.Gfx.SetShaderConstant("u_trans_world", mtx_trans, Engine.Gfx.SC_MATRIX4);
-					Engine.Gfx.DrawModel(model_floor);
+					//Engine.Gfx.DrawModel(model_floor);
 
 					// Draw models
 					var model_index = 0;
-					for(var i = -5; i <= 5; ++i)
+					//for(var i = -5; i <= 5; ++i)
 					{
-						for(var j = -5; j <= 5; ++j)
+						//for(var j = -5; j <= 5; ++j)
 						{
 							// Pick model
-							var model = models[model_index++ % models.length];
+							//var model = models[model_index++ % models.length];
+							var i = 0; var j = 0;
+							var model = models[2];
 
 							// Position on grid and rotate
-							mat4.translate(mtx_trans, Engine.Math.IdentityMatrix, [i * 3, 1.2, j * 3]);
-							mat4.rotate(mtx_trans, mtx_trans, info.elapsed_s, [1, 1, 1]);
+							mat4.translate(mtx_trans, Engine.Math.IdentityMatrix, [0, 0, 0]);
+							//mat4.rotate(mtx_trans, mtx_trans, info.elapsed_s, [1, 1, 1]);
 
 							// Set shader
 							var shader_mode = $('select').val();
@@ -174,6 +176,25 @@
 
 							// Draw model
 							Engine.Gfx.DrawModel(model);
+
+							// Drawn normals
+							var verts = model.model_data.primitives[0].vertex_buffers[0].stream;
+							var normals = model.model_data.primitives[0].vertex_buffers[1].stream;
+							var tangents = model.model_data.primitives[0].vertex_buffers[4].stream;
+							for(var x= 0; x < verts.length; x +=3)
+							{
+								var v0 = verts[x + 0];
+								var v1 = verts[x + 1];
+								var v2 = verts[x + 2];
+								var n0 = normals[x + 0];
+								var n1 = normals[x + 1];
+								var n2 = normals[x + 2];
+								var t0 = tangents[x + 0];
+								var t1 = tangents[x + 1];
+								var t2 = tangents[x + 2];
+								Engine.Debug.DrawArrow3D(cam, [v0, v1, v2], [v0 + n0, v1 + n1, v2 + n2], Engine.Colour.Red, 1);
+								Engine.Debug.DrawArrow3D(cam, [v0, v1, v2], [v0 + t0, v1 + t1, v2 + t2], Engine.Colour.Blue, 1);
+							}
 						}
 					}
 				};
@@ -191,9 +212,9 @@
 				<td id="param_editor_window" style="background-color:white;padding:20px;vertical-align:top">
 					<h2>Lighting Model</h2>
 					<select>
+						<option value="specular">specular</option>
 						<option value="ambient">ambient</option>
 						<option value="diffuse">diffuse</option>
-						<option value="specular">specular</option>
 					</select>
 
 					<h2>Material Properties</h2>
