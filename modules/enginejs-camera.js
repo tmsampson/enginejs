@@ -161,6 +161,8 @@ Engine.Camera =
 			                          world_pos.length <= 3? 1.0 : world_pos[3]);
 			var device_pos = vec4.create();
 			vec4.transformMat4(device_pos, pos, this.mtx_view_proj);
+
+			// Convert from device (-1 <= x <= 1) to viewport position (0 <= x <= width/height in pixels)
 			return [ this.viewport_pos[0] + ((((device_pos[0] / device_pos[3]) + 1) / 2) * this.viewport_size[0]),
 			         this.viewport_pos[1] + ((((device_pos[1] / device_pos[3]) + 1) / 2) * this.viewport_size[1]) ];
 		}
