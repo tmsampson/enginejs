@@ -285,8 +285,11 @@ Engine.Gfx =
 
 			// Setup params
 			Engine.GL.texImage2D(Engine.GL.TEXTURE_2D, 0, Engine.GL.RGBA, Engine.GL.RGBA, Engine.GL.UNSIGNED_BYTE, img_object);
+
+			// Generate mip chain
+			var mip_mode = (descriptor.hasOwnProperty("is_normal_map") && descriptor.is_normal_map)? Engine.GL.LINEAR : Engine.GL.LINEAR_MIPMAP_NEAREST;
 			Engine.GL.texParameteri(Engine.GL.TEXTURE_2D, Engine.GL.TEXTURE_MAG_FILTER, Engine.GL.LINEAR);
-			Engine.GL.texParameteri(Engine.GL.TEXTURE_2D, Engine.GL.TEXTURE_MIN_FILTER, Engine.GL.LINEAR_MIPMAP_NEAREST);
+			Engine.GL.texParameteri(Engine.GL.TEXTURE_2D, Engine.GL.TEXTURE_MIN_FILTER, mip_mode);
 			Engine.GL.generateMipmap(Engine.GL.TEXTURE_2D);
 
 			// Unbind
