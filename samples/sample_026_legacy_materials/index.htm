@@ -17,7 +17,7 @@
 		var resources =
 		{
 			tx_stone_albedo : { file : "img/stone-albedo.jpg" },
-			tx_stone_normal : { file : "img/stone-normal.jpg" },
+			tx_stone_normal : { file : "img/stone-normal.jpg", is_normal_map : true },
 		};
 
 		// ====================================================================================================================================
@@ -35,11 +35,12 @@
 		// ====================================================================================================================================
 		// Shader programs
 		// ====================================================================================================================================
-		var program_floor
-		var program_ambient
-		var program_diffuse
-		var program_specular
-		var program_white_unlit
+		var program_floor;
+		var program_ambient;
+		var program_diffuse;
+		var program_specular;
+		var program_normal_map;
+		var program_white_unlit;
 
 		// ====================================================================================================================================
 		// Light update / render
@@ -112,12 +113,15 @@
 				                                                     Engine.Resources["fs_legacy_diffuse"]);
 				program_specular    = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_general_transformed_uv_normals"],
 				                                                     Engine.Resources["fs_legacy_specular"]);
+				program_normal_map  = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_general_transformed_uv_normals_tangents"],
+				                                                     Engine.Resources["fs_legacy_specular_normal_map"]);
+
 				program_white_unlit = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_general_transformed"],
-				                                                         Engine.Resources["fs_unlit_colour"]);
+				                                                     Engine.Resources["fs_unlit_colour"]);
 
 				// Setup roam cam
-				cam = new Engine.Camera.Perspective({ position: [0, 10, -10] });
-				cam.AttachHelper(new Engine.Camera.Helper.Roam({ forward : [0, -1, 1] }));
+				cam = new Engine.Camera.Perspective({ position: [2.657, 3.07, -0.056] });
+				cam.AttachHelper(new Engine.Camera.Helper.Roam({ forward : [-1.294, -0.568, -0.011] }));
 
 				// Setup UI colour pickers
 				var config = { showInput: false, showButtons: false, preferredFormat: "rgb" };
@@ -134,6 +138,7 @@
 
 				// Setup UI sliders
 				$("#material_shininess").slider({ label : "Shininess", value: 50, min: 1,   max: 100,   step: 1 })
+				$("#model_select").slider({ label : "Model select", value: 1, min: 0,   max: 2,   step: 1 })
 
 				var on_render = function(info)
 				{
@@ -163,36 +168,41 @@
 							// Pick model
 							//var model = models[model_index++ % models.length];
 							var i = 0; var j = 0;
-							var model = models[2];
+							var model_index = $("#model_select").slider("value");
+							var model = models[model_index];
 
 							// Position on grid and rotate
 							mat4.translate(mtx_trans, Engine.Math.IdentityMatrix, [0, 2, 0]);
-							//mat4.rotate(mtx_trans, mtx_trans, info.elapsed_s, [1, 1, 1]);
+							if($('#cb_rotate').is(":checked"))
+							{
+								mat4.rotate(mtx_trans, mtx_trans, info.elapsed_s / 3.0, [0, 1, 0]);
+							}
 
 							// Set shader
 							var shader_mode = $('select').val();
-							if(shader_mode == "ambient")  { Engine.Gfx.BindShaderProgram(program_ambient); }
-							if(shader_mode == "diffuse")  { Engine.Gfx.BindShaderProgram(program_diffuse); }
-							if(shader_mode == "specular") { Engine.Gfx.BindShaderProgram(program_specular); }
+							if(shader_mode == "ambient")       { Engine.Gfx.BindShaderProgram(program_ambient); }
+							if(shader_mode == "diffuse")       { Engine.Gfx.BindShaderProgram(program_diffuse); }
+							if(shader_mode == "specular")      { Engine.Gfx.BindShaderProgram(program_specular); }
+							if(shader_mode == "normal-mapped") { Engine.Gfx.BindShaderProgram(program_normal_map); }
 
 							// Bind transform
 							Engine.Gfx.SetShaderConstant("u_trans_world", mtx_trans, Engine.Gfx.SC_MATRIX4);
 
 							// Bind global "sun" params
 							Engine.Gfx.SetShaderConstant("u_sun_ambient", colour_from_picker_rgb("#sun_ambient"), Engine.Gfx.SC_VEC3);
-							if(shader_mode == "diffuse" || shader_mode == "specular")
+							if(shader_mode == "diffuse" || shader_mode == "specular" || shader_mode == "normal-mapped")
 							{
 								Engine.Gfx.SetShaderConstant("u_sun_diffuse", colour_from_picker_rgb("#sun_diffuse"), Engine.Gfx.SC_VEC3);
-								Engine.Gfx.SetShaderConstant("u_sun_dir", [0.71, -0.71, 0], Engine.Gfx.SC_VEC3);
+								Engine.Gfx.SetShaderConstant("u_sun_dir", [0.71, 0.71, 0], Engine.Gfx.SC_VEC3);
 							}
-							if(shader_mode == "specular")
+							if(shader_mode == "specular" || shader_mode == "normal-mapped")
 							{
 								Engine.Gfx.SetShaderConstant("u_sun_specular", colour_from_picker_rgb("#sun_specular"), Engine.Gfx.SC_VEC3);
 							}
 
 							// Bind material properties
 							Engine.Gfx.SetShaderConstant("u_material_colour", colour_from_picker_rgba("#material_colour"), Engine.Gfx.SC_VEC4);
-							if(shader_mode == "specular")
+							if(shader_mode == "specular" || shader_mode == "normal-mapped")
 							{
 								Engine.Gfx.SetShaderConstant("u_material_specular", colour_from_picker_rgba("#material_specular"), Engine.Gfx.SC_VEC4);
 								Engine.Gfx.SetShaderConstant("u_material_shininess", $("#material_shininess").slider("value"), Engine.Gfx.SC_FLOAT);
@@ -200,6 +210,10 @@
 
 							// Bind textures
 							Engine.Gfx.BindTexture(resources["tx_stone_albedo"], 0, "u_material_tx_albedo");
+							if(shader_mode == "normal-mapped")
+							{
+								Engine.Gfx.BindTexture(resources["tx_stone_normal"], 1, "u_material_tx_normal");
+							}
 
 							// Draw model
 							Engine.Gfx.DrawModel(model);
@@ -247,12 +261,17 @@
 				<td id="param_editor_window" style="background-color:white;padding:20px;vertical-align:top">
 					<h4>Lighting Model</h4>
 					<select>
+						<option value="normal-mapped">normal-mapped</option>
 						<option value="specular">specular</option>
 						<option value="ambient">ambient</option>
 						<option value="diffuse">diffuse</option>
 					</select>
 
 					<h4>Debug</h4>
+					Model select:
+					<div id="model_select" style="width:200px"></div>
+					<br/>
+					Rotate: <input type="checkbox" id="cb_rotate" id="" />
 					Show normals: <input type="checkbox" id="cb_show_normals" id="" />
 					Show tangents: <input type="checkbox" id="cb_show_tangents" id="" />
 
@@ -262,7 +281,7 @@
 					Material specular<br/>					
 					<input type="text" id="material_specular"/></input><br/>
 					Shininess:
-					<div id="material_shininess" style="width:200px"/>
+					<div id="material_shininess" style="width:200px"/></div>
 					<br/>
 
 					<h4>Global Light Properties</h4>

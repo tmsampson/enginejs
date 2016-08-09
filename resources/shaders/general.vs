@@ -12,6 +12,10 @@ attribute vec2 a_uv;
 attribute vec3 a_normal;
 #endif
 
+#ifdef ENGINEJS_ENABLE_TANGENTS
+attribute vec3 a_tangent;
+#endif
+
 // -----------------------------------------------------------------------------
 // Per-draw input
 #ifdef ENGINEJS_ENABLE_TRANSFORM
@@ -24,8 +28,8 @@ uniform mat4 u_trans_proj;
 
 uniform float u_time;
 
-#ifdef ENGINEJS_ENABLE_NORMALS
-uniform mat3 u_trans_normal;
+#ifdef ENGINEJS_ENABLE_TANGENTS
+uniform mat3 u_trans_tangent;
 #endif
 
 // -----------------------------------------------------------------------------
@@ -42,6 +46,10 @@ varying vec2 v_uv;
 varying vec3 v_world_normal;
 #endif
 
+#ifdef ENGINEJS_ENABLE_TANGENTS
+varying vec3 v_world_tangent;
+#endif
+
 // -----------------------------------------------------------------------------
 // Main routine
 void main(void)
@@ -56,8 +64,13 @@ void main(void)
 
 	// Transform normal from model --> world space?
 	#ifdef ENGINEJS_ENABLE_NORMALS
-	mat3 normal_world_mtx = mat3(u_trans_world);
+	mat3 normal_world_mtx = mat3(u_trans_world); // mat3 = rotation only
 	v_world_normal = normalize(normal_world_mtx * a_normal);
+	#endif
+
+	#ifdef ENGINEJS_ENABLE_TANGENTS
+	mat3 tangent_world_mtx = mat3(u_trans_world); // mat3 = rotation only
+	v_world_tangent = normalize(tangent_world_mtx * a_tangent);
 	#endif
 
 	// Pass-through UV co-ordinates?

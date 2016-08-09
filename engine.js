@@ -52,44 +52,46 @@ var Engine =
 	Resources :
 	{
 		// General vertex shader flavours
-		vs_general                        : { file: "enginejs/resources/shaders/general.vs" },
-		vs_general_uv                     : { file: "enginejs/resources/shaders/general.vs", define : [ "ENGINEJS_ENABLE_UV_COORDS" ] },
-		vs_general_transformed            : { file: "enginejs/resources/shaders/general.vs", define : [ "ENGINEJS_ENABLE_TRANSFORM" ] },
-		vs_general_transformed_uv         : { file: "enginejs/resources/shaders/general.vs", define : [ "ENGINEJS_ENABLE_TRANSFORM", "ENGINEJS_ENABLE_UV_COORDS" ] },
-		vs_general_transformed_normals    : { file: "enginejs/resources/shaders/general.vs", define : [ "ENGINEJS_ENABLE_TRANSFORM", "ENGINEJS_ENABLE_NORMALS" ] },
-		vs_general_transformed_uv_normals : { file: "enginejs/resources/shaders/general.vs", define : [ "ENGINEJS_ENABLE_TRANSFORM", "ENGINEJS_ENABLE_UV_COORDS", "ENGINEJS_ENABLE_NORMALS" ] },
+		vs_general                                 : { file: "enginejs/resources/shaders/general.vs" },
+		vs_general_uv                              : { file: "enginejs/resources/shaders/general.vs", define : [ "ENGINEJS_ENABLE_UV_COORDS" ] },
+		vs_general_transformed                     : { file: "enginejs/resources/shaders/general.vs", define : [ "ENGINEJS_ENABLE_TRANSFORM" ] },
+		vs_general_transformed_uv                  : { file: "enginejs/resources/shaders/general.vs", define : [ "ENGINEJS_ENABLE_TRANSFORM", "ENGINEJS_ENABLE_UV_COORDS" ] },
+		vs_general_transformed_normals             : { file: "enginejs/resources/shaders/general.vs", define : [ "ENGINEJS_ENABLE_TRANSFORM", "ENGINEJS_ENABLE_NORMALS" ] },
+		vs_general_transformed_uv_normals          : { file: "enginejs/resources/shaders/general.vs", define : [ "ENGINEJS_ENABLE_TRANSFORM", "ENGINEJS_ENABLE_UV_COORDS", "ENGINEJS_ENABLE_NORMALS" ] },
+		vs_general_transformed_uv_normals_tangents : { file: "enginejs/resources/shaders/general.vs", define : [ "ENGINEJS_ENABLE_TRANSFORM", "ENGINEJS_ENABLE_UV_COORDS", "ENGINEJS_ENABLE_NORMALS", "ENGINEJS_ENABLE_TANGENTS" ] },
 
 		// Misc basic shaders
-		fs_unlit_colour                   : { file: "enginejs/resources/shaders/basic/unlit-colour.fs" },
-		fs_unlit_textured                 : { file: "enginejs/resources/shaders/basic/unlit-textured.fs" },
+		fs_unlit_colour                            : { file: "enginejs/resources/shaders/basic/unlit-colour.fs" },
+		fs_unlit_textured                          : { file: "enginejs/resources/shaders/basic/unlit-textured.fs" },
 
 		// Debug pass-through shaders
-		fs_debug_normals                  : { file: "enginejs/resources/shaders/debug/debug-normals.fs" },
-		fs_debug_uvs                      : { file: "enginejs/resources/shaders/debug/debug-uvs.fs" },
+		fs_debug_normals                           : { file: "enginejs/resources/shaders/debug/debug-normals.fs" },
+		fs_debug_uvs                               : { file: "enginejs/resources/shaders/debug/debug-uvs.fs" },
 
 		// Misc fragment shaders
-		fs_grid_xy                        : { file: "enginejs/resources/shaders/misc/grid-xy.fs" },
-		fs_grid_xz                        : { file: "enginejs/resources/shaders/misc/grid-xz.fs" },
-		fs_grid_xz_fog                    : { file: "enginejs/resources/shaders/misc/grid-xz-fog.fs" },
+		fs_grid_xy                                 : { file: "enginejs/resources/shaders/misc/grid-xy.fs" },
+		fs_grid_xz                                 : { file: "enginejs/resources/shaders/misc/grid-xz.fs" },
+		fs_grid_xz_fog                             : { file: "enginejs/resources/shaders/misc/grid-xz-fog.fs" },
 
 		// Game-2D shaders
-		fs_2d_background                  : { file: "enginejs/resources/shaders/2d/background.fs" },
-		fs_2d_sprite                      : { file: "enginejs/resources/shaders/2d/sprite.fs" },
+		fs_2d_background                           : { file: "enginejs/resources/shaders/2d/background.fs" },
+		fs_2d_sprite                               : { file: "enginejs/resources/shaders/2d/sprite.fs" },
 
 		// Legacy material system
-		fs_legacy_ambient                 : { file: "enginejs/resources/shaders/3d/material-legacy.fs", define : [] },
-		fs_legacy_diffuse                 : { file: "enginejs/resources/shaders/3d/material-legacy.fs", define : [ "USE_DIFFUSE" ] },
-		fs_legacy_specular                : { file: "enginejs/resources/shaders/3d/material-legacy.fs", define : [ "USE_DIFFUSE", "USE_SPECULAR"] },
+		fs_legacy_ambient                          : { file: "enginejs/resources/shaders/3d/material-legacy.fs", define : [] },
+		fs_legacy_diffuse                          : { file: "enginejs/resources/shaders/3d/material-legacy.fs", define : [ "USE_DIFFUSE" ] },
+		fs_legacy_specular                         : { file: "enginejs/resources/shaders/3d/material-legacy.fs", define : [ "USE_DIFFUSE", "USE_SPECULAR"] },
+		fs_legacy_specular_normal_map              : { file: "enginejs/resources/shaders/3d/material-legacy.fs", define : [ "USE_DIFFUSE", "USE_SPECULAR", "USE_NORMAL_MAP" ] },
 
 		// Models
-		ml_quad                           : { file: "enginejs/resources/models/quad.model"       },
-		ml_floor_tile                     : { file: "enginejs/resources/models/floor_tile.model" },
-		ml_tri                            : { file: "enginejs/resources/models/tri.model"        },
-		ml_cube                           : { file: "enginejs/resources/models/cube.model"       },
+		ml_quad                                    : { file: "enginejs/resources/models/quad.model"       },
+		ml_floor_tile                              : { file: "enginejs/resources/models/floor_tile.model" },
+		ml_tri                                     : { file: "enginejs/resources/models/tri.model"        },
+		ml_cube                                    : { file: "enginejs/resources/models/cube.model"       },
 
 		// Misc
-		tx_white                          : { file: "enginejs/resources/img/white.png"   },
-		sfx_blank                         : { file: "enginejs/resources/audio/blank.mp3" }
+		tx_white                                   : { file: "enginejs/resources/img/white.png"   },
+		sfx_blank                                  : { file: "enginejs/resources/audio/blank.mp3" }
 	},
 
 	// *************************************************************************************
