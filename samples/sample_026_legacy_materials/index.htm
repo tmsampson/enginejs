@@ -154,6 +154,9 @@
 
 				// Setup UI sliders
 				$("#material_shininess").slider({ label : "Shininess", value: 0.078125, min: 0.03,   max: 1,   step: 0.01 })
+				$("#material_fresnel_bias").slider({ label : "Fresnel Bias", value: 0.0, min: -1,   max: 1,   step: 0.01 })
+				$("#material_fresnel_scale").slider({ label : "Fresnel Scale", value: 0.0, min: 0,   max: 1,   step: 0.01 })
+				$("#material_fresnel_power").slider({ label : "Fresnel Scale", value: 1.4, min: 1,   max: 5,   step: 0.01 })
 				$("#normal_strength").slider({ label : "Normal Strength", value: 1, min: 0,   max: 1,   step: 0.01 })
 				$("#model_select").slider({ label : "Model select", value: 1, min: 0,   max: 2,   step: 1 })
 				$("#sun_angle").slider({ label : "Sun Angle", value: 0, min: -180,   max: 180,   step: 1 })
@@ -206,6 +209,11 @@
 						Engine.Gfx.SetShaderConstant("u_material_specular", colour_from_picker_rgba("#material_specular"), Engine.Gfx.SC_VEC4);
 						Engine.Gfx.SetShaderConstant("u_material_shininess", $("#material_shininess").slider("value"), Engine.Gfx.SC_FLOAT);
 					}
+
+					// Fresnel
+					Engine.Gfx.SetShaderConstant("u_material_fresnel_bias", $("#material_fresnel_bias").slider("value"), Engine.Gfx.SC_FLOAT);
+					Engine.Gfx.SetShaderConstant("u_material_fresnel_scale", $("#material_fresnel_scale").slider("value"), Engine.Gfx.SC_FLOAT);
+					Engine.Gfx.SetShaderConstant("u_material_fresnel_power", $("#material_fresnel_power").slider("value"), Engine.Gfx.SC_FLOAT);
 
 					// Bind textures
 					Engine.Gfx.BindTexture(resources["tx_albedo"], 0, "u_material_tx_albedo");
@@ -313,6 +321,12 @@
 					<div id="material_shininess" style="width:200px"/></div>
 					Normal Strength:
 					<div id="normal_strength" style="width:200px"/></div>
+					Fresnel Bias:
+					<div id="material_fresnel_bias" style="width:200px"/></div>
+					Fresnel Scale:
+					<div id="material_fresnel_scale" style="width:200px"/></div>
+					Fresnel Power:
+					<div id="material_fresnel_power" style="width:200px"/></div>
 					<br/>
 
 					<h4>Global Light Properties</h4>

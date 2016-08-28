@@ -21,6 +21,13 @@ uniform vec4 u_material_specular;
 uniform float u_material_shininess;
 uniform float u_material_normal_strength;
 
+#define USE_FRESNEL // Always enabled for now
+#ifdef USE_FRESNEL
+uniform float u_material_fresnel_bias;
+uniform float u_material_fresnel_scale;
+uniform float u_material_fresnel_power;
+#endif
+
 // Material samplers
 uniform sampler2D u_material_tx_albedo;
 
@@ -91,6 +98,14 @@ void main(void)
 	specular *= specular_map;
 #endif
 
+#ifdef USE_FRESNEL
+	vec3 to_cam = normalize(v_world_pos.xyz - u_cam_pos);
+	float fresnel = u_material_fresnel_bias + u_material_fresnel_scale * pow(1.0 + dot(to_cam, normal), u_material_fresnel_power);
+	fresnel = clamp(fresnel, 0.0, 1.0);
+#else
+	float fresnel = 0.0;
+#endif
+
 	// Composite
-	gl_FragColor = ambient + diffuse + specular;
+	gl_FragColor = mix(ambient + diffuse + specular, vec4(1.0), fresnel);
 }
