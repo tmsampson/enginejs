@@ -16,8 +16,8 @@
 		<script language="javascript">
 		var resources =
 		{
-			tx_stone_albedo : { file : "img/stone-albedo.jpg" },
-			tx_stone_normal : { file : "img/stone-normal.jpg", is_normal_map : true },
+			tx_stone_albedo : { file : "img/sponge_a.png" },
+			tx_stone_normal : { file : "img/sponge_n.png", is_normal_map : true },
 		};
 
 		// ====================================================================================================================================
@@ -45,23 +45,23 @@
 		// ====================================================================================================================================
 		// Light update / render
 		// ====================================================================================================================================
-		var light_pos = [0, 5, 0];
+		var sun_pos = [0, 5, 0];		// origin
+		var sun_angle = 0;				// 0 = straight down y-axis
+		var sun_forward = [ 0, -1, 0 ];	// 0 = straight down y-axis
+
 		function update_light(info)
 		{
 			var light_move_speed = 0.1;
-			if(Engine.Keyboard.IsPressed("w"))     { light_pos[2] -= light_move_speed; }
-			if(Engine.Keyboard.IsPressed("s"))     { light_pos[2] += light_move_speed; }
-			if(Engine.Keyboard.IsPressed("left"))  { light_pos[0] -= light_move_speed; }
-			if(Engine.Keyboard.IsPressed("right")) { light_pos[0] += light_move_speed; }
-			if(Engine.Keyboard.IsPressed("up"))    { light_pos[1] += light_move_speed; }
-			if(Engine.Keyboard.IsPressed("down"))  { light_pos[1] -= light_move_speed; }
-			draw_light(light_pos);
+			sun_angle = $("#sun_angle").slider("value");
+			sun_angle += Engine.Mouse.GetWheelDelta() / 20;
+			$("#sun_angle").slider('value', sun_angle);
+			draw_light(sun_pos, sun_angle);
 		};
 
-		function draw_light(light_pos)
+		function draw_light(sun_pos)
 		{
 			// Draw light as sphere
-			mat4.translate(mtx_trans, Engine.Math.IdentityMatrix, light_pos);
+			mat4.translate(mtx_trans, Engine.Math.IdentityMatrix, sun_pos);
 			mat4.scale(mtx_trans, mtx_trans, [0.3, 0.3, 0.3]);
 			Engine.Gfx.BindShaderProgram(program_white_unlit);
 			Engine.Gfx.SetShaderConstant("u_trans_world", mtx_trans, Engine.Gfx.SC_MATRIX4);
@@ -69,9 +69,20 @@
 			Engine.Gfx.DrawModel(models[2]);
 
 			// Draw light basis
-			Engine.Debug.DrawArrow3D(cam, light_pos, [light_pos[0] + 3, light_pos[1],     light_pos[2]],     Engine.Colour.Red, 1);
-			Engine.Debug.DrawArrow3D(cam, light_pos, [light_pos[0],     light_pos[1] + 3, light_pos[2]],     Engine.Colour.Green, 1);
-			Engine.Debug.DrawArrow3D(cam, light_pos, [light_pos[0],     light_pos[1],     light_pos[2] + 3], Engine.Colour.Blue, 1);
+			Engine.Debug.DrawArrow3D(cam, sun_pos, [sun_pos[0] + 3, sun_pos[1],     sun_pos[2]],     Engine.Colour.Red, 1);
+			Engine.Debug.DrawArrow3D(cam, sun_pos, [sun_pos[0],     sun_pos[1] + 3, sun_pos[2]],     Engine.Colour.Green, 1);
+			Engine.Debug.DrawArrow3D(cam, sun_pos, [sun_pos[0],     sun_pos[1],     sun_pos[2] + 3], Engine.Colour.Blue, 1);
+
+			// Draw light angle
+			mat4.fromRotation(mtx_trans, Engine.Math.DegToRad(sun_angle), [0, 0, -1]);
+			vec3.transformMat4(sun_forward, [0, -1, 0], mtx_trans);
+
+			var lp = [ sun_pos[0], sun_pos[1], sun_pos[2] ];
+			Engine.Debug.DrawArrow3D(cam, lp, [lp[0] + (sun_forward[0] * 3),     lp[1]+ (sun_forward[1] * 3),     lp[2]+ (sun_forward[2] * 3)], Engine.Colour.Orange, 1);
+			lp[0] = sun_pos[0] + 0.2;
+			Engine.Debug.DrawArrow3D(cam, lp, [lp[0] + (sun_forward[0] * 3),     lp[1]+ (sun_forward[1] * 3),     lp[2]+ (sun_forward[2] * 3)], Engine.Colour.Orange, 1);
+			lp[0] = sun_pos[0] - 0.2;
+			Engine.Debug.DrawArrow3D(cam, lp, [lp[0] + (sun_forward[0] * 3),     lp[1]+ (sun_forward[1] * 3),     lp[2]+ (sun_forward[2] * 3)], Engine.Colour.Orange, 1);
 		};
 
 		// ====================================================================================================================================
@@ -120,8 +131,8 @@
 				                                                     Engine.Resources["fs_unlit_colour"]);
 
 				// Setup roam cam
-				cam = new Engine.Camera.Perspective({ position: [2.657, 3.07, -0.056] });
-				cam.AttachHelper(new Engine.Camera.Helper.Roam({ forward : [-1.294, -0.568, -0.011] }));
+				cam = new Engine.Camera.Perspective({ position: [0, 4, -5] });
+				cam.AttachHelper(new Engine.Camera.Helper.Roam({ forward : [0, 0, 1] }));
 
 				// Setup UI colour pickers
 				var config = { showInput: false, showButtons: false, preferredFormat: "rgb" };
@@ -137,8 +148,10 @@
 				$("#material_specular").spectrum("set", "rgba 255 255 255 255");
 
 				// Setup UI sliders
-				$("#material_shininess").slider({ label : "Shininess", value: 50, min: 1,   max: 100,   step: 1 })
+				$("#material_shininess").slider({ label : "Shininess", value: 0.078125, min: 0.03,   max: 1,   step: 0.01 })
+				$("#normal_strength").slider({ label : "Normal Strength", value: 1, min: 0,   max: 1,   step: 0.01 })
 				$("#model_select").slider({ label : "Model select", value: 1, min: 0,   max: 2,   step: 1 })
+				$("#sun_angle").slider({ label : "Sun Angle", value: 0, min: -180,   max: 180,   step: 1 })
 
 				var on_render = function(info)
 				{
@@ -159,89 +172,94 @@
 					Engine.Gfx.SetShaderConstant("u_trans_world", mtx_trans, Engine.Gfx.SC_MATRIX4);
 					Engine.Gfx.DrawModel(model_floor);
 
+					// Set shader
+					var shader_mode = $('select').val();
+					if(shader_mode == "ambient")       { Engine.Gfx.BindShaderProgram(program_ambient); }
+					if(shader_mode == "diffuse")       { Engine.Gfx.BindShaderProgram(program_diffuse); }
+					if(shader_mode == "specular")      { Engine.Gfx.BindShaderProgram(program_specular); }
+					if(shader_mode == "normal-mapped") { Engine.Gfx.BindShaderProgram(program_normal_map); }
+
+					// Bind global "sun" params
+					Engine.Gfx.SetShaderConstant("u_sun_ambient", colour_from_picker_rgb("#sun_ambient"), Engine.Gfx.SC_VEC3);
+					if(shader_mode == "diffuse" || shader_mode == "specular" || shader_mode == "normal-mapped")
+					{
+						Engine.Gfx.SetShaderConstant("u_sun_diffuse", colour_from_picker_rgb("#sun_diffuse"), Engine.Gfx.SC_VEC3);
+						Engine.Gfx.SetShaderConstant("u_sun_dir", sun_forward, Engine.Gfx.SC_VEC3);
+					}
+					if(shader_mode == "specular" || shader_mode == "normal-mapped")
+					{
+						Engine.Gfx.SetShaderConstant("u_sun_specular", colour_from_picker_rgb("#sun_specular"), Engine.Gfx.SC_VEC3);
+					}
+
+					// Bind material properties
+					Engine.Gfx.SetShaderConstant("u_material_colour", colour_from_picker_rgba("#material_colour"), Engine.Gfx.SC_VEC4);
+					Engine.Gfx.SetShaderConstant("u_material_normal_strength", $("#normal_strength").slider("value"), Engine.Gfx.SC_FLOAT);
+					if(shader_mode == "specular" || shader_mode == "normal-mapped")
+					{
+						Engine.Gfx.SetShaderConstant("u_material_specular", colour_from_picker_rgba("#material_specular"), Engine.Gfx.SC_VEC4);
+						Engine.Gfx.SetShaderConstant("u_material_shininess", $("#material_shininess").slider("value"), Engine.Gfx.SC_FLOAT);
+					}
+
+					// Bind textures
+					Engine.Gfx.BindTexture(resources["tx_stone_albedo"], 0, "u_material_tx_albedo");
+					if(shader_mode == "normal-mapped")
+					{
+						Engine.Gfx.BindTexture(resources["tx_stone_normal"], 1, "u_material_tx_normal");
+					}
+
 					// Draw models
 					var model_index = 0;
-					//for(var i = -5; i <= 5; ++i)
+					for(var i = -5; i <= 5; ++i)
 					{
-						//for(var j = -5; j <= 5; ++j)
+						for(var j = -5; j <= 5; ++j)
 						{
 							// Pick model
-							//var model = models[model_index++ % models.length];
-							var i = 0; var j = 0;
-							var model_index = $("#model_select").slider("value");
-							var model = models[model_index];
+							var model = models[model_index++ % models.length];
 
 							// Position on grid and rotate
-							mat4.translate(mtx_trans, Engine.Math.IdentityMatrix, [0, 2, 0]);
+							mat4.translate(mtx_trans, Engine.Math.IdentityMatrix, [i * 3, 1.2, j * 3]);
 							if($('#cb_rotate').is(":checked"))
 							{
 								mat4.rotate(mtx_trans, mtx_trans, info.elapsed_s / 3.0, [0, 1, 0]);
 							}
 
-							// Set shader
-							var shader_mode = $('select').val();
-							if(shader_mode == "ambient")       { Engine.Gfx.BindShaderProgram(program_ambient); }
-							if(shader_mode == "diffuse")       { Engine.Gfx.BindShaderProgram(program_diffuse); }
-							if(shader_mode == "specular")      { Engine.Gfx.BindShaderProgram(program_specular); }
-							if(shader_mode == "normal-mapped") { Engine.Gfx.BindShaderProgram(program_normal_map); }
+							
 
 							// Bind transform
 							Engine.Gfx.SetShaderConstant("u_trans_world", mtx_trans, Engine.Gfx.SC_MATRIX4);
-
-							// Bind global "sun" params
-							Engine.Gfx.SetShaderConstant("u_sun_ambient", colour_from_picker_rgb("#sun_ambient"), Engine.Gfx.SC_VEC3);
-							if(shader_mode == "diffuse" || shader_mode == "specular" || shader_mode == "normal-mapped")
-							{
-								Engine.Gfx.SetShaderConstant("u_sun_diffuse", colour_from_picker_rgb("#sun_diffuse"), Engine.Gfx.SC_VEC3);
-								Engine.Gfx.SetShaderConstant("u_sun_dir", [0.71, 0.71, 0], Engine.Gfx.SC_VEC3);
-							}
-							if(shader_mode == "specular" || shader_mode == "normal-mapped")
-							{
-								Engine.Gfx.SetShaderConstant("u_sun_specular", colour_from_picker_rgb("#sun_specular"), Engine.Gfx.SC_VEC3);
-							}
-
-							// Bind material properties
-							Engine.Gfx.SetShaderConstant("u_material_colour", colour_from_picker_rgba("#material_colour"), Engine.Gfx.SC_VEC4);
-							if(shader_mode == "specular" || shader_mode == "normal-mapped")
-							{
-								Engine.Gfx.SetShaderConstant("u_material_specular", colour_from_picker_rgba("#material_specular"), Engine.Gfx.SC_VEC4);
-								Engine.Gfx.SetShaderConstant("u_material_shininess", $("#material_shininess").slider("value"), Engine.Gfx.SC_FLOAT);
-							}
-
-							// Bind textures
-							Engine.Gfx.BindTexture(resources["tx_stone_albedo"], 0, "u_material_tx_albedo");
-							if(shader_mode == "normal-mapped")
-							{
-								Engine.Gfx.BindTexture(resources["tx_stone_normal"], 1, "u_material_tx_normal");
-							}
 
 							// Draw model
 							Engine.Gfx.DrawModel(model);
 
 							// Draw normals
-							var verts = model.model_data.primitives[0].vertex_buffers[0].stream;
-							var normals = model.model_data.primitives[0].vertex_buffers[1].stream;
-							var tangents = model.model_data.primitives[0].vertex_buffers[4].stream;
-							for(var x= 0; x < verts.length; x +=3)
+							var debug_normals = $('#cb_show_normals').is(":checked");
+							var debug_tangents = $('#cb_show_tangents').is(":checked");
+							if(debug_normals || debug_tangents)
 							{
-								var v0 = verts[x + 0];
-								var v1 = verts[x + 1] + 2;
-								var v2 = verts[x + 2];
+								var verts = model.model_data.primitives[0].vertex_buffers[0].stream;
+								var normals = model.model_data.primitives[0].vertex_buffers[1].stream;
+								var tangents = model.model_data.primitives[0].vertex_buffers[4].stream;
+								for(var x= 0; x < verts.length; x +=3)
+								{
+									var v0 = verts[x + 0];
+									var v1 = verts[x + 1] + 2;
+									var v2 = verts[x + 2];
 
-								if($('#cb_show_normals').is(":checked"))
-								{
-									var n0 = normals[x + 0];
-									var n1 = normals[x + 1];
-									var n2 = normals[x + 2];
-									Engine.Debug.DrawArrow3D(cam, [v0, v1, v2], [v0 + n0, v1 + n1, v2 + n2], Engine.Colour.Red, 1);
-								}
-								
-								if($('#cb_show_tangents').is(":checked"))
-								{
-									var t0 = tangents[x + 0];
-									var t1 = tangents[x + 1];
-									var t2 = tangents[x + 2];
-									Engine.Debug.DrawArrow3D(cam, [v0, v1, v2], [v0 + t0, v1 + t1, v2 + t2], Engine.Colour.Blue, 1);
+									if(debug_normals)
+									{
+										var n0 = normals[x + 0];
+										var n1 = normals[x + 1];
+										var n2 = normals[x + 2];
+										Engine.Debug.DrawArrow3D(cam, [v0, v1, v2], [v0 + n0, v1 + n1, v2 + n2], Engine.Colour.Red, 1);
+									}
+									
+									if(debug_tangents)
+									{
+										var t0 = tangents[x + 0];
+										var t1 = tangents[x + 1];
+										var t2 = tangents[x + 2];
+										Engine.Debug.DrawArrow3D(cam, [v0, v1, v2], [v0 + t0, v1 + t1, v2 + t2], Engine.Colour.Blue, 1);
+									}
 								}
 							}
 						}
@@ -257,7 +275,7 @@
 	<body>
 		<table style="width:100%">
 			<tr>
-				<td style="width:1000px;vertical-align:top"><canvas width="800" height="600"></canvas></td>
+				<td style="width:1200px;vertical-align:top"><canvas width="1024" height="800"></canvas></td>
 				<td id="param_editor_window" style="background-color:white;padding:20px;vertical-align:top">
 					<h4>Lighting Model</h4>
 					<select>
@@ -282,9 +300,14 @@
 					<input type="text" id="material_specular"/></input><br/>
 					Shininess:
 					<div id="material_shininess" style="width:200px"/></div>
+					Normal Strength:
+					<div id="normal_strength" style="width:200px"/></div>
 					<br/>
 
 					<h4>Global Light Properties</h4>
+					Sun Angle:
+					<div id="sun_angle" style="width:200px"/></div>
+
 					Sun Ambient<br/>
 					<input type="text" id="sun_ambient"></input><br/>
 					Sun Diffuse<br/>
