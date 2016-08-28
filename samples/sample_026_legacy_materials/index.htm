@@ -146,11 +146,13 @@
 				$("#sun_diffuse").spectrum($.extend({}, config, { move : function(color) { } }));
 				$("#material_colour").spectrum($.extend({}, config, { move : function(color) { } }));
 				$("#material_specular").spectrum($.extend({}, config, { move : function(color) { } }));
+				$("#material_fresnel_colour").spectrum($.extend({}, config, { move : function(color) { } }));
 				$("#sun_ambient").spectrum("set", "rgba 70 70 70 255");
 				$("#sun_diffuse").spectrum("set", "rgba 255 255 255 255");
 				$("#sun_specular").spectrum("set", "rgba 255 255 255 255");
 				$("#material_colour").spectrum("set", "rgba 255 255 255 255");
 				$("#material_specular").spectrum("set", "rgba 255 255 255 255");
+				$("#material_fresnel_colour").spectrum("set", "rgba 255 255 255 255");
 
 				// Setup UI sliders
 				$("#material_shininess").slider({ label : "Shininess", value: 0.078125, min: 0.03,   max: 1,   step: 0.01 })
@@ -211,6 +213,7 @@
 					}
 
 					// Fresnel
+					Engine.Gfx.SetShaderConstant("u_material_fresnel_colour", colour_from_picker_rgba("#material_fresnel_colour"), Engine.Gfx.SC_VEC4);
 					Engine.Gfx.SetShaderConstant("u_material_fresnel_bias", $("#material_fresnel_bias").slider("value"), Engine.Gfx.SC_FLOAT);
 					Engine.Gfx.SetShaderConstant("u_material_fresnel_scale", $("#material_fresnel_scale").slider("value"), Engine.Gfx.SC_FLOAT);
 					Engine.Gfx.SetShaderConstant("u_material_fresnel_power", $("#material_fresnel_power").slider("value"), Engine.Gfx.SC_FLOAT);
@@ -321,6 +324,8 @@
 					<div id="material_shininess" style="width:200px"/></div>
 					Normal Strength:
 					<div id="normal_strength" style="width:200px"/></div>
+					Fresnel colour<br/>
+					<input type="text" id="material_fresnel_colour"/></input><br/>
 					Fresnel Bias:
 					<div id="material_fresnel_bias" style="width:200px"/></div>
 					Fresnel Scale:
