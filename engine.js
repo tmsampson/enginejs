@@ -123,6 +123,9 @@ var Engine =
 					{
 						first : function(cb) // 3. Load internal resources
 						{
+							// Run any pre-resource load initialisation routines
+							Engine.PreResourceLoadInit();
+
 							Engine.LogSection("Loading internal resources");
 							Engine.Resource.LoadBatch(Engine.Resources, cb);
 						}
@@ -213,6 +216,11 @@ var Engine =
 		                   window.mozRequestAnimationFrame    ||
 		                   function(callback) { window.setTimeout(callback, 1000 / 60); };
 		request_func(callback, this.canvas);
+	},
+
+	PreResourceLoadInit : function()
+	{
+		Engine.Gfx.PreResourceLoadInit();
 	},
 
 	PreGameLoopInit : function()

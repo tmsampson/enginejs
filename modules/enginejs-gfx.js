@@ -5,6 +5,22 @@
 Engine.Gfx =
 {
 	// **********************************************
+	// Extensions
+	// **********************************************
+	Extension_Anisotropic_Filtering : null,
+
+	// **********************************************
+	// Init
+	// **********************************************
+	PreResourceLoadInit : function()
+	{
+		// Grab anisotropic filtering extension (if present)
+		Engine.Gfx.Extension_Anisotropic_Filtering = Engine.GL.getExtension("EXT_texture_filter_anisotropic") ||
+		                                             Engine.GL.getExtension("MOZ_EXT_texture_filter_anisotropic") ||
+		                                             Engine.GL.getExtension("WEBKIT_EXT_texture_filter_anisotropic");
+	},
+
+	// **********************************************
 	// Vertex buffer functionality
 	// **********************************************
 	CreateVertexBuffer : function(vertex_buffer_descriptor)
@@ -287,10 +303,15 @@ Engine.Gfx =
 			Engine.GL.texImage2D(Engine.GL.TEXTURE_2D, 0, Engine.GL.RGBA, Engine.GL.RGBA, Engine.GL.UNSIGNED_BYTE, img_object);
 
 			// Generate mip chain
-			var mip_mode = (descriptor.hasOwnProperty("is_normal_map") && descriptor.is_normal_map)? Engine.GL.LINEAR : Engine.GL.LINEAR_MIPMAP_NEAREST;
-			Engine.GL.texParameteri(Engine.GL.TEXTURE_2D, Engine.GL.TEXTURE_MAG_FILTER, Engine.GL.LINEAR);
-			Engine.GL.texParameteri(Engine.GL.TEXTURE_2D, Engine.GL.TEXTURE_MIN_FILTER, mip_mode);
 			Engine.GL.generateMipmap(Engine.GL.TEXTURE_2D);
+			Engine.GL.texParameteri(Engine.GL.TEXTURE_2D, Engine.GL.TEXTURE_MAG_FILTER, Engine.GL.LINEAR);
+			Engine.GL.texParameteri(Engine.GL.TEXTURE_2D, Engine.GL.TEXTURE_MIN_FILTER, Engine.GL.LINEAR_MIPMAP_NEAREST);
+
+			// Enable anisotropic filtering?
+			if(Engine.Gfx.Extension_Anisotropic_Filtering)
+			{
+				Engine.GL.texParameterf(Engine.GL.TEXTURE_2D, Engine.Gfx.Extension_Anisotropic_Filtering.TEXTURE_MAX_ANISOTROPY_EXT, 4);
+			}
 
 			// Unbind
 			Engine.GL.bindTexture(Engine.GL.TEXTURE_2D, null);
