@@ -24,6 +24,10 @@ uniform float u_material_normal_strength;
 // Material samplers
 uniform sampler2D u_material_tx_albedo;
 
+#ifdef USE_SPECULAR_MAP
+uniform sampler2D u_material_tx_specular;
+#endif
+
 #ifdef USE_NORMAL_MAP
 uniform sampler2D u_material_tx_normal;
 #endif
@@ -80,6 +84,11 @@ void main(void)
 		float cam_dot = max(0.0, dot(reflected_ray, to_cam));
 		specular = material_albedo * u_material_specular * clamp(vec4(u_sun_specular, 1.0) * pow(cam_dot, u_material_shininess * 128.0), 0.0, 1.0);
 	}
+#endif
+
+#ifdef USE_SPECULAR_MAP
+	vec4 specular_map = texture2D(u_material_tx_specular, v_uv.xy);
+	specular *= specular_map;
 #endif
 
 	// Composite

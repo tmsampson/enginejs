@@ -81,7 +81,9 @@ var Engine =
 		fs_legacy_ambient                          : { file: "enginejs/resources/shaders/3d/material-legacy.fs", define : [] },
 		fs_legacy_diffuse                          : { file: "enginejs/resources/shaders/3d/material-legacy.fs", define : [ "USE_DIFFUSE" ] },
 		fs_legacy_specular                         : { file: "enginejs/resources/shaders/3d/material-legacy.fs", define : [ "USE_DIFFUSE", "USE_SPECULAR"] },
+		fs_legacy_specular_map                     : { file: "enginejs/resources/shaders/3d/material-legacy.fs", define : [ "USE_DIFFUSE", "USE_SPECULAR", "USE_SPECULAR_MAP"] },
 		fs_legacy_specular_normal_map              : { file: "enginejs/resources/shaders/3d/material-legacy.fs", define : [ "USE_DIFFUSE", "USE_SPECULAR", "USE_NORMAL_MAP" ] },
+		fs_legacy_specular_map_normal_map          : { file: "enginejs/resources/shaders/3d/material-legacy.fs", define : [ "USE_DIFFUSE", "USE_SPECULAR", "USE_SPECULAR_MAP", "USE_NORMAL_MAP" ] },
 
 		// Models
 		ml_quad                                    : { file: "enginejs/resources/models/quad.model"       },

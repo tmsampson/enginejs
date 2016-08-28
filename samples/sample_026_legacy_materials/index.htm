@@ -16,8 +16,9 @@
 		<script language="javascript">
 		var resources =
 		{
-			tx_stone_albedo : { file : "img/sponge_a.png" },
-			tx_stone_normal : { file : "img/sponge_n.png", is_normal_map : true },
+			tx_albedo   : { file : "img/sponge_a.png" },
+			tx_specular : { file : "img/sponge_s.png" },
+			tx_normal   : { file : "img/sponge_n.png", is_normal_map : true },
 		};
 
 		// ====================================================================================================================================
@@ -39,6 +40,7 @@
 		var program_ambient;
 		var program_diffuse;
 		var program_specular;
+		var program_specular_map;
 		var program_normal_map;
 		var program_white_unlit;
 
@@ -116,19 +118,22 @@
 				];
 
 				// Compile shaders
-				program_floor       = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_general_transformed"],
-				                                                     Engine.Resources["fs_grid_xz_fog"]);
-				program_ambient     = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_general_transformed_uv_normals"],
-				                                                     Engine.Resources["fs_legacy_ambient"]);
-				program_diffuse     = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_general_transformed_uv_normals"],
-				                                                     Engine.Resources["fs_legacy_diffuse"]);
-				program_specular    = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_general_transformed_uv_normals"],
-				                                                     Engine.Resources["fs_legacy_specular"]);
-				program_normal_map  = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_general_transformed_uv_normals_tangents"],
-				                                                     Engine.Resources["fs_legacy_specular_normal_map"]);
-
-				program_white_unlit = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_general_transformed"],
-				                                                     Engine.Resources["fs_unlit_colour"]);
+				program_floor                   = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_general_transformed"],
+				                                                                 Engine.Resources["fs_grid_xz_fog"]);
+				program_ambient                 = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_general_transformed_uv_normals"],
+				                                                                 Engine.Resources["fs_legacy_ambient"]);
+				program_diffuse                 = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_general_transformed_uv_normals"],
+				                                                                 Engine.Resources["fs_legacy_diffuse"]);
+				program_specular                = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_general_transformed_uv_normals"],
+				                                                                 Engine.Resources["fs_legacy_specular"]);
+				program_specular_map            = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_general_transformed_uv_normals"],
+				                                                                 Engine.Resources["fs_legacy_specular_map"]);
+				program_normal_map              = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_general_transformed_uv_normals_tangents"],
+				                                                                 Engine.Resources["fs_legacy_specular_normal_map"]);
+				program_specular_map_normal_map = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_general_transformed_uv_normals_tangents"],
+				                                                                 Engine.Resources["fs_legacy_specular_map_normal_map"]);
+				program_white_unlit             = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_general_transformed"],
+				                                                                 Engine.Resources["fs_unlit_colour"]);
 
 				// Setup roam cam
 				cam = new Engine.Camera.Perspective({ position: [0, 4, -5] });
@@ -174,19 +179,21 @@
 
 					// Set shader
 					var shader_mode = $('select').val();
-					if(shader_mode == "ambient")       { Engine.Gfx.BindShaderProgram(program_ambient); }
-					if(shader_mode == "diffuse")       { Engine.Gfx.BindShaderProgram(program_diffuse); }
-					if(shader_mode == "specular")      { Engine.Gfx.BindShaderProgram(program_specular); }
-					if(shader_mode == "normal-mapped") { Engine.Gfx.BindShaderProgram(program_normal_map); }
+					if(shader_mode == "ambient")                 { Engine.Gfx.BindShaderProgram(program_ambient); }
+					if(shader_mode == "diffuse")                 { Engine.Gfx.BindShaderProgram(program_diffuse); }
+					if(shader_mode == "specular")                { Engine.Gfx.BindShaderProgram(program_specular); }
+					if(shader_mode == "specular-map")            { Engine.Gfx.BindShaderProgram(program_specular_map); }
+					if(shader_mode == "normal-map")              { Engine.Gfx.BindShaderProgram(program_normal_map); }
+					if(shader_mode == "specular-map-normal-map") { Engine.Gfx.BindShaderProgram(program_specular_map_normal_map); }
 
 					// Bind global "sun" params
 					Engine.Gfx.SetShaderConstant("u_sun_ambient", colour_from_picker_rgb("#sun_ambient"), Engine.Gfx.SC_VEC3);
-					if(shader_mode == "diffuse" || shader_mode == "specular" || shader_mode == "normal-mapped")
+					if(shader_mode == "diffuse" || shader_mode == "specular" || shader_mode == "specular-map" || shader_mode == "normal-map" || shader_mode == "specular-map-normal-map")
 					{
 						Engine.Gfx.SetShaderConstant("u_sun_diffuse", colour_from_picker_rgb("#sun_diffuse"), Engine.Gfx.SC_VEC3);
 						Engine.Gfx.SetShaderConstant("u_sun_dir", sun_forward, Engine.Gfx.SC_VEC3);
 					}
-					if(shader_mode == "specular" || shader_mode == "normal-mapped")
+					if(shader_mode == "specular" || shader_mode == "specular-map" || shader_mode == "normal-map" || shader_mode == "specular-map-normal-map")
 					{
 						Engine.Gfx.SetShaderConstant("u_sun_specular", colour_from_picker_rgb("#sun_specular"), Engine.Gfx.SC_VEC3);
 					}
@@ -194,17 +201,21 @@
 					// Bind material properties
 					Engine.Gfx.SetShaderConstant("u_material_colour", colour_from_picker_rgba("#material_colour"), Engine.Gfx.SC_VEC4);
 					Engine.Gfx.SetShaderConstant("u_material_normal_strength", $("#normal_strength").slider("value"), Engine.Gfx.SC_FLOAT);
-					if(shader_mode == "specular" || shader_mode == "normal-mapped")
+					if(shader_mode == "specular"  || shader_mode == "specular-map" || shader_mode == "normal-map" || shader_mode == "specular-map-normal-map")
 					{
 						Engine.Gfx.SetShaderConstant("u_material_specular", colour_from_picker_rgba("#material_specular"), Engine.Gfx.SC_VEC4);
 						Engine.Gfx.SetShaderConstant("u_material_shininess", $("#material_shininess").slider("value"), Engine.Gfx.SC_FLOAT);
 					}
 
 					// Bind textures
-					Engine.Gfx.BindTexture(resources["tx_stone_albedo"], 0, "u_material_tx_albedo");
-					if(shader_mode == "normal-mapped")
+					Engine.Gfx.BindTexture(resources["tx_albedo"], 0, "u_material_tx_albedo");
+					if(shader_mode == "normal-map" || shader_mode == "specular-map-normal-map")
 					{
-						Engine.Gfx.BindTexture(resources["tx_stone_normal"], 1, "u_material_tx_normal");
+						Engine.Gfx.BindTexture(resources["tx_normal"], 1, "u_material_tx_normal");
+					}
+					if(shader_mode == "specular-map" || shader_mode == "specular-map-normal-map")
+					{
+						Engine.Gfx.BindTexture(resources["tx_specular"], 2, "u_material_tx_specular");
 					}
 
 					// Draw models
@@ -222,8 +233,6 @@
 							{
 								mat4.rotate(mtx_trans, mtx_trans, info.elapsed_s / 3.0, [0, 1, 0]);
 							}
-
-							
 
 							// Bind transform
 							Engine.Gfx.SetShaderConstant("u_trans_world", mtx_trans, Engine.Gfx.SC_MATRIX4);
@@ -279,7 +288,9 @@
 				<td id="param_editor_window" style="background-color:white;padding:20px;vertical-align:top">
 					<h4>Lighting Model</h4>
 					<select>
-						<option value="normal-mapped">normal-mapped</option>
+						<option value="specular-map-normal-map">specular-map-normal-map</option>
+						<option value="normal-map">normal-map</option>
+						<option value="specular-map">specular-map</option>
 						<option value="specular">specular</option>
 						<option value="ambient">ambient</option>
 						<option value="diffuse">diffuse</option>
