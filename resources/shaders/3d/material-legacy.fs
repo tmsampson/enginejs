@@ -23,6 +23,7 @@ uniform float u_material_normal_strength;
 
 #define USE_FRESNEL // Always enabled for now
 #ifdef USE_FRESNEL
+uniform vec4 u_material_fresnel_colour;
 uniform float u_material_fresnel_bias;
 uniform float u_material_fresnel_scale;
 uniform float u_material_fresnel_power;
@@ -107,5 +108,5 @@ void main(void)
 #endif
 
 	// Composite
-	gl_FragColor = mix(ambient + diffuse + specular, vec4(1.0), fresnel);
+	gl_FragColor = mix(ambient + diffuse + specular, u_material_fresnel_colour, fresnel);
 }
