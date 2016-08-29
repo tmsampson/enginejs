@@ -16,7 +16,7 @@ uniform vec3 u_sun_specular;
 uniform vec3 u_sun_dir; // normalised
 
 // Material properties
-uniform vec4 u_material_colour;
+uniform vec4 u_material_albedo_colour;
 uniform vec4 u_material_specular;
 uniform float u_material_shininess;
 uniform float u_material_normal_strength;
@@ -56,19 +56,18 @@ void main(void)
 	normal_basis[2] = normalize(v_world_normal);
 
 	vec3 normal = normal_basis * normalize((material_normal.xyz * 2.0) - 1.0);
-	
+
+	// Scale normal
+	normal *= u_material_normal_strength;
 #else
 	// Use vertex normals
 	vec3 normal = v_world_normal;
 #endif
 
-	// Scale normal
-	normal *= u_material_normal_strength;
-
 	// *************************************************************************************
 	// Ambient
 	// *************************************************************************************
-	vec4 material_albedo = texture2D(u_material_tx_albedo, v_uv.xy) * u_material_colour;
+	vec4 material_albedo = texture2D(u_material_tx_albedo, v_uv.xy) * u_material_albedo_colour;
 	vec4 ambient = material_albedo * vec4(u_sun_ambient, 1.0);
 
 	// *************************************************************************************
@@ -92,11 +91,11 @@ void main(void)
 		float cam_dot = max(0.0, dot(reflected_ray, to_cam));
 		specular = material_albedo * u_material_specular * clamp(vec4(u_sun_specular, 1.0) * pow(cam_dot, u_material_shininess * 128.0), 0.0, 1.0);
 	}
-#endif
 
-#ifdef USE_SPECULAR_MAP
+	#ifdef USE_SPECULAR_MAP
 	vec4 specular_map = texture2D(u_material_tx_specular, v_uv.xy);
 	specular *= specular_map;
+	#endif
 #endif
 
 #ifdef USE_FRESNEL
