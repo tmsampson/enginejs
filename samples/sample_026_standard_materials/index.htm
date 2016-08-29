@@ -96,12 +96,6 @@
 			return [raw_value.r /= 255, raw_value.g /= 255, raw_value.b /= 255 ];
 		};
 
-		function colour_from_picker_rgba(picker_selector)
-		{
-			var raw_value = $(picker_selector).spectrum("get").toRgb();
-			return [raw_value.r /= 255, raw_value.g /= 255, raw_value.b /= 255, raw_value.a /= 255 ];
-		};
-
 		$(document).ready(function()
 		{
 			var on_init = function()
@@ -202,38 +196,6 @@
 
 							// Draw model
 							Engine.Gfx.DrawModel(model);
-
-							// Draw normals
-							var debug_normals = $('#cb_show_normals').is(":checked");
-							var debug_tangents = $('#cb_show_tangents').is(":checked");
-							if(debug_normals || debug_tangents)
-							{
-								var verts = model.model_data.primitives[0].vertex_buffers[0].stream;
-								var normals = model.model_data.primitives[0].vertex_buffers[1].stream;
-								var tangents = model.model_data.primitives[0].vertex_buffers[4].stream;
-								for(var x= 0; x < verts.length; x +=3)
-								{
-									var v0 = verts[x + 0];
-									var v1 = verts[x + 1] + 2;
-									var v2 = verts[x + 2];
-
-									if(debug_normals)
-									{
-										var n0 = normals[x + 0];
-										var n1 = normals[x + 1];
-										var n2 = normals[x + 2];
-										Engine.Debug.DrawArrow3D(cam, [v0, v1, v2], [v0 + n0, v1 + n1, v2 + n2], Engine.Colour.Red, 1);
-									}
-									
-									if(debug_tangents)
-									{
-										var t0 = tangents[x + 0];
-										var t1 = tangents[x + 1];
-										var t2 = tangents[x + 2];
-										Engine.Debug.DrawArrow3D(cam, [v0, v1, v2], [v0 + t0, v1 + t1, v2 + t2], Engine.Colour.Blue, 1);
-									}
-								}
-							}
 						}
 					}
 				};
