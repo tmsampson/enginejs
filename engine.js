@@ -18,32 +18,33 @@ var Engine =
 	// *************************************************************************************
 	Modules :
 	[
-		{ name : "EngineJS-Util",      js : "enginejs/modules/enginejs-util.js",      ie : "load"     },
-		{ name : "EngineJS-Time",      js : "enginejs/modules/enginejs-time.js",      ie : "load"     },
-		{ name : "EngineJS-Colour",    js : "enginejs/modules/enginejs-colour.js",    ie : "load"     },
-		{ name : "EngineJS-Debug",     js : "enginejs/modules/enginejs-debug.js",     ie : "load"     },
-		{ name : "EngineJS-Array",     js : "enginejs/modules/enginejs-array.js",     ie : "load"     },
-		{ name : "EngineJS-Math",      js : "enginejs/modules/enginejs-math.js",      ie : "load"     },
-		{ name : "EngineJS-Intersect", js : "enginejs/modules/enginejs-intersect.js", ie : "load"     },
-		{ name : "EngineJS-Easing",    js : "enginejs/modules/enginejs-easing.js",    ie : "load"     },
-		{ name : "EngineJS-Vec2",      js : "enginejs/modules/enginejs-vec2.js",      ie : "load"     },
-		{ name : "EngineJS-Vec3",      js : "enginejs/modules/enginejs-vec3.js",      ie : "load"     },
-		{ name : "EngineJS-Spatial",   js : "enginejs/modules/enginejs-spatial.js",   ie : "load"     },
-		{ name : "EngineJS-Camera",    js : "enginejs/modules/enginejs-camera.js",    ie : "load"     },
-		{ name : "EngineJS-Net",       js : "enginejs/modules/enginejs-net.js",       ie : "load"     },
-		{ name : "EngineJS-Resource",  js : "enginejs/modules/enginejs-resource.js",  ie : "load"     },
-		{ name : "EngineJS-Keyboard",  js : "enginejs/modules/enginejs-keyboard.js",  ie : "load"     },
-		{ name : "EngineJS-Mouse",     js : "enginejs/modules/enginejs-mouse.js",     ie : "load"     },
-		{ name : "EngineJS-Gamepad",   js : "enginejs/modules/enginejs-gamepad.js",   ie : "load"     },
-		{ name : "EngineJS-Touch",     js : "enginejs/modules/enginejs-touch.js",     ie : "load"     },
-		{ name : "EngineJS-Gfx",       js : "enginejs/modules/enginejs-gfx.js",       ie : "load"     },
-		{ name : "EngineJS-Geometry",  js : "enginejs/modules/enginejs-geometry.js",  ie : "load"     },
-		{ name : "EngineJS-Model",     js : "enginejs/modules/enginejs-model.js",     ie : "load"     },
-		{ name : "EngineJS-Game-2D",   js : "enginejs/modules/enginejs-game-2d.js",   ie : "load"     },
-		{ name : "EngineJS-Audio",     js : "enginejs/modules/enginejs-audio.js",     ie : "override" },
-		{ name : "EngineJS-Editor",    js : "enginejs/modules/enginejs-editor.js",    ie : "load"     },
-		{ name : "EngineJS-Device",    js : "enginejs/modules/enginejs-device.js",    ie : "load"     },
-		{ name : "EngineJS-Text2D",    js : "enginejs/modules/enginejs-text-2d.js",   ie : "load"     },
+		{ name : "EngineJS-Util",              js : "enginejs/modules/enginejs-util.js",              ie : "load"     },
+		{ name : "EngineJS-Time",              js : "enginejs/modules/enginejs-time.js",              ie : "load"     },
+		{ name : "EngineJS-Colour",            js : "enginejs/modules/enginejs-colour.js",            ie : "load"     },
+		{ name : "EngineJS-Debug",             js : "enginejs/modules/enginejs-debug.js",             ie : "load"     },
+		{ name : "EngineJS-Array",             js : "enginejs/modules/enginejs-array.js",             ie : "load"     },
+		{ name : "EngineJS-Math",              js : "enginejs/modules/enginejs-math.js",              ie : "load"     },
+		{ name : "EngineJS-Intersect",         js : "enginejs/modules/enginejs-intersect.js",         ie : "load"     },
+		{ name : "EngineJS-Easing",            js : "enginejs/modules/enginejs-easing.js",            ie : "load"     },
+		{ name : "EngineJS-Vec2",              js : "enginejs/modules/enginejs-vec2.js",              ie : "load"     },
+		{ name : "EngineJS-Vec3",              js : "enginejs/modules/enginejs-vec3.js",              ie : "load"     },
+		{ name : "EngineJS-Spatial",           js : "enginejs/modules/enginejs-spatial.js",           ie : "load"     },
+		{ name : "EngineJS-Camera",            js : "enginejs/modules/enginejs-camera.js",            ie : "load"     },
+		{ name : "EngineJS-Net",               js : "enginejs/modules/enginejs-net.js",               ie : "load"     },
+		{ name : "EngineJS-Resource",          js : "enginejs/modules/enginejs-resource.js",          ie : "load"     },
+		{ name : "EngineJS-Keyboard",          js : "enginejs/modules/enginejs-keyboard.js",          ie : "load"     },
+		{ name : "EngineJS-Mouse",             js : "enginejs/modules/enginejs-mouse.js",             ie : "load"     },
+		{ name : "EngineJS-Gamepad",           js : "enginejs/modules/enginejs-gamepad.js",           ie : "load"     },
+		{ name : "EngineJS-Touch",             js : "enginejs/modules/enginejs-touch.js",             ie : "load"     },
+		{ name : "EngineJS-Gfx",               js : "enginejs/modules/enginejs-gfx.js",               ie : "load"     },
+		{ name : "EngineJS-Material-Standard", js : "enginejs/modules/enginejs-material-standard.js", ie : "load"     },
+		{ name : "EngineJS-Geometry",          js : "enginejs/modules/enginejs-geometry.js",          ie : "load"     },
+		{ name : "EngineJS-Model",             js : "enginejs/modules/enginejs-model.js",             ie : "load"     },
+		{ name : "EngineJS-Game-2D",           js : "enginejs/modules/enginejs-game-2d.js",           ie : "load"     },
+		{ name : "EngineJS-Audio",             js : "enginejs/modules/enginejs-audio.js",             ie : "override" },
+		{ name : "EngineJS-Editor",            js : "enginejs/modules/enginejs-editor.js",            ie : "load"     },
+		{ name : "EngineJS-Device",            js : "enginejs/modules/enginejs-device.js",            ie : "load"     },
+		{ name : "EngineJS-Text2D",            js : "enginejs/modules/enginejs-text-2d.js",           ie : "load"     },
 	],
 
 	// *************************************************************************************
@@ -52,48 +53,56 @@ var Engine =
 	Resources :
 	{
 		// General vertex shader flavours
-		vs_general                                 : { file: "enginejs/resources/shaders/general.vs" },
-		vs_general_uv                              : { file: "enginejs/resources/shaders/general.vs", define : [ "ENGINEJS_ENABLE_UV_COORDS" ] },
-		vs_general_transformed                     : { file: "enginejs/resources/shaders/general.vs", define : [ "ENGINEJS_ENABLE_TRANSFORM" ] },
-		vs_general_transformed_uv                  : { file: "enginejs/resources/shaders/general.vs", define : [ "ENGINEJS_ENABLE_TRANSFORM", "ENGINEJS_ENABLE_UV_COORDS" ] },
-		vs_general_transformed_normals             : { file: "enginejs/resources/shaders/general.vs", define : [ "ENGINEJS_ENABLE_TRANSFORM", "ENGINEJS_ENABLE_NORMALS" ] },
-		vs_general_transformed_uv_normals          : { file: "enginejs/resources/shaders/general.vs", define : [ "ENGINEJS_ENABLE_TRANSFORM", "ENGINEJS_ENABLE_UV_COORDS", "ENGINEJS_ENABLE_NORMALS" ] },
-		vs_general_transformed_uv_normals_tangents : { file: "enginejs/resources/shaders/general.vs", define : [ "ENGINEJS_ENABLE_TRANSFORM", "ENGINEJS_ENABLE_UV_COORDS", "ENGINEJS_ENABLE_NORMALS", "ENGINEJS_ENABLE_TANGENTS" ] },
+		vs_general                                             : { file: "enginejs/resources/shaders/general.vs" },
+		vs_general_uv                                          : { file: "enginejs/resources/shaders/general.vs", define : [ "ENGINEJS_ENABLE_UV_COORDS" ] },
+		vs_general_transformed                                 : { file: "enginejs/resources/shaders/general.vs", define : [ "ENGINEJS_ENABLE_TRANSFORM" ] },
+		vs_general_transformed_uv                              : { file: "enginejs/resources/shaders/general.vs", define : [ "ENGINEJS_ENABLE_TRANSFORM", "ENGINEJS_ENABLE_UV_COORDS" ] },
+		vs_general_transformed_normals                         : { file: "enginejs/resources/shaders/general.vs", define : [ "ENGINEJS_ENABLE_TRANSFORM", "ENGINEJS_ENABLE_NORMALS" ] },
+		vs_general_transformed_uv_normals                      : { file: "enginejs/resources/shaders/general.vs", define : [ "ENGINEJS_ENABLE_TRANSFORM", "ENGINEJS_ENABLE_UV_COORDS", "ENGINEJS_ENABLE_NORMALS" ] },
+		vs_general_transformed_uv_normals_tangents             : { file: "enginejs/resources/shaders/general.vs", define : [ "ENGINEJS_ENABLE_TRANSFORM", "ENGINEJS_ENABLE_UV_COORDS", "ENGINEJS_ENABLE_NORMALS", "ENGINEJS_ENABLE_TANGENTS" ] },
 
 		// Misc basic shaders
-		fs_unlit_colour                            : { file: "enginejs/resources/shaders/basic/unlit-colour.fs" },
-		fs_unlit_textured                          : { file: "enginejs/resources/shaders/basic/unlit-textured.fs" },
+		fs_unlit_colour                                        : { file: "enginejs/resources/shaders/basic/unlit-colour.fs" },
+		fs_unlit_textured                                      : { file: "enginejs/resources/shaders/basic/unlit-textured.fs" },
 
 		// Debug pass-through shaders
-		fs_debug_normals                           : { file: "enginejs/resources/shaders/debug/debug-normals.fs" },
-		fs_debug_uvs                               : { file: "enginejs/resources/shaders/debug/debug-uvs.fs" },
+		fs_debug_normals                                       : { file: "enginejs/resources/shaders/debug/debug-normals.fs" },
+		fs_debug_uvs                                           : { file: "enginejs/resources/shaders/debug/debug-uvs.fs" },
 
 		// Misc fragment shaders
-		fs_grid_xy                                 : { file: "enginejs/resources/shaders/misc/grid-xy.fs" },
-		fs_grid_xz                                 : { file: "enginejs/resources/shaders/misc/grid-xz.fs" },
-		fs_grid_xz_fog                             : { file: "enginejs/resources/shaders/misc/grid-xz-fog.fs" },
+		fs_grid_xy                                             : { file: "enginejs/resources/shaders/misc/grid-xy.fs" },
+		fs_grid_xz                                             : { file: "enginejs/resources/shaders/misc/grid-xz.fs" },
+		fs_grid_xz_fog                                         : { file: "enginejs/resources/shaders/misc/grid-xz-fog.fs" },
 
 		// Game-2D shaders
-		fs_2d_background                           : { file: "enginejs/resources/shaders/2d/background.fs" },
-		fs_2d_sprite                               : { file: "enginejs/resources/shaders/2d/sprite.fs" },
+		fs_2d_background                                       : { file: "enginejs/resources/shaders/2d/background.fs" },
+		fs_2d_sprite                                           : { file: "enginejs/resources/shaders/2d/sprite.fs" },
 
-		// Legacy material system
-		fs_legacy_ambient                          : { file: "enginejs/resources/shaders/3d/material-legacy.fs", define : [] },
-		fs_legacy_diffuse                          : { file: "enginejs/resources/shaders/3d/material-legacy.fs", define : [ "USE_DIFFUSE" ] },
-		fs_legacy_specular                         : { file: "enginejs/resources/shaders/3d/material-legacy.fs", define : [ "USE_DIFFUSE", "USE_SPECULAR"] },
-		fs_legacy_specular_map                     : { file: "enginejs/resources/shaders/3d/material-legacy.fs", define : [ "USE_DIFFUSE", "USE_SPECULAR", "USE_SPECULAR_MAP"] },
-		fs_legacy_specular_normal_map              : { file: "enginejs/resources/shaders/3d/material-legacy.fs", define : [ "USE_DIFFUSE", "USE_SPECULAR", "USE_NORMAL_MAP" ] },
-		fs_legacy_specular_map_normal_map          : { file: "enginejs/resources/shaders/3d/material-legacy.fs", define : [ "USE_DIFFUSE", "USE_SPECULAR", "USE_SPECULAR_MAP", "USE_NORMAL_MAP" ] },
+		// Legacy material system (shader permutations)
+		fs_mat_standard_amb                                    : { file: "enginejs/resources/shaders/3d/material-standard.fs", define : [] },
+		fs_mat_standard_amb_lit                                : { file: "enginejs/resources/shaders/3d/material-standard.fs", define : [ "USE_DIFFUSE" ] },
+		fs_mat_standard_amb_lit_spec                           : { file: "enginejs/resources/shaders/3d/material-standard.fs", define : [ "USE_DIFFUSE", "USE_SPECULAR"] },
+		fs_mat_standard_amb_lit_spec_specmap                   : { file: "enginejs/resources/shaders/3d/material-standard.fs", define : [ "USE_DIFFUSE", "USE_SPECULAR", "USE_SPECULAR_MAP"] },
+		fs_mat_standard_amb_lit_normalmap                      : { file: "enginejs/resources/shaders/3d/material-standard.fs", define : [ "USE_DIFFUSE", "USE_NORMAL_MAP" ] },
+		fs_mat_standard_amb_lit_spec_normalmap                 : { file: "enginejs/resources/shaders/3d/material-standard.fs", define : [ "USE_DIFFUSE", "USE_SPECULAR", "USE_NORMAL_MAP" ] },
+		fs_mat_standard_amb_lit_spec_specmap_normalmap         : { file: "enginejs/resources/shaders/3d/material-standard.fs", define : [ "USE_DIFFUSE", "USE_SPECULAR", "USE_SPECULAR_MAP", "USE_NORMAL_MAP" ] },
+		fs_mat_standard_amb_fresnel                            : { file: "enginejs/resources/shaders/3d/material-standard.fs", define : [ "USE_FRESNEL" ] },
+		fs_mat_standard_amb_lit_fresnel                        : { file: "enginejs/resources/shaders/3d/material-standard.fs", define : [ "USE_DIFFUSE", "USE_FRESNEL" ] },
+		fs_mat_standard_amb_lit_spec_fresnel                   : { file: "enginejs/resources/shaders/3d/material-standard.fs", define : [ "USE_DIFFUSE", "USE_SPECULAR", "USE_FRESNEL" ] },
+		fs_mat_standard_amb_lit_spec_specmap_fresnel           : { file: "enginejs/resources/shaders/3d/material-standard.fs", define : [ "USE_DIFFUSE", "USE_SPECULAR", "USE_SPECULAR_MAP", "USE_FRESNEL" ] },
+		fs_mat_standard_amb_lit_normalmap_fresnel              : { file: "enginejs/resources/shaders/3d/material-standard.fs", define : [ "USE_DIFFUSE", "USE_NORMAL_MAP", "USE_FRESNEL" ] },
+		fs_mat_standard_amb_lit_spec_normalmap_fresnel         : { file: "enginejs/resources/shaders/3d/material-standard.fs", define : [ "USE_DIFFUSE", "USE_SPECULAR", "USE_NORMAL_MAP", "USE_FRESNEL" ] },
+		fs_mat_standard_amb_lit_spec_specmap_normalmap_fresnel : { file: "enginejs/resources/shaders/3d/material-standard.fs", define : [ "USE_DIFFUSE", "USE_SPECULAR", "USE_SPECULAR_MAP", "USE_NORMAL_MAP", "USE_FRESNEL" ] },
 
 		// Models
-		ml_quad                                    : { file: "enginejs/resources/models/quad.model"       },
-		ml_floor_tile                              : { file: "enginejs/resources/models/floor_tile.model" },
-		ml_tri                                     : { file: "enginejs/resources/models/tri.model"        },
-		ml_cube                                    : { file: "enginejs/resources/models/cube.model"       },
+		ml_quad                                                : { file: "enginejs/resources/models/quad.model"       },
+		ml_floor_tile                                          : { file: "enginejs/resources/models/floor_tile.model" },
+		ml_tri                                                 : { file: "enginejs/resources/models/tri.model"        },
+		ml_cube                                                : { file: "enginejs/resources/models/cube.model"       },
 
 		// Misc
-		tx_white                                   : { file: "enginejs/resources/img/white.png"   },
-		sfx_blank                                  : { file: "enginejs/resources/audio/blank.mp3" }
+		tx_white                                               : { file: "enginejs/resources/img/white.png"   },
+		sfx_blank                                              : { file: "enginejs/resources/audio/blank.mp3" }
 	},
 
 	// *************************************************************************************
