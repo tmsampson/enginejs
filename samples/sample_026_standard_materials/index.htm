@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="utf-8" />
 
-		<title>Engine Sample: Stadard material system</title>
+		<title>Engine Sample: Standard material system</title>
 
 		<!-- EngineJS -->
 		<script type="text/javascript" src="enginejs/jquery.js"></script>
@@ -16,6 +16,13 @@
 		<script language="javascript">
 		var resources =
 		{
+			mat_sponge  : { file : "mat/sponge.mat"},
+			mat_wool    : { file : "mat/wool.mat"},
+			mat_shiny_plastic    : { file : "mat/shiny-plastic.mat"},
+			mat_stone   : { file : "mat/stone.mat"},
+			mat_wood    : { file : "mat/wood.mat"},
+			mat_snooker_ball    : { file : "mat/snooker-ball.mat"},
+			mat_carpet    : { file : "mat/carpet.mat"},
 			tx_albedo   : { file : "img/sponge_a.png" },
 			tx_specular : { file : "img/sponge_s.png" },
 			tx_normal   : { file : "img/sponge_n.png", is_normal_map : true },
@@ -26,17 +33,13 @@
 		// ====================================================================================================================================
 		var cam = null;
 		var mtx_trans = null;
+		var gamepad = null;
 
 		// ====================================================================================================================================
 		// Models
 		// ====================================================================================================================================
 		var model_floor = null;
 		var models = null;
-
-		// ====================================================================================================================================
-		// Materials
-		// ====================================================================================================================================
-		var materials = [ ];
 
 		// ====================================================================================================================================
 		// Shader programs
@@ -56,6 +59,21 @@
 			var light_move_speed = 0.1;
 			sun_angle = $("#sun_angle").slider("value");
 			sun_angle += Engine.Mouse.GetWheelDelta() / 20;
+			
+			// Process gamepad input
+			gamepad = Engine.Gamepad.Pads[0];
+			if(gamepad)
+			{
+				if(gamepad.IsPressed("lb"))
+				{
+					sun_angle -= 1;
+				}
+				if(gamepad.IsPressed("rb"))
+				{
+					sun_angle += 1;
+				}
+			}
+
 			$("#sun_angle").slider('value', sun_angle);
 			draw_light(sun_pos, sun_angle);
 		};
@@ -68,7 +86,7 @@
 			Engine.Gfx.BindShaderProgram(program_white_unlit);
 			Engine.Gfx.SetShaderConstant("u_trans_world", mtx_trans, Engine.Gfx.SC_MATRIX4);
 			Engine.Gfx.SetShaderConstant("u_colour", Engine.Colour.White, Engine.Gfx.SC_COLOUR);
-			Engine.Gfx.DrawModel(models[2]);
+			Engine.Gfx.DrawModel(models[0]);
 
 			// Draw light basis
 			Engine.Debug.DrawArrow3D(cam, sun_pos, [sun_pos[0] + 3, sun_pos[1],     sun_pos[2]],     Engine.Colour.Red, 1);
@@ -96,6 +114,11 @@
 			return [raw_value.r /= 255, raw_value.g /= 255, raw_value.b /= 255 ];
 		};
 
+		function copy_to_clipboard(text)
+		{
+			window.prompt("Copy to clipboard: Ctrl+C, Enter", text);
+		};
+
 		$(document).ready(function()
 		{
 			var on_init = function()
@@ -112,15 +135,12 @@
 				model_floor = Engine.Resources["ml_floor_tile"];
 				models =
 				[
+					Engine.Geometry.MakeSphere(),
 					Engine.Resources["ml_cube"],
 					Engine.Geometry.MakePlane({ x_size : 2, z_size : 2}),
-					Engine.Geometry.MakeSphere(),
 				];
 
-				materials =
-				[
-					Engine.Material.Create({ albedo_map : resources["tx_albedo"], normal_map : resources["tx_normal"], fresnel_enabled : true, fresnel_power : 2.5 }),
-				];
+				var materials = [ resources["mat_sponge"], resources["mat_wool"], resources["mat_shiny_plastic"], resources["mat_wood"], resources["mat_stone"], resources["mat_snooker_ball"], resources["mat_carpet"] ];
 
 				// Setup roam cam
 				cam = new Engine.Camera.Perspective({ position: [0, 4, -5] });
@@ -146,6 +166,9 @@
 				$("#model_select").slider({ label : "Model select", value: 1, min: 0,   max: 2,   step: 1 })
 				$("#sun_angle").slider({ label : "Sun Angle", value: 0, min: -180,   max: 180,   step: 1 })
 
+				var sun_colour = [ 0.4, 0.4, 0.4 ];
+				var model_index = 0;
+
 				var on_render = function(info)
 				{
 					// Clear
@@ -159,24 +182,46 @@
 					// Update light
 					update_light(info);
 
+					// Process gamepad input
+					gamepad = Engine.Gamepad.Pads[0];
+					if(gamepad)
+					{
+						if(gamepad.IsPressed("lt"))
+						{
+							sun_colour[0] -= 0.01;
+							sun_colour[1] -= 0.01;
+							sun_colour[2] -= 0.01;
+						}
+						if(gamepad.IsPressed("rt"))
+						{
+							sun_colour[0] += 0.01;
+							sun_colour[1] += 0.01;
+							sun_colour[2] += 0.01;
+						}
+						if(gamepad.IsPressed("a", true))
+						{
+							model_index = (model_index + 1) % models.length;
+						}
+					}
+
 					// Draw floor
 					mat4.scale(mtx_trans, Engine.Math.IdentityMatrix, [100, 0, 100]);
 					Engine.Gfx.BindShaderProgram(program_floor);
 					Engine.Gfx.SetShaderConstant("u_trans_world", mtx_trans, Engine.Gfx.SC_MATRIX4);
 					Engine.Gfx.DrawModel(model_floor);
 
-					// Bind single material
-					Engine.Gfx.BindMaterial(materials[0], { colour : colour_from_picker_rgb("#sun_colour"),
-					                                        direction : sun_dir });
-
 					// Draw models
-					var model_index = 0;
-					for(var i = -5; i <= 5; ++i)
+					var mat_index = 0;
+					for(var i = -8; i <= 8; ++i)
 					{
-						for(var j = -5; j <= 5; ++j)
+						for(var j = -8; j <= 8; ++j)
 						{
 							// Pick model
-							var model = models[model_index++ % models.length];
+							var model = models[model_index];// models[model_index++ % models.length];
+
+							// Bind material
+							Engine.Gfx.BindMaterial(materials[mat_index++ % materials.length], { colour : sun_colour,
+							                                                                     direction : sun_dir });
 
 							// Position on grid and rotate
 							mat4.translate(mtx_trans, Engine.Math.IdentityMatrix, [i * 3, 1.2, j * 3]);
