@@ -8,12 +8,12 @@ Engine.Material =
 	standard :
 	{
 		// Type (for extensibility)
-		type                   : "standard",				// standard | pbr | custom
+		type                   : "standard",	// standard | pbr | custom
 
 		name                   : "default",
 
 		// Shader
-		shader			       : null,					// Resource descriptor / object
+		shader			       : null,			// Resource descriptor / object
 
 		// Properties
 		properties             :
@@ -121,12 +121,41 @@ Engine.Material =
 			// Apply shader
 			this.shader = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_general_transformed_uv_normals_tangents"],
 			                                             Engine.Resources[shader_name]); // Select pre-compiled permutation
+		},
+
+		Serialise : function()
+		{
+			// Setup serialised material
+			var serialised_material =
+			{
+				name       : this.name,
+				type       : this.type,
+				properties : { }
+			};
+
+			// Add properties
+			for (var property_name in this.properties)
+			{
+				var property = this.properties[property_name];
+
+				// Skip?
+				if(property.value == null)
+				{
+					continue;
+				}
+
+				var is_texture = property.type == "texture2d";
+				serialised_material.properties[property_name] = { value : is_texture? { file : property.value.descriptor.file } :
+				                                                                        property.value };
+			}
+
+			return serialised_material;
 		}
 	},
 
 	Create : function(material_config)
 	{
-		var material = $.extend(Engine.Material.standard, { }); // Copy the default material
+		var material = $.extend(true, { }, Engine.Material.standard); // Copy the default material
 		for (var property_name in material_config)
 		{
 			var property_value = material_config[property_name];
@@ -193,5 +222,55 @@ Engine.Material =
 			Engine.Gfx.SetShaderConstant("u_material_fresnel_scale", material.GetProperty("fresnel_scale"), Engine.Gfx.SC_FLOAT);
 			Engine.Gfx.SetShaderConstant("u_material_fresnel_power", material.GetProperty("fresnel_power"), Engine.Gfx.SC_FLOAT);
 		}
+	},
+
+	Load : function(descriptor, callback)
+	{
+		// Load the material
+		Engine.Net.FetchResource(descriptor.file, function(material_json)
+		{
+			var json = jQuery.parseJSON(material_json);
+
+			// Gather textures for batch loading
+			var textures =
+			{
+				"albedo_map" : Engine.Util.IsDefined(json.properties.albedo_map)? json.properties.albedo_map.value : null,
+				"normal_map" : Engine.Util.IsDefined(json.properties.normal_map)? json.properties.normal_map.value : null,
+				"specular_map" : Engine.Util.IsDefined(json.properties.specular_map)? json.properties.specular_map.value : null
+			};
+
+			Engine.Resource.LoadBatch(textures, function()
+			{
+				var material = Engine.Material.Create();
+				material.name = json.name;
+				material.type = json.type;
+
+				// Add textures
+				material.SetProperty("albedo_map", textures["albedo_map"], true);
+				material.SetProperty("normal_map", textures["normal_map"], true);
+				material.SetProperty("specular_map", textures["specular_map"], true);
+
+				// Strip texture properties
+				delete json.properties.albedo_map;
+				delete json.properties.normal_map;
+				delete json.properties.specular_map;
+
+				// Add properties
+				for (var property_name in json.properties)
+				{
+					var property = json.properties[property_name];
+					material.SetProperty(property_name, property.value, true);
+				}
+
+				// Init shader
+				material.InitShader(true);
+
+				// Finalise
+				callback(material);
+			});
+		});
 	}
 };
+
+// Resource loading
+Engine.Resource.RegisterLoadFunction("mat", Engine.Material.Load);

@@ -1,0 +1,67 @@
+{
+	"name": "sponge",
+	"type": "standard",
+	"properties": {
+		"albedo_map": {
+			"value": {
+				"file": "img/sponge_a.png"
+			}
+		},
+		"albedo_colour": {
+			"value": [
+				1,
+				1,
+				1,
+				1
+			]
+		},
+		"lighting_enabled": {
+			"value": true
+		},
+		"normal_map": {
+			"value": {
+				"file": "img/sponge_n.png"
+			}
+		},
+		"normal_strength": {
+			"value": 1
+		},
+		"specular_enabled": {
+			"value": true
+		},
+		"specular_colour": {
+			"value": [
+				0.5,
+				0.5,
+				0.5,
+				1.0
+			]
+		},
+		"specular_map" : { "value" :
+				{ "file" : "img/sponge_s.png" }
+			},
+		"specular_shininess": {
+			"value": 0.078125
+		},
+		"fresnel_enabled": {
+			"value": true
+		},
+		"fresnel_colour": {
+			"value": [
+				1,
+				1,
+				1,
+				1
+			]
+		},
+		"fresnel_scale": {
+			"value": 0.1
+		},
+		"fresnel_bias": {
+			"value": 0
+		},
+		"fresnel_power": {
+			"value": 2.5
+		}
+	}
+}
