@@ -1,0 +1,2 @@
+* Simplify sun light properties
+	Only need single colour and direction, remove separate ambient / diffuse / specular properties
