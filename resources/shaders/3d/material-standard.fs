@@ -87,7 +87,7 @@ void main(void)
 		vec3 reflected_ray = normalize(reflect(u_sun_dir, normal)); // reflect light about surface normal
 		vec3 to_cam = normalize(u_cam_pos - v_world_pos.xyz);
 		float cam_dot = max(0.0, dot(reflected_ray, to_cam));
-		specular = material_albedo * u_material_specular * clamp(vec4(u_sun_colour, 1.0) * pow(cam_dot, u_material_shininess * 128.0), 0.0, 1.0);
+		specular = u_material_specular * clamp(vec4(u_sun_colour, 1.0) * pow(cam_dot, u_material_shininess * 128.0), 0.0, 1.0);
 	}
 
 	#ifdef USE_SPECULAR_MAP
