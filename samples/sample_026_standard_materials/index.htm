@@ -128,15 +128,11 @@
 
 				// Setup UI colour pickers
 				var config = { showInput: false, showButtons: false, preferredFormat: "rgb" };
-				$("#sun_ambient").spectrum($.extend({}, config, { move : function(color) { } }));
-				$("#sun_specular").spectrum($.extend({}, config, { move : function(color) { } }));
-				$("#sun_diffuse").spectrum($.extend({}, config, { move : function(color) { } }));
+				$("#sun_colour").spectrum($.extend({}, config, { move : function(color) { } }));
 				$("#material_colour").spectrum($.extend({}, config, { move : function(color) { } }));
 				$("#material_specular").spectrum($.extend({}, config, { move : function(color) { } }));
 				$("#material_fresnel_colour").spectrum($.extend({}, config, { move : function(color) { } }));
-				$("#sun_ambient").spectrum("set", "rgba 70 70 70 255");
-				$("#sun_diffuse").spectrum("set", "rgba 255 255 255 255");
-				$("#sun_specular").spectrum("set", "rgba 255 255 255 255");
+				$("#sun_colour").spectrum("set", "rgba 70 70 70 255");
 				$("#material_colour").spectrum("set", "rgba 255 255 255 255");
 				$("#material_specular").spectrum("set", "rgba 255 255 255 255");
 				$("#material_fresnel_colour").spectrum("set", "rgba 255 255 255 255");
@@ -170,9 +166,7 @@
 					Engine.Gfx.DrawModel(model_floor);
 
 					// Bind single material
-					Engine.Gfx.BindMaterial(materials[0], { ambient  : colour_from_picker_rgb("#sun_ambient"),
-					                                        diffuse  : colour_from_picker_rgb("#sun_diffuse"),
-					                                        specular : colour_from_picker_rgb("#sun_specular"),
+					Engine.Gfx.BindMaterial(materials[0], { colour : colour_from_picker_rgb("#sun_colour"),
 					                                        direction : sun_dir });
 
 					// Draw models
@@ -252,12 +246,8 @@
 					Sun Angle:
 					<div id="sun_angle" style="width:200px"/></div>
 
-					Sun Ambient<br/>
-					<input type="text" id="sun_ambient"></input><br/>
-					Sun Diffuse<br/>
-					<input type="text" id="sun_diffuse"></input><br/>
-					Sun Specular<br/>
-					<input type="text" id="sun_specular"></input>
+					Sun Colour<br/>
+					<input type="text" id="sun_colour"></input><br/>
 				</td>
 			</tr>
 		</table>
