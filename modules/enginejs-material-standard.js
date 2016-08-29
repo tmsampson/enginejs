@@ -142,13 +142,12 @@ Engine.Material =
 		// 1. Bind shader
 		Engine.Gfx.BindShaderProgram(material.shader);
 
-		// 2. Bind sun ambient
-		Engine.Gfx.SetShaderConstant("u_sun_ambient", sun.ambient, Engine.Gfx.SC_VEC3);
+		// 2. Bind sun colour
+		Engine.Gfx.SetShaderConstant("u_sun_colour", sun.colour, Engine.Gfx.SC_VEC3);
 
 		// 3. Bind sun params?
 		if(material.GetProperty("lighting_enabled"))
 		{
-			Engine.Gfx.SetShaderConstant("u_sun_diffuse", sun.diffuse, Engine.Gfx.SC_VEC3);
 			Engine.Gfx.SetShaderConstant("u_sun_dir", sun.direction, Engine.Gfx.SC_VEC3);
 		}
 
@@ -168,7 +167,6 @@ Engine.Material =
 		// 4. Bind material specular params / map?
 		if(material.GetProperty("specular_enabled"))
 		{
-			Engine.Gfx.SetShaderConstant("u_sun_specular", sun.specular, Engine.Gfx.SC_VEC3);
 			Engine.Gfx.SetShaderConstant("u_material_specular", material.GetProperty("specular_colour"), Engine.Gfx.SC_VEC4);
 			Engine.Gfx.SetShaderConstant("u_material_shininess", material.GetProperty("specular_shininess"), Engine.Gfx.SC_FLOAT);
 
