@@ -18,6 +18,9 @@ Engine.Resource =
 		var i = 0; var property_count = Object.keys(descriptor_list).length - (on_loaded? 1 : 0);
 		ExecuteAsyncLoopProps(descriptor_list, function(prop_key, descriptor, carry_on)
 		{
+			// Skip null descriptors
+			if(descriptor == null) { return carry_on(true); }
+
 			// Don't try and load the user callback as a resource!
 			if(prop_key == "on_loaded") { return carry_on(true); }
 
