@@ -125,7 +125,7 @@
 
 				materials =
 				[
-					Engine.Material.Create(),
+					Engine.Material.Create({ albedo_map : resources["tx_albedo"], normal_map : resources["tx_normal"], fresnel_enabled : true, fresnel_power : 2.5 }),
 				];
 
 				// Setup roam cam
@@ -176,10 +176,10 @@
 					Engine.Gfx.DrawModel(model_floor);
 
 					// Bind single material
-					Engine.Material.Bind(materials[0], { ambient  : colour_from_picker_rgb("#sun_ambient"),
-					                                     diffuse  : colour_from_picker_rgb("#sun_diffuse"),
-					                                     specular : colour_from_picker_rgb("#sun_specular"),
-					                                     direction : sun_dir });
+					Engine.Gfx.BindMaterial(materials[0], { ambient  : colour_from_picker_rgb("#sun_ambient"),
+					                                        diffuse  : colour_from_picker_rgb("#sun_diffuse"),
+					                                        specular : colour_from_picker_rgb("#sun_specular"),
+					                                        direction : sun_dir });
 
 					// Draw models
 					var model_index = 0;

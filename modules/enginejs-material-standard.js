@@ -30,7 +30,7 @@ Engine.Material =
 			normal_strength    : { type : "float", value : 1.0, min : 0.0, max : 1.0 },
 			
 			// Specular
-			specular_enabled   : { type : "bool", value : false },
+			specular_enabled   : { type : "bool", value : true },
 			specular_colour    : { type : "colour", value : Engine.Colour.White },
 			specular_shininess : { type : "float", value : 0.078125, min : 0.03, max : 1 },
 			specular_map       : { type : "texture2d", value : null },
@@ -55,7 +55,7 @@ Engine.Material =
 			return this.properties[property_name].value;
 		},
 
-		SetProperty : function(property_name, new_value)
+		SetProperty : function(property_name, new_value, prevent_shader_update)
 		{
 			// Check the property exists
 			if(!Engine.Util.IsDefined(this.properties[property_name]))
@@ -64,8 +64,14 @@ Engine.Material =
 				return;
 			}
 
-			this.properties[property_name] = new_value;
-			this.InitShader(true); // Force select appropriate shader permutation
+			// Update property
+			this.properties[property_name].value = new_value;
+
+			// Update appropriate shader permutation
+			if(!prevent_shader_update)
+			{
+				this.InitShader(true);
+			}
 		},
 
 		InitShader : function(force)
@@ -120,7 +126,13 @@ Engine.Material =
 
 	Create : function(material_config)
 	{
-		var material = $.extend(Engine.Material.standard, material_config);
+		var material = $.extend(Engine.Material.standard, { }); // Copy the default material
+		for (var property_name in material_config)
+		{
+			var property_value = material_config[property_name];
+			material.SetProperty(property_name, property_value, true)
+		}
+
 		material.InitShader();
 		return material;
 	},

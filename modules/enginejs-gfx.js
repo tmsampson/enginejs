@@ -378,6 +378,17 @@ Engine.Gfx =
 	},
 
 	// **********************************************
+	// Material functionality (forward to Engine.Material)
+	// **********************************************
+	BindMaterial : function(material, sun)
+	{
+		if(material.type == "standard")
+		{
+			Engine.Material.Bind(material, sun);
+		}
+	},
+
+	// **********************************************
 	// Render target functionality
 	// **********************************************
 	CreateRenderTarget : function(rt_name, rt_width, rt_height)
