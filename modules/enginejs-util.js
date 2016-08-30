@@ -35,5 +35,11 @@ Engine.Util =
 	IsDefined : function(x)
 	{
 		return typeof x !== 'undefined';
+	},
+
+	CopyToClipboard : function(text)
+	{
+		// Uses prompt, allowing user to manually copy the text (using ctrl+c)
+		window.prompt("EngineJS: Copy to clipboard (Ctrl + C)", text);
 	}
 };
