@@ -8,39 +8,43 @@ Engine.Material =
 	standard :
 	{
 		// Type (for extensibility)
-		type                   : "standard",	// standard | pbr | custom
+		type                    : "standard",	// standard | pbr | custom
 
-		name                   : "default",
+		name                    : "default",
 
 		// Shader
-		shader			       : null,			// Resource descriptor / object
+		shader			        : null,			// Resource descriptor / object
 
 		// Properties
-		properties             :
+		properties              :
 		{
 			// Albedo
-			albedo_map         : { type : "texture2d", value : null },
-			albedo_colour      : { type : "colour", value : Engine.Colour.White },
+			albedo_colour       : { type : "colour", value : Engine.Colour.White },
+			albedo_map          : { type : "texture2d", value : null },
+			albedo_map_repeat   : { type : "vec2", value : [1, 1] },
 
 			// Lighting (opaque albedo if disabled)?
-			lighting_enabled   :  { type : "bool", value : true },
+			lighting_enabled    :  { type : "bool", value : true },
 
 			// Normal map
-			normal_map         : { type : "texture2d", value : null },
-			normal_strength    : { type : "float", value : 1.0, min : 0.0, max : 1.0 },
+			normal_map          : { type : "texture2d", value : null },
+			normal_map_repeat   : { type : "vec2", value : [1, 1] },
+			normal_strength     : { type : "float", value : 1.0, min : 0.0, max : 1.0 },
 			
 			// Specular
-			specular_enabled   : { type : "bool", value : true },
-			specular_colour    : { type : "colour", value : Engine.Colour.White },
-			specular_shininess : { type : "float", value : 0.078125, min : 0.03, max : 1 },
-			specular_map       : { type : "texture2d", value : null },
+			specular_enabled    : { type : "bool", value : true },
+			specular_colour     : { type : "colour", value : Engine.Colour.White },
+			specular_shininess  : { type : "float", value : 0.078125, min : 0.03, max : 1 },
+			specular_map        : { type : "texture2d", value : null },
+			specular_map_repeat : { type : "vec2", value : [1, 1] },
+			
 
 			// Fresnel
-			fresnel_enabled    : { type : "bool", value : false },
-			fresnel_colour     : { type : "colour", value : Engine.Colour.White },
-			fresnel_scale      : { type : "float", value : 0.5, min : 0.0, max : 1.0 },
-			fresnel_bias       : { type : "float", value : 0.0, min : -1.0, max : 1.0 },
-			fresnel_power      : { type : "float", value : 1.4, min : 1.0, max : 8.0 },
+			fresnel_enabled     : { type : "bool", value : false },
+			fresnel_colour      : { type : "colour", value : Engine.Colour.White },
+			fresnel_scale       : { type : "float", value : 0.5, min : 0.0, max : 1.0 },
+			fresnel_bias        : { type : "float", value : 0.0, min : -1.0, max : 1.0 },
+			fresnel_power       : { type : "float", value : 1.4, min : 1.0, max : 8.0 },
 		},
 
 		GetProperty : function(property_name)
@@ -186,11 +190,13 @@ Engine.Material =
 		if(material_albedo_map != null)
 		{
 			Engine.Gfx.BindTexture(material.GetProperty("albedo_map"), 0, "u_material_tx_albedo");
+			Engine.Gfx.SetShaderConstant("u_material_tx_albedo_uv_repeat", material.GetProperty("albedo_map_repeat"), Engine.Gfx.SC_VEC2);
 		}
 		else
 		{
 			// If no albedo texture is set in the material, bind single white pixel
 			Engine.Gfx.BindTexture(Engine.Resources["tx_white"], 0, "u_material_tx_albedo");
+			Engine.Gfx.SetShaderConstant("u_material_tx_albedo_uv_repeat", [1, 1], Engine.Gfx.SC_VEC2);
 		}
 
 		// 4. Bind material specular params / map?
@@ -203,6 +209,7 @@ Engine.Material =
 			if(material_specular_map != null)
 			{
 				Engine.Gfx.BindTexture(material_specular_map, 1, "u_material_tx_specular");
+				Engine.Gfx.SetShaderConstant("u_material_tx_specular_uv_repeat", material.GetProperty("specular_map_repeat"), Engine.Gfx.SC_VEC2);
 			}
 		}
 
@@ -211,6 +218,7 @@ Engine.Material =
 		if(material_normal_map != null)
 		{
 			Engine.Gfx.BindTexture(material_normal_map, 2, "u_material_tx_normal");
+			Engine.Gfx.SetShaderConstant("u_material_tx_normal_uv_repeat", material.GetProperty("normal_map_repeat"), Engine.Gfx.SC_VEC2);
 			Engine.Gfx.SetShaderConstant("u_material_normal_strength", material.GetProperty("normal_strength"), Engine.Gfx.SC_FLOAT);
 		}
 

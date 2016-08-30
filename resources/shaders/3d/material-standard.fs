@@ -29,13 +29,16 @@ uniform float u_material_fresnel_power;
 
 // Material samplers
 uniform sampler2D u_material_tx_albedo;
+uniform vec2      u_material_tx_albedo_uv_repeat;
 
 #ifdef USE_SPECULAR_MAP
 uniform sampler2D u_material_tx_specular;
+uniform vec2      u_material_tx_specular_uv_repeat;
 #endif
 
 #ifdef USE_NORMAL_MAP
 uniform sampler2D u_material_tx_normal;
+uniform vec2      u_material_tx_normal_uv_repeat;
 #endif
 
 void main(void)
@@ -44,7 +47,7 @@ void main(void)
 	// Normal
 	// *************************************************************************************
 #ifdef USE_NORMAL_MAP
-	vec4 material_normal = texture2D(u_material_tx_normal, v_uv.xy);
+	vec4 material_normal = texture2D(u_material_tx_normal, v_uv.xy * u_material_tx_normal_uv_repeat);
 	vec3 v_world_bitangent = cross(v_world_normal, v_world_tangent);
 
 	// Calculate normal basis matrix
@@ -65,7 +68,7 @@ void main(void)
 	// *************************************************************************************
 	// Ambient
 	// *************************************************************************************
-	vec4 material_albedo = texture2D(u_material_tx_albedo, v_uv.xy) * u_material_albedo_colour;
+	vec4 material_albedo = texture2D(u_material_tx_albedo, v_uv.xy * u_material_tx_albedo_uv_repeat) * u_material_albedo_colour;
 	vec4 ambient = material_albedo * vec4(u_sun_colour, 1.0);
 
 	// *************************************************************************************
@@ -91,7 +94,7 @@ void main(void)
 	}
 
 	#ifdef USE_SPECULAR_MAP
-	vec4 specular_map = texture2D(u_material_tx_specular, v_uv.xy);
+	vec4 specular_map = texture2D(u_material_tx_specular, v_uv.xy * u_material_tx_specular_uv_repeat);
 	specular *= specular_map;
 	#endif
 #endif
