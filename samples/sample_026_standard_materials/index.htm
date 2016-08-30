@@ -114,11 +114,6 @@
 			return [raw_value.r /= 255, raw_value.g /= 255, raw_value.b /= 255 ];
 		};
 
-		function copy_to_clipboard(text)
-		{
-			window.prompt("Copy to clipboard: Ctrl+C, Enter", text);
-		};
-
 		$(document).ready(function()
 		{
 			var on_init = function()
