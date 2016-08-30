@@ -5,8 +5,8 @@
 		"albedo_map": {
 			"value": {
 				"file": "img/sponge_a.png"
-			}
-		},
+		} },
+		"albedo_map_repeat" : { "value" : [2, 2] },
 		"albedo_colour": {
 			"value": [
 				1,
@@ -23,6 +23,7 @@
 				"file": "img/sponge_n.png"
 			}
 		},
+		"normal_map_repeat" : { "value" : [2, 2] },
 		"normal_strength": {
 			"value": 1
 		},
@@ -40,6 +41,7 @@
 		"specular_map" : { "value" :
 				{ "file" : "img/sponge_s.png" }
 			},
+		"specular_map_repeat" : { "value" : [2, 2] },
 		"specular_shininess": {
 			"value": 0.078125
 		},
