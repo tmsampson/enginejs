@@ -4,7 +4,13 @@
 
 Engine.Resource =
 {
-	LoadFunctions : { }, // Registered by relevant modules
+	// ****************************************************************************************************
+	// List of all loaded resources
+	// ****************************************************************************************************
+	loaded_resources : { },
+	// ****************************************************************************************************
+
+	LoadFunctions    : {}, // Registered by relevant modules
 
 	LoadBatch : function(descriptor_list, on_complete)
 	{
@@ -25,6 +31,7 @@ Engine.Resource =
 			if(prop_key == "on_loaded") { return carry_on(true); }
 
 			Engine.Log("Loading resource: " + descriptor.file);
+			descriptor.hash = Engine.Util.Hash(descriptor);
 			descriptor.prop_key = prop_key; // Pass prop_key through closure
 			Engine.Resource.Load(descriptor, function(resource_object)
 			{
@@ -38,6 +45,13 @@ Engine.Resource =
 
 	Load : function(descriptor, on_complete)
 	{
+		// Already loaded?
+		if (descriptor.hash in Engine.Resource.loaded_resources)
+		{
+			on_complete(Engine.Resource.loaded_resources[descriptor.hash]);
+			return;
+		}
+
 		// Is this resource type supported?
 		var extension = descriptor.file.split('.').pop();
 		if(extension in Engine.Resource.LoadFunctions)
@@ -47,6 +61,9 @@ Engine.Resource =
 				descriptor.extension = extension;
 				resource_object.descriptor = descriptor;
 				on_complete(resource_object);
+
+				// Resource tracking
+				Engine.Resource.loaded_resources[descriptor.hash] = resource_object;
 			});
 		}
 		else
