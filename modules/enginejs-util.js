@@ -41,5 +41,18 @@ Engine.Util =
 	{
 		// Uses prompt, allowing user to manually copy the text (using ctrl+c)
 		window.prompt("EngineJS: Copy to clipboard (Ctrl + C)", text);
+	},
+
+	Hash : function(x)
+	{
+		var string_to_hash = Engine.Util.IsString(x)? x : JSON.stringify(x);
+		var hash = 0, i, chr, len;
+		for (i = 0, len = string_to_hash.length; i < len; i++)
+		{
+			chr = string_to_hash.charCodeAt(i);
+			hash = ((hash << 5) - hash) + chr;
+			hash |= 0; // Convert to 32-bit integer
+		}
+		return hash;
 	}
 };
