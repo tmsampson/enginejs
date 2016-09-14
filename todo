@@ -1,4 +1,3 @@
-* Need to implement a texture cache in Engine.Gfx.LoadTexture, (similar to the way we cache the shaders). materials referincing same textures are likely loading duplicates at the moment!!!
 * Material serialisation is shonky and very specific to the "standard" model
 	Need to take a more "Unity" approach and store exposed material properties in shaders
 	Need to strip material properties pre-compile, check how I did the shader annotation for the interactive plasma demo
