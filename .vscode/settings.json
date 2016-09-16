@@ -14,6 +14,7 @@
 		"*.sprite"     : "json",
 		"*.model"      : "json",
 		"*.background" : "json",
+		"*.mat"        : "json",
 		"*.vs"         : "c",
 		"*.fs"         : "c"
 	},
