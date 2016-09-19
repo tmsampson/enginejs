@@ -185,31 +185,31 @@ Engine.Material =
 		}
 
 		// 3. Bind material albedo
-		Engine.Gfx.SetShaderConstant("u_material_albedo_colour", material.GetProperty("albedo_colour"), Engine.Gfx.SC_VEC4);
+		Engine.Gfx.SetShaderConstant("albedo_colour", material.GetProperty("albedo_colour"), Engine.Gfx.SC_VEC4);
 		var material_albedo_map = material.GetProperty("albedo_map");
 		if(material_albedo_map != null)
 		{
-			Engine.Gfx.BindTexture(material.GetProperty("albedo_map"), 0, "u_material_tx_albedo");
-			Engine.Gfx.SetShaderConstant("u_material_tx_albedo_uv_repeat", material.GetProperty("albedo_map_repeat"), Engine.Gfx.SC_VEC2);
+			Engine.Gfx.BindTexture(material.GetProperty("albedo_map"), 0, "albedo_map");
+			Engine.Gfx.SetShaderConstant("albedo_map_repeat", material.GetProperty("albedo_map_repeat"), Engine.Gfx.SC_VEC2);
 		}
 		else
 		{
 			// If no albedo texture is set in the material, bind single white pixel
-			Engine.Gfx.BindTexture(Engine.Resources["tx_white"], 0, "u_material_tx_albedo");
-			Engine.Gfx.SetShaderConstant("u_material_tx_albedo_uv_repeat", [1, 1], Engine.Gfx.SC_VEC2);
+			Engine.Gfx.BindTexture(Engine.Resources["tx_white"], 0, "albedo_map");
+			Engine.Gfx.SetShaderConstant("albedo_map_repeat", [1, 1], Engine.Gfx.SC_VEC2);
 		}
 
 		// 4. Bind material specular params / map?
-		if(material.GetProperty("specular_enabled"))
+		if(material.GetProperty("specular_colour"))
 		{
-			Engine.Gfx.SetShaderConstant("u_material_specular", material.GetProperty("specular_colour"), Engine.Gfx.SC_VEC4);
-			Engine.Gfx.SetShaderConstant("u_material_shininess", material.GetProperty("specular_shininess"), Engine.Gfx.SC_FLOAT);
+			Engine.Gfx.SetShaderConstant("specular_colour", material.GetProperty("specular_colour"), Engine.Gfx.SC_VEC4);
+			Engine.Gfx.SetShaderConstant("specular_shininess", material.GetProperty("specular_shininess"), Engine.Gfx.SC_FLOAT);
 
 			var material_specular_map = material.GetProperty("specular_map");
 			if(material_specular_map != null)
 			{
-				Engine.Gfx.BindTexture(material_specular_map, 1, "u_material_tx_specular");
-				Engine.Gfx.SetShaderConstant("u_material_tx_specular_uv_repeat", material.GetProperty("specular_map_repeat"), Engine.Gfx.SC_VEC2);
+				Engine.Gfx.BindTexture(material_specular_map, 1, "specular_map");
+				Engine.Gfx.SetShaderConstant("specular_map_repeat", material.GetProperty("specular_map_repeat"), Engine.Gfx.SC_VEC2);
 			}
 		}
 
@@ -217,18 +217,18 @@ Engine.Material =
 		var material_normal_map = material.GetProperty("normal_map");
 		if(material_normal_map != null)
 		{
-			Engine.Gfx.BindTexture(material_normal_map, 2, "u_material_tx_normal");
-			Engine.Gfx.SetShaderConstant("u_material_tx_normal_uv_repeat", material.GetProperty("normal_map_repeat"), Engine.Gfx.SC_VEC2);
-			Engine.Gfx.SetShaderConstant("u_material_normal_strength", material.GetProperty("normal_strength"), Engine.Gfx.SC_FLOAT);
+			Engine.Gfx.BindTexture(material_normal_map, 2, "normal_map");
+			Engine.Gfx.SetShaderConstant("normal_map_repeat", material.GetProperty("normal_map_repeat"), Engine.Gfx.SC_VEC2);
+			Engine.Gfx.SetShaderConstant("normal_strength", material.GetProperty("normal_strength"), Engine.Gfx.SC_FLOAT);
 		}
 
 		// 6. Bind material fresnel params?
 		if(material.GetProperty("fresnel_enabled"))
 		{
-			Engine.Gfx.SetShaderConstant("u_material_fresnel_colour", material.GetProperty("fresnel_colour"), Engine.Gfx.SC_VEC4);
-			Engine.Gfx.SetShaderConstant("u_material_fresnel_bias", material.GetProperty("fresnel_bias"), Engine.Gfx.SC_FLOAT);
-			Engine.Gfx.SetShaderConstant("u_material_fresnel_scale", material.GetProperty("fresnel_scale"), Engine.Gfx.SC_FLOAT);
-			Engine.Gfx.SetShaderConstant("u_material_fresnel_power", material.GetProperty("fresnel_power"), Engine.Gfx.SC_FLOAT);
+			Engine.Gfx.SetShaderConstant("fresnel_colour", material.GetProperty("fresnel_colour"), Engine.Gfx.SC_VEC4);
+			Engine.Gfx.SetShaderConstant("fresnel_scale", material.GetProperty("fresnel_scale"), Engine.Gfx.SC_FLOAT);
+			Engine.Gfx.SetShaderConstant("fresnel_bias", material.GetProperty("fresnel_bias"), Engine.Gfx.SC_FLOAT);
+			Engine.Gfx.SetShaderConstant("fresnel_power", material.GetProperty("fresnel_power"), Engine.Gfx.SC_FLOAT);
 		}
 	},
 
