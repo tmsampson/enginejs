@@ -148,15 +148,80 @@ Engine.Gfx =
 		return Engine.Gfx.CompileShader(code, Engine.GL.FRAGMENT_SHADER, defines);
 	},
 
-	CompileShader : function(shader_code, shader_type, defines)
+	CompileShader : function(shader_code, shader_type, shader_defines)
 	{
 		var shader_resource = Engine.GL.createShader(shader_type);
 
 		// Add pre-processor defines...
-		$.each(defines, function(idx, definition)
+		$.each(shader_defines, function(idx, definition)
 		{
 			shader_code = "#define " + definition + "\n" + shader_code;
 		});
+
+		// Extract property information (fragment shader only)
+		var shader_property_info;
+		var property_info_start_token = "#if PROPERTY_INFO";
+		if(shader_type == Engine.GL.FRAGMENT_SHADER)
+		{
+			var start = shader_code.indexOf(property_info_start_token);
+			if(start != -1)
+			{
+				var property_info_end_token = "#endif";
+				var property_info_end_token_length = property_info_end_token.length;
+				var end = shader_code.indexOf(property_info_end_token, start);
+				if(end == -1)
+				{
+					Engine.LogError("Failed compiling shader: PROPERTY_INFO missing #endif");
+					return;
+				}
+
+				end += property_info_end_token_length; // include end token in match
+				var property_info_block = shader_code.substring(start, end);
+				shader_code = shader_code.replace(property_info_block, "");
+
+				// Parse property info JSON
+				var property_info_json = property_info_block.replace(property_info_start_token, "");
+				property_info_json = property_info_json.replace(property_info_end_token, "");
+				try
+				{
+					shader_property_info = JSON.parse(property_info_json);
+				}
+				catch(e)
+				{
+					Engine.LogError("Failed compiling shader: PROPERTY_INFO syntax error " + e);
+				}
+
+				// Parse uniforms and build name --> type lookup
+				var uniform_regex = /uniform\s(\w*)\s+(\w*)(\s)?;/g; var match;
+				var uniform_name_to_type = { };
+				while (match = uniform_regex.exec(shader_code))
+				{
+					var uniform_type = match[1];
+					var uniform_name = match[2];
+					uniform_name_to_type[uniform_name] = uniform_type;
+				}
+
+				// Cross reference properties with uniforms and deduce types / setter functions
+				for (var property_name in shader_property_info)
+				{
+					if (!shader_property_info.hasOwnProperty(property_name))
+						continue;
+					var property_info = shader_property_info[property_name];
+					if(!uniform_name_to_type.hasOwnProperty(property_name))
+					{
+						Engine.LogError("Failed compiling shader: PROPERTY_INFO property '" + property_name + "' has no matching uniform");
+						continue;
+					}
+					property_info.type = uniform_name_to_type[property_name];
+					if(!Engine.Gfx.ShaderPropertySetterFuncFromString.hasOwnProperty(property_info.type))
+					{
+						Engine.LogError("Failed compiling shader: PROPERTY_INFO property '" + property_name + "' unknown uniform type: " + property_info.type);
+						continue;
+					}
+					property_info.setter_func = Engine.Gfx.ShaderPropertySetterFuncFromString[property_info.type];
+				}
+			}
+		}
 
 		// Compile code
 		Engine.GL.shaderSource(shader_resource, shader_code);
@@ -166,10 +231,11 @@ Engine.Gfx =
 		// Return shader object
 		var shader_object =
 		{
-			resource  : success? shader_resource : null,
-			type      : shader_type,
-			code      : shader_code,
-			defines   : defines
+			resource      : success? shader_resource : null,
+			type          : shader_type,
+			code          : shader_code,
+			defines       : shader_defines,
+			property_info : shader_property_info
 		};
 
 		// Report errors?
@@ -645,6 +711,8 @@ Engine.Gfx =
 		"lines"           : Engine.GL.LINES
 	},
 
+	ShaderPropertySetterFuncFromString : { },
+
 	// *************************************
 	// Uniform setter functions (passed to SetShaderConstant)
 	SC_FLOAT         : function(gl, uniform_location, new_value) { gl.uniform1f(uniform_location,        new_value); },
@@ -680,6 +748,18 @@ Engine.Gfx =
 Engine.Gfx.StateTracking[Engine.GL.BLEND]      = 0;
 Engine.Gfx.StateTracking[Engine.GL.DEPTH_TEST] = 0;
 Engine.Gfx.ResizeViewport();
+
+Engine.Gfx.ShaderPropertySetterFuncFromString =
+{
+	"float"     : Engine.Gfx.SC_FLOAT,
+	"int"       : Engine.Gfx.SC_INT,
+	"sampler2D" : Engine.Gfx.SC_SAMPLER,
+	"vec2"      : Engine.Gfx.SC_VEC2,
+	"vec3"      : Engine.Gfx.SC_VEC3,
+	"vec4"      : Engine.Gfx.SC_VEC4,
+	"mat3"      : Engine.Gfx.SC_MATRIX3,
+	"mat4"      : Engine.Gfx.SC_MATRIX4
+};
 
 // Resource loading
 Engine.Resource.RegisterLoadFunction("png", Engine.Gfx.LoadTexture);
