@@ -1,6 +1,7 @@
 precision highp float;
 
-properties
+// Note: regex = #if(.*)PROPERTY_INFO(.*)\n(.*\n)*#endif
+#if PROPERTY_INFO
 {
 	"u_wave_1_contribution" : { "name" : "Wave 1 Contribution", "default" : 1 , "min" : 0, "max" : 1, "step" : 0.1 },
 	"u_wave_1_thickness"    : { "name" : "Wave 1 Thickness", "default" : 0.9 , "min" : 0, "max" : 10, "step" : 0.5 },
@@ -17,8 +18,9 @@ properties
 	"u_wave_3_angle"        : { "name" : "Wave 3 Angle", "default" : 0.5 , "min" : 0, "max" : 10, "step" : 0.5     },
 	"u_wave_3_shift_1"      : { "name" : "Wave 3 Shift 1", "default" : 3 , "min" : 0.5, "max" : 10, "step" : 0.5   },
 	"u_wave_3_shift_2"      : { "name" : "Wave 3 Shift 2", "default" : 2 , "min" : 0.5, "max" : 10, "step" : 0.5   },
-	"u_wave_3_pulse"        : { "name" : "Wave 3 Pulse", "default" : 2 , "min" : 0, "max" : 10, "step" : 0.5       },
+	"u_wave_3_pulse"        : { "name" : "Wave 3 Pulse", "default" : 2 , "min" : 0, "max" : 10, "step" : 0.5       }
 }
+#endif
 
 // Helpers
 #define PI 3.1415926535897932384626433832795

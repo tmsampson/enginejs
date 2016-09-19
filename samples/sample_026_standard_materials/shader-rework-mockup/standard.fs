@@ -1,6 +1,7 @@
 precision highp float;
 
-properties
+// Note: regex = #if(.*)PROPERTY_INFO(.*)\n(.*\n)*#endif
+#if PROPERTY_INFO
 {
 	"albedo_colour"       : { "name" : "Albedo Colour",         "default" : [1, 1, 1, 1]       },
 	"albedo_map"          : { "name" : "Albedo Texture"                                        },
@@ -15,8 +16,9 @@ properties
 	"fresnel_colour"      : { "name" : "Fresnel Colour",        "default" : [1, 1, 1, 1]       },
 	"fresnel_scale "      : { "name" : "Fresnel Scale",         "default" : 0.1                },
 	"fresnel_bias "       : { "name" : "Fresnel Bias",          "default" : 0                  },
-	"fresnel_power "      : { "name" : "Fresnel Power",         "default" : 2.5                },
+	"fresnel_power "      : { "name" : "Fresnel Power",         "default" : 2.5                }
 }
+#endif
 
 // Vertex input
 varying vec4 v_world_pos;
