@@ -1,22 +1,21 @@
 precision highp float;
 
-// Note: regex = #if(.*)PROPERTY_INFO(.*)\n(.*\n)*#endif
 #if PROPERTY_INFO
 {
-	"albedo_colour"       : { "name" : "Albedo Colour",         "default" : [1, 1, 1, 1]       },
-	"albedo_map"          : { "name" : "Albedo Texture"                                        },
-	"albedo_map_repeat"   : { "name" : "Albedo Texture Tiling", "default" : [1, 1]             },
-	"normal_map"          : { "name" : "Normal Map"                                            },
-	"normal_map_repeat"   : { "name" : "Normal Map Tiling",     "default" : [1, 1]             },
-	"normal_strength"     : { "name" : "Normal Strength",       "default" : 1.0                },
-	"specular_colour"     : { "name" : "Specular Colour",       "default" : [0.5, 0.5, 0.5, 1] },
-	"specular_map"        : { "name" : "Specular Map"                                          },
-	"specular_map_repeat" : { "name" : "Specular Map Tiling",   "default" : [1, 1]             },
-	"specular_shininess"  : { "name" : "Specular Shininess",    "default" : 0.078125           },
-	"fresnel_colour"      : { "name" : "Fresnel Colour",        "default" : [1, 1, 1, 1]       },
-	"fresnel_scale "      : { "name" : "Fresnel Scale",         "default" : 0.1                },
-	"fresnel_bias "       : { "name" : "Fresnel Bias",          "default" : 0                  },
-	"fresnel_power "      : { "name" : "Fresnel Power",         "default" : 2.5                }
+	"albedo_colour"       : { "name" : "Albedo Colour",         "default" : [1, 1, 1, 1], is_colour : true,       },
+	"albedo_map"          : { "name" : "Albedo Texture"                                                           },
+	"albedo_map_repeat"   : { "name" : "Albedo Texture Tiling", "default" : [1, 1]                                },
+	"normal_map"          : { "name" : "Normal Map"                                                               },
+	"normal_map_repeat"   : { "name" : "Normal Map Tiling",     "default" : [1, 1]                                },
+	"normal_strength"     : { "name" : "Normal Strength",       "default" : 1.0                                   },
+	"specular_colour"     : { "name" : "Specular Colour",       "default" : [0.5, 0.5, 0.5, 1], is_colour : true, },
+	"specular_map"        : { "name" : "Specular Map"                                                             },
+	"specular_map_repeat" : { "name" : "Specular Map Tiling",   "default" : [1, 1]                                },
+	"specular_shininess"  : { "name" : "Specular Shininess",    "default" : 0.078125                              },
+	"fresnel_colour"      : { "name" : "Fresnel Colour",        "default" : [1, 1, 1, 1], is_colour : true,       },
+	"fresnel_scale "      : { "name" : "Fresnel Scale",         "default" : 0.1                                   },
+	"fresnel_bias "       : { "name" : "Fresnel Bias",          "default" : 0                                     },
+	"fresnel_power "      : { "name" : "Fresnel Power",         "default" : 2.5                                   }
 }
 #endif
 

@@ -1,6 +1,5 @@
 precision highp float;
 
-// Note: regex = #if(.*)PROPERTY_INFO(.*)\n(.*\n)*#endif
 #if PROPERTY_INFO
 {
 	"u_wave_1_contribution" : { "name" : "Wave 1 Contribution", "default" : 1 , "min" : 0, "max" : 1, "step" : 0.1 },
