@@ -1,12 +1,8 @@
-* Material serialisation is shonky and very specific to the "standard" model
-	Need to take a more "Unity" approach and store exposed material properties in shaders
-	Need to strip material properties pre-compile, check how I did the shader annotation for the interactive plasma demo
-	Serialised .mat file should just store name, type (stanard or custom), shader (if custom) then a list of property name / value pairs
-	When loading the .mat file we can get the type of each property from the shader annotation, make sure to compile any textures, and apply properties
-		Note: When loading a .mat file with "standard" type, we need to cross-reference the propertes from the material-standard.fs shader (any permutation) before a shader permutation in selected in the finalisation step!
-	Above approach unifies the serialisation format for "standard" and "custom" materials alike
+* Rename Engine Gfx "SC_" and all references to "SP_" for "shader property" not "shader constant"!!!!
+* Re-write to implement new material format (and auto bind using shader property_info)
 * Add support for "custom" materials (with custom shaders)
 	Also make a plasma material with plasma shader!
 	Use for floor / light materials, expose floor grid colours via material!
+* Write code to generate material editor panel from shader property info (and update plasma interactive sample)
 * Add support for point lights
 * Add support for spotlights
