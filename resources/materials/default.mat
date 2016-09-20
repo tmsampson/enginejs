@@ -1,0 +1,23 @@
+{
+	"version"        : 1.0,
+	"name"           : "Default",
+	"type"           : "standard",
+	"config"         :
+	{
+		"lighting_enabled"        : true,
+		"specular_enabled"        : true,
+		"fresnel_enabled"         : false
+	},
+	"properties"     :
+	{
+		"float"      :
+		{
+			"specular_shininess"  : 0.01
+		},
+		"vec4"       :
+		{
+			"albedo_colour"       : [1, 1, 1, 1],
+			"specular_colour"     : [0.8, 0.8, 0.8, 1]
+		}
+	}
+}
