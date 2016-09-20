@@ -48,7 +48,7 @@ uniform float u_wave_3_pulse;
 void main(void)
 {
 	// Wave 1 **********************************************************************************************************************
-	float wave_1 = normalise(sin(v_uv.x * (1.0 - u_wave1_thickness) * 100.0 + (u_time * u_wave_1_speed)));
+	float wave_1 = normalise(sin(v_uv.x * (1.0 - u_wave_1_thickness) * 100.0 + (u_time * u_wave_1_speed)));
 	wave_1 *= u_wave_1_contribution;
 
 	// Wave 2 **********************************************************************************************************************
