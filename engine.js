@@ -61,6 +61,11 @@ var Engine =
 		vs_general_transformed_uv_normals                      : { file: "enginejs/resources/shaders/general.vs", define : [ "ENGINEJS_ENABLE_TRANSFORM", "ENGINEJS_ENABLE_UV_COORDS", "ENGINEJS_ENABLE_NORMALS" ] },
 		vs_general_transformed_uv_normals_tangents             : { file: "enginejs/resources/shaders/general.vs", define : [ "ENGINEJS_ENABLE_TRANSFORM", "ENGINEJS_ENABLE_UV_COORDS", "ENGINEJS_ENABLE_NORMALS", "ENGINEJS_ENABLE_TANGENTS" ] },
 
+		// Misc
+		tx_white                                               : { file: "enginejs/resources/img/white.png"           },
+		tx_missing                                             : { file: "enginejs/resources/img/missing-texture.png" },
+		sfx_blank                                              : { file: "enginejs/resources/audio/blank.mp3"         },
+
 		// Misc basic shaders
 		fs_unlit_colour                                        : { file: "enginejs/resources/shaders/basic/unlit-colour.fs" },
 		fs_unlit_textured                                      : { file: "enginejs/resources/shaders/basic/unlit-textured.fs" },
@@ -78,7 +83,7 @@ var Engine =
 		fs_2d_background                                       : { file: "enginejs/resources/shaders/2d/background.fs" },
 		fs_2d_sprite                                           : { file: "enginejs/resources/shaders/2d/sprite.fs" },
 
-		// Legacy material system (shader permutations)
+		// Standard material system (shader permutations)
 		fs_mat_standard_amb                                    : { file: "enginejs/resources/shaders/3d/material-standard.fs", define : [] },
 		fs_mat_standard_amb_lit                                : { file: "enginejs/resources/shaders/3d/material-standard.fs", define : [ "USE_DIFFUSE" ] },
 		fs_mat_standard_amb_lit_spec                           : { file: "enginejs/resources/shaders/3d/material-standard.fs", define : [ "USE_DIFFUSE", "USE_SPECULAR"] },
@@ -94,15 +99,14 @@ var Engine =
 		fs_mat_standard_amb_lit_spec_normalmap_fresnel         : { file: "enginejs/resources/shaders/3d/material-standard.fs", define : [ "USE_DIFFUSE", "USE_SPECULAR", "USE_NORMAL_MAP", "USE_FRESNEL" ] },
 		fs_mat_standard_amb_lit_spec_specmap_normalmap_fresnel : { file: "enginejs/resources/shaders/3d/material-standard.fs", define : [ "USE_DIFFUSE", "USE_SPECULAR", "USE_SPECULAR_MAP", "USE_NORMAL_MAP", "USE_FRESNEL" ] },
 
+		// Materials
+		mat_standard_default                                   : { file: "enginejs/resources/materials/default.mat"   },
+
 		// Models
 		ml_quad                                                : { file: "enginejs/resources/models/quad.model"       },
 		ml_floor_tile                                          : { file: "enginejs/resources/models/floor_tile.model" },
 		ml_tri                                                 : { file: "enginejs/resources/models/tri.model"        },
 		ml_cube                                                : { file: "enginejs/resources/models/cube.model"       },
-
-		// Misc
-		tx_white                                               : { file: "enginejs/resources/img/white.png"   },
-		sfx_blank                                              : { file: "enginejs/resources/audio/blank.mp3" }
 	},
 
 	// *************************************************************************************
