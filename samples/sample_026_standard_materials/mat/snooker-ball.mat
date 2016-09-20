@@ -1,60 +1,28 @@
 {
-	"name": "snooker ball",
-	"type": "standard",
-	"properties": {
-		"albedo_map": {
-			"value": null
+	"version"        : 1.0,
+	"name"           : "Snooker Ball",
+	"type"           : "standard",
+	"config"         :
+	{
+		"lighting_enabled"        : true,
+		"specular_enabled"        : true,
+		"fresnel_enabled"         : true
+	},
+	"properties"     :
+	{
+		"float"      :
+		{
+			"normal_strength"     : 1.0,
+			"specular_shininess"  : 0.2,
+			"fresnel_scale"       : 0.6,
+			"fresnel_bias"        : 0,
+			"fresnel_power"       : 2
 		},
-		"albedo_colour": {
-			"value": [
-				1,
-				1,
-				0.8,
-				0
-			]
-		},
-		"lighting_enabled": {
-			"value": true
-		},
-		"normal_map": {
-			"value": null
-		},
-		"normal_strength": {
-			"value": 1
-		},
-		"specular_enabled": {
-			"value": true
-		},
-		"specular_colour": {
-			"value": [
-				1.0,
-				1.0,
-				1.0,
-				1.0
-			]
-		},
-		"specular_shininess": {
-			"value": 0.2
-		},
-		"fresnel_enabled": {
-			"value": true
-		},
-		"fresnel_colour": {
-			"value": [
-				0.3,
-				0.3,
-				0.3,
-				1
-			]
-		},
-		"fresnel_scale": {
-			"value": 0.6
-		},
-		"fresnel_bias": {
-			"value": 0
-		},
-		"fresnel_power": {
-			"value": 2
+		"vec4"       :
+		{
+			"albedo_colour"       : [1, 1, 0.8, 1],
+			"specular_colour"     : [1, 1, 1, 1],
+			"fresnel_colour"      : [0.3, 0.3, 0.3, 1]
 		}
 	}
 }

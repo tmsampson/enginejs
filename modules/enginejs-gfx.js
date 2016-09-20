@@ -448,10 +448,7 @@ Engine.Gfx =
 	// **********************************************
 	BindMaterial : function(material, sun)
 	{
-		if(material.type == "standard")
-		{
-			Engine.Material.Bind(material, sun);
-		}
+		material.Bind(sun);
 	},
 
 	// **********************************************

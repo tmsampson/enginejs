@@ -1,60 +1,29 @@
 {
-	"name": "stone",
-	"type": "standard",
-	"properties": {
-		"albedo_map": {
-			"value": { "file" : "img/stone_a.jpg" }
+	"version"        : 1.0,
+	"name"           : "Stone",
+	"type"           : "standard",
+	"config"         :
+	{
+		"lighting_enabled"        : true,
+		"specular_enabled"        : true,
+		"fresnel_enabled"         : false
+	},
+	"properties"     :
+	{
+		"sampler2D"  :
+		{
+			"albedo_map"          : { "file": "img/stone_a.jpg" },
+			"normal_map"          : { "file": "img/stone_n.jpg" }
 		},
-		"albedo_colour": {
-			"value": [
-				1,
-				1,
-				1,
-				1
-			]
+		"float"      :
+		{
+			"normal_strength"     : 1.0,
+			"specular_shininess"  : 0.3
 		},
-		"lighting_enabled": {
-			"value": true
-		},
-		"normal_map": {
-			"value": { "file" : "img/stone_n.jpg" }
-		},
-		"normal_strength": {
-			"value": 1
-		},
-		"specular_enabled": {
-			"value": true
-		},
-		"specular_colour": {
-			"value": [
-				1.0,
-				1.0,
-				1.0,
-				1.0
-			]
-		},
-		"specular_shininess": {
-			"value": 0.3
-		},
-		"fresnel_enabled": {
-			"value": false
-		},
-		"fresnel_colour": {
-			"value": [
-				0.3,
-				0.3,
-				0.3,
-				1
-			]
-		},
-		"fresnel_scale": {
-			"value": 0.6
-		},
-		"fresnel_bias": {
-			"value": 0
-		},
-		"fresnel_power": {
-			"value": 2
+		"vec4"       :
+		{
+			"albedo_colour"       : [1, 1, 1, 1],
+			"specular_colour"     : [1, 1, 1, 1]
 		}
 	}
 }

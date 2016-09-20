@@ -1,64 +1,39 @@
 {
-	"name": "carpet",
-	"type": "standard",
-	"properties": {
-		"albedo_map": {
-			"value": {
-				"file": "img/carpet_a.png"
-			}
+	"version"        : 1.0,
+	"name"           : "Carpet",
+	"type"           : "standard",
+	"config"         :
+	{
+		"lighting_enabled"        : true,
+		"specular_enabled"        : true,
+		"fresnel_enabled"         : true
+	},
+	"properties"     :
+	{
+		"sampler2D"  :
+		{
+			"albedo_map"          : { "file": "img/carpet_a.png" },
+			"normal_map"          : { "file": "img/carpet_n.png" }
 		},
-		"albedo_colour": {
-			"value": [
-				1,
-				1,
-				1,
-				1
-			]
+		"float"      :
+		{
+			"normal_strength"     : 1.0,
+			"specular_shininess"  : 0.078125,
+			"fresnel_scale"       : 0.2,
+			"fresnel_bias"        : 0,
+			"fresnel_power"       : 2.5
 		},
-		"lighting_enabled": {
-			"value": true
+		"vec2"       :
+		{
+			"albedo_map_repeat"   : [1, 1],
+			"normal_map_repeat"   : [1, 1],
+			"specular_map_repeat" : [1, 1]
 		},
-		"normal_map": {
-			"value": {
-				"file": "img/carpet_n.png"
-			}
-		},
-		"normal_strength": {
-			"value": 1
-		},
-		"specular_enabled": {
-			"value": true
-		},
-		"specular_colour": {
-			"value": [
-				0.2,
-				0.2,
-				0.2,
-				1.0
-			]
-		},
-		"specular_shininess": {
-			"value": 0.078125
-		},
-		"fresnel_enabled": {
-			"value": true
-		},
-		"fresnel_colour": {
-			"value": [
-				0.5,
-				0.5,
-				0.5,
-				1
-			]
-		},
-		"fresnel_scale": {
-			"value": 0.2
-		},
-		"fresnel_bias": {
-			"value": 0
-		},
-		"fresnel_power": {
-			"value": 2.5
+		"vec4"       :
+		{
+			"albedo_colour"       : [1, 1, 1, 1],
+			"specular_colour"     : [0.2, 0.2, 0.2, 1],
+			"fresnel_colour"      : [0.5, 0.5, 0.5, 1]
 		}
 	}
 }

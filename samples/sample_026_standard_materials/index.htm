@@ -16,16 +16,14 @@
 		<script language="javascript">
 		var resources =
 		{
-			mat_sponge  : { file : "mat/sponge.mat"},
-			mat_wool    : { file : "mat/wool.mat"},
-			mat_shiny_plastic    : { file : "mat/shiny-plastic.mat"},
-			mat_stone   : { file : "mat/stone.mat"},
-			mat_wood    : { file : "mat/wood.mat"},
-			mat_snooker_ball    : { file : "mat/snooker-ball.mat"},
-			mat_carpet    : { file : "mat/carpet.mat"},
-			tx_albedo   : { file : "img/sponge_a.png" },
-			tx_specular : { file : "img/sponge_s.png" },
-			tx_normal   : { file : "img/sponge_n.png", is_normal_map : true },
+			mat_sponge        : { file : "mat/sponge.mat"},
+			mat_plasma        : { file : "mat/plasma.mat"},
+			mat_wool          : { file : "mat/wool.mat"},
+			mat_shiny_plastic : { file : "mat/shiny-plastic.mat"},
+			mat_stone         : { file : "mat/stone.mat"},
+			mat_wood          : { file : "mat/wood.mat"},
+			mat_snooker_ball  : { file : "mat/snooker-ball.mat"},
+			mat_carpet        : { file : "mat/carpet.mat"},
 		};
 
 		// ====================================================================================================================================
@@ -50,8 +48,8 @@
 		// ====================================================================================================================================
 		// Light update / render
 		// ====================================================================================================================================
-		var sun_pos = [0, 5, 0];		// origin
-		var sun_angle = 0;				// 0 = straight down y-axis
+		var sun_pos = [0, 5, 0];	// origin
+		var sun_angle = 0;			// 0 = straight down y-axis
 		var sun_dir = [ 0, -1, 0 ];	// 0 = straight down y-axis
 
 		function update_light(info)
@@ -135,7 +133,17 @@
 					Engine.Geometry.MakePlane({ x_size : 2, z_size : 2}),
 				];
 
-				var materials = [ resources["mat_sponge"], resources["mat_wool"], resources["mat_shiny_plastic"], resources["mat_wood"], resources["mat_stone"], resources["mat_snooker_ball"], resources["mat_carpet"] ];
+				var materials =
+				[
+					resources["mat_sponge"],
+					resources["mat_plasma"],
+					resources["mat_carpet"],
+					resources["mat_shiny_plastic"],
+					resources["mat_wool"],
+					resources["mat_wood"],
+					resources["mat_stone"],
+					resources["mat_snooker_ball"],
+				];
 
 				// Setup roam cam
 				cam = new Engine.Camera.Perspective({ position: [0, 4, -5] });
@@ -207,9 +215,9 @@
 
 					// Draw models
 					var mat_index = 0;
-					for(var i = -8; i <= 8; ++i)
+					for(var i = -10; i <= 10; ++i)
 					{
-						for(var j = -8; j <= 8; ++j)
+						for(var j = -10; j <= 10; ++j)
 						{
 							// Pick model
 							var model = models[model_index];// models[model_index++ % models.length];
