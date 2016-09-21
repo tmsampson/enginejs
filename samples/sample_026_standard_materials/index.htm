@@ -135,7 +135,7 @@
 
 				var materials =
 				[
-					new Engine.Gfx.Material(),
+					null, // created on the fly below
 					resources["mat_sponge"],
 					resources["mat_plasma"],
 					resources["mat_carpet"],
@@ -146,7 +146,9 @@
 					resources["mat_snooker_ball"],
 				];
 
-				materials[0].properties.vec4.albedo_colour = [1, 0, 0, 1];
+				// Setup new green material on the fly
+				materials[0] = new Engine.Gfx.Material()
+				materials[0].SetColour("albedo_colour", [0, 1, 0, 1]);
 
 				// Setup roam cam
 				cam = new Engine.Camera.Perspective({ position: [0, 4, -5] });
