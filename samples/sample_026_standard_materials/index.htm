@@ -26,116 +26,36 @@
 			mat_carpet        : { file : "mat/carpet.mat"},
 		};
 
-		// ====================================================================================================================================
-		// Misc
-		// ====================================================================================================================================
-		var cam = null;
-		var mtx_trans = null;
-		var gamepad = null;
-
-		// ====================================================================================================================================
-		// Models
-		// ====================================================================================================================================
-		var model_floor = null;
-		var models = null;
-
-		// ====================================================================================================================================
-		// Shader programs
-		// ====================================================================================================================================
-		var program_floor;
-		var program_white_unlit;
-
-		// ====================================================================================================================================
-		// Light update / render
-		// ====================================================================================================================================
-		var sun_pos = [0, 5, 0];	// origin
-		var sun_angle = 0;			// 0 = straight down y-axis
-		var sun_dir = [ 0, -1, 0 ];	// 0 = straight down y-axis
-
-		function update_light(info)
-		{
-			var light_move_speed = 0.1;
-			sun_angle = $("#sun_angle").slider("value");
-			sun_angle += Engine.Mouse.GetWheelDelta() / 20;
-			
-			// Process gamepad input
-			gamepad = Engine.Gamepad.Pads[0];
-			if(gamepad)
-			{
-				if(gamepad.IsPressed("lb"))
-				{
-					sun_angle -= 1;
-				}
-				if(gamepad.IsPressed("rb"))
-				{
-					sun_angle += 1;
-				}
-			}
-
-			$("#sun_angle").slider('value', sun_angle);
-			draw_light(sun_pos, sun_angle);
-		};
-
-		function draw_light(sun_pos)
-		{
-			// Draw light as sphere
-			mat4.translate(mtx_trans, Engine.Math.IdentityMatrix, sun_pos);
-			mat4.scale(mtx_trans, mtx_trans, [0.3, 0.3, 0.3]);
-			Engine.Gfx.BindShaderProgram(program_white_unlit);
-			Engine.Gfx.SetShaderConstant("u_trans_world", mtx_trans, Engine.Gfx.SC_MATRIX4);
-			Engine.Gfx.SetShaderConstant("u_colour", Engine.Colour.White, Engine.Gfx.SC_COLOUR);
-			Engine.Gfx.DrawModel(models[0]);
-
-			// Draw light basis
-			Engine.Debug.DrawArrow3D(cam, sun_pos, [sun_pos[0] + 3, sun_pos[1],     sun_pos[2]],     Engine.Colour.Red, 1);
-			Engine.Debug.DrawArrow3D(cam, sun_pos, [sun_pos[0],     sun_pos[1] + 3, sun_pos[2]],     Engine.Colour.Green, 1);
-			Engine.Debug.DrawArrow3D(cam, sun_pos, [sun_pos[0],     sun_pos[1],     sun_pos[2] + 3], Engine.Colour.Blue, 1);
-
-			// Draw light angle
-			mat4.fromRotation(mtx_trans, Engine.Math.DegToRad(sun_angle), [0, 0, -1]);
-			vec3.transformMat4(sun_dir, [0, -1, 0], mtx_trans);
-
-			var lp = [ sun_pos[0], sun_pos[1], sun_pos[2] ];
-			Engine.Debug.DrawArrow3D(cam, lp, [lp[0] + (sun_dir[0] * 3),     lp[1]+ (sun_dir[1] * 3),     lp[2]+ (sun_dir[2] * 3)], Engine.Colour.Orange, 1);
-			lp[0] = sun_pos[0] + 0.2;
-			Engine.Debug.DrawArrow3D(cam, lp, [lp[0] + (sun_dir[0] * 3),     lp[1]+ (sun_dir[1] * 3),     lp[2]+ (sun_dir[2] * 3)], Engine.Colour.Orange, 1);
-			lp[0] = sun_pos[0] - 0.2;
-			Engine.Debug.DrawArrow3D(cam, lp, [lp[0] + (sun_dir[0] * 3),     lp[1]+ (sun_dir[1] * 3),     lp[2]+ (sun_dir[2] * 3)], Engine.Colour.Orange, 1);
-		};
-
-		// ====================================================================================================================================
-		// Colour picker helpers
-		// ====================================================================================================================================
-		function colour_from_picker_rgb(picker_selector)
-		{
-			var raw_value = $(picker_selector).spectrum("get").toRgb();
-			return [raw_value.r /= 255, raw_value.g /= 255, raw_value.b /= 255 ];
-		};
-
 		$(document).ready(function()
 		{
 			var on_init = function()
 			{
-				mtx_trans = mat4.create();
+				// ====================================================================================================================================
+				// Misc
+				var mtx_trans = mat4.create();
+				var model_index = 0;
+				var model_rotate_enabled = false;
 
-				// Setup misc shaders
-				program_floor       = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_general_transformed"],
-				                                                     Engine.Resources["fs_grid_xz_fog"]);
-				program_white_unlit = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_general_transformed"],
-				                                                     Engine.Resources["fs_unlit_colour"]);
+				// ====================================================================================================================================
+				// Camera
+				var cam = new Engine.Camera.Perspective({ position: [0, 4, -5] });
+				cam.AttachHelper(new Engine.Camera.Helper.Roam({ forward : [0, 0, 1] }));
 
-				// Setup models
-				model_floor = Engine.Resources["ml_floor_tile"];
-				models =
+				// ====================================================================================================================================
+				// Models
+				var floor_model = Engine.Resources["ml_floor_tile"];
+				var object_models =
 				[
 					Engine.Geometry.MakeSphere(),
 					Engine.Resources["ml_cube"],
 					Engine.Geometry.MakePlane({ x_size : 2, z_size : 2}),
 				];
 
+				// ====================================================================================================================================
+				// Materials
 				var materials =
 				[
-					null, // created on the fly below
+					new Engine.Gfx.Material(), // setup below
 					resources["mat_sponge"],
 					resources["mat_plasma"],
 					resources["mat_carpet"],
@@ -147,39 +67,78 @@
 				];
 
 				// Setup new green material on the fly
-				materials[0] = new Engine.Gfx.Material()
 				materials[0].SetColour("albedo_colour", [0, 1, 0, 1]);
 				materials[0].SetConfig("fresnel_enabled", true);
 				materials[0].SetColour("fresnel_colour", [0.8, 1, 0.8, 1]);
 				materials[0].SetFloat("fresnel_scale", 0.4);
 				materials[0].SetFloat("fresnel_power", 2);
 
-				// Setup roam cam
-				cam = new Engine.Camera.Perspective({ position: [0, 4, -5] });
-				cam.AttachHelper(new Engine.Camera.Helper.Roam({ forward : [0, 0, 1] }));
+				// ====================================================================================================================================
+				// Shader programs
+				var program_floor = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_general_transformed"],
+				                                                   Engine.Resources["fs_grid_xz_fog"]);
 
-				// Setup UI colour pickers
-				var config = { showInput: false, showButtons: false, preferredFormat: "rgb" };
-				$("#sun_colour").spectrum($.extend({}, config, { move : function(color) { } }));
-				$("#material_colour").spectrum($.extend({}, config, { move : function(color) { } }));
-				$("#material_specular").spectrum($.extend({}, config, { move : function(color) { } }));
-				$("#material_fresnel_colour").spectrum($.extend({}, config, { move : function(color) { } }));
-				$("#sun_colour").spectrum("set", "rgba 70 70 70 255");
-				$("#material_colour").spectrum("set", "rgba 255 255 255 255");
-				$("#material_specular").spectrum("set", "rgba 255 255 255 255");
-				$("#material_fresnel_colour").spectrum("set", "rgba 255 255 255 255");
+				// ====================================================================================================================================
+				// Light
+				var sun =
+				{
+					model     : Engine.Geometry.MakeSphere(),
+					material  : new Engine.Gfx.Material(),
+					pos       : [0, 5, 0],
+					angle     : 0,	// 0 = straight down y-axis
+					direction : [ 0, -1, 0 ],
+					colour    : [ 0.4, 0.4, 0.4 ],
+				};
 
-				// Setup UI sliders
-				$("#material_shininess").slider({ label : "Shininess", value: 0.078125, min: 0.03,   max: 1,   step: 0.01 })
-				$("#material_fresnel_bias").slider({ label : "Fresnel Bias", value: 0.0, min: -1,   max: 1,   step: 0.01 })
-				$("#material_fresnel_scale").slider({ label : "Fresnel Scale", value: 0.0, min: 0,   max: 1,   step: 0.01 })
-				$("#material_fresnel_power").slider({ label : "Fresnel Scale", value: 1.4, min: 1,   max: 5,   step: 0.01 })
-				$("#normal_strength").slider({ label : "Normal Strength", value: 1, min: 0,   max: 1,   step: 0.01 })
-				$("#model_select").slider({ label : "Model select", value: 1, min: 0,   max: 2,   step: 1 })
-				$("#sun_angle").slider({ label : "Sun Angle", value: 0, min: -180,   max: 180,   step: 1 })
+				function update_light()
+				{
+					sun.angle += Engine.Mouse.GetWheelDelta() / 20;
 
-				var sun_colour = [ 0.4, 0.4, 0.4 ];
-				var model_index = 0;
+					// Process gamepad input
+					var gamepad = Engine.Gamepad.Pads[0];
+					if(gamepad)
+					{
+						sun.angle += gamepad.IsPressed("lb")? -1 : (gamepad.IsPressed("rb")? 1 : 0);
+
+						if(gamepad.IsPressed("lt"))
+						{
+							sun.colour[0] -= 0.01;
+							sun.colour[1] -= 0.01;
+							sun.colour[2] -= 0.01;
+						}
+						if(gamepad.IsPressed("rt"))
+						{
+							sun.colour[0] += 0.01;
+							sun.colour[1] += 0.01;
+							sun.colour[2] += 0.01;
+						}
+					}
+				};
+
+				function draw_light()
+				{
+					// Draw light as sphere
+					mat4.translate(mtx_trans, Engine.Math.IdentityMatrix, sun.pos);
+					mat4.scale(mtx_trans, mtx_trans, [0.2, 0.2, 0.2]);
+					Engine.Gfx.BindMaterial(sun.material, sun)
+					Engine.Gfx.SetShaderConstant("u_trans_world", mtx_trans, Engine.Gfx.SC_MATRIX4);
+					Engine.Gfx.DrawModel(sun.model);
+
+					// Draw light basis
+					Engine.Debug.DrawArrow3D(cam, sun.pos, [sun.pos[0] + 3, sun.pos[1],     sun.pos[2]],     Engine.Colour.Red, 1);
+					Engine.Debug.DrawArrow3D(cam, sun.pos, [sun.pos[0],     sun.pos[1] + 3, sun.pos[2]],     Engine.Colour.Green, 1);
+					Engine.Debug.DrawArrow3D(cam, sun.pos, [sun.pos[0],     sun.pos[1],     sun.pos[2] + 3], Engine.Colour.Blue, 1);
+
+					// Draw light angle
+					mat4.fromRotation(mtx_trans, Engine.Math.DegToRad(sun.angle), [0, 0, -1]);
+					vec3.transformMat4(sun.direction, [0, -1, 0], mtx_trans);
+					var lp = [ sun.pos[0], sun.pos[1], sun.pos[2] ];
+					Engine.Debug.DrawArrow3D(cam, lp, [lp[0] + (sun.direction[0] * 3),     lp[1]+ (sun.direction[1] * 3),     lp[2]+ (sun.direction[2] * 3)], Engine.Colour.Orange, 1);
+					lp[0] = sun.pos[0] + 0.2;
+					Engine.Debug.DrawArrow3D(cam, lp, [lp[0] + (sun.direction[0] * 3),     lp[1]+ (sun.direction[1] * 3),     lp[2]+ (sun.direction[2] * 3)], Engine.Colour.Orange, 1);
+					lp[0] = sun.pos[0] - 0.2;
+					Engine.Debug.DrawArrow3D(cam, lp, [lp[0] + (sun.direction[0] * 3),     lp[1]+ (sun.direction[1] * 3),     lp[2]+ (sun.direction[2] * 3)], Engine.Colour.Orange, 1);
+				};
 
 				var on_render = function(info)
 				{
@@ -192,27 +151,20 @@
 					Engine.Gfx.BindCamera(cam);
 
 					// Update light
-					update_light(info);
+					update_light();
+					draw_light();
 
 					// Process gamepad input
 					gamepad = Engine.Gamepad.Pads[0];
 					if(gamepad)
 					{
-						if(gamepad.IsPressed("lt"))
-						{
-							sun_colour[0] -= 0.01;
-							sun_colour[1] -= 0.01;
-							sun_colour[2] -= 0.01;
-						}
-						if(gamepad.IsPressed("rt"))
-						{
-							sun_colour[0] += 0.01;
-							sun_colour[1] += 0.01;
-							sun_colour[2] += 0.01;
-						}
 						if(gamepad.IsPressed("a", true))
 						{
-							model_index = (model_index + 1) % models.length;
+							model_index = (model_index + 1) % object_models.length;
+						}
+						if(gamepad.IsPressed("b", true))
+						{
+							model_rotate_enabled = !model_rotate_enabled;
 						}
 					}
 
@@ -220,24 +172,22 @@
 					mat4.scale(mtx_trans, Engine.Math.IdentityMatrix, [100, 0, 100]);
 					Engine.Gfx.BindShaderProgram(program_floor);
 					Engine.Gfx.SetShaderConstant("u_trans_world", mtx_trans, Engine.Gfx.SC_MATRIX4);
-					Engine.Gfx.DrawModel(model_floor);
+					Engine.Gfx.DrawModel(floor_model);
 
-					// Draw models
+					// Draw object_models
 					var mat_index = 0;
 					for(var i = -10; i <= 10; ++i)
 					{
 						for(var j = -10; j <= 10; ++j)
 						{
-							// Pick model
-							var model = models[model_index];// models[model_index++ % models.length];
-
 							// Bind material
-							Engine.Gfx.BindMaterial(materials[mat_index++ % materials.length], { colour : sun_colour,
-							                                                                     direction : sun_dir });
+							Engine.Gfx.BindMaterial(materials[mat_index++ % materials.length], sun);
 
-							// Position on grid and rotate
+							// Position on grid
 							mat4.translate(mtx_trans, Engine.Math.IdentityMatrix, [i * 3, 1.2, j * 3]);
-							if($('#cb_rotate').is(":checked"))
+
+							// Rotate?
+							if(model_rotate_enabled)
 							{
 								mat4.rotate(mtx_trans, mtx_trans, info.elapsed_s / 3.0, [0, 1, 0]);
 							}
@@ -246,7 +196,7 @@
 							Engine.Gfx.SetShaderConstant("u_trans_world", mtx_trans, Engine.Gfx.SC_MATRIX4);
 
 							// Draw model
-							Engine.Gfx.DrawModel(model);
+							Engine.Gfx.DrawModel(object_models[model_index]);
 						}
 					}
 				};
@@ -258,55 +208,6 @@
 	</head>
 
 	<body>
-		<table style="width:100%">
-			<tr>
-				<td style="width:1200px;vertical-align:top"><canvas width="1024" height="800"></canvas></td>
-				<td id="param_editor_window" style="background-color:white;padding:20px;vertical-align:top">
-					<h4>Lighting Model</h4>
-					<select>
-						<option value="specular-map-normal-map">specular-map-normal-map</option>
-						<option value="normal-map">normal-map</option>
-						<option value="specular-map">specular-map</option>
-						<option value="specular">specular</option>
-						<option value="ambient">ambient</option>
-						<option value="diffuse">diffuse</option>
-					</select>
-
-					<h4>Debug</h4>
-					Model select:
-					<div id="model_select" style="width:200px"></div>
-					<br/>
-					Rotate: <input type="checkbox" id="cb_rotate" id="" />
-					Show normals: <input type="checkbox" id="cb_show_normals" id="" />
-					Show tangents: <input type="checkbox" id="cb_show_tangents" id="" />
-
-					<h4>Material Properties</h4>
-					Material colour<br/>
-					<input type="text" id="material_colour"/></input><br/>
-					Material specular<br/>
-					<input type="text" id="material_specular"/></input><br/>
-					Shininess:
-					<div id="material_shininess" style="width:200px"/></div>
-					Normal Strength:
-					<div id="normal_strength" style="width:200px"/></div>
-					Fresnel colour<br/>
-					<input type="text" id="material_fresnel_colour"/></input><br/>
-					Fresnel Bias:
-					<div id="material_fresnel_bias" style="width:200px"/></div>
-					Fresnel Scale:
-					<div id="material_fresnel_scale" style="width:200px"/></div>
-					Fresnel Power:
-					<div id="material_fresnel_power" style="width:200px"/></div>
-					<br/>
-
-					<h4>Global Light Properties</h4>
-					Sun Angle:
-					<div id="sun_angle" style="width:200px"/></div>
-
-					Sun Colour<br/>
-					<input type="text" id="sun_colour"></input><br/>
-				</td>
-			</tr>
-		</table>
+		<canvas width="1024" height="800">
 	</body>
 </html>
