@@ -151,7 +151,22 @@ Engine.Gfx.Material = function(prevent_default)
 		}
 	}
 
-	// Getters
+	// Config Getters
+	this.GetConfig = function(config_param_name) { return this.config[config_param_name]; }
+
+	// Config Setters
+	this.SetConfig = function(config_param_name, new_value)
+	{
+		this.config[config_param_name] = new_value;
+
+		// Important: Modifying config parameters for standard shaders means we potentially need to select a new shader permutation
+		if(this.type == "standard")
+		{
+			this.InitStandardShader();
+		}
+	}
+
+	// Property Getters
 	this.GetTexture   = function(sampler_name)  { return Engine.Util.IsDefined(this.properties.sampler2D)? this.properties.sampler2D[sampler_name] : null  };
 	this.GetSampler2D = function(sampler_name)  { return Engine.Util.IsDefined(this.properties.sampler2D)? this.properties.sampler2D[sampler_name] : null  };
 	this.GetInteger   = function(property_name) { return Engine.Util.IsDefined(this.properties.int)? this.properties.int[property_name] : null             };
@@ -166,7 +181,7 @@ Engine.Gfx.Material = function(prevent_default)
 	this.GetColour    = function(property_name) { return Engine.Util.IsDefined(this.properties.vec4)? this.properties.vec4[property_name] : null           };
 	this.GetColor     = function(property_name) { return Engine.Util.IsDefined(this.properties.vec4)? this.properties.vec4[property_name] : null           };
 
-	// Setters
+	// Property Setters
 	this.SetTexture   = function(sampler_name, new_value)  { if(!Engine.Util.IsDefined(this.properties.sampler2D)) { this.properties.sampler2D = { sampler_name : new_value }} else { this.properties.sampler2D[sampler_name] = new_value; } };
 	this.SetSampler2D = function(sampler_name, new_value)  { if(!Engine.Util.IsDefined(this.properties.sampler2D)) { this.properties.sampler2D = { sampler_name : new_value }} else { this.properties.sampler2D[sampler_name] = new_value; } };
 	this.SetInteger   = function(property_name, new_value) { if(!Engine.Util.IsDefined(this.properties.int)) { this.properties.int = { property_name : new_value }} else { this.properties.int[property_name] = new_value; }                 };
@@ -212,10 +227,16 @@ Engine.Resource.RegisterLoadFunction("mat", function(descriptor, callback)
 				var material_property_bank = material.properties[shader_property_info.type];
 				if(!material_property_bank.hasOwnProperty(property_name))
 				{
-					// No! Setup a material property with the default value provided in the shader
-					// Note: If the missing property is a sampler2D we bind a 1x1 plain white texture
-					var default_value = shader_property_info.type == "sampler2D"? Engine.Resources["tx_white"] : shader_property_info.default;			                                                                 shader_property_info.default;
-					material_property_bank[property_name] = default_value;
+					// Setup a material property with the default value provided in the shader
+					// Note: If the missing property is a the albedo map sampler, we bind a 1x1 plain white texture
+					if(shader_property_info.type == "sampler2D")
+					{
+						material_property_bank[property_name] = property_name == "albedo_map"? Engine.Resources["tx_white"] : null;
+					}
+					else
+					{
+						material_property_bank[property_name] = shader_property_info.default;
+					}
 				}
 			}
 

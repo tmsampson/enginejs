@@ -149,6 +149,10 @@
 				// Setup new green material on the fly
 				materials[0] = new Engine.Gfx.Material()
 				materials[0].SetColour("albedo_colour", [0, 1, 0, 1]);
+				materials[0].SetConfig("fresnel_enabled", true);
+				materials[0].SetColour("fresnel_colour", [0.8, 1, 0.8, 1]);
+				materials[0].SetFloat("fresnel_scale", 0.4);
+				materials[0].SetFloat("fresnel_power", 2);
 
 				// Setup roam cam
 				cam = new Engine.Camera.Perspective({ position: [0, 4, -5] });
