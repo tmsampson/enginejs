@@ -31,7 +31,6 @@ Engine.Resource =
 			if(prop_key == "on_loaded") { return carry_on(true); }
 
 			Engine.Log("Loading resource: " + descriptor.file);
-			descriptor.hash = Engine.Util.Hash(descriptor);
 			descriptor.prop_key = prop_key; // Pass prop_key through closure
 			Engine.Resource.Load(descriptor, function(resource_object)
 			{
@@ -45,6 +44,13 @@ Engine.Resource =
 
 	Load : function(descriptor, on_complete)
 	{
+		// Generate hash for descriptor
+		// Note: We prevent the prop_key from contributing to the hash as this should not be used to uniquely identify a resource
+		var original_prop_key = descriptor.prop_key;
+		descriptor.prop_key = "";
+		descriptor.hash = Engine.Util.Hash(descriptor);
+		descriptor.prop_key = original_prop_key;
+
 		// Already loaded?
 		if (descriptor.hash in Engine.Resource.loaded_resources)
 		{
