@@ -1,7 +1,7 @@
-* Make "new Engine.Material()" copy the default material (when loading a material, pass a flag to constructor to supress this behaviour)
-* Use for floor / light materials, expose floor grid colours via material!
+* Add material property getters / setters
 * Tidy up standard material sample index.htm an make use of a material made on the fly (see todo entry above)
-* Rename Engine Gfx "SC_" and all references to "SP_" for "shader property" not "shader constant"!!!!
+* Use for floor / light materials, expose floor grid colours via material!
+* Rename Engine Gfx "SC_" and all references to "SP_" for "shader property" not "shader constant"!!!! Also rename SetShaderConstant to SetShaderProperty
 * Write code to generate material editor panel from shader property info (and update plasma interactive sample)
 * Add support for point lights
 * Add support for spotlights
