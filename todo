@@ -1,4 +1,4 @@
-* Add material property getters / setters
+* Engine.Gfx.Material --> Engine.Game3d.Material ??
 * Tidy up standard material sample index.htm an make use of a material made on the fly (see todo entry above)
 * Use for floor / light materials, expose floor grid colours via material!
 * Rename Engine Gfx "SC_" and all references to "SP_" for "shader property" not "shader constant"!!!! Also rename SetShaderConstant to SetShaderProperty
