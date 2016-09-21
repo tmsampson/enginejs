@@ -141,13 +141,13 @@ Engine.Gfx.Material = function(prevent_default)
 		// Bind vec3 properties
 		for (var property_name in this.properties.vec3)
 		{
-			Engine.Gfx.SetShaderConstant(property_name, this.properties.vec3[property_name], Engine.Gfx.SC_FLOAT);
+			Engine.Gfx.SetShaderConstant(property_name, this.properties.vec3[property_name], Engine.Gfx.SC_VEC3);
 		}
 
 		// Bind vec4 properties
 		for (var property_name in this.properties.vec4)
 		{
-			Engine.Gfx.SetShaderConstant(property_name, this.properties.vec4[property_name], Engine.Gfx.SC_FLOAT);
+			Engine.Gfx.SetShaderConstant(property_name, this.properties.vec4[property_name], Engine.Gfx.SC_VEC4);
 		}
 	}
 
@@ -231,7 +231,7 @@ Engine.Resource.RegisterLoadFunction("mat", function(descriptor, callback)
 					// Note: If the missing property is a the albedo map sampler, we bind a 1x1 plain white texture
 					if(shader_property_info.type == "sampler2D")
 					{
-						material_property_bank[property_name] = property_name == "albedo_map"? Engine.Resources["tx_white"] : null;
+						material_property_bank[property_name] = (property_name == "albedo_map")? Engine.Resources["tx_white"] : null;
 					}
 					else
 					{
