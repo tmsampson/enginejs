@@ -1,0 +1,8 @@
+{
+	"version"        : 1.0,
+	"name"           : "Grid XZ Fog",
+	"type"           : "custom",
+	"shader"         : "enginejs/resources/shaders/misc/grid-xz-fog-custom.fs",
+	"shader-defines" : "",
+	"properties"     : { }
+}
