@@ -2,7 +2,7 @@
 //# sourceURL=modules/enginejs-material-standard.js
 // **************************************************
 
-Engine.Gfx.Material = function()
+Engine.Gfx.Material = function(prevent_default)
 {
 	this.version        = 1.0;
 	this.name           = "Unknown";
@@ -11,11 +11,13 @@ Engine.Gfx.Material = function()
 	this.shader_program = null; // compiled shader program
 	this.shader_defines = [ ];
 	this.config         = { };
-	this.properties     = 
+	this.properties     = {	};
+
+	// Unless otherwise specified, new materials should be constructed by copying the default material
+	if(!prevent_default)
 	{
-		sampler2D : { }, int  : { }, float : { },
-		vec2      : { }, vec3 : { }, vec4  : { },
-	};
+		$.extend(true, this, Engine.Resources["mat_standard_default"]);
+	}
 
 	this.InitStandardShader = function()
 	{
@@ -159,7 +161,7 @@ Engine.Resource.RegisterLoadFunction("mat", function(descriptor, callback)
 		var material_json = jQuery.parseJSON(json);
 
 		// Setup new material and apply JSON
-		var material = new Engine.Gfx.Material();
+		var material = new Engine.Gfx.Material(true);
 		$.extend(material, material_json);
 
 		// 3. Cross reference material properties with shader properties
