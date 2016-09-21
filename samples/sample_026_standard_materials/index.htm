@@ -53,6 +53,7 @@
 
 				// ====================================================================================================================================
 				// Materials
+				var floor_material = Engine.Resources["mat_standard_grid_xz_fog_custom"];
 				var materials =
 				[
 					new Engine.Gfx.Material(), // setup below
@@ -72,11 +73,6 @@
 				materials[0].SetColour("fresnel_colour", [0.8, 1, 0.8, 1]);
 				materials[0].SetFloat("fresnel_scale", 0.4);
 				materials[0].SetFloat("fresnel_power", 2);
-
-				// ====================================================================================================================================
-				// Shader programs
-				var program_floor = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_general_transformed"],
-				                                                   Engine.Resources["fs_grid_xz_fog"]);
 
 				// ====================================================================================================================================
 				// Light
@@ -170,7 +166,7 @@
 
 					// Draw floor
 					mat4.scale(mtx_trans, Engine.Math.IdentityMatrix, [100, 0, 100]);
-					Engine.Gfx.BindShaderProgram(program_floor);
+					Engine.Gfx.BindMaterial(floor_material, sun);
 					Engine.Gfx.SetShaderConstant("u_trans_world", mtx_trans, Engine.Gfx.SC_MATRIX4);
 					Engine.Gfx.DrawModel(floor_model);
 
