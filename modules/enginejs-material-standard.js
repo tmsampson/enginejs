@@ -197,6 +197,13 @@ Engine.Gfx.Material = function(prevent_default)
 	this.SetColor     = function(property_name, new_value) { if(!Engine.Util.IsDefined(this.properties.vec4)) { this.properties.vec4 = { property_name : new_value }} else { this.properties.vec4[property_name] = new_value; }              };
 };
 
+Engine.Gfx.Material.Clone = function(original_material)
+{
+	var material = new Engine.Gfx.Material(true);
+	$.extend(true, material, original_material);
+	return material;
+};
+
 // Material loading
 Engine.Resource.RegisterLoadFunction("mat", function(descriptor, callback)
 {
