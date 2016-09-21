@@ -135,7 +135,7 @@ Engine.Gfx.Material = function(prevent_default)
 		// Bind vec2 properties
 		for (var property_name in this.properties.vec2)
 		{
-			Engine.Gfx.SetShaderConstant(property_name, this.properties.vec2[property_name], Engine.Gfx.SC_FLOAT);
+			Engine.Gfx.SetShaderConstant(property_name, this.properties.vec2[property_name], Engine.Gfx.SC_VEC2);
 		}
 
 		// Bind vec3 properties
