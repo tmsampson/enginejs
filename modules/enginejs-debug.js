@@ -245,8 +245,8 @@ Engine.Debug =
 			{
 				var command = Engine.Debug.draw_commands_3d_z_test[i];
 				Engine.Gfx.BindCamera(command.camera);
-				Engine.Gfx.SetShaderConstant("u_colour", command.colour, Engine.Gfx.SC_COLOUR);
-				Engine.Gfx.SetShaderConstant("u_trans_world", mtx_identity, Engine.Gfx.SC_MATRIX4);
+				Engine.Gfx.SetShaderProperty("u_colour", command.colour, Engine.Gfx.SP_COLOUR);
+				Engine.Gfx.SetShaderProperty("u_trans_world", mtx_identity, Engine.Gfx.SP_MATRIX4);
 				Engine.Gfx.DrawArray(command.offset, command.length, command.draw_mode);
 			}
 		}
@@ -266,8 +266,8 @@ Engine.Debug =
 			{
 				var command = Engine.Debug.draw_commands_3d_no_z_test[i];
 				Engine.Gfx.BindCamera(command.camera);
-				Engine.Gfx.SetShaderConstant("u_colour", command.colour, Engine.Gfx.SC_COLOUR);
-				Engine.Gfx.SetShaderConstant("u_trans_world", mtx_identity, Engine.Gfx.SC_MATRIX4);
+				Engine.Gfx.SetShaderProperty("u_colour", command.colour, Engine.Gfx.SP_COLOUR);
+				Engine.Gfx.SetShaderProperty("u_trans_world", mtx_identity, Engine.Gfx.SP_MATRIX4);
 				Engine.Gfx.DrawArray(command.offset, command.length, command.draw_mode);
 			}
 		}
@@ -287,9 +287,9 @@ Engine.Debug =
 			var mtx_proj = mat4.create(); mat4.identity(mtx_proj);
 			var canvas_size = Engine.Canvas.GetSize();
 			mat4.ortho(mtx_proj, 0, canvas_size[0], 0, canvas_size[1], -1, 1);
-			Engine.Gfx.SetShaderConstant("u_trans_world", Engine.Math.IdentityMatrix, Engine.Gfx.SC_MATRIX4);
-			Engine.Gfx.SetShaderConstant("u_trans_view",  Engine.Math.IdentityMatrix, Engine.Gfx.SC_MATRIX4);
-			Engine.Gfx.SetShaderConstant("u_trans_proj",  mtx_proj, Engine.Gfx.SC_MATRIX4);
+			Engine.Gfx.SetShaderProperty("u_trans_world", Engine.Math.IdentityMatrix, Engine.Gfx.SP_MATRIX4);
+			Engine.Gfx.SetShaderProperty("u_trans_view",  Engine.Math.IdentityMatrix, Engine.Gfx.SP_MATRIX4);
+			Engine.Gfx.SetShaderProperty("u_trans_proj",  mtx_proj, Engine.Gfx.SP_MATRIX4);
 
 			// Draw lines and polys (using offsets into vertex soup)
 			if(Engine.Debug.draw_commands_2d.length > 0)
@@ -297,7 +297,7 @@ Engine.Debug =
 				for(var i = 0; i < Engine.Debug.draw_commands_2d.length; ++i)
 				{
 					var command = Engine.Debug.draw_commands_2d[i];
-					Engine.Gfx.SetShaderConstant("u_colour", command.colour, Engine.Gfx.SC_COLOUR);
+					Engine.Gfx.SetShaderProperty("u_colour", command.colour, Engine.Gfx.SP_COLOUR);
 					Engine.Gfx.DrawArray(command.offset, command.length, command.draw_mode);
 				}
 			}
@@ -308,8 +308,8 @@ Engine.Debug =
 				for(var i = 0; i < Engine.Debug.prim_queue.length; ++i)
 				{
 					var prim = Engine.Debug.prim_queue[i];
-					Engine.Gfx.SetShaderConstant("u_colour", prim.colour, Engine.Gfx.SC_COLOUR);
-					Engine.Gfx.SetShaderConstant("u_trans_world", prim.mtx, Engine.Gfx.SC_MATRIX4);
+					Engine.Gfx.SetShaderProperty("u_colour", prim.colour, Engine.Gfx.SP_COLOUR);
+					Engine.Gfx.SetShaderProperty("u_trans_world", prim.mtx, Engine.Gfx.SP_MATRIX4);
 					switch(prim.type)
 					{
 						case "rect":

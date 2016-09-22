@@ -21,7 +21,7 @@
 				var on_render = function(info)
 				{
 					Engine.Gfx.BindShaderProgram(program);
-					Engine.Gfx.SetShaderConstant("u_time", info.elapsed_s, Engine.Gfx.SC_FLOAT);
+					Engine.Gfx.SetShaderProperty("u_time", info.elapsed_s, Engine.Gfx.SP_FLOAT);
 					Engine.Gfx.DrawQuad();
 				};
 				return on_render;

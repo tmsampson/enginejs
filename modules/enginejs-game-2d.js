@@ -643,7 +643,7 @@ Engine.Game2D =
 					mat4.scale(mtx_trans, mtx_trans, [this.max_size[0], this.max_size[1], 0.0]);
 					Engine.Gfx.BindShaderProgram(this.program_grid);
 					Engine.Gfx.DrawQuad();
-					Engine.Gfx.SetShaderConstant("u_trans_world", mtx_trans, Engine.Gfx.SC_MATRIX4);
+					Engine.Gfx.SetShaderProperty("u_trans_world", mtx_trans, Engine.Gfx.SP_MATRIX4);
 				}
 
 				// Render setup
@@ -669,12 +669,12 @@ Engine.Game2D =
 					var scale = entity.sprite? Engine.Vec2.DivideScalar(entity.original_size, 2) : entity.size;
 					mat4.scale(mtx_trans, mtx_trans, Engine.Vec3.FromVec2(scale));
 					mat4.translate(mtx_trans, mtx_trans, [1, 1, 0]);
-					Engine.Gfx.SetShaderConstant("u_trans_world", mtx_trans, Engine.Gfx.SC_MATRIX4);
+					Engine.Gfx.SetShaderProperty("u_trans_world", mtx_trans, Engine.Gfx.SP_MATRIX4);
 
 					// Setup tint
 					if(entity.tint != last_bound_tint)
 					{
-						Engine.Gfx.SetShaderConstant("u_tint", entity.tint, Engine.Gfx.SC_VEC4);
+						Engine.Gfx.SetShaderProperty("u_tint", entity.tint, Engine.Gfx.SP_VEC4);
 						last_bound_tint = entity.tint;
 					}
 
@@ -685,10 +685,10 @@ Engine.Game2D =
 						var anim_config = [entity.sprite.active_texture.descriptor.rows,
 						                   entity.sprite.active_texture.descriptor.cols,
 						                   entity.sprite.current_anim_frame];
-						Engine.Gfx.SetShaderConstant("u_anim_config", anim_config, Engine.Gfx.SC_VEC3);
+						Engine.Gfx.SetShaderProperty("u_anim_config", anim_config, Engine.Gfx.SP_VEC3);
 
 						// Setup mirror config
-						Engine.Gfx.SetShaderConstant("u_mirror_config", entity.sprite.mirror, Engine.Gfx.SC_VEC2);
+						Engine.Gfx.SetShaderProperty("u_mirror_config", entity.sprite.mirror, Engine.Gfx.SP_VEC2);
 
 						// Setup texture
 						if(entity.sprite.active_texture != last_bound_texture)
@@ -955,16 +955,16 @@ Engine.Game2D =
 
 				// Bind background data
 				var bg_colour = this.colour? this.colour : Engine.Colour.Black;
-				Engine.Gfx.SetShaderConstant("u_background_color", bg_colour, Engine.Gfx.SC_VEC4);
-				Engine.Gfx.SetShaderConstant("u_time", info.elapsed_s, Engine.Gfx.SC_FLOAT);
+				Engine.Gfx.SetShaderProperty("u_background_color", bg_colour, Engine.Gfx.SP_VEC4);
+				Engine.Gfx.SetShaderProperty("u_time", info.elapsed_s, Engine.Gfx.SP_FLOAT);
 
 				// Bind per-layer textures
 				Engine.Gfx.BindTextureArray(this.u_textures, "u_layer_tx");
 
 				// Bind packed per-layer data
-				Engine.Gfx.SetShaderConstant("u_layer_config_1", this.u_config_1, Engine.Gfx.SC_VEC4_ARRAY);
-				Engine.Gfx.SetShaderConstant("u_layer_config_2", this.u_config_2, Engine.Gfx.SC_VEC4_ARRAY);
-				Engine.Gfx.SetShaderConstant("u_layer_config_3", this.u_config_3, Engine.Gfx.SC_VEC4_ARRAY);
+				Engine.Gfx.SetShaderProperty("u_layer_config_1", this.u_config_1, Engine.Gfx.SP_VEC4_ARRAY);
+				Engine.Gfx.SetShaderProperty("u_layer_config_2", this.u_config_2, Engine.Gfx.SP_VEC4_ARRAY);
+				Engine.Gfx.SetShaderProperty("u_layer_config_3", this.u_config_3, Engine.Gfx.SP_VEC4_ARRAY);
 
 				// Draw all layers in single pass
 				Engine.Gfx.DrawQuad();

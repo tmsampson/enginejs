@@ -152,9 +152,9 @@
 				var on_render = function(info)
 				{
 					Engine.Gfx.BindShaderProgram(program);
-					Engine.Gfx.SetShaderConstant("iGlobalTime", info.elapsed_s, Engine.Gfx.SC_FLOAT);
+					Engine.Gfx.SetShaderProperty("iGlobalTime", info.elapsed_s, Engine.Gfx.SP_FLOAT);
 					var res = [ 800, 450, 0 ];
-					Engine.Gfx.SetShaderConstant("iResolution", res, Engine.Gfx.SC_VEC3);
+					Engine.Gfx.SetShaderProperty("iResolution", res, Engine.Gfx.SP_VEC3);
 
 					Engine.Editor.BindParamEditor($(".tab-content.tweaker")); // Bind sliders
 
@@ -170,10 +170,10 @@
 					}
 
 					var mouse = [ mpos[0], mpos[1], mpressed? click_pos[0] : -click_pos[0], mpressed? click_pos[1] : -click_pos[1] ];
-					Engine.Gfx.SetShaderConstant("iMouse", mouse, Engine.Gfx.SC_VEC4);
+					Engine.Gfx.SetShaderProperty("iMouse", mouse, Engine.Gfx.SP_VEC4);
 
 					// Colours
-					Engine.Gfx.SetShaderConstant("iColour", GetColours(), Engine.Gfx.SC_VEC4_ARRAY);
+					Engine.Gfx.SetShaderProperty("iColour", GetColours(), Engine.Gfx.SP_VEC4_ARRAY);
 					Engine.Gfx.DrawQuad();
 				};
 				return on_render;

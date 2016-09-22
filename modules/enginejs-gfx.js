@@ -301,17 +301,17 @@ Engine.Gfx =
 		// Bind camera?
 		if(this.active_camera)
 		{
-			this.SetShaderConstant("u_cam_pos", this.active_camera.position, Engine.Gfx.SC_VEC3, true);
-			this.SetShaderConstant("u_trans_view", this.active_camera.mtx_view, Engine.Gfx.SC_MATRIX4, true);
-			this.SetShaderConstant("u_trans_view_inverse", this.active_camera.mtx_view_inverse, Engine.Gfx.SC_MATRIX4, true);
-			this.SetShaderConstant("u_trans_proj", this.active_camera.mtx_proj, Engine.Gfx.SC_MATRIX4, true);
+			this.SetShaderProperty("u_cam_pos", this.active_camera.position, Engine.Gfx.SP_VEC3, true);
+			this.SetShaderProperty("u_trans_view", this.active_camera.mtx_view, Engine.Gfx.SP_MATRIX4, true);
+			this.SetShaderProperty("u_trans_view_inverse", this.active_camera.mtx_view_inverse, Engine.Gfx.SP_MATRIX4, true);
+			this.SetShaderProperty("u_trans_proj", this.active_camera.mtx_proj, Engine.Gfx.SP_MATRIX4, true);
 		}
 		
 		// Set time
-		this.SetShaderConstant("u_time", Engine.Time.elapsed_s, Engine.Gfx.SC_FLOAT, true);
+		this.SetShaderProperty("u_time", Engine.Time.elapsed_s, Engine.Gfx.SP_FLOAT, true);
 	},
 
-	SetShaderConstant : function(constant_name, constant_value, setter_func, ignore_errors)
+	SetShaderProperty : function(constant_name, constant_value, setter_func, ignore_errors)
 	{
 		var uniform_location = null;
 		var program = this.current_shader_program;
@@ -410,7 +410,7 @@ Engine.Gfx =
 		// Bind texture
 		Engine.GL.activeTexture(Engine.GL.TEXTURE0 + idx);
 		Engine.GL.bindTexture(Engine.GL.TEXTURE_2D, tx_resource);
-		this.SetShaderConstant(sampler_name, idx, Engine.Gfx.SC_SAMPLER);
+		this.SetShaderProperty(sampler_name, idx, Engine.Gfx.SP_SAMPLER);
 	},
 
 	BindTextureArray : function(texture_array, sampler_name)
@@ -434,7 +434,7 @@ Engine.Gfx =
 		}
 
 		// Setup sampler array
-		this.SetShaderConstant(sampler_name, sampler_indices, Engine.Gfx.SC_SAMPLER_ARRAY);
+		this.SetShaderProperty(sampler_name, sampler_indices, Engine.Gfx.SP_SAMPLER_ARRAY);
 	},
 
 	SetTextureFiltering : function(mag, min)
@@ -711,22 +711,22 @@ Engine.Gfx =
 	ShaderPropertySetterFuncFromString : { },
 
 	// *************************************
-	// Uniform setter functions (passed to SetShaderConstant)
-	SC_FLOAT         : function(gl, uniform_location, new_value) { gl.uniform1f(uniform_location,        new_value); },
-	SC_FLOAT_ARRAY   : function(gl, uniform_location, new_value) { gl.uniform1fv(uniform_location,       new_value); },
-	SC_INT           : function(gl, uniform_location, new_value) { gl.uniform1i(uniform_location,        new_value); },
-	SC_INT_ARRAY     : function(gl, uniform_location, new_value) { gl.uniform1iv(uniform_location,       new_value); },
-	SC_SAMPLER       : function(gl, uniform_location, new_value) { gl.uniform1i(uniform_location,        new_value); },
-	SC_SAMPLER_ARRAY : function(gl, uniform_location, new_value) { gl.uniform1iv(uniform_location,       new_value); },
-	SC_VEC2          : function(gl, uniform_location, new_value) { gl.uniform2fv(uniform_location,       new_value); },
-	SC_VEC2_ARRAY    : function(gl, uniform_location, new_value) { gl.uniform2fv(uniform_location,       new_value); },
-	SC_VEC3          : function(gl, uniform_location, new_value) { gl.uniform3fv(uniform_location,       new_value); },
-	SC_VEC3_ARRAY    : function(gl, uniform_location, new_value) { gl.uniform3fv(uniform_location,       new_value); },
-	SC_VEC4          : function(gl, uniform_location, new_value) { gl.uniform4fv(uniform_location,       new_value); },
-	SC_VEC4_ARRAY    : function(gl, uniform_location, new_value) { gl.uniform4fv(uniform_location,       new_value); },
-	SC_COLOUR        : function(gl, uniform_location, new_value) { gl.uniform4fv(uniform_location,       new_value); },
-	SC_MATRIX3       : function(gl, uniform_location, new_value) { gl.uniformMatrix3fv(uniform_location, false, new_value); },
-	SC_MATRIX4       : function(gl, uniform_location, new_value) { gl.uniformMatrix4fv(uniform_location, false, new_value); },
+	// Uniform setter functions (passed to SetShaderProperty)
+	SP_FLOAT         : function(gl, uniform_location, new_value) { gl.uniform1f(uniform_location,        new_value); },
+	SP_FLOAT_ARRAY   : function(gl, uniform_location, new_value) { gl.uniform1fv(uniform_location,       new_value); },
+	SP_INT           : function(gl, uniform_location, new_value) { gl.uniform1i(uniform_location,        new_value); },
+	SP_INT_ARRAY     : function(gl, uniform_location, new_value) { gl.uniform1iv(uniform_location,       new_value); },
+	SP_SAMPLER       : function(gl, uniform_location, new_value) { gl.uniform1i(uniform_location,        new_value); },
+	SP_SAMPLER_ARRAY : function(gl, uniform_location, new_value) { gl.uniform1iv(uniform_location,       new_value); },
+	SP_VEC2          : function(gl, uniform_location, new_value) { gl.uniform2fv(uniform_location,       new_value); },
+	SP_VEC2_ARRAY    : function(gl, uniform_location, new_value) { gl.uniform2fv(uniform_location,       new_value); },
+	SP_VEC3          : function(gl, uniform_location, new_value) { gl.uniform3fv(uniform_location,       new_value); },
+	SP_VEC3_ARRAY    : function(gl, uniform_location, new_value) { gl.uniform3fv(uniform_location,       new_value); },
+	SP_VEC4          : function(gl, uniform_location, new_value) { gl.uniform4fv(uniform_location,       new_value); },
+	SP_VEC4_ARRAY    : function(gl, uniform_location, new_value) { gl.uniform4fv(uniform_location,       new_value); },
+	SP_COLOUR        : function(gl, uniform_location, new_value) { gl.uniform4fv(uniform_location,       new_value); },
+	SP_MATRIX3       : function(gl, uniform_location, new_value) { gl.uniformMatrix3fv(uniform_location, false, new_value); },
+	SP_MATRIX4       : function(gl, uniform_location, new_value) { gl.uniformMatrix4fv(uniform_location, false, new_value); },
 
 	// **********************************************
 	// Cache
@@ -748,14 +748,14 @@ Engine.Gfx.ResizeViewport();
 
 Engine.Gfx.ShaderPropertySetterFuncFromString =
 {
-	"float"     : Engine.Gfx.SC_FLOAT,
-	"int"       : Engine.Gfx.SC_INT,
-	"sampler2D" : Engine.Gfx.SC_SAMPLER,
-	"vec2"      : Engine.Gfx.SC_VEC2,
-	"vec3"      : Engine.Gfx.SC_VEC3,
-	"vec4"      : Engine.Gfx.SC_VEC4,
-	"mat3"      : Engine.Gfx.SC_MATRIX3,
-	"mat4"      : Engine.Gfx.SC_MATRIX4
+	"float"     : Engine.Gfx.SP_FLOAT,
+	"int"       : Engine.Gfx.SP_INT,
+	"sampler2D" : Engine.Gfx.SP_SAMPLER,
+	"vec2"      : Engine.Gfx.SP_VEC2,
+	"vec3"      : Engine.Gfx.SP_VEC3,
+	"vec4"      : Engine.Gfx.SP_VEC4,
+	"mat3"      : Engine.Gfx.SP_MATRIX3,
+	"mat4"      : Engine.Gfx.SP_MATRIX4
 };
 
 // Resource loading

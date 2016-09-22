@@ -38,7 +38,7 @@ Engine.Editor =
 	{
 		param_editor.find("td div").each(function()
 		{
-			Engine.Gfx.SetShaderConstant($(this).attr("id"), $(this).slider("value"), Engine.Gfx.SC_FLOAT);
+			Engine.Gfx.SetShaderProperty($(this).attr("id"), $(this).slider("value"), Engine.Gfx.SP_FLOAT);
 		});
 	},
 };
