@@ -117,7 +117,7 @@
 					mat4.translate(mtx_trans, Engine.Math.IdentityMatrix, sun.pos);
 					mat4.scale(mtx_trans, mtx_trans, [0.2, 0.2, 0.2]);
 					Engine.Gfx.BindMaterial(sun.material, sun)
-					Engine.Gfx.SetShaderConstant("u_trans_world", mtx_trans, Engine.Gfx.SC_MATRIX4);
+					Engine.Gfx.SetShaderProperty("u_trans_world", mtx_trans, Engine.Gfx.SP_MATRIX4);
 					Engine.Gfx.DrawModel(sun.model);
 
 					// Draw light basis
@@ -167,7 +167,7 @@
 					// Draw floor
 					mat4.scale(mtx_trans, Engine.Math.IdentityMatrix, [100, 0, 100]);
 					Engine.Gfx.BindMaterial(floor_material, sun);
-					Engine.Gfx.SetShaderConstant("u_trans_world", mtx_trans, Engine.Gfx.SC_MATRIX4);
+					Engine.Gfx.SetShaderProperty("u_trans_world", mtx_trans, Engine.Gfx.SP_MATRIX4);
 					Engine.Gfx.DrawModel(floor_model);
 
 					// Draw object_models
@@ -189,7 +189,7 @@
 							}
 
 							// Bind transform
-							Engine.Gfx.SetShaderConstant("u_trans_world", mtx_trans, Engine.Gfx.SC_MATRIX4);
+							Engine.Gfx.SetShaderProperty("u_trans_world", mtx_trans, Engine.Gfx.SP_MATRIX4);
 
 							// Draw model
 							Engine.Gfx.DrawModel(object_models[model_index]);

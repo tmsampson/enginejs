@@ -60,7 +60,7 @@
 			Engine.Gfx.BindVertexBuffer(vbo);
 			mat4.translate(mtx_trans, Engine.Math.IdentityMatrix, pos);
 			mat4.scale(mtx_trans, mtx_trans, [scale / 2.5, scale / 2.5, 0.0]);
-			Engine.Gfx.SetShaderConstant("u_trans_world", mtx_trans, Engine.Gfx.SC_MATRIX4);
+			Engine.Gfx.SetShaderProperty("u_trans_world", mtx_trans, Engine.Gfx.SP_MATRIX4);
 			Engine.Gfx.DrawArray();
 		}
 
@@ -90,7 +90,7 @@
 					var centre = Engine.Canvas.GetCentre();
 					var offset = Engine.Canvas.GetWidth() / 3;
 					Engine.Gfx.BindShaderProgram(program);
-					Engine.Gfx.SetShaderConstant("u_colour", [0.0, 0.6, 1.0, 1.0], Engine.Gfx.SC_COLOUR);
+					Engine.Gfx.SetShaderProperty("u_colour", [0.0, 0.6, 1.0, 1.0], Engine.Gfx.SP_COLOUR);
 					RenderPrim(tri_vbo,    offset, [centre[0] - offset, centre[1], 0]); // Draw triangle
 					RenderPrim(quad_vbo,   offset, centre);                             // Draw quad
 					RenderPrim(circle_vbo, offset, [centre[0] + offset, centre[1], 0]); // Draw circle

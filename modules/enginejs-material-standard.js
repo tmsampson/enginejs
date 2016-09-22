@@ -63,8 +63,8 @@ Engine.Gfx.Material = function(prevent_default)
 		Engine.Gfx.BindShaderProgram(this.shader_program);
 
 		// 2. Bind sun params
-		Engine.Gfx.SetShaderConstant("u_sun_colour", sun.colour, Engine.Gfx.SC_VEC3, true);
-		Engine.Gfx.SetShaderConstant("u_sun_dir", sun.direction, Engine.Gfx.SC_VEC3, true);
+		Engine.Gfx.SetShaderProperty("u_sun_colour", sun.colour, Engine.Gfx.SP_VEC3, true);
+		Engine.Gfx.SetShaderProperty("u_sun_dir", sun.direction, Engine.Gfx.SP_VEC3, true);
 
 		// 3. Bind material properties
 		if(this.type == "standard")
@@ -80,34 +80,34 @@ Engine.Gfx.Material = function(prevent_default)
 	this.BindStandardProperties = function()
 	{
 		// 1. Bind albedo
-		Engine.Gfx.SetShaderConstant("albedo_colour", this.properties.vec4.albedo_colour, Engine.Gfx.SC_VEC4);
+		Engine.Gfx.SetShaderProperty("albedo_colour", this.properties.vec4.albedo_colour, Engine.Gfx.SP_VEC4);
 		Engine.Gfx.BindTexture(this.properties.sampler2D.albedo_map, 0, "albedo_map");
-		Engine.Gfx.SetShaderConstant("albedo_map_repeat", this.properties.vec2.albedo_map_repeat, Engine.Gfx.SC_VEC2);
+		Engine.Gfx.SetShaderProperty("albedo_map_repeat", this.properties.vec2.albedo_map_repeat, Engine.Gfx.SP_VEC2);
 
 		// 2. Bind specular params / map?
-		Engine.Gfx.SetShaderConstant("specular_colour", this.properties.vec4.specular_colour, Engine.Gfx.SC_VEC4);
-		Engine.Gfx.SetShaderConstant("specular_shininess",  this.properties.float.specular_shininess, Engine.Gfx.SC_FLOAT);
+		Engine.Gfx.SetShaderProperty("specular_colour", this.properties.vec4.specular_colour, Engine.Gfx.SP_VEC4);
+		Engine.Gfx.SetShaderProperty("specular_shininess",  this.properties.float.specular_shininess, Engine.Gfx.SP_FLOAT);
 		if(this.config.uses_specular_map)
 		{
 			Engine.Gfx.BindTexture(this.properties.sampler2D.specular_map, 1, "specular_map");
-			Engine.Gfx.SetShaderConstant("specular_map_repeat", this.properties.vec2.specular_map_repeat, Engine.Gfx.SC_VEC2);
+			Engine.Gfx.SetShaderProperty("specular_map_repeat", this.properties.vec2.specular_map_repeat, Engine.Gfx.SP_VEC2);
 		}
 
 		// 3. Bind normal params / map?
 		if(this.config.uses_normal_map)
 		{
 			Engine.Gfx.BindTexture(this.properties.sampler2D.normal_map, 2, "normal_map");
-			Engine.Gfx.SetShaderConstant("normal_map_repeat", this.properties.vec2.normal_map_repeat, Engine.Gfx.SC_VEC2);
-			Engine.Gfx.SetShaderConstant("normal_strength", this.properties.float.normal_strength, Engine.Gfx.SC_FLOAT);
+			Engine.Gfx.SetShaderProperty("normal_map_repeat", this.properties.vec2.normal_map_repeat, Engine.Gfx.SP_VEC2);
+			Engine.Gfx.SetShaderProperty("normal_strength", this.properties.float.normal_strength, Engine.Gfx.SP_FLOAT);
 		}
 
 		// 4. Bind fresnel params?
 		if(this.config.fresnel_enabled)
 		{
-			Engine.Gfx.SetShaderConstant("fresnel_colour", this.properties.vec4.fresnel_colour, Engine.Gfx.SC_VEC4);
-			Engine.Gfx.SetShaderConstant("fresnel_scale", this.properties.float.fresnel_scale, Engine.Gfx.SC_FLOAT);
-			Engine.Gfx.SetShaderConstant("fresnel_bias", this.properties.float.fresnel_bias, Engine.Gfx.SC_FLOAT);
-			Engine.Gfx.SetShaderConstant("fresnel_power", this.properties.float.fresnel_power, Engine.Gfx.SC_FLOAT);
+			Engine.Gfx.SetShaderProperty("fresnel_colour", this.properties.vec4.fresnel_colour, Engine.Gfx.SP_VEC4);
+			Engine.Gfx.SetShaderProperty("fresnel_scale", this.properties.float.fresnel_scale, Engine.Gfx.SP_FLOAT);
+			Engine.Gfx.SetShaderProperty("fresnel_bias", this.properties.float.fresnel_bias, Engine.Gfx.SP_FLOAT);
+			Engine.Gfx.SetShaderProperty("fresnel_power", this.properties.float.fresnel_power, Engine.Gfx.SP_FLOAT);
 		}
 	}
 
@@ -123,31 +123,31 @@ Engine.Gfx.Material = function(prevent_default)
 		// Bind integer properties
 		for (var property_name in this.properties.int)
 		{
-			Engine.Gfx.SetShaderConstant(property_name, this.properties.int[property_name], Engine.Gfx.SC_INT);
+			Engine.Gfx.SetShaderProperty(property_name, this.properties.int[property_name], Engine.Gfx.SP_INT);
 		}
 
 		// Bind float properties
 		for (var property_name in this.properties.float)
 		{
-			Engine.Gfx.SetShaderConstant(property_name, this.properties.float[property_name], Engine.Gfx.SC_FLOAT);
+			Engine.Gfx.SetShaderProperty(property_name, this.properties.float[property_name], Engine.Gfx.SP_FLOAT);
 		}
 
 		// Bind vec2 properties
 		for (var property_name in this.properties.vec2)
 		{
-			Engine.Gfx.SetShaderConstant(property_name, this.properties.vec2[property_name], Engine.Gfx.SC_VEC2);
+			Engine.Gfx.SetShaderProperty(property_name, this.properties.vec2[property_name], Engine.Gfx.SP_VEC2);
 		}
 
 		// Bind vec3 properties
 		for (var property_name in this.properties.vec3)
 		{
-			Engine.Gfx.SetShaderConstant(property_name, this.properties.vec3[property_name], Engine.Gfx.SC_VEC3);
+			Engine.Gfx.SetShaderProperty(property_name, this.properties.vec3[property_name], Engine.Gfx.SP_VEC3);
 		}
 
 		// Bind vec4 properties
 		for (var property_name in this.properties.vec4)
 		{
-			Engine.Gfx.SetShaderConstant(property_name, this.properties.vec4[property_name], Engine.Gfx.SC_VEC4);
+			Engine.Gfx.SetShaderProperty(property_name, this.properties.vec4[property_name], Engine.Gfx.SP_VEC4);
 		}
 	}
 

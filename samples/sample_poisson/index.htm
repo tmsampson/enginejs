@@ -55,7 +55,7 @@
 					{
 						mat4.translate(mtx_trans, Engine.Math.IdentityMatrix, [output_queue[i][0], output_queue[i][1], 0]);
 						mat4.scale(mtx_trans, mtx_trans, [32, 32, 0]);
-						Engine.Gfx.SetShaderConstant("u_trans_world", mtx_trans, Engine.Gfx.SC_MATRIX4);
+						Engine.Gfx.SetShaderProperty("u_trans_world", mtx_trans, Engine.Gfx.SP_MATRIX4);
 						Engine.Gfx.DrawQuad();
 					}
 
