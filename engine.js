@@ -57,6 +57,7 @@ var Engine =
 		vs_general_uv                                          : { file: "enginejs/resources/shaders/general.vs", define : [ "ENGINEJS_ENABLE_UV_COORDS" ] },
 		vs_general_transformed                                 : { file: "enginejs/resources/shaders/general.vs", define : [ "ENGINEJS_ENABLE_TRANSFORM" ] },
 		vs_general_transformed_uv                              : { file: "enginejs/resources/shaders/general.vs", define : [ "ENGINEJS_ENABLE_TRANSFORM", "ENGINEJS_ENABLE_UV_COORDS" ] },
+		vs_general_transformed_uv_flipped                      : { file: "enginejs/resources/shaders/general.vs", define : [ "ENGINEJS_ENABLE_TRANSFORM", "ENGINEJS_ENABLE_UV_COORDS", "FLIP_Y" ] },
 		vs_general_transformed_normals                         : { file: "enginejs/resources/shaders/general.vs", define : [ "ENGINEJS_ENABLE_TRANSFORM", "ENGINEJS_ENABLE_NORMALS" ] },
 		vs_general_transformed_uv_normals                      : { file: "enginejs/resources/shaders/general.vs", define : [ "ENGINEJS_ENABLE_TRANSFORM", "ENGINEJS_ENABLE_UV_COORDS", "ENGINEJS_ENABLE_NORMALS" ] },
 		vs_general_transformed_uv_normals_tangents             : { file: "enginejs/resources/shaders/general.vs", define : [ "ENGINEJS_ENABLE_TRANSFORM", "ENGINEJS_ENABLE_UV_COORDS", "ENGINEJS_ENABLE_NORMALS", "ENGINEJS_ENABLE_TANGENTS" ] },
