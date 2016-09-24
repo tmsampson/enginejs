@@ -1,0 +1,39 @@
+{
+	"version"        : 1.0,
+	"name"           : "Carpet",
+	"type"           : "standard",
+	"config"         :
+	{
+		"lighting_enabled"        : true,
+		"specular_enabled"        : true,
+		"fresnel_enabled"         : true
+	},
+	"properties"     :
+	{
+		"sampler2D"  :
+		{
+			"albedo_map"          : { "file": "img/carpet_a.png" },
+			"normal_map"          : { "file": "img/carpet_n.png" }
+		},
+		"float"      :
+		{
+			"normal_strength"     : 1.0,
+			"specular_shininess"  : 0.078125,
+			"fresnel_scale"       : 0.2,
+			"fresnel_bias"        : 0,
+			"fresnel_power"       : 2.5
+		},
+		"vec2"       :
+		{
+			"albedo_map_repeat"   : [1, 1],
+			"normal_map_repeat"   : [1, 1],
+			"specular_map_repeat" : [1, 1]
+		},
+		"vec4"       :
+		{
+			"albedo_colour"       : [1, 1, 1, 1],
+			"specular_colour"     : [0.2, 0.2, 0.2, 1],
+			"fresnel_colour"      : [0.5, 0.5, 0.5, 1]
+		}
+	}
+}
