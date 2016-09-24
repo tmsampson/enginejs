@@ -22,19 +22,19 @@ Engine.Camera =
 			this.helpers.push(helper_class);
 		};
 
-		this.BindViewport = function()
+		this.BindViewport = function(render_target_size)
 		{
 			// Setup viewport
 			this.viewport_pos =
 			[
-				this.viewport.position[0] * Engine.Canvas.GetWidth(),
-				this.viewport.position[1] * Engine.Canvas.GetHeight()
+				this.viewport.position[0] * render_target_size[0],
+				this.viewport.position[1] * render_target_size[1]
 			];
 
 			this.viewport_size =
 			[
-				this.viewport.size[0] * Engine.Canvas.GetWidth(),
-				this.viewport.size[1] * Engine.Canvas.GetHeight()
+				this.viewport.size[0] * render_target_size[0],
+				this.viewport.size[1] * render_target_size[1]
 			];
 
 			// Bind with webgl
@@ -69,7 +69,7 @@ Engine.Camera =
 		$.extend(this, new Engine.Camera.Base());
 
 		// Set defaults
-		this.position        = [0, 0];
+		this.position        = [0, 0, 0];
 		this.size            = Engine.Canvas.GetSize();
 		this.use_canvas_size = !(user_config && user_config.size),
 		this.follow          = null;
