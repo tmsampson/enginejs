@@ -454,26 +454,41 @@ Engine.Gfx =
 	// **********************************************
 	// Render target functionality
 	// **********************************************
-	CreateRenderTarget : function(rt_name, rt_width, rt_height)
+	CreateRenderTarget : function(rt_name, rt_width, rt_height, want_depth_buffer)
 	{
-		// Create texture
-		var rt_texture = this.CreateRenderTargetTexture(rt_width, rt_height);
+		// Create main texture
+		var rt_texture = this.CreateTexture(rt_width, rt_height);
 
-		// Create buffer
+		// Create main buffer
 		var rt_buffer = Engine.GL.createFramebuffer();
 		Engine.GL.bindFramebuffer(Engine.GL.FRAMEBUFFER, rt_buffer);
 
-		// Bind the two
+		// Bind main buffer and texture
 		Engine.GL.framebufferTexture2D(Engine.GL.FRAMEBUFFER, Engine.GL.COLOR_ATTACHMENT0, Engine.GL.TEXTURE_2D, rt_texture, 0);
+
+		// Need a depth buffer?
+		var rt_depth_buffer = null;
+		if(want_depth_buffer)
+		{
+			// Create and attach depth buffer
+			rt_depth_buffer = Engine.GL.createRenderbuffer();
+			Engine.GL.bindRenderbuffer(Engine.GL.RENDERBUFFER, rt_depth_buffer);
+			Engine.GL.renderbufferStorage(Engine.GL.RENDERBUFFER, Engine.GL.DEPTH_COMPONENT16, rt_width, rt_height);
+			Engine.GL.framebufferRenderbuffer(Engine.GL.FRAMEBUFFER, Engine.GL.DEPTH_ATTACHMENT, Engine.GL.RENDERBUFFER, rt_depth_buffer);
+		}
+
+		// Done (unbind for now)
 		Engine.GL.bindFramebuffer(Engine.GL.FRAMEBUFFER, null);
-		
+		Engine.GL.bindRenderbuffer(Engine.GL.RENDERBUFFER, null);
+
 		// Setup render target object
 		var rt_object =
 		{
-			name     : rt_name,
-			resource : rt_buffer,
-			texture  : rt_texture,
-			size     : [rt_width, rt_height]
+			name         : rt_name,
+			buffer       : rt_buffer,
+			depth_buffer : rt_depth_buffer,
+			texture      : rt_texture,
+			size         : [rt_width, rt_height]
 		};
 
 		// Register and return render target object
@@ -481,7 +496,7 @@ Engine.Gfx =
 		return rt_object;
 	},
 
-	CreateRenderTargetTexture : function(width, height)
+	CreateTexture : function(width, height)
 	{
 		// Create
 		var texture = Engine.GL.createTexture();
@@ -498,8 +513,15 @@ Engine.Gfx =
 
 	BindRenderTarget : function(render_target)
 	{
+		// Bind render target
 		this.active_render_target = render_target;
-		Engine.GL.bindFramebuffer(Engine.GL.FRAMEBUFFER, render_target.resource);
+		Engine.GL.bindFramebuffer(Engine.GL.FRAMEBUFFER, render_target.buffer);
+
+		// Bind depth buffer?
+		if(!render_target.depth_buffer == null)
+		{
+			Engine.GL.bindRenderbuffer(Engine.GL.RENDERBUFFER, render_target.depth_buffer);
+		}
 	},
 
 	UnBindRenderTarget : function(render_target)
@@ -569,7 +591,7 @@ Engine.Gfx =
 	Clear : function(colour)
 	{
 		Engine.GL.clearColor(colour[0], colour[1], colour[2], colour[3]);
-		Engine.GL.clear(Engine.GL.COLOR_BUFFER_BIT);
+		Engine.GL.clear(Engine.GL.COLOR_BUFFER_BIT | Engine.GL.DEPTH_BUFFER_BIT);
 	},
 
 	DrawArray : function(optional_offset, optional_count, override_drawmode)
