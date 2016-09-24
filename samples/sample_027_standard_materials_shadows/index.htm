@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+
+		<title>Engine Sample: Standard material system</title>
+
+		<!-- EngineJS -->
+		<script type="text/javascript" src="enginejs/jquery.js"></script>
+		<script type="text/javascript" src="enginejs/engine.js"></script>
+
+		<!-- Spectrum colour picker -->
+		<script src='enginejs/resources/misc/spectrum/spectrum.js'></script>
+		<link rel='stylesheet' href='enginejs/resources/misc/spectrum/spectrum.css' />
+
+		<script language="javascript">
+		var resources =
+		{
+			mat_sponge        : { file : "mat/sponge.mat"},
+			mat_plasma        : { file : "mat/plasma.mat"},
+			mat_wool          : { file : "mat/wool.mat"},
+			mat_shiny_plastic : { file : "mat/shiny-plastic.mat"},
+			mat_stone         : { file : "mat/stone.mat"},
+			mat_wood          : { file : "mat/wood.mat"},
+			mat_snooker_ball  : { file : "mat/snooker-ball.mat"},
+			mat_carpet        : { file : "mat/carpet.mat"},
+
+			mat_shadow        : { file : "mat/shadow.mat"},
+		};
+
+		$(document).ready(function()
+		{
+			var on_init = function()
+			{
+				// ====================================================================================================================================
+				// Misc
+				var mtx_trans = mat4.create();
+				var model_index = 0;
+				var model_rotate_enabled = false;
+
+				// ====================================================================================================================================
+				// Camera
+				var cam = new Engine.Camera.Perspective({ position: [0, 4, -5] });
+				cam.AttachHelper(new Engine.Camera.Helper.Roam({ forward : [0, 0, 1] }));
+
+				// ====================================================================================================================================
+				// Shadows
+				var shadow_rt = Engine.Gfx.CreateRenderTarget("Shadow", 512, 512);
+				var shadow_preview_enabled = true;
+				var shadow_cam = new Engine.Camera.Orthographic({ size : [512, 512] });
+				var shadow_preview_size = [100, 100];
+				var shadow_preview_padding = [10, 10];
+				var shadow_preview_cam = new Engine.Camera.Orthographic();
+				var shadow_preview_program  = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_general_transformed_uv_flipped"],
+				                              Engine.Resources["fs_unlit_textured"]);
+
+				// ====================================================================================================================================
+				// Models
+				var floor_model = Engine.Resources["ml_floor_tile"];
+				var object_models =
+				[
+					Engine.Geometry.MakeSphere(),
+					Engine.Resources["ml_cube"],
+					Engine.Geometry.MakePlane({ x_size : 2, z_size : 2}),
+				];
+
+				// ====================================================================================================================================
+				// Materials
+				var floor_material = Engine.Resources["mat_standard_grid_xz_fog_custom"];
+				var materials =
+				[
+					new Engine.Gfx.Material(), // setup below
+					resources["mat_sponge"],
+					resources["mat_plasma"],
+					resources["mat_carpet"],
+					resources["mat_shiny_plastic"],
+					resources["mat_wool"],
+					resources["mat_wood"],
+					resources["mat_stone"],
+					resources["mat_snooker_ball"],
+				];
+
+				// Setup new green material on the fly
+				materials[0].SetColour("albedo_colour", [0, 1, 0, 1]);
+				materials[0].SetConfig("fresnel_enabled", true);
+				materials[0].SetColour("fresnel_colour", [0.8, 1, 0.8, 1]);
+				materials[0].SetFloat("fresnel_scale", 0.4);
+				materials[0].SetFloat("fresnel_power", 2);
+
+				// ====================================================================================================================================
+				// Light
+				var sun =
+				{
+					model      : Engine.Geometry.MakeSphere(),
+					material   : new Engine.Gfx.Material(),
+					position   : [0, 5, 0],
+					angle      : 1,	// -90 --> 90 arc
+					direction  : [ 0, -1, 0 ],
+					colour     : [ 0.4, 0.4, 0.4 ],
+					arc_radius : [30, 15],
+					arc_lift   : 5
+				};
+
+				function update_light()
+				{
+					// Update light angle
+					sun.angle -= Engine.Mouse.GetWheelDelta() / 50;
+					sun.angle = Engine.Math.Clamp(sun.angle, -90, 90);
+
+					// Update light position
+					sun.position[0] = Math.sin(Engine.Math.DegToRad(sun.angle)) * sun.arc_radius[0];
+					sun.position[1] = sun.arc_lift + Math.cos(Engine.Math.DegToRad(sun.angle)) * sun.arc_radius[1];
+
+					// Update light direction
+					var len = Math.sqrt((sun.position[0] * sun.position[0]) + (sun.position[1]  * sun.position[1]));
+					sun.direction = [ -sun.position[0] / len, -sun.position[1] / len, 0 ];
+
+					// Process gamepad input
+					var gamepad = Engine.Gamepad.Pads[0];
+					if(gamepad)
+					{
+						sun.angle += gamepad.IsPressed("lb")? -1 : (gamepad.IsPressed("rb")? 1 : 0);
+
+						if(gamepad.IsPressed("lt"))
+						{
+							sun.colour[0] -= 0.01;
+							sun.colour[1] -= 0.01;
+							sun.colour[2] -= 0.01;
+						}
+						if(gamepad.IsPressed("rt"))
+						{
+							sun.colour[0] += 0.01;
+							sun.colour[1] += 0.01;
+							sun.colour[2] += 0.01;
+						}
+					}
+				};
+
+				function draw_light()
+				{
+					// Draw light as sphere
+					mat4.translate(mtx_trans, Engine.Math.IdentityMatrix, sun.position);
+					mat4.scale(mtx_trans, mtx_trans, [0.4, 0.4, 0.4]);
+					Engine.Gfx.BindMaterial(sun.material, sun)
+					Engine.Gfx.SetShaderProperty("u_trans_world", mtx_trans, Engine.Gfx.SP_MATRIX4);
+					Engine.Gfx.DrawModel(sun.model);
+
+					// Draw light direction
+					Engine.Debug.DrawLine3D(cam, sun.position, [0, 0, 0], Engine.Colour.Orange, 1);
+				};
+
+				var DrawObjects = function(override_material)
+				{
+					var mat_index = 0;
+					for(var i = -5; i <= 5; ++i)
+					{
+						for(var j = -5; j <= 5; ++j)
+						{
+							// Bind material
+							var material = (override_material == null)? materials[mat_index++ % materials.length] : override_material;
+							Engine.Gfx.BindMaterial(material, sun);
+
+							// Position on grid
+							mat4.translate(mtx_trans, Engine.Math.IdentityMatrix, [i * 3, 1.2, j * 3]);
+
+							// Rotate?
+							if(model_rotate_enabled)
+							{
+								mat4.rotate(mtx_trans, mtx_trans, Engine.Time.elapsed_s / 3.0, [0, 1, 0]);
+							}
+
+							// Bind transform
+							Engine.Gfx.SetShaderProperty("u_trans_world", mtx_trans, Engine.Gfx.SP_MATRIX4);
+
+							// Draw model
+							Engine.Gfx.DrawModel(object_models[model_index]);
+						}
+					}
+				}
+
+				var RenderMainPass = function()
+				{
+					// Clear
+					Engine.Gfx.Clear(Engine.Colour.Black);
+					Engine.Gfx.SetDepthTestMode(Engine.GL.LESS, true);
+
+					// Update & bind camera
+					cam.Update();
+					Engine.Gfx.BindCamera(cam);
+
+					// Update light
+					update_light();
+					draw_light();
+
+					// Process gamepad input
+					gamepad = Engine.Gamepad.Pads[0];
+					if(gamepad)
+					{
+						if(gamepad.IsPressed("a", true))
+						{
+							model_index = (model_index + 1) % object_models.length;
+						}
+						if(gamepad.IsPressed("b", true))
+						{
+							model_rotate_enabled = !model_rotate_enabled;
+						}
+					}
+
+					// Draw floor
+					mat4.scale(mtx_trans, Engine.Math.IdentityMatrix, [100, 0, 100]);
+					Engine.Gfx.BindMaterial(floor_material, sun);
+					Engine.Gfx.SetShaderProperty("u_trans_world", mtx_trans, Engine.Gfx.SP_MATRIX4);
+					Engine.Gfx.DrawModel(floor_model);
+
+					DrawObjects();
+				};
+
+				var RenderShadowPass = function()
+				{
+					Engine.Gfx.BindRenderTarget(shadow_rt);
+					var lookat = [0, 0, 0];
+					Engine.Gfx.Clear(Engine.Colour.Blue);
+					shadow_cam.Update();
+					shadow_cam.foo = [512, 512 ];
+					mat4.lookAt(shadow_cam.mtx_view, sun.position, lookat, [0, 1, 0]);
+					mat4.ortho(shadow_cam.mtx_proj,-20,20,-20,20,-10,80);
+
+					Engine.Gfx.BindCamera(shadow_cam);
+
+					DrawObjects(resources["mat_shadow"]);
+
+					Engine.Gfx.UnBindRenderTarget(shadow_rt);
+				};
+
+				var on_render = function()
+				{
+					// Main render pass
+					RenderMainPass();
+
+					// Shadow pass
+					RenderShadowPass();
+
+					// Shadow map preview?
+					if(Engine.Keyboard.IsPressed("p", true)) { shadow_preview_enabled = !shadow_preview_enabled; }
+					if(shadow_preview_enabled)
+					{
+						shadow_preview_cam.Update();
+						Engine.Gfx.BindCamera(shadow_preview_cam);
+						Engine.Gfx.BindShaderProgram(shadow_preview_program);
+						mat4.translate(mtx_trans, Engine.Math.IdentityMatrix, [ Engine.Canvas.GetWidth() - shadow_preview_size[0] - shadow_preview_padding[0], Engine.Canvas.GetHeight() - shadow_preview_size[1] - shadow_preview_padding[1], 0]);
+						mat4.scale(mtx_trans, mtx_trans, [shadow_preview_size[0], shadow_preview_size[1], 0.0]);
+						Engine.Gfx.SetShaderProperty("u_trans_world", mtx_trans, Engine.Gfx.SP_MATRIX4);
+						Engine.Gfx.BindTexture(shadow_rt.texture, 0);
+						Engine.Gfx.DrawQuad();
+					}
+				};
+				return on_render;
+			};
+			Engine.Init(on_init, resources);
+		});
+		</script>
+	</head>
+
+	<body>
+		<canvas width="1024" height="640">
+	</body>
+</html>
