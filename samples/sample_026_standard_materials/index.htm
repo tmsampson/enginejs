@@ -78,29 +78,17 @@
 				// Light
 				var sun =
 				{
-					model      : Engine.Geometry.MakeSphere(),
-					material   : new Engine.Gfx.Material(),
-					position   : [0, 5, 0],
-					angle      : 0,	// -90 --> 90 arc
-					direction  : [ 0, -1, 0 ],
-					colour     : [ 0.4, 0.4, 0.4 ],
-					arc_radius : [30, 15],
-					arc_lift   : 5
+					model     : Engine.Geometry.MakeSphere(),
+					material  : new Engine.Gfx.Material(),
+					pos       : [0, 5, 0],
+					angle     : 0,	// 0 = straight down y-axis
+					direction : [ 0, -1, 0 ],
+					colour    : [ 0.4, 0.4, 0.4 ],
 				};
 
 				function update_light()
 				{
-					// Update light angle
-					sun.angle -= Engine.Mouse.GetWheelDelta() / 20;
-					sun.angle = Engine.Math.Clamp(sun.angle, -90, 90);
-
-					// Update light position
-					sun.position[0] = Math.sin(Engine.Math.DegToRad(sun.angle)) * sun.arc_radius[0];
-					sun.position[1] = sun.arc_lift + Math.cos(Engine.Math.DegToRad(sun.angle)) * sun.arc_radius[1];
-
-					// Update light direction
-					var len = Math.sqrt((sun.position[0] * sun.position[0]) + (sun.position[1]  * sun.position[1]));
-					sun.direction = [ -sun.position[0] / len, -sun.position[1] / len, 0 ];
+					sun.angle += Engine.Mouse.GetWheelDelta() / 20;
 
 					// Process gamepad input
 					var gamepad = Engine.Gamepad.Pads[0];
@@ -126,14 +114,26 @@
 				function draw_light()
 				{
 					// Draw light as sphere
-					mat4.translate(mtx_trans, Engine.Math.IdentityMatrix, sun.position);
-					mat4.scale(mtx_trans, mtx_trans, [0.4, 0.4, 0.4]);
+					mat4.translate(mtx_trans, Engine.Math.IdentityMatrix, sun.pos);
+					mat4.scale(mtx_trans, mtx_trans, [0.2, 0.2, 0.2]);
 					Engine.Gfx.BindMaterial(sun.material, sun)
 					Engine.Gfx.SetShaderProperty("u_trans_world", mtx_trans, Engine.Gfx.SP_MATRIX4);
 					Engine.Gfx.DrawModel(sun.model);
 
-					// Draw light direction
-					Engine.Debug.DrawLine3D(cam, sun.position, [0, 0, 0], Engine.Colour.Orange, 1);
+					// Draw light basis
+					Engine.Debug.DrawArrow3D(cam, sun.pos, [sun.pos[0] + 3, sun.pos[1],     sun.pos[2]],     Engine.Colour.Red, 1);
+					Engine.Debug.DrawArrow3D(cam, sun.pos, [sun.pos[0],     sun.pos[1] + 3, sun.pos[2]],     Engine.Colour.Green, 1);
+					Engine.Debug.DrawArrow3D(cam, sun.pos, [sun.pos[0],     sun.pos[1],     sun.pos[2] + 3], Engine.Colour.Blue, 1);
+
+					// Draw light angle
+					mat4.fromRotation(mtx_trans, Engine.Math.DegToRad(sun.angle), [0, 0, -1]);
+					vec3.transformMat4(sun.direction, [0, -1, 0], mtx_trans);
+					var lp = [ sun.pos[0], sun.pos[1], sun.pos[2] ];
+					Engine.Debug.DrawArrow3D(cam, lp, [lp[0] + (sun.direction[0] * 3),     lp[1]+ (sun.direction[1] * 3),     lp[2]+ (sun.direction[2] * 3)], Engine.Colour.Orange, 1);
+					lp[0] = sun.pos[0] + 0.2;
+					Engine.Debug.DrawArrow3D(cam, lp, [lp[0] + (sun.direction[0] * 3),     lp[1]+ (sun.direction[1] * 3),     lp[2]+ (sun.direction[2] * 3)], Engine.Colour.Orange, 1);
+					lp[0] = sun.pos[0] - 0.2;
+					Engine.Debug.DrawArrow3D(cam, lp, [lp[0] + (sun.direction[0] * 3),     lp[1]+ (sun.direction[1] * 3),     lp[2]+ (sun.direction[2] * 3)], Engine.Colour.Orange, 1);
 				};
 
 				var on_render = function()
