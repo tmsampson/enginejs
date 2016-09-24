@@ -236,15 +236,13 @@ Engine.Debug =
 			// Setup
 			Engine.Gfx.EnableDepthTest(true);
 
-			// Bind shader
-			Engine.Gfx.BindShaderProgram(Engine.Debug.shader_program);
-
 			// Draw
 			var mtx_identity = mat4.create(); mat4.identity(mtx_identity);
 			for(var i = 0; i < Engine.Debug.draw_commands_3d_z_test.length; ++i)
 			{
 				var command = Engine.Debug.draw_commands_3d_z_test[i];
 				Engine.Gfx.BindCamera(command.camera);
+				Engine.Gfx.BindShaderProgram(Engine.Debug.shader_program);
 				Engine.Gfx.SetShaderProperty("u_colour", command.colour, Engine.Gfx.SP_COLOUR);
 				Engine.Gfx.SetShaderProperty("u_trans_world", mtx_identity, Engine.Gfx.SP_MATRIX4);
 				Engine.Gfx.DrawArray(command.offset, command.length, command.draw_mode);
@@ -257,15 +255,13 @@ Engine.Debug =
 			// Setup
 			Engine.Gfx.EnableDepthTest(false);
 
-			// Bind shader
-			Engine.Gfx.BindShaderProgram(Engine.Debug.shader_program);
-
 			// Draw
 			var mtx_identity = mat4.create(); mat4.identity(mtx_identity);
 			for(var i = 0; i < Engine.Debug.draw_commands_3d_no_z_test.length; ++i)
 			{
 				var command = Engine.Debug.draw_commands_3d_no_z_test[i];
 				Engine.Gfx.BindCamera(command.camera);
+				Engine.Gfx.BindShaderProgram(Engine.Debug.shader_program);
 				Engine.Gfx.SetShaderProperty("u_colour", command.colour, Engine.Gfx.SP_COLOUR);
 				Engine.Gfx.SetShaderProperty("u_trans_world", mtx_identity, Engine.Gfx.SP_MATRIX4);
 				Engine.Gfx.DrawArray(command.offset, command.length, command.draw_mode);
