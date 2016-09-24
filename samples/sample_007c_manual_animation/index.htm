@@ -33,12 +33,12 @@
 				var program = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_general_transformed_uv"],
 				                                             resources["fs_anim"]);
 
-				var on_render = function(info)
+				var on_render = function()
 				{
 					Engine.Gfx.Clear(Engine.Colour.Black);
 					Engine.Gfx.SetBlendMode(Engine.GL.SRC_ALPHA, Engine.GL.ONE_MINUS_SRC_ALPHA, true);
-					current_frame = Math.floor(info.elapsed_s * play_speed);
-					current_frame_fast = Math.floor(info.elapsed_s * play_speed * 2);
+					current_frame = Math.floor(Engine.Time.elapsed_s * play_speed);
+					current_frame_fast = Math.floor(Engine.Time.elapsed_s * play_speed * 2);
 					var offset = Engine.Canvas.GetWidth() / 3;
 					var scale = offset / 5;
 
@@ -48,7 +48,7 @@
 					var centre = Engine.Canvas.GetCentre();
 
 					// Update & bind camera
-					cam.Update(info);
+					cam.Update();
 					Engine.Gfx.BindCamera(cam);
 
 					// Play anim (top, first 4 frames only)
@@ -62,7 +62,7 @@
 					// Play anim (middle, all frames @ double speed, rotating)
 					mat4.translate(mtx_trans, Engine.Math.IdentityMatrix, [centre[0], centre[1], 0]);
 					mat4.scale(mtx_trans, mtx_trans, [scale * 2, scale * 2, 0]);
-					mat4.rotate(mtx_trans, mtx_trans, info.elapsed_s, [0, 0, 1]);
+					mat4.rotate(mtx_trans, mtx_trans, Engine.Time.elapsed_s, [0, 0, 1]);
 					Engine.Gfx.SetShaderProperty("u_trans_world", mtx_trans, Engine.Gfx.SP_MATRIX4);
 					anim_config[2] = current_frame_fast;
 					Engine.Gfx.SetShaderProperty("u_anim_config", anim_config, Engine.Gfx.SP_VEC3);

@@ -25,13 +25,13 @@
 				var program_cube   = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_general_transformed_uv"],
 				                                                    Engine.Resources["fs_debug_uvs"]);
 
-				var on_render = function(info)
+				var on_render = function()
 				{
 					Engine.Gfx.Clear(Engine.Colour.Black);
 					Engine.Gfx.SetDepthTestMode(Engine.GL.LESS, true);
 
 					// Update & bind camera
-					cam.Update(info);
+					cam.Update();
 					Engine.Gfx.BindCamera(cam);
 
 					// Draw floor

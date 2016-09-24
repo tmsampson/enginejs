@@ -23,41 +23,42 @@
 				entity.MoveTo(Engine.Canvas.GetCentre()); entity.SetTint([1,0,0]);
 				scene.Add(entity);
 
-				var on_render = function(info)
+				var on_render = function()
 				{
 					// Process gamepad input?
 					var gamepad = Engine.Gamepad.Pads[0];
 					if(gamepad)
 					{
 						// Process movement (dpad)
+						var delta_s = Engine.Time.delta_s;
 						var pos = entity.GetPosition();
-						pos[0] += gamepad.IsPressed("left")? -200 * info.delta_s :
-						          gamepad.IsPressed("right")? 200 * info.delta_s : 0;
-						pos[1] += gamepad.IsPressed("up")?    200 * info.delta_s :
-						          gamepad.IsPressed("down")? -200 * info.delta_s : 0;
+						pos[0] += gamepad.IsPressed("left")? -200 * delta_s :
+						          gamepad.IsPressed("right")? 200 * delta_s : 0;
+						pos[1] += gamepad.IsPressed("up")?    200 * delta_s :
+						          gamepad.IsPressed("down")? -200 * delta_s : 0;
 
 						// Process movement (analogue sticks)
-						pos[0] += gamepad.GetLeftStick()[0] * 200 * info.delta_s;
-						pos[1] += gamepad.GetLeftStick()[1] * 200 * info.delta_s;
+						pos[0] += gamepad.GetLeftStick()[0] * 200 * delta_s;
+						pos[1] += gamepad.GetLeftStick()[1] * 200 * delta_s;
 						entity.MoveTo(pos);
 
 						// Process scale(a/b and right analogue stick x-axis)
 						var scale = entity.GetSize();
-						scale += gamepad.IsPressed("a")?  200 * info.delta_s :
-						         gamepad.IsPressed("b")? -200 * info.delta_s : 0;
-						scale += gamepad.GetRightStick()[1] * 200 * info.delta_s;
+						scale += gamepad.IsPressed("a")?  200 * delta_s :
+						         gamepad.IsPressed("b")? -200 * delta_s : 0;
+						scale += gamepad.GetRightStick()[1] * 200 * delta_s;
 						entity.SetSize(Engine.Math.Clamp(scale, min_size, max_size));
 
 						// Process rotation (trigger/bumpers and right analogue stick y-axis)
 						var rotation = entity.GetRotation();
-						rotation += gamepad.IsPressed(["lb", "lt"])?  5 * info.delta_s :
-						            gamepad.IsPressed(["rb", "rt"])? -5 * info.delta_s : 0;
-						rotation += gamepad.GetRightStick()[0] * -5 * info.delta_s;
+						rotation += gamepad.IsPressed(["lb", "lt"])?  5 * delta_s :
+						            gamepad.IsPressed(["rb", "rt"])? -5 * delta_s : 0;
+						rotation += gamepad.GetRightStick()[0] * -5 * delta_s;
 						entity.SetRotation(rotation);
 					}
 
 					// Draw scene
-					scene.Render(info);
+					scene.Render();
 				};
 				return on_render;
 			});

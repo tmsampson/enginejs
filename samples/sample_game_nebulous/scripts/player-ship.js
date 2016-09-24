@@ -28,7 +28,7 @@ Game.PlayerShip = function()
 		this.health     = 100;
 	};
 
-	this.Update = function(info)
+	this.Update = function()
 	{
 		var canvas_size = Engine.Canvas.GetSize();
 		this.SetSize(canvas_size[0]/5);

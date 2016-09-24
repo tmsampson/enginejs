@@ -136,14 +136,14 @@
 					Engine.Debug.DrawArrow3D(cam, lp, [lp[0] + (sun.direction[0] * 3),     lp[1]+ (sun.direction[1] * 3),     lp[2]+ (sun.direction[2] * 3)], Engine.Colour.Orange, 1);
 				};
 
-				var on_render = function(info)
+				var on_render = function()
 				{
 					// Clear
 					Engine.Gfx.Clear(Engine.Colour.Black);
 					Engine.Gfx.SetDepthTestMode(Engine.GL.LESS, true);
 
 					// Update & bind camera
-					cam.Update(info);
+					cam.Update();
 					Engine.Gfx.BindCamera(cam);
 
 					// Update light
@@ -185,7 +185,7 @@
 							// Rotate?
 							if(model_rotate_enabled)
 							{
-								mat4.rotate(mtx_trans, mtx_trans, info.elapsed_s / 3.0, [0, 1, 0]);
+								mat4.rotate(mtx_trans, mtx_trans, Engine.Time.elapsed_s / 3.0, [0, 1, 0]);
 							}
 
 							// Bind transform

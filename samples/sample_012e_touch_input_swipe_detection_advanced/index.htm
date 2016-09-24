@@ -19,9 +19,9 @@
 				var scene = new Engine.Game2D.Scene();
 				var text = new Engine.Text2D.TextBox("None", { prefix : "Detected: ", dock : ["top", "left"] });
 
-				var on_render = function(info)
+				var on_render = function()
 				{
-					scene.Render(info);
+					scene.Render();
 
 					// *******************************************
 					// 1. Detect long diagonal swipe

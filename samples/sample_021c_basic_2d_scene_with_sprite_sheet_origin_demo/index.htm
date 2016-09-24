@@ -27,7 +27,7 @@
 				$("#slider_scale").slider({ value: 128, min: 32, max: 256, step: 8 });
 				$("#slider_rotation").slider({ value: 0, min: 0, max: Math.PI * 2, step: 0.1 });
 
-				var on_render = function(info)
+				var on_render = function()
 				{
 					if(Engine.Keyboard.IsPressed(["w", "up"]))    { hero.Move([0,  2]); }
 					if(Engine.Keyboard.IsPressed(["a", "left"]))  { hero.Move([-2, 0]); }
@@ -42,7 +42,7 @@
 
 					// Draw Scene
 					scene.EnableDebugRender($("#checkbox").is(':checked'));
-					scene.Render(info);
+					scene.Render();
 				};
 				return on_render;
 			};

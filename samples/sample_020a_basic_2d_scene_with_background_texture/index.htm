@@ -17,10 +17,10 @@
 			var on_init = function()
 			{
 				var scene = new Engine.Game2D.Scene(resources["tx_stars"]);
-				var on_render = function(info)
+				var on_render = function()
 				{
 					Engine.Gfx.Clear(Engine.Colour.Black);
-					scene.Render(info);
+					scene.Render();
 				};
 				return on_render;
 			};

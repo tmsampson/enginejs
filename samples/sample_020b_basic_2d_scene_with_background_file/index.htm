@@ -23,9 +23,9 @@
 				var scene = new Engine.Game2D.Scene(resources["bg_space"]);
 				$("select").change(function() { scene.background = resources[$('select').val()]; });
 
-				var on_render = function(info)
+				var on_render = function()
 				{
-					scene.Render(info);
+					scene.Render();
 				};
 				return on_render;
 			};

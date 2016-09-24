@@ -20,22 +20,22 @@
 				var program  = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_general_transformed"],
 				                                              Engine.Resources["fs_unlit_colour"]);
 
-				var on_render = function(info)
+				var on_render = function()
 				{
 					Engine.Gfx.Clear(Engine.Colour.Black);
 
 					// Update & bind camera
-					cam.Update(info);
+					cam.Update();
 					Engine.Gfx.BindCamera(cam);
 
 					// Animate scale
 					var min_dimension = Engine.Canvas.GetMinDimension();
-					var scale = (min_dimension / 10) + (Math.sin(info.elapsed_s * 1.5) + 1) * (min_dimension / 8);
+					var scale = (min_dimension / 10) + (Math.sin(Engine.Time.elapsed_s * 1.5) + 1) * (min_dimension / 8);
 
 					// Render transformed quad
 					Engine.Gfx.BindShaderProgram(program);
 					mat4.translate(mtx_trans, Engine.Math.IdentityMatrix, Engine.Canvas.GetCentre());
-					mat4.rotate(mtx_trans, mtx_trans, info.elapsed_s, [0, 0, 1]);
+					mat4.rotate(mtx_trans, mtx_trans, Engine.Time.elapsed_s, [0, 0, 1]);
 					mat4.scale(mtx_trans, mtx_trans, [scale, scale, 0.0]);
 					Engine.Gfx.SetShaderProperty("u_trans_world", mtx_trans, Engine.Gfx.SP_MATRIX4);
 					Engine.Gfx.SetShaderProperty("u_colour", [1.0, 0.0, 0.0, 1.0], Engine.Gfx.SP_COLOUR);

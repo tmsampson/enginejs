@@ -35,7 +35,7 @@
 				}
 
 				generate_ships(); // Generate ships
-				var on_render = function(info)
+				var on_render = function()
 				{
 					// Regenerate ships?
 					if(Engine.Mouse.IsPressed("left", true) || Engine.Touch.IsPressed(0, true))
@@ -43,7 +43,7 @@
 						generate_ships();
 					}
 
-					scene.Render(info);
+					scene.Render();
 				};
 				return on_render;
 			};

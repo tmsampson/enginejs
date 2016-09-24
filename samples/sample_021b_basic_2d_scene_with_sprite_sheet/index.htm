@@ -48,7 +48,7 @@
 				hero.MoveTo(Engine.Canvas.GetCentre());
 				var hero_state = "down";
 
-				var on_render = function(info)
+				var on_render = function()
 				{
 					if(hero_state != "dead")
 					{
@@ -64,7 +64,7 @@
 					}
 
 					// Draw scene
-					scene.Render(info);
+					scene.Render();
 				};
 				return on_render;
 			};

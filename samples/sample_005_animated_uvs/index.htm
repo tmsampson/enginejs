@@ -22,10 +22,10 @@
 			{
 				var program  = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_general_uv"],
 				                                              resources["fs_animated_uvs"]);
-				var on_render = function(info)
+				var on_render = function()
 				{
 					Engine.Gfx.BindShaderProgram(program);
-					Engine.Gfx.SetShaderProperty("u_time", info.elapsed_s, Engine.Gfx.SP_FLOAT);
+					Engine.Gfx.SetShaderProperty("u_time", Engine.Time.elapsed_s, Engine.Gfx.SP_FLOAT);
 					Engine.Gfx.BindTexture(resources["tx_swamp"], 0);
 					Engine.Gfx.DrawQuad();
 				};

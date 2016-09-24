@@ -22,7 +22,7 @@
 				plane.MoveTo(Engine.Canvas.GetCentre()); plane.SetSize(80);
 				scene.Add(plane);
 
-				var on_render = function(info)
+				var on_render = function()
 				{
 					// Change aircraft direction based on mouse position
 					var to_mouse = Engine.Vec2.Subtract(Engine.Mouse.GetPosition(), plane.GetPosition());
@@ -34,7 +34,7 @@
 					plane.SetSize(Engine.Math.Clamp(plane.GetSize() + size_change, 80, 128));
 
 					// Draw scene
-					scene.Render(info);
+					scene.Render();
 				};
 				return on_render;
 			};

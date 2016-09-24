@@ -18,9 +18,9 @@
 				var scene = new Engine.Game2D.Scene();
 				var cam = scene.GetCamera(0);
 
-				var on_render = function(info)
+				var on_render = function()
 				{
-					scene.Render(info);
+					scene.Render();
 				};
 				return on_render;
 			});

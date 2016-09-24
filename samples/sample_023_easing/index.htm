@@ -34,10 +34,10 @@
 				var marker = new Engine.Game2D.Entity(resources["tx_ball"]);
 				scene.Add(marker);
 
-				var on_render = function(info)
+				var on_render = function()
 				{
 					// Update timer
-					t = Engine.Math.Clamp(t + info.delta_s, 0, duration);
+					t = Engine.Math.Clamp(t + Engine.Time.delta_s, 0, duration);
 
 					// Apply easing
 					var x = Engine.Easing[$("#x_func").find(":selected").text()](marker_start[0], marker_stop[0], t / duration);
@@ -45,7 +45,7 @@
 					marker.MoveTo([x, y]);
 
 					// Draw scene
-					scene.Render(info);
+					scene.Render();
 				};
 				return on_render;
 			}

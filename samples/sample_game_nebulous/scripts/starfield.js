@@ -86,7 +86,7 @@ Game.Starfield = function()
 		this.health_text.Hide();
 	};
 
-	this.UpdateScenery = function(ship_shift, info)
+	this.UpdateScenery = function(ship_shift)
 	{
 		var scenery = this.FindByTag("scenery");
 		for(var i = 0; i < scenery.length; ++i)
@@ -106,7 +106,7 @@ Game.Starfield = function()
 			}
 
 			// Tick
-			item.wait -= info.delta_s;
+			item.wait -= Engine.Time.delta_s;
 		}
 	};
 
@@ -167,9 +167,9 @@ Game.Starfield = function()
 		}
 	};
 
-	this.Update = function(info)
+	this.Update = function()
 	{
-		this.player_ship.Update(info);
+		this.player_ship.Update();
 		var ship_shift = ((this.player_ship.GetX() / Engine.Canvas.GetWidth()) * 2) - 1; // -1 --> 1
 
 		// Update parallax effect for background / scenery
@@ -183,7 +183,7 @@ Game.Starfield = function()
 		}
 
 		// Update scenery
-		this.UpdateScenery(ship_shift, info);
+		this.UpdateScenery(ship_shift);
 
 		// Spawn more asteroids?
 		if(--this.asteroid_wait < 0)

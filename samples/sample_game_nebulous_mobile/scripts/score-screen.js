@@ -38,11 +38,11 @@ Game.ScoreScreen = function()
 		this.score_text.Hide();
 	};
 
-	this.Update = function(info)
+	this.Update = function()
 	{
 		var min_size = Engine.Canvas.GetWidth() * 0.13;
 		var max_size = Engine.Canvas.GetWidth() * 0.15;
-		var x = (1 + Math.sin(info.elapsed_s * 5)) / 2; // Animate with sin wave
+		var x = (1 + Math.sin(Engine.Time.elapsed_s * 5)) / 2; // Animate with sin wave
 		this.score_text.SetSize(Engine.Easing.Linear(min_size, max_size, x));
 
 		// Return to splash screen when user clicks / presses

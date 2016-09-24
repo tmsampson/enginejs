@@ -40,9 +40,9 @@
 					{ texture : resources["tx_layer_6"], depth : 6.0,  scale :  [0.5, 3.0], offset : [0, 0],   scroll : [0.0, 0], repeat : [true, false], alpha : 1 },
 				];
 
-				var on_render = function(info)
+				var on_render = function()
 				{
-					scene.Render(info);
+					scene.Render();
 				};
 				return on_render;
 			};

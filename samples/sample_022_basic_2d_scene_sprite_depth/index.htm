@@ -33,7 +33,7 @@
 					tiles.push(tile); scene.Add(tile);
 				}
 
-				var on_render = function(info)
+				var on_render = function()
 				{
 					var centre = Engine.Canvas.GetCentre();
 					var min_dimension = Engine.Canvas.GetMinDimension();
@@ -55,7 +55,7 @@
 					}
 
 					// Draw scene
-					scene.Render(info);
+					scene.Render();
 				};
 				return on_render;
 			};
