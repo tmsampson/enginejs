@@ -45,7 +45,7 @@
 
 				// ====================================================================================================================================
 				// Shadows
-				var shadow_rt = Engine.Gfx.CreateRenderTarget("Shadow", 512, 512);
+				var shadow_rt = Engine.Gfx.CreateRenderTarget("Shadow", 512, 512, true);
 				var shadow_preview_enabled = true;
 				var shadow_cam = new Engine.Camera.Orthographic({ size : [512, 512] });
 				var shadow_preview_size = [100, 100];
