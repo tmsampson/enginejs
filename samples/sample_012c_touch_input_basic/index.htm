@@ -23,7 +23,7 @@
 				plane.MoveTo(Engine.Canvas.GetCentre()); plane.SetSize(140);
 				scene.Add(plane);
 
-				var on_render = function(info)
+				var on_render = function()
 				{
 					// Capture touch position
 					if(Engine.Touch.IsPressed())
@@ -37,7 +37,7 @@
 					plane.SetRotation(Engine.Vec2.Angle(to_finger));
 
 					// Draw scene
-					scene.Render(info);
+					scene.Render();
 				};
 				return on_render;
 			};

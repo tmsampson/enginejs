@@ -62,16 +62,16 @@ Engine.Game2D =
 			this.SetSprite(texture_or_sprite);
 		}
 
-		this.UpdateInternal = function(info)
+		this.UpdateInternal = function()
 		{
 			// Integrate linear velocity
-			this.position[0] += this.velocity[0] * info.delta_s;
-			this.position[1] += this.velocity[1] * info.delta_s;
+			this.position[0] += this.velocity[0] * Engine.Time.delta_s;
+			this.position[1] += this.velocity[1] * Engine.Time.delta_s;
 
 			// Update sprite?
 			if(this.sprite)
 			{
-				this.sprite.Update(info);
+				this.sprite.Update();
 			}
 		};
 
@@ -586,7 +586,7 @@ Engine.Game2D =
 			return this.cameras[i];
 		};
 
-		this.Render = function(info)
+		this.Render = function()
 		{
 			if(!this.is_paused || this.is_stepping)
 			{
@@ -595,7 +595,7 @@ Engine.Game2D =
 				for(var i = 0; i < this.entities.length; ++i)
 				{
 					var entity = this.entities[i];
-					entity.UpdateInternal(info);
+					entity.UpdateInternal();
 
 					// Cache world-space AABB for this frame & update quadtree
 					entity.cached_aabb = entity.GetAABB();
@@ -626,7 +626,7 @@ Engine.Game2D =
 				mat4.identity(mtx_trans);
 
 				// Update & bind camera
-				cam.Update(info);
+				cam.Update();
 				Engine.Gfx.BindCamera(cam);
 
 				// Render background (or grid if background not setup)
@@ -635,7 +635,7 @@ Engine.Game2D =
 				                        this.background.layers.length > 0;
 				if(background_in_use)
 				{
-					this.background.Render(info);
+					this.background.Render();
 				}
 				else
 				{
@@ -906,7 +906,7 @@ Engine.Game2D =
 		this.u_config_2 = new Float32Array(this.MAX_LAYERS * 4);
 		this.u_config_3 = new Float32Array(this.MAX_LAYERS * 4);
 
-		this.Render = function(info)
+		this.Render = function()
 		{
 			// Setup constants
 			var canvas_width = Engine.Canvas.GetWidth();
@@ -956,7 +956,7 @@ Engine.Game2D =
 				// Bind background data
 				var bg_colour = this.colour? this.colour : Engine.Colour.Black;
 				Engine.Gfx.SetShaderProperty("u_background_color", bg_colour, Engine.Gfx.SP_VEC4);
-				Engine.Gfx.SetShaderProperty("u_time", info.elapsed_s, Engine.Gfx.SP_FLOAT);
+				Engine.Gfx.SetShaderProperty("u_time", Engine.Time.elapsed_s, Engine.Gfx.SP_FLOAT);
 
 				// Bind per-layer textures
 				Engine.Gfx.BindTextureArray(this.u_textures, "u_layer_tx");
@@ -1040,13 +1040,13 @@ Engine.Game2D =
 			}
 		};
 
-		this.Update = function(info)
+		this.Update = function()
 		{
 			if(!this.requires_update)
 				return;
 
 			// Progress anim time and calculate which frame to display
-			this.anim_time += info.delta_s;
+			this.anim_time += Engine.Time.delta_s;
 			var current_frame = Math.floor(this.anim_time / this.anim_frame_length);
 
 			// Deal with animation loop / end

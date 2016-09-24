@@ -21,11 +21,11 @@
 				var selected_ship = null;
 				scene.enable_debug_render_quadtree = true;
 
-				var on_render = function(info)
+				var on_render = function()
 				{
 					// Update on-screen text
 					text_box.Set("Entities: " + scene.GetEntityCount() + "<br/>");
-					text_box.Append("Timer: " + info.delta_ms + "<br/>");
+					text_box.Append("Timer: " + Engine.Time.delta_ms + "<br/>");
 					text_box.Append("Subdivides: " + scene.quadtree.GetDebugInfo().subdivide_count + "<br/>");
 
 					// Spawn ships? (space bar)
@@ -81,7 +81,7 @@
 					}
 
 					// Daw scene
-					scene.Render(info);
+					scene.Render();
 				};
 				return on_render;
 			};

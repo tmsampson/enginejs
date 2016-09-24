@@ -97,9 +97,9 @@ Game =
 		Game.CurrentState.Enter();
 	},
 
-	OnRender : function(info)
+	OnRender : function()
 	{
-		Game.CurrentState.Update(info);
-		Game.CurrentState.Render(info);
+		Game.CurrentState.Update();
+		Game.CurrentState.Render();
 	}
 };

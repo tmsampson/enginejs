@@ -119,7 +119,7 @@
 				hero2.MoveTo(Engine.Vec2.Add(Engine.Canvas.GetCentre(), [-64, 0]));
 				var hero_states = ["down", "down"];
 
-				var on_render = function(info)
+				var on_render = function()
 				{
 					update_hero(true, hero1); hero1.depth = hero1.GetY();
 					update_hero(true, hero2); hero2.depth = hero2.GetY();
@@ -145,7 +145,7 @@
 					if(Engine.Keyboard.IsPressed("4", true)) { cam_config_split_screen(); }
 
 					// Draw scene
-					scene.Render(info);
+					scene.Render();
 				};
 				return on_render;
 			};

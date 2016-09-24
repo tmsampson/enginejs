@@ -22,12 +22,12 @@
 				var program_floor  = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_general_transformed"],
 				                                                    Engine.Resources["fs_grid_xz_fog"]);
 
-				var on_render = function(info)
+				var on_render = function()
 				{
 					Engine.Gfx.Clear(Engine.Colour.Black);
 
 					// Update & bind camera
-					cam.Update(info);
+					cam.Update();
 					Engine.Gfx.BindCamera(cam);
 
 					// Render floor

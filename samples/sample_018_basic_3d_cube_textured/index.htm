@@ -35,13 +35,13 @@
 					max_y   : (Math.PI / 2) - 0.1
 				}));
 
-				var on_render = function(info)
+				var on_render = function()
 				{
 					Engine.Gfx.Clear(Engine.Colour.Black);
 					Engine.Gfx.SetDepthTestMode(Engine.GL.LESS, true);
 
 					// Update & bind camera
-					cam.Update(info);
+					cam.Update();
 					Engine.Gfx.BindCamera(cam);
 
 					// Draw floor
@@ -52,7 +52,7 @@
 
 					// Draw cube
 					mat4.translate(mtx_trans, Engine.Math.IdentityMatrix, [0, 5, 0]);
-					mat4.rotate(mtx_trans, mtx_trans, info.elapsed_s, [0, 1, 0]);
+					mat4.rotate(mtx_trans, mtx_trans, Engine.Time.elapsed_s, [0, 1, 0]);
 					Engine.Gfx.BindShaderProgram(program_cube);
 					Engine.Gfx.SetShaderProperty("u_trans_world", mtx_trans, Engine.Gfx.SP_MATRIX4);
 					Engine.Gfx.BindTexture(resources["tx_lava"], 0);

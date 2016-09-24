@@ -273,19 +273,9 @@ var Engine =
 			// Update text elements
 			Engine.Text2D.Update();
 
-			// Setup per-frame info for client
-			var info =
-			{
-				elapsed_s    : Engine.Time.elapsed_s,
-				elapsed_ms   : Engine.Time.elapsed_ms,
-				delta_s      : Engine.Time.delta_s,
-				delta_ms     : Engine.Time.delta_ms,
-				frame_number : frame_number
-			};
-
 			// Call user render function
 			last_frame_time = Engine.Time.Now();
-			on_user_render(info);
+			on_user_render();
 
 			// Debug draw
 			Engine.Debug.Render();

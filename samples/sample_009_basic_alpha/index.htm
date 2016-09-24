@@ -23,12 +23,12 @@
 				var program_basic = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_general_transformed_uv"],
 				                                                   Engine.Resources["fs_unlit_textured"]);
 
-				var on_render = function(info)
+				var on_render = function()
 				{
 					Engine.Gfx.SetBlendMode(Engine.GL.SRC_ALPHA, Engine.GL.ONE_MINUS_SRC_ALPHA, true);
 
 					// Update & bind camera
-					cam.Update(info);
+					cam.Update();
 					Engine.Gfx.BindCamera(cam);
 
 					// Draw grid

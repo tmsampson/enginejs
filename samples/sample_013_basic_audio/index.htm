@@ -40,7 +40,7 @@
 				$("#btn_stop").click(function(){ bgm.Stop(); });
 				$("#btn_restart").click(function(){ bgm.Restart(); });
 
-				var on_render = function(info)
+				var on_render = function()
 				{
 					Engine.Gfx.Clear(Engine.Colour.Blue);
 					Engine.Audio.SetGlobalBgmVolume($("#bgm_slider").slider("value"));

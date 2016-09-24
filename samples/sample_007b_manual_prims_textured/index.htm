@@ -126,12 +126,12 @@
 				var program = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_general_transformed_uv"],
 				                                             Engine.Resources["fs_unlit_textured"]);
 
-				var on_render = function(info)
+				var on_render = function()
 				{
 					Engine.Gfx.Clear(Engine.Colour.Black);
 
 					// Update & bind camera
-					cam.Update(info);
+					cam.Update();
 					Engine.Gfx.BindCamera(cam);
 
 					// Render textured prims

@@ -34,13 +34,13 @@
 					max_y   : (Math.PI / 2) - 0.1
 				}));
 
-				var on_render = function(info)
+				var on_render = function()
 				{
 					Engine.Gfx.Clear(Engine.Colour.Black);
 					Engine.Gfx.SetDepthTestMode(Engine.GL.LESS, true);
 
 					// Update & bind camera
-					cam.Update(info);
+					cam.Update();
 					Engine.Gfx.BindCamera(cam);
 
 					// Draw floor

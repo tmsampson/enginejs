@@ -1,5 +1,5 @@
-* Stop passing "info" around everywhere use Engine.Time.elapsed_ms instead
-
 * Write code to generate material editor panel from shader property info (and update plasma interactive sample)
 * Add support for point lights
 * Add support for spotlights
+
+* Look into NW for packaging apps https://github.com/nwjs/nw.js/

@@ -76,7 +76,7 @@
 					}
 				};
 
-				return function(info)
+				return function()
 				{
 					// Centre camera on world [0, 0]
 					scene.GetCamera().position = [-Engine.Canvas.GetWidth() / 2, -Engine.Canvas.GetHeight() / 2];
@@ -127,7 +127,7 @@
 						if(Engine.Mouse.IsPressed("left", true))
 						{
 							turret_config.v = to_mouse;
-							time_offset = info.elapsed_s;
+							time_offset = Engine.Time.elapsed_s;
 							begin_simulation();
 							game_state = "running";
 						}
@@ -147,7 +147,7 @@
 					turret.SetVisible(game_state != "placing_target" && game_state != "rotating_target");
 
 					// Fire shot?
-					if(can_hit && fire_time != null && (info.elapsed_s - time_offset) >= fire_time)
+					if(can_hit && fire_time != null && (Engine.Time.elapsed_s - time_offset) >= fire_time)
 					{
 						sfx_shot.Play();
 						bullet.SetVelocity(turret_config.v);
@@ -155,7 +155,7 @@
 					}
 
 					// target hit?
-					if(can_hit && hit_time != null && (info.elapsed_s - time_offset) >= hit_time)
+					if(can_hit && hit_time != null && (Engine.Time.elapsed_s - time_offset) >= hit_time)
 					{
 						target.sprite.SetSequence("explode");
 						sfx_explosion.Play();
@@ -167,7 +167,7 @@
 
 					// Add all items to scene and render
 					scene.Add([target, tank, turret, bullet, crosshair]);
-					scene.Render(info);
+					scene.Render();
 					scene.Clear();
 				};
 			}, resources);

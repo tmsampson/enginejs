@@ -38,12 +38,12 @@
 				bg_colour = Engine.Colour.Black;
 				Generate();
 
-				var on_render = function(info)
+				var on_render = function()
 				{
 					Engine.Gfx.Clear(bg_colour);
 
 					// Update & bind camera
-					cam.Update(info);
+					cam.Update();
 					Engine.Gfx.BindCamera(cam);
 
 					// Bind state

@@ -149,10 +149,10 @@
 
 				RecompileShader(editor.getValue());
 
-				var on_render = function(info)
+				var on_render = function()
 				{
 					Engine.Gfx.BindShaderProgram(program);
-					Engine.Gfx.SetShaderProperty("iGlobalTime", info.elapsed_s, Engine.Gfx.SP_FLOAT);
+					Engine.Gfx.SetShaderProperty("iGlobalTime", Engine.Time.elapsed_s, Engine.Gfx.SP_FLOAT);
 					var res = [ 800, 450, 0 ];
 					Engine.Gfx.SetShaderProperty("iResolution", res, Engine.Gfx.SP_VEC3);
 

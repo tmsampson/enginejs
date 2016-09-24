@@ -17,7 +17,7 @@
 			Engine.Init(function()
 			{
 				var scene = new Engine.Game2D.Scene();
-				var on_render = function(info)
+				var on_render = function()
 				{
 					var centre = Engine.Canvas.GetCentre();
 					var size = Engine.Canvas.GetSize();
@@ -36,7 +36,7 @@
 					// Rects
 					Engine.Debug.DrawRect([centre[0] - 50,  centre[1] + 200], 100, 200, Engine.Colour.Orange);
 					Engine.Debug.DrawRect([centre[0] - 100, centre[1] - 300], 200, 100, Engine.Colour.Pink);
-					scene.Render(info);
+					scene.Render();
 				};
 				return on_render;
 			});

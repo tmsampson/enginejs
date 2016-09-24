@@ -85,10 +85,10 @@
 				var first_sprite_name = $("#sprite_select option:first").val();
 				$("#sprite_select").val(first_sprite_name).trigger("change");
 
-				var on_render = function(info)
+				var on_render = function()
 				{
 					entity.SetSize($("#slider_zoom").slider("value"));
-					scene.Render(info);
+					scene.Render();
 				};
 				return on_render;
 			};

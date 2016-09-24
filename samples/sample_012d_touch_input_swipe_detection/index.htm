@@ -28,7 +28,7 @@
 					arrow.MoveTo(Engine.Canvas.GetCentre());
 				};
 
-				var on_render = function(info)
+				var on_render = function()
 				{
 					// Detect swipes
 					if(Engine.Touch.IsSwipedLeft())  { show("left");  }
@@ -38,7 +38,7 @@
 
 					// Draw scene
 					if(arrow.GetAlpha() > 0) { arrow.SetAlpha(arrow.GetAlpha() - 0.04); }
-					scene.Render(info);
+					scene.Render();
 				};
 				return on_render;
 			};

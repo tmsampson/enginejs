@@ -23,30 +23,31 @@
 				entity.MoveTo(Engine.Canvas.GetCentre()); entity.SetTint([1,0,0]);
 				scene.Add(entity);
 
-				var on_render = function(info)
+				var on_render = function()
 				{
 					// Process movement
+					var delta_s = Engine.Time.delta_s;
 					var pos = entity.GetPosition();
-					pos[0] += Engine.Keyboard.IsPressed("a")? -200 * info.delta_s :
-					          Engine.Keyboard.IsPressed("d")?  200 * info.delta_s : 0;
-					pos[1] += Engine.Keyboard.IsPressed("w")?  200 * info.delta_s :
-					          Engine.Keyboard.IsPressed("s")? -200 * info.delta_s : 0;
+					pos[0] += Engine.Keyboard.IsPressed("a")? -200 * delta_s :
+					          Engine.Keyboard.IsPressed("d")?  200 * delta_s : 0;
+					pos[1] += Engine.Keyboard.IsPressed("w")?  200 * delta_s :
+					          Engine.Keyboard.IsPressed("s")? -200 * delta_s : 0;
 					entity.MoveTo(pos);
 
 					// Process scale
 					var scale = entity.GetSize();
-					scale += Engine.Keyboard.IsPressed("up")?    200 * info.delta_s :
-					         Engine.Keyboard.IsPressed("down")? -200 * info.delta_s : 0;
+					scale += Engine.Keyboard.IsPressed("up")?    200 * delta_s :
+					         Engine.Keyboard.IsPressed("down")? -200 * delta_s : 0;
 					entity.SetSize(Engine.Math.Clamp(scale, min_size, max_size));
 
 					// Process rotation
 					var rotation = entity.GetRotation();
-					rotation += Engine.Keyboard.IsPressed("left")?   5 * info.delta_s :
-					            Engine.Keyboard.IsPressed("right")? -5 * info.delta_s : 0;
+					rotation += Engine.Keyboard.IsPressed("left")?   5 * delta_s :
+					            Engine.Keyboard.IsPressed("right")? -5 * delta_s : 0;
 					entity.SetRotation(rotation);
 
 					// Draw scene
-					scene.Render(info);
+					scene.Render();
 				};
 				return on_render;
 			});

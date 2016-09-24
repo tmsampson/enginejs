@@ -31,12 +31,12 @@ Game.SplashScreen = function()
 		this.instruction_text.Hide();
 	}
 
-	this.Update = function(info)
+	this.Update = function()
 	{
 		// Animate logo
 		this.logo.SetSize(Engine.Canvas.GetWidth() * 0.7);
 		var x = Engine.Canvas.GetCentre()[0];
-		var y = (Engine.Canvas.GetHeight() * 0.8) + Math.sin(info.elapsed_s * 3) * 5;
+		var y = (Engine.Canvas.GetHeight() * 0.8) + Math.sin(Engine.Time.elapsed_s * 3) * 5;
 		this.logo.MoveTo([x, y]);
 
 		// Move to main game when user clicks / presses

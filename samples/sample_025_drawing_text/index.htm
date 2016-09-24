@@ -50,10 +50,10 @@
 					position   : [100, 100]
 				});
 
-				var on_render = function(info)
+				var on_render = function()
 				{
-					timer.Set(info.elapsed_s);
-					scene.Render(info);
+					timer.Set(Engine.Time.elapsed_s);
+					scene.Render();
 				};
 				return on_render;
 			});
