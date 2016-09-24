@@ -127,14 +127,13 @@
 				{
 					// Draw light as sphere
 					mat4.translate(mtx_trans, Engine.Math.IdentityMatrix, sun.position);
-					mat4.scale(mtx_trans, mtx_trans, [0.2, 0.2, 0.2]);
+					mat4.scale(mtx_trans, mtx_trans, [0.4, 0.4, 0.4]);
 					Engine.Gfx.BindMaterial(sun.material, sun)
 					Engine.Gfx.SetShaderProperty("u_trans_world", mtx_trans, Engine.Gfx.SP_MATRIX4);
 					Engine.Gfx.DrawModel(sun.model);
 
 					// Draw light direction
-
-					
+					Engine.Debug.DrawLine3D(cam, sun.position, [0, 0, 0], Engine.Colour.Orange, 1);
 				};
 
 				var on_render = function()
