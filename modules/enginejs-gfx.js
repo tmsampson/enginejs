@@ -465,19 +465,19 @@ Engine.Gfx =
 
 		// Bind the two
 		Engine.GL.framebufferTexture2D(Engine.GL.FRAMEBUFFER, Engine.GL.COLOR_ATTACHMENT0, Engine.GL.TEXTURE_2D, rt_texture, 0);
-
+		Engine.GL.bindFramebuffer(Engine.GL.FRAMEBUFFER, null);
+		
 		// Setup render target object
 		var rt_object =
 		{
 			name     : rt_name,
 			resource : rt_buffer,
 			texture  : rt_texture,
-			width    : rt_width,
-			height   : rt_height
+			size     : [rt_width, rt_height]
 		};
 
 		// Register and return render target object
-		this.RenderTargets[rt_name] = rt_object;
+		this.render_targets[rt_name] = rt_object;
 		return rt_object;
 	},
 
@@ -498,11 +498,13 @@ Engine.Gfx =
 
 	BindRenderTarget : function(render_target)
 	{
+		this.active_render_target = render_target;
 		Engine.GL.bindFramebuffer(Engine.GL.FRAMEBUFFER, render_target.resource);
 	},
 
 	UnBindRenderTarget : function(render_target)
 	{
+		this.active_render_target = null;
 		Engine.GL.bindFramebuffer(Engine.GL.FRAMEBUFFER, null);
 	},
 
@@ -665,7 +667,8 @@ Engine.Gfx =
 		this.active_camera = cam;
 
 		// Bind viewport for subsequent draw calls
-		cam.BindViewport();
+		var render_target_size = (this.active_render_target == null)? Engine.Canvas.GetSize() : this.active_render_target.size;
+		cam.BindViewport(render_target_size);
 	},
 
 	GetActiveCamera : function()
@@ -732,6 +735,11 @@ Engine.Gfx =
 	// Cache
 	// **********************************************
 	ShaderProgramCache : { },
+
+	// **********************************************
+	// Render targets
+	active_render_target : null,
+	render_targets       : [],
 
 	// **********************************************
 	// Scratch pad
