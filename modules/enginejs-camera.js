@@ -251,52 +251,52 @@ Engine.Camera.Helper =
 			}
 
 			// Apply strafe?
-			var delta = Engine.Time.delta_s * strafe_speed;
 			var strafe_speed = (Engine.Keyboard.IsPressed("shift") || (gamepad && gamepad.IsPressed("rt")))? this.strafe_speed_fast : this.strafe_speed;
+			var strafe_delta = Engine.Time.delta_s * strafe_speed;
 			if(gamepad)
 			{
 				var left_stick = gamepad.GetLeftStick();
 				if(Engine.Math.Abs(gamepad.GetLeftStick()[0]) > this.gamepad_deadzone)
 				{
-					camera.position[0] += (this.right[0] * delta * left_stick[0]);
-					camera.position[1] += (this.right[1] * delta * left_stick[0]);
-					camera.position[2] += (this.right[2] * delta * left_stick[0]);
+					camera.position[0] += (this.right[0] * strafe_delta * left_stick[0]);
+					camera.position[1] += (this.right[1] * strafe_delta * left_stick[0]);
+					camera.position[2] += (this.right[2] * strafe_delta * left_stick[0]);
 				}
 
 				if(Engine.Math.Abs(gamepad.GetLeftStick()[1]) > this.gamepad_deadzone)
 				{
-					camera.position[0] += (this.forward[0] * delta * left_stick[1]);
-					camera.position[1] += (this.forward[1] * delta * left_stick[1]);
-					camera.position[2] += (this.forward[2] * delta * left_stick[1]);
+					camera.position[0] += (this.forward[0] * strafe_delta * left_stick[1]);
+					camera.position[1] += (this.forward[1] * strafe_delta * left_stick[1]);
+					camera.position[2] += (this.forward[2] * strafe_delta * left_stick[1]);
 				}
 			}
 
 			if(Engine.Keyboard.IsPressed("w"))
 			{
-				camera.position[0] += (this.forward[0] * delta);
-				camera.position[1] += (this.forward[1] * delta);
-				camera.position[2] += (this.forward[2] * delta);
+				camera.position[0] += (this.forward[0] * strafe_delta);
+				camera.position[1] += (this.forward[1] * strafe_delta);
+				camera.position[2] += (this.forward[2] * strafe_delta);
 			}
 
 			if(Engine.Keyboard.IsPressed("s"))
 			{
-				camera.position[0] -= (this.forward[0] * delta);
-				camera.position[1] -= (this.forward[1] * delta);
-				camera.position[2] -= (this.forward[2] * delta);
+				camera.position[0] -= (this.forward[0] * strafe_delta);
+				camera.position[1] -= (this.forward[1] * strafe_delta);
+				camera.position[2] -= (this.forward[2] * strafe_delta);
 			}
 
 			if(Engine.Keyboard.IsPressed("a"))
 			{
-				camera.position[0] -= (this.right[0] * delta);
-				camera.position[1] -= (this.right[1] * delta);
-				camera.position[2] -= (this.right[2] * delta);
+				camera.position[0] -= (this.right[0] * strafe_delta);
+				camera.position[1] -= (this.right[1] * strafe_delta);
+				camera.position[2] -= (this.right[2] * strafe_delta);
 			}
 
 			if(Engine.Keyboard.IsPressed("d"))
 			{
-				camera.position[0] += (this.right[0] * delta);
-				camera.position[1] += (this.right[1] * delta);
-				camera.position[2] += (this.right[2] * delta);
+				camera.position[0] += (this.right[0] * strafe_delta);
+				camera.position[1] += (this.right[1] * strafe_delta);
+				camera.position[2] += (this.right[2] * strafe_delta);
 			}
 
 			// Update lookat
