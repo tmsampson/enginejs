@@ -141,6 +141,7 @@ var Engine =
 						first : function(cb) // 3. Load internal resources
 						{
 							// Run any pre-resource load initialisation routines
+							Engine.LogSection("Inititialsing modules (pre-resource load)");
 							Engine.PreResourceLoadInit();
 
 							Engine.LogSection("Loading internal resources");

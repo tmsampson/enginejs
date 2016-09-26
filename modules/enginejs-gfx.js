@@ -18,6 +18,15 @@ Engine.Gfx =
 		Engine.Gfx.Extension_Anisotropic_Filtering = Engine.GL.getExtension("EXT_texture_filter_anisotropic") ||
 		                                             Engine.GL.getExtension("MOZ_EXT_texture_filter_anisotropic") ||
 		                                             Engine.GL.getExtension("WEBKIT_EXT_texture_filter_anisotropic");
+
+		// Grab depth textures (fallback to standard depth buffer where required)
+		Engine.Gfx.Extension_Depth_Textures = Engine.GL.getExtension("WEBGL_depth_texture") ||
+		                                      Engine.GL.getExtension("MOZ_WEBGL_depth_texture") ||
+		                                      Engine.GL.getExtension("WEBKIT_WEBGL_depth_texture");
+
+		// Extensions report
+		Engine.Log("[extension] Anisotropic filtering: " + (Engine.Gfx.Extension_Anisotropic_Filtering? "ENABLED" : "DISABLED"));
+		Engine.Log("[extension] Depth textures: " + (Engine.Gfx.Extension_Depth_Textures? "ENABLED" : "DISABLED"));
 	},
 
 	// **********************************************
@@ -456,40 +465,47 @@ Engine.Gfx =
 	// **********************************************
 	CreateRenderTarget : function(rt_name, rt_width, rt_height, want_depth_buffer)
 	{
-		// Create main texture
-		var rt_texture = this.CreateTexture(rt_width, rt_height);
+		// Setup render target object
+		var rt_object =
+		{
+			name         : rt_name,
+			size         : [rt_width, rt_height]
+		};
 
 		// Create main buffer
-		var rt_buffer = Engine.GL.createFramebuffer();
-		Engine.GL.bindFramebuffer(Engine.GL.FRAMEBUFFER, rt_buffer);
+		rt_object.buffer = Engine.GL.createFramebuffer();
+		Engine.GL.bindFramebuffer(Engine.GL.FRAMEBUFFER, rt_object.buffer);
+
+		// Create main texture
+		rt_object.texture = this.CreateTexture(rt_width, rt_height);
 
 		// Bind main buffer and texture
-		Engine.GL.framebufferTexture2D(Engine.GL.FRAMEBUFFER, Engine.GL.COLOR_ATTACHMENT0, Engine.GL.TEXTURE_2D, rt_texture, 0);
+		Engine.GL.framebufferTexture2D(Engine.GL.FRAMEBUFFER, Engine.GL.COLOR_ATTACHMENT0, Engine.GL.TEXTURE_2D, rt_object.texture, 0);
 
 		// Need a depth buffer?
 		var rt_depth_buffer = null;
 		if(want_depth_buffer)
 		{
-			// Create and attach depth buffer
-			rt_depth_buffer = Engine.GL.createRenderbuffer();
-			Engine.GL.bindRenderbuffer(Engine.GL.RENDERBUFFER, rt_depth_buffer);
-			Engine.GL.renderbufferStorage(Engine.GL.RENDERBUFFER, Engine.GL.DEPTH_COMPONENT16, rt_width, rt_height);
-			Engine.GL.framebufferRenderbuffer(Engine.GL.FRAMEBUFFER, Engine.GL.DEPTH_ATTACHMENT, Engine.GL.RENDERBUFFER, rt_depth_buffer);
+			// Try and use depth texture (facilitates binding to shader input via sampler2D), or fallback to regular depth buffer
+			if(Engine.Gfx.Extension_Depth_Textures != null)
+			{
+				// Create and attach depth texture
+				rt_object.depth_texture = Engine.Gfx.CreateDepthTexture(rt_width, rt_height);
+				Engine.GL.framebufferTexture2D(Engine.GL.FRAMEBUFFER, Engine.GL.DEPTH_ATTACHMENT, Engine.GL.TEXTURE_2D, rt_object.depth_texture, 0);
+			}
+			else
+			{
+				// Create and attach depth buffer
+				rt_object.depth_buffer = Engine.GL.createRenderbuffer();
+				Engine.GL.bindRenderbuffer(Engine.GL.RENDERBUFFER, rt_depth_buffer);
+				Engine.GL.renderbufferStorage(Engine.GL.RENDERBUFFER, Engine.GL.DEPTH_COMPONENT16, rt_width, rt_height);
+				Engine.GL.framebufferRenderbuffer(Engine.GL.FRAMEBUFFER, Engine.GL.DEPTH_ATTACHMENT, Engine.GL.RENDERBUFFER, rt_depth_buffer);
+				Engine.GL.bindRenderbuffer(Engine.GL.RENDERBUFFER, null);
+			}
 		}
 
 		// Done (unbind for now)
 		Engine.GL.bindFramebuffer(Engine.GL.FRAMEBUFFER, null);
-		Engine.GL.bindRenderbuffer(Engine.GL.RENDERBUFFER, null);
-
-		// Setup render target object
-		var rt_object =
-		{
-			name         : rt_name,
-			buffer       : rt_buffer,
-			depth_buffer : rt_depth_buffer,
-			texture      : rt_texture,
-			size         : [rt_width, rt_height]
-		};
 
 		// Register and return render target object
 		this.render_targets[rt_name] = rt_object;
@@ -511,6 +527,21 @@ Engine.Gfx =
 		return texture;
 	},
 
+	CreateDepthTexture : function(width, height)
+	{
+		// Create
+		var depth_texture = Engine.GL.createTexture();
+
+		// Create and attach depth texture
+		Engine.GL.bindTexture(Engine.GL.TEXTURE_2D, depth_texture);
+		Engine.GL.texParameteri(Engine.GL.TEXTURE_2D, Engine.GL.TEXTURE_MAG_FILTER, Engine.GL.NEAREST);
+		Engine.GL.texParameteri(Engine.GL.TEXTURE_2D, Engine.GL.TEXTURE_MIN_FILTER, Engine.GL.NEAREST);
+		Engine.GL.texParameteri(Engine.GL.TEXTURE_2D, Engine.GL.TEXTURE_WRAP_S, Engine.GL.CLAMP_TO_EDGE);
+		Engine.GL.texParameteri(Engine.GL.TEXTURE_2D, Engine.GL.TEXTURE_WRAP_T, Engine.GL.CLAMP_TO_EDGE);
+		Engine.GL.texImage2D(Engine.GL.TEXTURE_2D, 0, Engine.GL.DEPTH_COMPONENT, width, height, 0, Engine.GL.DEPTH_COMPONENT, Engine.GL.UNSIGNED_SHORT, null);
+		return depth_texture;
+	},
+
 	BindRenderTarget : function(render_target)
 	{
 		// Bind render target
@@ -518,6 +549,8 @@ Engine.Gfx =
 		Engine.GL.bindFramebuffer(Engine.GL.FRAMEBUFFER, render_target.buffer);
 
 		// Bind depth buffer?
+		// Note: If depth textures are enabled, the depth texture associated with the render target will have been
+		//       automatically bound above when the render target is bound. Otherwise we bind the separate depth "buffer" below...
 		if(!render_target.depth_buffer == null)
 		{
 			Engine.GL.bindRenderbuffer(Engine.GL.RENDERBUFFER, render_target.depth_buffer);
