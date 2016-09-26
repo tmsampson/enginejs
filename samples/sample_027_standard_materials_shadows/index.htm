@@ -250,7 +250,7 @@
 						mat4.translate(mtx_trans, Engine.Math.IdentityMatrix, [ Engine.Canvas.GetWidth() - shadow_preview_size[0] - shadow_preview_padding[0], Engine.Canvas.GetHeight() - shadow_preview_size[1] - shadow_preview_padding[1], 0]);
 						mat4.scale(mtx_trans, mtx_trans, [shadow_preview_size[0], shadow_preview_size[1], 0.0]);
 						Engine.Gfx.SetShaderProperty("u_trans_world", mtx_trans, Engine.Gfx.SP_MATRIX4);
-						Engine.Gfx.BindTexture(shadow_rt.texture, 0);
+						Engine.Gfx.BindTexture(shadow_rt.depth_texture, 0);
 						Engine.Gfx.DrawQuad();
 					}
 				};
