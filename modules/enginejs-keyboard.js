@@ -6,18 +6,12 @@ Engine.KeyboardKeyCodeMap =
 {
 	// Common
 	"left" : 37, "right" : 39, "up"    : 38, "down"  : 40,
-	"w"    : 87, "a"     : 65, "s"     : 83, "d"     : 68,
 	"ctrl" : 17, "alt"   : 18, "shift" : 16, "space" : 32,
-
-	// Numeric (default)
-	"0" : 48, "1" : 49, "2" : 50, "3" : 51, "4" : 52,
-	"5" : 53, "6" : 54, "7" : 55, "8" : 56, "9" : 57,
 
 	// Function keys
 	"f9" : 120, "f10" : 121,
 
-	// Letters
-	"i" : 73, "o" : 79, "p" : 80, "r" : 82,
+	// Alpha-numeric (populated during init)
 
 	// Ignored
 	"f5" : 116
@@ -92,6 +86,23 @@ Engine.Keyboard =
 // *******************************************
 // Init
 // *******************************************
+
+// Add numeric key code mappings
+for(var i = 0; i < 10; ++i)
+{
+	var char_code = 48 + i;
+	Engine.KeyboardKeyCodeMap[String.fromCharCode(char_code)] = char_code;
+}
+
+// Add alphabetic key code mappings
+for(var i = 0; i < 26; ++i)
+{
+	var char_code_upper = 65 + i;
+	var char_code_lower = 97 + i;
+	Engine.KeyboardKeyCodeMap[String.fromCharCode(char_code_upper)] = char_code_upper;
+	Engine.KeyboardKeyCodeMap[String.fromCharCode(char_code_lower)] = char_code_lower;
+}
+
 $(document).keydown(function(e)
 {
 	Engine.Keyboard.key_buffer[2][e.keyCode] = 1;
