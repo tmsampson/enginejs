@@ -22,6 +22,19 @@
 						]
 					},
 					{
+						"name"           : "normals",
+						"attribute_name" : "a_normal",
+						"item_size"      : 3,
+						"draw_mode"      : "triangle_strip",
+						"stream"         :
+						[
+							0.0, 1.0, 0.0,
+							0.0, 1.0, 0.0,
+							0.0, 1.0, 0.0,
+							0.0, 1.0, 0.0
+						]
+					},
+					{
 						"name"           : "texture-coordinates",
 						"attribute_name" : "a_uv",
 						"item_size"      : 2,
