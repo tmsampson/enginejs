@@ -45,7 +45,7 @@
 
 				// ====================================================================================================================================
 				// Shadows
-				var shadow_type = 0;
+				var shadow_type = 2;
 				var shadow_rt = Engine.Gfx.CreateRenderTarget("Shadow", 1024, 1024, true);
 				var shadow_preview_enabled = true;
 				var shadow_cam = new Engine.Camera.Orthographic({ size : [1024, 1024] });
@@ -159,7 +159,7 @@
 						{
 							// Bind material
 							var material = (override_material == null)? materials[mat_index++ % materials.length] : override_material;
-							Engine.Gfx.BindMaterial(material, sun);
+							Engine.Gfx.BindMaterial(material, sun, override_material == null);
 
 							// Position on grid
 							mat4.translate(mtx_trans, Engine.Math.IdentityMatrix, [i * 3, 1.2, j * 3]);
@@ -173,7 +173,7 @@
 							// Bind transform
 							Engine.Gfx.SetShaderProperty("u_trans_world", mtx_trans, Engine.Gfx.SP_MATRIX4);
 
-							if(override_material == null)
+							if(override_material == null && material != resources["mat_plasma"]) // only bind shadows for main render pass exluding custom plasma shader
 							{
 								Engine.Gfx.SetShaderProperty("shadow_type", shadow_type, Engine.Gfx.SP_INT)
 								Engine.Gfx.SetShaderProperty("u_trans_shadow", shadow_cam.mtx_view_proj, Engine.Gfx.SP_MATRIX4);
@@ -217,8 +217,8 @@
 					}
 
 					// Draw floor
-					mat4.scale(mtx_trans, Engine.Math.IdentityMatrix, [100, 0, 100]);
-					Engine.Gfx.BindMaterial(floor_material, sun);
+					mat4.scale(mtx_trans, Engine.Math.IdentityMatrix, [100, 1, 100]);
+					Engine.Gfx.BindMaterial(floor_material, sun, true);
 					Engine.Gfx.SetShaderProperty("u_trans_world", mtx_trans, Engine.Gfx.SP_MATRIX4);
 					Engine.Gfx.SetShaderProperty("shadow_type", shadow_type, Engine.Gfx.SP_INT)
 					Engine.Gfx.SetShaderProperty("u_trans_shadow", shadow_cam.mtx_view_proj, Engine.Gfx.SP_MATRIX4);
@@ -263,17 +263,17 @@
 
 					// Shadow map preview?
 					if(Engine.Keyboard.IsPressed("p", true)) { shadow_preview_enabled = !shadow_preview_enabled; }
-					// if(shadow_preview_enabled)
-					// {
-					// 	shadow_preview_cam.Update();
-					// 	Engine.Gfx.BindCamera(shadow_preview_cam);
-					// 	Engine.Gfx.BindShaderProgram(shadow_preview_program);
-					// 	mat4.translate(mtx_trans, Engine.Math.IdentityMatrix, [ Engine.Canvas.GetWidth() - shadow_preview_size[0] - shadow_preview_padding[0], Engine.Canvas.GetHeight() - shadow_preview_size[1] - shadow_preview_padding[1], 0]);
-					// 	mat4.scale(mtx_trans, mtx_trans, [shadow_preview_size[0], shadow_preview_size[1], 0.0]);
-					// 	Engine.Gfx.SetShaderProperty("u_trans_world", mtx_trans, Engine.Gfx.SP_MATRIX4);
-					// 	Engine.Gfx.BindTexture(shadow_rt.depth_texture, 0);
-					// 	Engine.Gfx.DrawQuad();
-					// }
+					if(shadow_preview_enabled)
+					{
+						shadow_preview_cam.Update();
+						Engine.Gfx.BindCamera(shadow_preview_cam);
+						Engine.Gfx.BindShaderProgram(shadow_preview_program);
+						mat4.translate(mtx_trans, Engine.Math.IdentityMatrix, [ Engine.Canvas.GetWidth() - shadow_preview_size[0] - shadow_preview_padding[0], Engine.Canvas.GetHeight() - shadow_preview_size[1] - shadow_preview_padding[1], 0]);
+						mat4.scale(mtx_trans, mtx_trans, [shadow_preview_size[0], shadow_preview_size[1], 0.0]);
+						Engine.Gfx.SetShaderProperty("u_trans_world", mtx_trans, Engine.Gfx.SP_MATRIX4);
+						Engine.Gfx.BindTexture(shadow_rt.depth_texture, 0);
+						Engine.Gfx.DrawQuad();
+					}
 				};
 				return on_render;
 			};

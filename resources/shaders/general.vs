@@ -25,7 +25,7 @@ uniform mat4 u_trans_view;
 uniform mat4 u_trans_view_inverse;
 uniform mat4 u_trans_proj;
 
-	#ifdef ENGINEJS_ENABLE_SHADOWS
+	#ifdef USE_SHADOWS
 	uniform mat4 u_trans_shadow;
 	#endif
 
@@ -44,7 +44,7 @@ uniform mat3 u_trans_tangent;
 #ifdef ENGINEJS_ENABLE_TRANSFORM
 varying vec4 v_world_pos;
 
-	#ifdef ENGINEJS_ENABLE_SHADOWS
+	#ifdef USE_SHADOWS
 	varying vec4 v_shadow_pos;
 	#endif
 
@@ -72,7 +72,7 @@ void main(void)
 	v_world_pos = u_trans_world * vec4(a_pos, 1.0);
 	gl_Position = u_trans_proj * u_trans_view * v_world_pos;
 
-		#ifdef ENGINEJS_ENABLE_SHADOWS
+		#ifdef USE_SHADOWS
 		v_shadow_pos = u_trans_shadow * v_world_pos;
 		#endif
 
