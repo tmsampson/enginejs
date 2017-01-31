@@ -24,6 +24,11 @@ uniform mat4 u_trans_world;
 uniform mat4 u_trans_view;
 uniform mat4 u_trans_view_inverse;
 uniform mat4 u_trans_proj;
+
+	#ifdef ENGINEJS_ENABLE_SHADOWS
+	uniform mat4 u_trans_shadow;
+	#endif
+
 #endif
 
 uniform float u_time;
@@ -32,10 +37,17 @@ uniform float u_time;
 uniform mat3 u_trans_tangent;
 #endif
 
+
+
 // -----------------------------------------------------------------------------
 // Per-vertex output
 #ifdef ENGINEJS_ENABLE_TRANSFORM
 varying vec4 v_world_pos;
+
+	#ifdef ENGINEJS_ENABLE_SHADOWS
+	varying vec4 v_shadow_pos;
+	#endif
+
 #endif
 
 #ifdef ENGINEJS_ENABLE_UV_COORDS
@@ -50,6 +62,7 @@ varying vec3 v_world_normal;
 varying vec3 v_world_tangent;
 #endif
 
+
 // -----------------------------------------------------------------------------
 // Main routine
 void main(void)
@@ -58,7 +71,13 @@ void main(void)
 	#ifdef ENGINEJS_ENABLE_TRANSFORM
 	v_world_pos = u_trans_world * vec4(a_pos, 1.0);
 	gl_Position = u_trans_proj * u_trans_view * v_world_pos;
+
+		#ifdef ENGINEJS_ENABLE_SHADOWS
+		v_shadow_pos = u_trans_shadow * v_world_pos;
+		#endif
+
 	#else
+
 	gl_Position = vec4(a_pos, 1.0);
 	#endif
 
@@ -76,8 +95,8 @@ void main(void)
 	// Pass-through UV co-ordinates?
 	#ifdef ENGINEJS_ENABLE_UV_COORDS
 	v_uv = a_uv;
-	#ifdef FLIP_Y
-	v_uv.y = 1.0 - v_uv.y;
-	#endif
+		#ifdef FLIP_Y
+		v_uv.y = 1.0 - v_uv.y;
+		#endif
 	#endif
 }
