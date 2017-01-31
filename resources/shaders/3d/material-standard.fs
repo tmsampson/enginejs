@@ -21,6 +21,7 @@ precision highp float;
 
 // Vertex input
 varying vec4 v_world_pos;
+varying vec4 v_shadow_pos;
 varying vec2 v_uv;
 varying vec3 v_world_normal;
 varying vec3 v_world_tangent;
@@ -38,7 +39,6 @@ uniform vec4 specular_colour;
 uniform float specular_shininess;
 uniform float normal_strength;
 
-#define USE_FRESNEL // Always enabled for now
 #ifdef USE_FRESNEL
 uniform vec4 fresnel_colour;
 uniform float fresnel_scale;
@@ -58,6 +58,56 @@ uniform vec2      normal_map_repeat;
 #ifdef USE_SPECULAR_MAP
 uniform sampler2D specular_map;
 uniform vec2      specular_map_repeat;
+#endif
+
+// Shadows
+#ifdef ENGINEJS_ENABLE_SHADOWS
+uniform sampler2D shadow_map;
+uniform int shadow_type;
+#endif
+
+#ifdef ENGINEJS_ENABLE_SHADOWS
+float get_shadow_hard(vec2 shadow_map_uv, float fragment_depth)
+{
+	float shadow_depth = texture2D(shadow_map, shadow_map_uv).r;
+	return step(shadow_depth + 0.018, fragment_depth);
+}
+
+float get_shadow_bilinear(vec2 shadow_map_uv, float fragment_depth)
+{
+	vec2 shadow_map_size = vec2(1024, 1024);
+	vec2 texel_size = vec2(1.0) / shadow_map_size;
+	vec2 shadow_map_uv_centroid = floor(shadow_map_uv * shadow_map_size + 0.5) / shadow_map_size;
+
+	// Sample centre
+	float c = get_shadow_hard(shadow_map_uv, fragment_depth);
+
+	// 4 x 4 sample around pixel
+	float l = get_shadow_hard(shadow_map_uv + (texel_size * vec2(-1.0, 0.0)), fragment_depth);
+	float r = get_shadow_hard(shadow_map_uv + (texel_size * vec2(1.0, 0.0)), fragment_depth);
+	float t = get_shadow_hard(shadow_map_uv + (texel_size * vec2(0.0, 1.0)), fragment_depth);
+	float bt = get_shadow_hard(shadow_map_uv + (texel_size * vec2(0.0, -1.0)), fragment_depth);
+
+	// Bilinear blend
+	float a = mix(l, r, 0.5);
+	float b = mix(t, bt, 0.5);
+	return mix(mix(a, b, 0.5), c, 0.5);
+}
+
+float get_shadow_pcf(vec2 shadow_map_uv, float fragment_depth)
+{
+	vec2 shadow_map_size = vec2(1024, 1024);
+	float result = 0.0;
+	for(int x=-2; x<=2; x++)
+	{
+		for(int y=-2; y<=2; y++)
+		{
+			vec2 off = vec2(x,y) / shadow_map_size;
+			result += get_shadow_hard(shadow_map_uv + off, fragment_depth);
+		}
+	}
+	return result / 25.0;
+}
 #endif
 
 void main(void)
@@ -126,9 +176,37 @@ void main(void)
 	float fresnel = fresnel_bias + fresnel_scale * pow(1.0 + dot(to_cam, normal), fresnel_power);
 	fresnel = clamp(fresnel, 0.0, 1.0);
 #else
+	vec4 fresnel_colour = vec4(0, 0, 0, 0);
 	float fresnel = 0.0;
 #endif
 
 	// Composite
 	gl_FragColor = mix(ambient + diffuse + specular, fresnel_colour, fresnel);
+
+	#ifdef ENGINEJS_ENABLE_SHADOWS
+
+	// Calculate projected shadow position (xy = screen space, z = depth)
+	vec3 shadow_pos = v_shadow_pos.xyz / v_shadow_pos.w; // perspective divide
+	shadow_pos = shadow_pos * 0.5 + 0.5; // [-1..1] --> [0..1]
+
+	// Contribute shadows
+	vec2 shadow_map_uv = shadow_pos.xy;
+	float fragment_depth = shadow_pos.z;
+
+	float shadow = 0.0;
+	if(shadow_type == 0)
+	{
+		shadow = get_shadow_hard(shadow_map_uv, fragment_depth);
+	}
+	else if(shadow_type == 1)
+	{
+		shadow = get_shadow_bilinear(shadow_map_uv, fragment_depth);
+	}
+	else if(shadow_type == 2)
+	{
+		shadow = get_shadow_pcf(shadow_map_uv, fragment_depth);
+	}
+
+	gl_FragColor *= mix(1.0, 0.4, shadow);
+	#endif
 }
