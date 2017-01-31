@@ -100,7 +100,7 @@ for(var i = 0; i < 26; ++i)
 	var char_code_upper = 65 + i;
 	var char_code_lower = 97 + i;
 	Engine.KeyboardKeyCodeMap[String.fromCharCode(char_code_upper)] = char_code_upper;
-	Engine.KeyboardKeyCodeMap[String.fromCharCode(char_code_lower)] = char_code_lower;
+	Engine.KeyboardKeyCodeMap[String.fromCharCode(char_code_lower)] = char_code_upper;
 }
 
 $(document).keydown(function(e)
