@@ -1,0 +1,35 @@
+{
+	"version"        : 1.0,
+	"name"           : "Wood",
+	"type"           : "standard",
+	"config"         :
+	{
+		"lighting_enabled"        : true,
+		"specular_enabled"        : true,
+		"fresnel_enabled"         : false
+	},
+	"properties"     :
+	{
+		"sampler2D"  :
+		{
+			"albedo_map"          : { "file": "img/wood_a.png" },
+			"normal_map"          : { "file": "img/wood_n.png" }
+		},
+		"float"      :
+		{
+			"normal_strength"     : 1.0,
+			"specular_shininess"  : 0.05
+		},
+		"vec2"       :
+		{
+			"albedo_map_repeat"   : [5, 5],
+			"normal_map_repeat"   : [5, 5],
+			"specular_map_repeat" : [5, 5]
+		},
+		"vec4"       :
+		{
+			"albedo_colour"       : [0.8, 0.5, 0.5, 1],
+			"specular_colour"     : [1, 1, 1, 1]
+		}
+	}
+}

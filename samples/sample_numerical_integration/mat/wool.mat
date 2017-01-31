@@ -1,0 +1,33 @@
+{
+	"version"        : 1.0,
+	"name"           : "Wool",
+	"type"           : "standard",
+	"config"         :
+	{
+		"lighting_enabled"        : true,
+		"specular_enabled"        : true,
+		"fresnel_enabled"         : false
+	},
+	"properties"     :
+	{
+		"sampler2D"  :
+		{
+			"albedo_map"          : { "file": "img/wool_a.png" },
+			"normal_map"          : { "file": "img/wool_n.png" }
+		},
+		"float"      :
+		{
+			"normal_strength"     : 1.0,
+			"specular_shininess"  : 0.078125,
+			"fresnel_scale"       : 0.1,
+			"fresnel_bias"        : 0,
+			"fresnel_power"       : 2.5
+		},
+		"vec4"       :
+		{
+			"albedo_colour"       : [1, 1, 1, 1],
+			"specular_colour"     : [0.3, 0.3, 0.3, 1],
+			"fresnel_colour"      : [1, 1, 1, 1]
+		}
+	}
+}
