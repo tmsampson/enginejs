@@ -52,15 +52,28 @@ Engine.Gfx.Material = function(prevent_default)
 		}
 
 		// Apply shader
-		this.shader = Engine.Resources[shader_name]; // Select pre-compiled permutation
+		this.shader_perumation = shader_name;
+		this.shader = Engine.Resources[shader_name]; 					  // Select pre-compiled permutation
+		this.shader_shadowed = Engine.Resources[shader_name + "_shadow"]; // Select pre-compiled permutation with shadows enabled
 		this.shader_program = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_general_transformed_uv_normals_tangents"],
 		                                                     this.shader);
+		this.shader_program_shadowed = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_general_transformed_uv_normals_tangents_shadow"],
+		                                                     this.shader_shadowed);
 	};
 
-	this.Bind = function(sun)
+	this.Bind = function(sun, enable_shadows)
 	{
 		// 1. Bind shader
-		Engine.Gfx.BindShaderProgram(this.shader_program);
+		if(enable_shadows && this.shader_program_shadowed != null)
+		{
+			// Shadows
+			Engine.Gfx.BindShaderProgram(this.shader_program_shadowed);
+		}
+		else
+		{
+			// No shadows
+			Engine.Gfx.BindShaderProgram(this.shader_program);
+		}
 
 		// 2. Bind sun params
 		Engine.Gfx.SetShaderProperty("u_sun_colour", sun.colour, Engine.Gfx.SP_VEC3, true);

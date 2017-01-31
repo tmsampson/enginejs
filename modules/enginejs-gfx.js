@@ -455,9 +455,9 @@ Engine.Gfx =
 	// **********************************************
 	// Material functionality (forward to Engine.Material)
 	// **********************************************
-	BindMaterial : function(material, sun)
+	BindMaterial : function(material, sun, use_shadows)
 	{
-		material.Bind(sun);
+		material.Bind(sun, use_shadows);
 	},
 
 	// **********************************************
