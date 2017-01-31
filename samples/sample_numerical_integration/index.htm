@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+
+		<title>Engine Sample: Numerical Integration</title>
+
+		<!-- EngineJS -->
+		<script type="text/javascript" src="enginejs/jquery.js"></script>
+		<script type="text/javascript" src="enginejs/engine.js"></script>
+
+		<!-- Spectrum colour picker -->
+		<script src='enginejs/resources/misc/spectrum/spectrum.js'></script>
+		<link rel='stylesheet' href='enginejs/resources/misc/spectrum/spectrum.css' />
+
+		<script language="javascript">
+		var resources =
+		{
+			mat_sponge        : { file : "mat/sponge.mat"},
+			mat_wool          : { file : "mat/wood.mat"},
+			mat_shadow        : { file : "mat/shadow.mat"},
+		};
+
+		$(document).ready(function()
+		{
+			var on_init = function()
+			{
+				// ====================================================================================================================================
+				// Misc
+				var mtx_trans = mat4.create();
+				var model_index = 0;
+
+				// ====================================================================================================================================
+				// Camera
+				var cam = new Engine.Camera.Perspective({ position: [0, 4, 0] });
+				cam.AttachHelper(new Engine.Camera.Helper.Roam({ forward : [0, 0, -1] }));
+				var shadow_rt = Engine.Gfx.CreateRenderTarget("Shadow", 1024, 1024, true);
+				var shadow_cam = new Engine.Camera.Orthographic({ size : [1024, 1024] });
+
+				// ====================================================================================================================================
+				// Models
+				var floor_model = Engine.Resources["ml_cube"];
+				var sphere_model = Engine.Geometry.MakeSphere();
+
+				// ====================================================================================================================================
+				// Light
+				var sun =
+				{
+					model      : Engine.Geometry.MakeSphere(),
+					material   : new Engine.Gfx.Material(),
+					position   : [0, 5, 0],
+					angle      : 0,	// -90 --> 90 arc
+					direction  : [ 0, -1, 0 ],
+					colour     : [ 0.6, 0.6, 0.6 ],
+					arc_radius : [30, 15],
+					arc_lift   : 5
+				};
+
+				var sphere_p = [0, 8, -12,
+								-6, 9, -12,
+								6, 10, -12];
+				var sphere_v = [0, 0, -1,
+								0, 0, 0,
+								0, 0, 0 ];
+				var sphere_a = [0, -9.8, 0,
+								0, -9.8, 0,
+								0, -9.8, 0];
+				var mass = 1;
+
+				var draw_spheres = function(mat, bind_shadows)
+				{
+					// Update spheres
+					for(var i = 0; i < sphere_p.length; i += 3)
+					{
+						// Load
+						var pos = [ sphere_p[i], sphere_p[i + 1], sphere_p[i + 2]  ];
+						mat4.translate(mtx_trans, Engine.Math.IdentityMatrix, pos);
+						Engine.Gfx.BindMaterial(mat, sun, bind_shadows);
+
+						if(bind_shadows)
+						{
+							// Bind shadow config
+							Engine.Gfx.SetShaderProperty("shadow_type", 2, Engine.Gfx.SP_INT)
+							Engine.Gfx.SetShaderProperty("u_trans_shadow", shadow_cam.mtx_view_proj, Engine.Gfx.SP_MATRIX4);
+
+							// Bind shadow map
+							Engine.Gfx.BindTexture(shadow_rt.depth_texture, 3, "shadow_map");
+						}
+
+						Engine.Gfx.SetShaderProperty("u_trans_world", mtx_trans, Engine.Gfx.SP_MATRIX4);
+						Engine.Gfx.DrawModel(sphere_model);
+					}
+				}
+
+				var on_render = function()
+				{
+					Engine.Gfx.Clear(Engine.Colour.Blue);
+					Engine.Gfx.SetDepthTestMode(Engine.GL.LESS, true);
+
+					var dt = Engine.Time.delta_s;
+
+					// Update spheres
+					for(var i = 0; i < sphere_p.length; i += 3)
+					{
+						// Load
+						var pos = [ sphere_p[i], sphere_p[i + 1], sphere_p[i + 2]  ];
+						var vel = [ sphere_v[i], sphere_v[i + 1], sphere_v[i + 2]  ];
+						var acc = [ sphere_a[i], sphere_a[i + 1], sphere_a[i + 2]  ];
+
+						// Bounce
+						if(pos[1] <= 1.0)
+						{
+							pos[1] = 1;
+							vel[1] = -vel[1] * 0.8;
+						}
+
+						// Update
+						pos[0] += vel[0] * dt; pos[1] += vel[1] * dt; pos[2] += vel[2] * dt;
+						vel[0] += (acc[0] / mass) * dt; vel[1] += (acc[1] / mass) * dt; vel[2] += (acc[2] / mass) * dt;
+
+						// store
+						sphere_p[i] = pos[0]; sphere_p[i + 1] = pos[1]; sphere_p[i + 2] = pos[2];
+						sphere_v[i] = vel[0]; sphere_v[i + 1] = vel[1]; sphere_v[i + 2] = vel[2];
+						sphere_a[i] = acc[0]; sphere_a[i + 1] = acc[1]; sphere_a[i + 2] = acc[2];
+					}
+
+
+					// Render shadows
+					Engine.Gfx.BindRenderTarget(shadow_rt);
+					var lookat = [0, 0, 0];
+					Engine.Gfx.Clear(Engine.Colour.Blue);
+					shadow_cam.Update();
+
+					// fix this manual code
+					mat4.lookAt(shadow_cam.mtx_view, sun.position, lookat, [0, 0, 1]);
+					mat4.ortho(shadow_cam.mtx_proj,-50, 50, -50, 50, -10, 80);
+					mat4.multiply(shadow_cam.mtx_view_proj, shadow_cam.mtx_proj, shadow_cam.mtx_view);
+					mat4.invert(shadow_cam.mtx_view_inverse, shadow_cam.mtx_view);
+
+					Engine.Gfx.BindCamera(shadow_cam);
+
+					draw_spheres(resources["mat_shadow"]);
+
+					Engine.Gfx.UnBindRenderTarget(shadow_rt);
+
+					// Render main
+					cam.Update();
+					Engine.Gfx.BindCamera(cam);
+
+					// Draw floor
+					mat4.scale(mtx_trans, Engine.Math.IdentityMatrix, [100, 0, 100]);
+					Engine.Gfx.BindMaterial(resources["mat_wool"], sun, true);
+					Engine.Gfx.SetShaderProperty("shadow_type", 2, Engine.Gfx.SP_INT)
+					Engine.Gfx.SetShaderProperty("u_trans_shadow", shadow_cam.mtx_view_proj, Engine.Gfx.SP_MATRIX4);
+
+					// Bind shadow map
+					Engine.Gfx.BindTexture(shadow_rt.depth_texture, 3, "shadow_map");
+					Engine.Gfx.SetShaderProperty("u_trans_world", mtx_trans, Engine.Gfx.SP_MATRIX4);
+					Engine.Gfx.DrawModel(floor_model);
+
+					draw_spheres(resources["mat_sponge"], true);
+
+				};
+				return on_render;
+			};
+			Engine.Init(on_init, resources);
+		});
+		</script>
+	</head>
+
+	<body>
+		<canvas width="1024" height="640">
+	</body>
+</html>
