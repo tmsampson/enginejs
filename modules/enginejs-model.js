@@ -14,6 +14,94 @@ Engine.Model =
 		});
 	},
 
+	LoadOBJ : function(descriptor, callback)
+	{
+		var upscale = 40;
+		Engine.Net.FetchResource(descriptor.file, function(obj_data)
+		{
+			var vertex_stream = [];
+			var index_stream = [];
+			var uv_stream = [];
+			var normal_stream = [];
+
+			// Parse
+			var lines = obj_data.split("\n");
+			for(var i = 0; i < lines.length; ++i)
+			{
+				var line = lines[i];
+				if(line[0] == "#")
+					continue;
+				if(line[0] == "v")
+				{
+					var values = line.split(" ");
+					var p0 = parseFloat(values[1]) * upscale;
+					var p1 = parseFloat(values[2]) * upscale;
+					var p2 = parseFloat(values[3]) * upscale;
+					vertex_stream.push(p0, p1, p2);
+					uv_stream.push(p0 / 10.0, p1/ 10.0);
+					normal_stream.push(Math.random(), Math.random(), Math.random());
+				}
+				if(line[0] == "f")
+				{
+					var values = line.split(" ");
+					var i0 = parseInt(values[1]);
+					var i1 = parseInt(values[2]);
+					var i2 = parseInt(values[3]);
+					index_stream.push(i0 -1, i1 -1, i2 -1);
+				}
+			}
+
+			// Build enginejs model
+			var model_file =
+			{
+				name: descriptor.file,
+				model_data:
+				{
+					primitives : 
+					[
+						{
+							name : "faces",
+							vertex_buffers :
+							[
+								{
+									name           : "vertices",
+									attribute_name : "a_pos",
+									item_size      : 3,
+									draw_mode      : "triangles",
+									stream         : vertex_stream,
+								},
+								{
+									name           : "indices",
+									attribute_name : "",
+									item_size      : 1,
+									draw_mode      : "triangles",
+									stream         : index_stream,
+								},
+								{
+									name           : "normals",
+									attribute_name : "a_normal",
+									item_size      : 3,
+									draw_mode      : "triangles",
+									stream         : normal_stream,
+								},
+								{
+									name           : "texture-coordinates",
+									attribute_name : "a_uv",
+									item_size      : 2,
+									draw_mode      : "triangles",
+									stream         : uv_stream,
+								},
+							]
+						}
+					]
+				},
+			};
+
+			var model_object = Engine.Model.Generate(model_file);
+			callback(model_object);
+		});
+	},
+
 	Generate : function(model_file)
 	{
 		// Generate tangent / bi-tangent streams?
@@ -109,3 +197,4 @@ Engine.Model =
 
 // Resource loading
 Engine.Resource.RegisterLoadFunction("model", Engine.Model.Load);
+Engine.Resource.RegisterLoadFunction("obj", Engine.Model.LoadOBJ);
