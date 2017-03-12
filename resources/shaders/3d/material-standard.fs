@@ -62,23 +62,23 @@ uniform vec2      specular_map_repeat;
 
 // Shadows
 #ifdef USE_SHADOWS
-uniform sampler2D shadow_map;
-uniform int shadow_type;
+uniform sampler2D u_shadow_map;
+uniform vec2 u_shadow_map_size;
+uniform int u_shadow_type;
 
 float get_shadow_hard(vec2 shadow_map_uv, float fragment_depth)
 {
-	float shadow_depth = texture2D(shadow_map, shadow_map_uv).r;
+	float shadow_depth = texture2D(u_shadow_map, shadow_map_uv).r;
 	return step(shadow_depth + 0.009, fragment_depth);
 }
 
 float get_shadow_bilinear(vec2 shadow_map_uv, float fragment_depth)
 {
-	vec2 shadow_map_size = vec2(1024, 1024);
-	vec2 texel_size = vec2(1.0) / shadow_map_size;
+	vec2 texel_size = vec2(1.0) / u_shadow_map_size;
 
-	vec2 pixel = shadow_map_uv * shadow_map_size;
+	vec2 pixel = shadow_map_uv * u_shadow_map_size;
 	vec2 pixel_tl = floor(pixel - 0.5) + 0.5;
-	vec2 uv_tl = pixel_tl / shadow_map_size;
+	vec2 uv_tl = pixel_tl / u_shadow_map_size;
 
 	float tl = get_shadow_hard(uv_tl + (texel_size * vec2(0.0, 0.0)), fragment_depth);
 	float tr = get_shadow_hard(uv_tl + (texel_size * vec2(1.0, 0.0)), fragment_depth);
@@ -92,36 +92,20 @@ float get_shadow_bilinear(vec2 shadow_map_uv, float fragment_depth)
 	return c;
 }
 
-// float get_shadow_pcf(vec2 shadow_map_uv, float fragment_depth)
-// {
-// 	vec2 shadow_map_size = vec2(1024, 1024);
-// 	float result = 0.0;
-// 	for(int x=-2; x<=2; x++)
-// 	{
-// 		for(int y=-2; y<=2; y++)
-// 		{
-// 			vec2 off = vec2(x,y) / shadow_map_size;
-// 			result += get_shadow_hard(shadow_map_uv + off, fragment_depth);
-// 		}
-// 	}
-// 	return result / 25.0;
-// }
-
-// float get_shadow_pcf_bilinear(vec2 shadow_map_uv, float fragment_depth)
-// {
-// 	vec2 shadow_map_size = vec2(1024, 1024);
-// 	float result = 0.0;
-// 	for(int x=-1; x<=1; x++)
-// 	{
-// 		for(int y=-1; y<=1; y++)
-// 		{
-// 			vec2 off = vec2(x,y)/shadow_map_size;
-// 			result += get_shadow_pcf(shadow_map_uv + off, fragment_depth);
-// 		}
-// 	}
-// 	return result / 9.0;
-// }
-
+float get_shadow_bilinear_4x4(vec2 shadow_map_uv, float fragment_depth)
+{
+	vec2 texel_size = vec2(1.0) / u_shadow_map_size;
+	float sum = 0.0;
+	for(float x = -1.5; x <= 1.5; x += 1.0)
+	{
+		for(float y = -1.5; y <= 1.5; y += 1.0)
+		{
+			vec2 uv = shadow_map_uv + (texel_size * vec2(x, y));
+			sum += get_shadow_bilinear(uv, fragment_depth);
+		}
+	}
+	return sum / 16.0;
+}
 #endif
 
 void main(void)
@@ -208,24 +192,16 @@ void main(void)
 	float fragment_depth = shadow_pos.z;
 
 	float shadow = 0.0;
-	if(shadow_type == 0)
+	if(u_shadow_type == 0)
 	{
 		shadow = get_shadow_hard(shadow_map_uv, fragment_depth);
 		gl_FragColor *= mix(1.0, 0.4, shadow);
 	}
-	else if(shadow_type == 1)
+	else if(u_shadow_type == 1)
 	{
-		shadow = get_shadow_bilinear(shadow_map_uv, fragment_depth);
+		shadow = get_shadow_bilinear_4x4(shadow_map_uv, fragment_depth);
 		gl_FragColor *= mix(1.0, 0.4, shadow);
 	}
-	// else if(shadow_type == 2)
-	// {
-	// 	shadow = get_shadow_pcf(shadow_map_uv, fragment_depth);
-	// }
-	// else if(shadow_type == 3)
-	// {
-	// 	shadow = get_shadow_pcf_bilinear(shadow_map_uv, fragment_depth);
-	// }
 
 	#endif
 }
