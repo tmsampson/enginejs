@@ -74,22 +74,55 @@ float get_shadow_hard(vec2 shadow_map_uv, float fragment_depth)
 float get_shadow_bilinear(vec2 shadow_map_uv, float fragment_depth)
 {
 	vec2 shadow_map_size = vec2(1024, 1024);
-	vec2 texel_size = vec2(1.0) / shadow_map_size;
-	vec2 shadow_map_uv_centroid = floor(shadow_map_uv * shadow_map_size + 0.5) / shadow_map_size;
+	vec2 texelSize = vec2(1.0)/shadow_map_size;
+	vec2 f = fract(shadow_map_uv*shadow_map_size+0.5);
+	vec2 centroidUV = floor(shadow_map_uv*shadow_map_size+0.5) / shadow_map_size;
 
-	// Sample centre
-	float c = get_shadow_hard(shadow_map_uv, fragment_depth);
+	float lb = get_shadow_hard(centroidUV+texelSize*vec2(0.0, 0.0), fragment_depth);
+	float lt = get_shadow_hard(centroidUV+texelSize*vec2(0.0, 1.0), fragment_depth);
+	float rb = get_shadow_hard(centroidUV+texelSize*vec2(1.0, 0.0), fragment_depth);
+	float rt = get_shadow_hard(centroidUV+texelSize*vec2(1.0, 1.0), fragment_depth);
+	float a = mix(lb, lt, f.y);
+	float b = mix(rb, rt, f.y);
+	float c = mix(a, b, f.x);
+	return c;
 
-	// 4 x 4 sample around pixel
-	float l = get_shadow_hard(shadow_map_uv + (texel_size * vec2(-1.0, 0.0)), fragment_depth);
-	float r = get_shadow_hard(shadow_map_uv + (texel_size * vec2(1.0, 0.0)), fragment_depth);
-	float t = get_shadow_hard(shadow_map_uv + (texel_size * vec2(0.0, 1.0)), fragment_depth);
-	float bt = get_shadow_hard(shadow_map_uv + (texel_size * vec2(0.0, -1.0)), fragment_depth);
+	// vec2 shadow_map_size = vec2(1024, 1024);
+	// vec2 texelSize = vec2(1.0)/shadow_map_size;
+	// vec2 f = fract(shadow_map_uv*shadow_map_size+0.5);
+	// vec2 centroidUV = floor(shadow_map_uv*shadow_map_size+0.5)/shadow_map_size;
 
-	// Bilinear blend
-	float a = mix(l, r, 0.5);
-	float b = mix(t, bt, 0.5);
-	return mix(mix(a, b, 0.5), c, 0.5);
+    // float lb = get_shadow_hard(centroidUV+texelSize*vec2(0.0, 0.0), fragment_depth);
+    // float lt = get_shadow_hard(centroidUV+texelSize*vec2(0.0, 1.0), fragment_depth);
+    // float rb = get_shadow_hard(centroidUV+texelSize*vec2(1.0, 0.0), fragment_depth);
+    // float rt = get_shadow_hard(centroidUV+texelSize*vec2(1.0, 1.0), fragment_depth);
+    // float a = mix(lb, lt, f.y);
+    // float b = mix(rb, rt, f.y);
+    // float c = mix(a, b, f.x);
+    // return c;
+
+
+
+
+	
+
+	// vec2 shadow_map_size = vec2(1024, 1024);
+	// vec2 texel_size = vec2(1.0) / shadow_map_size;
+	// vec2 shadow_map_uv_centroid = floor(shadow_map_uv * shadow_map_size + 0.5) / shadow_map_size;
+
+	// // Sample centre
+	// float c = get_shadow_hard(shadow_map_uv, fragment_depth);
+
+	// // 4 x 4 sample around pixel
+	// float l = get_shadow_hard(shadow_map_uv + (texel_size * vec2(-1.0, 0.0)), fragment_depth);
+	// float r = get_shadow_hard(shadow_map_uv + (texel_size * vec2(1.0, 0.0)), fragment_depth);
+	// float t = get_shadow_hard(shadow_map_uv + (texel_size * vec2(0.0, 1.0)), fragment_depth);
+	// float bt = get_shadow_hard(shadow_map_uv + (texel_size * vec2(0.0, -1.0)), fragment_depth);
+
+	// // Bilinear blend
+	// float a = mix(l, r, 0.5);
+	// float b = mix(t, bt, 0.5);
+	// return mix(mix(a, b, 0.5), c, 0.5);
 }
 
 float get_shadow_pcf(vec2 shadow_map_uv, float fragment_depth)
@@ -106,6 +139,22 @@ float get_shadow_pcf(vec2 shadow_map_uv, float fragment_depth)
 	}
 	return result / 25.0;
 }
+
+float get_shadow_pcf_bilinear(vec2 shadow_map_uv, float fragment_depth)
+{
+	vec2 shadow_map_size = vec2(1024, 1024);
+	float result = 0.0;
+	for(int x=-1; x<=1; x++)
+	{
+		for(int y=-1; y<=1; y++)
+		{
+			vec2 off = vec2(x,y)/shadow_map_size;
+			result += get_shadow_pcf(shadow_map_uv + off, fragment_depth);
+		}
+	}
+	return result / 9.0;
+}
+
 #endif
 
 void main(void)
@@ -157,7 +206,7 @@ void main(void)
 		vec3 reflected_ray = normalize(reflect(u_sun_dir, normal)); // reflect light about surface normal
 		vec3 to_cam = normalize(u_cam_pos - v_world_pos.xyz);
 		float cam_dot = max(0.0, dot(reflected_ray, to_cam));
-		specular = specular_colour * clamp(vec4(u_sun_colour, 1.0) * pow(cam_dot, specular_shininess * 128.0), 0.0, 1.0);
+		specular = specular_colour * clamp(vec4(u_sun_colour, 1.0) * max(0.0, dot(normal, -u_sun_dir)) * pow(cam_dot, specular_shininess * 128.0), 0.0, 1.0); // 
 	}
 
 	#ifdef USE_SPECULAR_MAP
@@ -203,6 +252,10 @@ void main(void)
 	else if(shadow_type == 2)
 	{
 		shadow = get_shadow_pcf(shadow_map_uv, fragment_depth);
+	}
+	else if(shadow_type == 3)
+	{
+		shadow = get_shadow_pcf_bilinear(shadow_map_uv, fragment_depth);
 	}
 
 	gl_FragColor *= mix(1.0, 0.4, shadow);
