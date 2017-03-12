@@ -105,7 +105,7 @@ Engine.Geometry =
 		prim.vertex_buffers.push(index_buffer);
 
 		// Generate and return model
-		return Engine.Model.Generate(model);
+		return Engine.Model.PrepareModel(model);
 	},
 
 	// --------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -159,7 +159,7 @@ Engine.Geometry =
 		}
 
 		// Generate and return model
-		return Engine.Model.Generate(model);
+		return Engine.Model.PrepareModel(model);
 	},
 
 	// --------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -284,6 +284,6 @@ Engine.Geometry =
 		prim.vertex_buffers.push(index_buffer);
 
 		// Generate and return model
-		return Engine.Model.Generate(model);
+		return Engine.Model.PrepareModel(model);
 	},
 };
