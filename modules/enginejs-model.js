@@ -9,14 +9,14 @@ Engine.Model =
 		Engine.Net.FetchResource(descriptor.file, function(model_json)
 		{
 			var model_file = jQuery.parseJSON(model_json);
-			var model_object = Engine.Model.Generate(model_file);
+			var model_object = Engine.Model.PrepareModel(model_file);
 			callback(model_object);
 		});
 	},
 
 	LoadOBJ : function(descriptor, callback)
 	{
-		var upscale = 40;
+		var scale = (descriptor.scale == undefined)? 1.0 : descriptor.scale;
 		Engine.Net.FetchResource(descriptor.file, function(obj_data)
 		{
 			var vertex_stream = [];
@@ -34,9 +34,9 @@ Engine.Model =
 				if(line[0] == "v")
 				{
 					var values = line.split(" ");
-					var p0 = parseFloat(values[1]) * upscale;
-					var p1 = parseFloat(values[2]) * upscale;
-					var p2 = parseFloat(values[3]) * upscale;
+					var p0 = parseFloat(values[1]) * scale;
+					var p1 = parseFloat(values[2]) * scale;
+					var p2 = parseFloat(values[3]) * scale;
 					vertex_stream.push(p0, p1, p2);
 					uv_stream.push(p0 / 10.0, p1/ 10.0);
 					normal_stream.push(Math.random(), Math.random(), Math.random());
@@ -97,12 +97,12 @@ Engine.Model =
 				},
 			};
 
-			var model_object = Engine.Model.Generate(model_file);
+			var model_object = Engine.Model.PrepareModel(model_file);
 			callback(model_object);
 		});
 	},
 
-	Generate : function(model_file)
+	PrepareModel : function(model_file)
 	{
 		// Generate tangent / bi-tangent streams?
 		var prims = model_file.model_data.primitives;
@@ -115,8 +115,8 @@ Engine.Model =
 				var buffer = buffers[j];
 				if(buffer.attribute_name == "a_pos")    { vertex_buffer = buffer; }
 				if(buffer.attribute_name == "a_normal") { normal_buffer = buffer; }
-				if(buffer.attribute_name == "a_uv")     { uv_buffer = buffer; }
-				if(buffer.name == "indices")            { index_buffer = buffer; }
+				if(buffer.attribute_name == "a_uv")     { uv_buffer = buffer;     }
+				if(buffer.name == "indices")            { index_buffer = buffer;  }
 			}
 
 			if(index_buffer != null && index_buffer.draw_mode == "triangles")

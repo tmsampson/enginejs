@@ -195,13 +195,17 @@ void main(void)
 	if(u_shadow_type == 0)
 	{
 		shadow = get_shadow_hard(shadow_map_uv, fragment_depth);
-		gl_FragColor *= mix(1.0, 0.4, shadow);
 	}
 	else if(u_shadow_type == 1)
 	{
-		shadow = get_shadow_bilinear_4x4(shadow_map_uv, fragment_depth);
-		gl_FragColor *= mix(1.0, 0.4, shadow);
+		shadow = get_shadow_bilinear(shadow_map_uv, fragment_depth);
 	}
+	else if(u_shadow_type == 2)
+	{
+		shadow = get_shadow_bilinear_4x4(shadow_map_uv, fragment_depth);
+	}
+
+	gl_FragColor *= mix(1.0, 0.4, shadow);
 
 	#endif
 }
