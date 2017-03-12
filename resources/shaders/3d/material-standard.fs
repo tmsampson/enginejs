@@ -74,86 +74,53 @@ float get_shadow_hard(vec2 shadow_map_uv, float fragment_depth)
 float get_shadow_bilinear(vec2 shadow_map_uv, float fragment_depth)
 {
 	vec2 shadow_map_size = vec2(1024, 1024);
-	vec2 texelSize = vec2(1.0)/shadow_map_size;
-	vec2 f = fract(shadow_map_uv*shadow_map_size+0.5);
-	vec2 centroidUV = floor(shadow_map_uv*shadow_map_size+0.5) / shadow_map_size;
+	vec2 texel_size = vec2(1.0) / shadow_map_size;
 
-	float lb = get_shadow_hard(centroidUV+texelSize*vec2(0.0, 0.0), fragment_depth);
-	float lt = get_shadow_hard(centroidUV+texelSize*vec2(0.0, 1.0), fragment_depth);
-	float rb = get_shadow_hard(centroidUV+texelSize*vec2(1.0, 0.0), fragment_depth);
-	float rt = get_shadow_hard(centroidUV+texelSize*vec2(1.0, 1.0), fragment_depth);
-	float a = mix(lb, lt, f.y);
-	float b = mix(rb, rt, f.y);
-	float c = mix(a, b, f.x);
+	vec2 pixel = shadow_map_uv * shadow_map_size;
+	vec2 pixel_tl = floor(pixel - 0.5) + 0.5;
+	vec2 uv_tl = pixel_tl / shadow_map_size;
+
+	float tl = get_shadow_hard(uv_tl + (texel_size * vec2(0.0, 0.0)), fragment_depth);
+	float tr = get_shadow_hard(uv_tl + (texel_size * vec2(1.0, 0.0)), fragment_depth);
+	float bl = get_shadow_hard(uv_tl + (texel_size * vec2(0.0, 1.0)), fragment_depth);
+	float br = get_shadow_hard(uv_tl + (texel_size * vec2(1.0, 1.0)), fragment_depth);
+
+	vec2 weight = fract(pixel + 0.5);
+	float a = mix(tl, tr, weight.x);
+	float b = mix(bl, br, weight.x);
+	float c = mix(a, b, weight.y);
 	return c;
-
-	// vec2 shadow_map_size = vec2(1024, 1024);
-	// vec2 texelSize = vec2(1.0)/shadow_map_size;
-	// vec2 f = fract(shadow_map_uv*shadow_map_size+0.5);
-	// vec2 centroidUV = floor(shadow_map_uv*shadow_map_size+0.5)/shadow_map_size;
-
-    // float lb = get_shadow_hard(centroidUV+texelSize*vec2(0.0, 0.0), fragment_depth);
-    // float lt = get_shadow_hard(centroidUV+texelSize*vec2(0.0, 1.0), fragment_depth);
-    // float rb = get_shadow_hard(centroidUV+texelSize*vec2(1.0, 0.0), fragment_depth);
-    // float rt = get_shadow_hard(centroidUV+texelSize*vec2(1.0, 1.0), fragment_depth);
-    // float a = mix(lb, lt, f.y);
-    // float b = mix(rb, rt, f.y);
-    // float c = mix(a, b, f.x);
-    // return c;
-
-
-
-
-	
-
-	// vec2 shadow_map_size = vec2(1024, 1024);
-	// vec2 texel_size = vec2(1.0) / shadow_map_size;
-	// vec2 shadow_map_uv_centroid = floor(shadow_map_uv * shadow_map_size + 0.5) / shadow_map_size;
-
-	// // Sample centre
-	// float c = get_shadow_hard(shadow_map_uv, fragment_depth);
-
-	// // 4 x 4 sample around pixel
-	// float l = get_shadow_hard(shadow_map_uv + (texel_size * vec2(-1.0, 0.0)), fragment_depth);
-	// float r = get_shadow_hard(shadow_map_uv + (texel_size * vec2(1.0, 0.0)), fragment_depth);
-	// float t = get_shadow_hard(shadow_map_uv + (texel_size * vec2(0.0, 1.0)), fragment_depth);
-	// float bt = get_shadow_hard(shadow_map_uv + (texel_size * vec2(0.0, -1.0)), fragment_depth);
-
-	// // Bilinear blend
-	// float a = mix(l, r, 0.5);
-	// float b = mix(t, bt, 0.5);
-	// return mix(mix(a, b, 0.5), c, 0.5);
 }
 
-float get_shadow_pcf(vec2 shadow_map_uv, float fragment_depth)
-{
-	vec2 shadow_map_size = vec2(1024, 1024);
-	float result = 0.0;
-	for(int x=-2; x<=2; x++)
-	{
-		for(int y=-2; y<=2; y++)
-		{
-			vec2 off = vec2(x,y) / shadow_map_size;
-			result += get_shadow_hard(shadow_map_uv + off, fragment_depth);
-		}
-	}
-	return result / 25.0;
-}
+// float get_shadow_pcf(vec2 shadow_map_uv, float fragment_depth)
+// {
+// 	vec2 shadow_map_size = vec2(1024, 1024);
+// 	float result = 0.0;
+// 	for(int x=-2; x<=2; x++)
+// 	{
+// 		for(int y=-2; y<=2; y++)
+// 		{
+// 			vec2 off = vec2(x,y) / shadow_map_size;
+// 			result += get_shadow_hard(shadow_map_uv + off, fragment_depth);
+// 		}
+// 	}
+// 	return result / 25.0;
+// }
 
-float get_shadow_pcf_bilinear(vec2 shadow_map_uv, float fragment_depth)
-{
-	vec2 shadow_map_size = vec2(1024, 1024);
-	float result = 0.0;
-	for(int x=-1; x<=1; x++)
-	{
-		for(int y=-1; y<=1; y++)
-		{
-			vec2 off = vec2(x,y)/shadow_map_size;
-			result += get_shadow_pcf(shadow_map_uv + off, fragment_depth);
-		}
-	}
-	return result / 9.0;
-}
+// float get_shadow_pcf_bilinear(vec2 shadow_map_uv, float fragment_depth)
+// {
+// 	vec2 shadow_map_size = vec2(1024, 1024);
+// 	float result = 0.0;
+// 	for(int x=-1; x<=1; x++)
+// 	{
+// 		for(int y=-1; y<=1; y++)
+// 		{
+// 			vec2 off = vec2(x,y)/shadow_map_size;
+// 			result += get_shadow_pcf(shadow_map_uv + off, fragment_depth);
+// 		}
+// 	}
+// 	return result / 9.0;
+// }
 
 #endif
 
@@ -244,20 +211,21 @@ void main(void)
 	if(shadow_type == 0)
 	{
 		shadow = get_shadow_hard(shadow_map_uv, fragment_depth);
+		gl_FragColor *= mix(1.0, 0.4, shadow);
 	}
 	else if(shadow_type == 1)
 	{
 		shadow = get_shadow_bilinear(shadow_map_uv, fragment_depth);
+		gl_FragColor *= mix(1.0, 0.4, shadow);
 	}
-	else if(shadow_type == 2)
-	{
-		shadow = get_shadow_pcf(shadow_map_uv, fragment_depth);
-	}
-	else if(shadow_type == 3)
-	{
-		shadow = get_shadow_pcf_bilinear(shadow_map_uv, fragment_depth);
-	}
+	// else if(shadow_type == 2)
+	// {
+	// 	shadow = get_shadow_pcf(shadow_map_uv, fragment_depth);
+	// }
+	// else if(shadow_type == 3)
+	// {
+	// 	shadow = get_shadow_pcf_bilinear(shadow_map_uv, fragment_depth);
+	// }
 
-	gl_FragColor *= mix(1.0, 0.4, shadow);
 	#endif
 }
