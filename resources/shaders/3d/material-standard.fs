@@ -65,11 +65,12 @@ uniform vec2      specular_map_repeat;
 uniform sampler2D u_shadow_map;
 uniform vec2 u_shadow_map_size;
 uniform int u_shadow_type;
+float shadow_bias = 0.009;
 
 float get_shadow_hard(vec2 shadow_map_uv, float fragment_depth)
 {
 	float shadow_depth = texture2D(u_shadow_map, shadow_map_uv).r;
-	return step(shadow_depth + 0.009, fragment_depth);
+	return step(shadow_depth + shadow_bias, fragment_depth);
 }
 
 float get_shadow_bilinear(vec2 shadow_map_uv, float fragment_depth)
@@ -182,7 +183,6 @@ void main(void)
 	gl_FragColor = mix(ambient + diffuse + specular, fresnel_colour, fresnel);
 
 	#ifdef USE_SHADOWS
-
 	// Calculate projected shadow position (xy = screen space, z = depth)
 	vec3 shadow_pos = v_shadow_pos.xyz / v_shadow_pos.w; // perspective divide
 	shadow_pos = shadow_pos * 0.5 + 0.5; // [-1..1] --> [0..1]
