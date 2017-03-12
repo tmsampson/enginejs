@@ -175,11 +175,11 @@
 
 							if(override_material == null && material != resources["mat_plasma"]) // only bind shadows for main render pass exluding custom plasma shader
 							{
-								Engine.Gfx.SetShaderProperty("shadow_type", shadow_type, Engine.Gfx.SP_INT)
+								Engine.Gfx.SetShaderProperty("u_shadow_type", shadow_type, Engine.Gfx.SP_INT)
 								Engine.Gfx.SetShaderProperty("u_trans_shadow", shadow_cam.mtx_view_proj, Engine.Gfx.SP_MATRIX4);
 
 								// Bind shadow map
-								Engine.Gfx.BindTexture(shadow_rt.depth_texture, 3, "shadow_map");
+								Engine.Gfx.BindTexture(shadow_rt.depth_texture, 3, "u_shadow_map");
 							}
 
 							// Draw model
@@ -220,9 +220,9 @@
 					mat4.scale(mtx_trans, Engine.Math.IdentityMatrix, [100, 1, 100]);
 					Engine.Gfx.BindMaterial(floor_material, sun, true);
 					Engine.Gfx.SetShaderProperty("u_trans_world", mtx_trans, Engine.Gfx.SP_MATRIX4);
-					Engine.Gfx.SetShaderProperty("shadow_type", shadow_type, Engine.Gfx.SP_INT)
+					Engine.Gfx.SetShaderProperty("u_shadow_type", shadow_type, Engine.Gfx.SP_INT)
 					Engine.Gfx.SetShaderProperty("u_trans_shadow", shadow_cam.mtx_view_proj, Engine.Gfx.SP_MATRIX4);
-					Engine.Gfx.BindTexture(shadow_rt.depth_texture, 3, "shadow_map");
+					Engine.Gfx.BindTexture(shadow_rt.depth_texture, 3, "u_shadow_map");
 					Engine.Gfx.DrawModel(floor_model);
 
 					DrawObjects();
