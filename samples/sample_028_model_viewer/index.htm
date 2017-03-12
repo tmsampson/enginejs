@@ -16,6 +16,7 @@
 		<script language="javascript">
 		var resources =
 		{
+			mat_bunny         : { file : "mat/bunny.mat"},
 			mat_sponge        : { file : "mat/sponge.mat"},
 			mat_plasma        : { file : "mat/plasma.mat"},
 			mat_wool          : { file : "mat/wool.mat"},
@@ -24,6 +25,8 @@
 			mat_wood          : { file : "mat/wood.mat"},
 			mat_snooker_ball  : { file : "mat/snooker-ball.mat"},
 			mat_carpet        : { file : "mat/carpet.mat"},
+
+			mdl_bunny         : { file : "model/bunny.obj" },
 
 			mat_shadow        : { file : "mat/shadow.mat"},
 		};
@@ -70,7 +73,7 @@
 				var floor_material = new Engine.Gfx.Material();
 				var materials =
 				[
-					new Engine.Gfx.Material(), // setup below
+					resources["mat_bunny"],
 					resources["mat_sponge"],
 					resources["mat_plasma"],
 					resources["mat_carpet"],
@@ -80,13 +83,6 @@
 					resources["mat_stone"],
 					resources["mat_snooker_ball"],
 				];
-
-				// Setup new green material on the fly
-				materials[0].SetColour("albedo_colour", [0, 1, 0, 1]);
-				materials[0].SetConfig("fresnel_enabled", true);
-				materials[0].SetColour("fresnel_colour", [0.8, 1, 0.8, 1]);
-				materials[0].SetFloat("fresnel_scale", 0.4);
-				materials[0].SetFloat("fresnel_power", 2);
 
 				// ====================================================================================================================================
 				// Light
@@ -137,55 +133,37 @@
 					}
 				};
 
-				function draw_light()
-				{
-					// Draw light as sphere
-					mat4.translate(mtx_trans, Engine.Math.IdentityMatrix, sun.position);
-					mat4.scale(mtx_trans, mtx_trans, [0.4, 0.4, 0.4]);
-					Engine.Gfx.BindMaterial(sun.material, sun)
-					Engine.Gfx.SetShaderProperty("u_trans_world", mtx_trans, Engine.Gfx.SP_MATRIX4);
-					Engine.Gfx.DrawModel(sun.model);
-
-					// Draw light direction
-					Engine.Debug.DrawLine3D(cam, sun.position, [0, 0, 0], Engine.Colour.Orange, 1);
-				};
-
-				var DrawObjects = function(override_material)
+				var DrawModel = function(override_material)
 				{
 					var mat_index = 0;
-					for(var i = -5; i <= 5; ++i)
+
+					// Bind material
+					var material = (override_material == null)? materials[5] : override_material;
+					Engine.Gfx.BindMaterial(material, sun, override_material == null);
+
+					// Position on grid
+					mat4.translate(mtx_trans, Engine.Math.IdentityMatrix, [0, 0, 0]);
+
+					// Rotate?
+					if(model_rotate_enabled)
 					{
-						for(var j = -5; j <= 5; ++j)
-						{
-							// Bind material
-							var material = (override_material == null)? materials[mat_index++ % materials.length] : override_material;
-							Engine.Gfx.BindMaterial(material, sun, override_material == null);
-
-							// Position on grid
-							mat4.translate(mtx_trans, Engine.Math.IdentityMatrix, [i * 3, 1.2, j * 3]);
-
-							// Rotate?
-							if(model_rotate_enabled)
-							{
-								mat4.rotate(mtx_trans, mtx_trans, Engine.Time.elapsed_s / 3.0, [0, 1, 0]);
-							}
-
-							// Bind transform
-							Engine.Gfx.SetShaderProperty("u_trans_world", mtx_trans, Engine.Gfx.SP_MATRIX4);
-
-							if(override_material == null && material != resources["mat_plasma"]) // only bind shadows for main render pass exluding custom plasma shader
-							{
-								Engine.Gfx.SetShaderProperty("u_shadow_type", shadow_type, Engine.Gfx.SP_INT)
-								Engine.Gfx.SetShaderProperty("u_trans_shadow", shadow_cam.mtx_view_proj, Engine.Gfx.SP_MATRIX4);
-
-								// Bind shadow map
-								Engine.Gfx.BindTexture(shadow_rt.depth_texture, 3, "u_shadow_map");
-							}
-
-							// Draw model
-							Engine.Gfx.DrawModel(object_models[model_index]);
-						}
+						mat4.rotate(mtx_trans, mtx_trans, Engine.Time.elapsed_s / 3.0, [0, 1, 0]);
 					}
+
+					// Bind transform
+					Engine.Gfx.SetShaderProperty("u_trans_world", mtx_trans, Engine.Gfx.SP_MATRIX4);
+
+					if(override_material == null && material != resources["mat_bunny"]) // only bind shadows for main render pass exluding custom plasma shader
+					{
+						Engine.Gfx.SetShaderProperty("u_shadow_type", shadow_type, Engine.Gfx.SP_INT)
+						Engine.Gfx.SetShaderProperty("u_trans_shadow", shadow_cam.mtx_view_proj, Engine.Gfx.SP_MATRIX4);
+
+						// Bind shadow map
+						Engine.Gfx.BindTexture(shadow_rt.depth_texture, 3, "u_shadow_map");
+					}
+
+					// Draw model
+					Engine.Gfx.DrawModel(resources["mdl_bunny"]);
 				}
 
 				var RenderMainPass = function()
@@ -200,20 +178,10 @@
 
 					// Update light
 					update_light();
-					draw_light();
 
-					// Process gamepad input
-					//gamepad = Engine.Gamepad.Pads[0];
-					//if(gamepad)
+					if(Engine.Keyboard.IsPressed("n", true))
 					{
-						if(Engine.Keyboard.IsPressed("m", true))
-						{
-							model_index = (model_index + 1) % object_models.length;
-						}
-						if(Engine.Keyboard.IsPressed("n", true))
-						{
-							model_rotate_enabled = !model_rotate_enabled;
-						}
+						model_rotate_enabled = !model_rotate_enabled;
 					}
 
 					// Draw floor
@@ -225,7 +193,7 @@
 					Engine.Gfx.BindTexture(shadow_rt.depth_texture, 3, "u_shadow_map");
 					Engine.Gfx.DrawModel(floor_model);
 
-					DrawObjects();
+					DrawModel();
 				};
 
 				var RenderShadowPass = function()
@@ -243,7 +211,7 @@
 
 					Engine.Gfx.BindCamera(shadow_cam);
 
-					DrawObjects(resources["mat_shadow"]);
+					DrawModel(resources["mat_shadow"]);
 
 					Engine.Gfx.UnBindRenderTarget(shadow_rt);
 				};
