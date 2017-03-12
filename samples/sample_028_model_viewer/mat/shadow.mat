@@ -1,0 +1,8 @@
+{
+	"version"        : 1.0,
+	"name"           : "Shadow",
+	"type"           : "custom",
+	"shader"         : "shader/shadow.fs",
+	"shader-defines" : "",
+	"properties"     : { }
+}
