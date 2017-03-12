@@ -11,7 +11,7 @@ Engine.Gfx.Material = function(prevent_default)
 	this.shader_program = null; // compiled shader program
 	this.shader_defines = [ ];
 	this.config         = { };
-	this.properties     = {	};
+	this.properties     = { };
 
 	// Unless otherwise specified, new materials should be constructed by copying the default material
 	if(!prevent_default)
