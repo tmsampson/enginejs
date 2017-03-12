@@ -1,5 +1,4 @@
-* Tidy up shadows demo
-	- Add more shadow modes
+* Make shadow bias a uniform for experimentation
 * Begin implementing 3D scene management
 
 * Write code to generate editor panel from any JS object
