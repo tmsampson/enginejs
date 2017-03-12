@@ -1,4 +1,7 @@
 * Make shadow bias a uniform for experimentation
+* Implement PrepareIndices/Normals/Tangents/UVS (uv defaults to x-z local space overlay)
+* Prevent self shadowing?
+* Need to be able to choose whether a mesh casts shadows
 * Begin implementing 3D scene management
 
 * Write code to generate editor panel from any JS object
