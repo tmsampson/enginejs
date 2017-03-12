@@ -1,11 +1,8 @@
-* Should fresnel show when lights are dimmed?!
-
 * Tidy up shadows demo
 	- Add more shadow modes
-	- Make sure shader can #ifdef shadows
 * Begin implementing 3D scene management
 
-* Write code to generate material editor panel from any JS object
+* Write code to generate editor panel from any JS object
 	- Update plasma interactive demo to use this
 	- Update material demo to use this
 
