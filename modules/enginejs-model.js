@@ -16,7 +16,7 @@ Engine.Model =
 
 	LoadOBJ : function(descriptor, callback)
 	{
-		var scale = (descriptor.scale == undefined)? 1.0 : descriptor.scale;
+		var scale = Engine.Util.IsDefined(descriptor.scale)? descriptor.scale : 1.0;
 		Engine.Net.FetchResource(descriptor.file, function(obj_data)
 		{
 			var vertex_stream = [];
@@ -274,7 +274,7 @@ Engine.Model =
 		var vertex_to_face_lookup = [];
 		var add_lookup = function(vertex, face)
 		{
-			if(vertex_to_face_lookup[vertex] == undefined)
+			if(!Engine.Util.IsDefined(vertex_to_face_lookup[vertex]))
 			{
 				vertex_to_face_lookup[vertex] = [];
 			}
