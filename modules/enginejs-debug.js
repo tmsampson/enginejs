@@ -15,8 +15,8 @@ Engine.Debug =
 
 	// Dynamic polygon soup for debug geometry (arbitrary lines & polygons)
 	soup_vbo                   : null,
-	soup_idx                   : 0, // Current write offset into soup
-	soup_max_verts             : 10000,
+	soup_idx                   : 0,          // Current write offset into soup
+	soup_max_verts             : 100000 * 3, // Max = 100,000 verts (~0.3 MB)
 	soup_descriptor            :
 	{
 		attribute_name         : "a_pos",
