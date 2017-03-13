@@ -1,8 +1,0 @@
-{
-	"version"        : 1.0,
-	"name"           : "Bunny",
-	"type"           : "custom",
-	"shader"         : "shader/bunny.fs",
-	"shader-defines" : "",
-	"properties"     : { }
-}
