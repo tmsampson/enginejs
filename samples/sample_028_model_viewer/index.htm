@@ -39,7 +39,8 @@
 				// Misc
 				var mtx_trans = mat4.create();
 				var model_index = 0;
-				var model_rotate_enabled = false;
+				var model_rotate_enabled = true;
+				var debug_draw_normals = false;
 
 				// ====================================================================================================================================
 				// Camera
@@ -145,9 +146,9 @@
 					mat4.translate(mtx_trans, Engine.Math.IdentityMatrix, [0, 0, 0]);
 
 					// Rotate?
-					if(model_rotate_enabled)
+					if(model_rotate_enabled && !debug_draw_normals)
 					{
-						//mat4.rotate(mtx_trans, mtx_trans, Engine.Time.elapsed_s / 3.0, [0, 1, 0]);
+						mat4.rotate(mtx_trans, mtx_trans, Engine.Time.elapsed_s / 3.0, [0, 1, 0]);
 					}
 
 					// Bind transform
@@ -184,7 +185,7 @@
 						material_index = (material_index + 1) % materials.length;
 					}
 
-					if(Engine.Keyboard.IsPressed("n", true))
+					if(Engine.Keyboard.IsPressed("r", true))
 					{
 						model_rotate_enabled = !model_rotate_enabled;
 					}
@@ -248,24 +249,29 @@
 						Engine.Gfx.DrawQuad();
 					}
 
-					// Debug normals
-					var model = resources["mdl_bunny"];
-					var prim = model.model_data.primitives[0];
-					var verts = prim.vertex_buffers[0].stream;
-					var indices = prim.vertex_buffers[1].stream;
-					var normals = prim.vertex_buffers[3].stream;
-
-					// Debug draw normals
-					for(var i = 0; i < indices.length; i +=3)
+					// Debug draw normals?
+					if(Engine.Keyboard.IsPressed("n", true))
 					{
-						var vert_offset = indices[i] * 3;
-						var vx = verts[vert_offset + 0];
-						var vy = verts[vert_offset + 1];
-						var vz = verts[vert_offset + 2];
-						var vert = [ vx, vy, vz ];
-						var normal = [ normals[vert_offset], normals[vert_offset + 1], normals[vert_offset + 2] ];
-						var end = [ vert[0] + normal[0], vert[1] + normal[1], vert[2] + normal[2] ];
-						Engine.Debug.DrawLine3D(cam, vert, end, Engine.Colour.Orange, 1);
+						debug_draw_normals = !debug_draw_normals;
+					}
+					if(debug_draw_normals)
+					{
+						var model = resources["mdl_bunny"];
+						var prim = model.model_data.primitives[0];
+						var verts = prim.vertex_buffers[0].stream;
+						var indices = prim.vertex_buffers[1].stream;
+						var normals = prim.vertex_buffers[3].stream;
+						for(var i = 0; i < indices.length; i +=3)
+						{
+							var vert_offset = indices[i] * 3;
+							var vx = verts[vert_offset + 0];
+							var vy = verts[vert_offset + 1];
+							var vz = verts[vert_offset + 2];
+							var vert = [ vx, vy, vz ];
+							var normal = [ normals[vert_offset], normals[vert_offset + 1], normals[vert_offset + 2] ];
+							var end = [ vert[0] + normal[0], vert[1] + normal[1], vert[2] + normal[2] ];
+							Engine.Debug.DrawLine3D(cam, vert, end, Engine.Colour.Orange, 1);
+						}
 					}
 				};
 				return on_render;
