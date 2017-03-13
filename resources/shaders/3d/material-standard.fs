@@ -65,12 +65,12 @@ uniform vec2      specular_map_repeat;
 uniform sampler2D u_shadow_map;
 uniform vec2 u_shadow_map_size;
 uniform int u_shadow_type;
-float shadow_bias = 0.009;
+uniform float u_shadow_bias;
 
 float get_shadow_hard(vec2 shadow_map_uv, float fragment_depth)
 {
 	float shadow_depth = texture2D(u_shadow_map, shadow_map_uv).r;
-	return step(shadow_depth + shadow_bias, fragment_depth);
+	return step(shadow_depth + u_shadow_bias, fragment_depth);
 }
 
 float get_shadow_bilinear(vec2 shadow_map_uv, float fragment_depth)

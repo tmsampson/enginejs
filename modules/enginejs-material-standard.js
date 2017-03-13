@@ -69,6 +69,7 @@ Engine.Gfx.Material = function(prevent_default)
 			// Shadows
 			Engine.Gfx.BindShaderProgram(this.shader_program_shadowed);
 			Engine.Gfx.SetShaderProperty("u_shadow_map_size", [1024, 1024], Engine.Gfx.SP_VEC2, true);
+			Engine.Gfx.SetShaderProperty("u_shadow_bias", 0.009, Engine.Gfx.SP_FLOAT, true);
 		}
 		else
 		{
