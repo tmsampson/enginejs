@@ -100,12 +100,15 @@ Engine.Gfx.Material = function(prevent_default)
 		Engine.Gfx.SetShaderProperty("albedo_map_repeat", this.properties.vec2.albedo_map_repeat, Engine.Gfx.SP_VEC2);
 
 		// 2. Bind specular params / map?
-		Engine.Gfx.SetShaderProperty("specular_colour", this.properties.vec4.specular_colour, Engine.Gfx.SP_VEC4);
-		Engine.Gfx.SetShaderProperty("specular_shininess",  this.properties.float.specular_shininess, Engine.Gfx.SP_FLOAT);
-		if(this.config.uses_specular_map)
+		if(Engine.Util.IsDefined(this.config.specular_enabled) && this.config.specular_enabled)
 		{
-			Engine.Gfx.BindTexture(this.properties.sampler2D.specular_map, 1, "specular_map");
-			Engine.Gfx.SetShaderProperty("specular_map_repeat", this.properties.vec2.specular_map_repeat, Engine.Gfx.SP_VEC2);
+			Engine.Gfx.SetShaderProperty("specular_colour", this.properties.vec4.specular_colour, Engine.Gfx.SP_VEC4);
+			Engine.Gfx.SetShaderProperty("specular_shininess",  this.properties.float.specular_shininess, Engine.Gfx.SP_FLOAT);
+			if(this.config.uses_specular_map)
+			{
+				Engine.Gfx.BindTexture(this.properties.sampler2D.specular_map, 1, "specular_map");
+				Engine.Gfx.SetShaderProperty("specular_map_repeat", this.properties.vec2.specular_map_repeat, Engine.Gfx.SP_VEC2);
+			}
 		}
 
 		// 3. Bind normal params / map?
