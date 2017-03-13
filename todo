@@ -1,7 +1,8 @@
 * Implement PrepareIndices/Normals/Tangents/UVS (uv defaults to x-z local space overlay)
-* Prevent self shadowing?
-* Need to be able to choose whether a mesh casts shadows
+* Calculate v_world_bitangent and normal_basis per-vertex rather than per-fragment?
+
 * Begin implementing 3D scene management
+	* Need to be able to choose whether a mesh casts shadows
 
 * Write code to generate editor panel from any JS object
 	- Update plasma interactive demo to use this
