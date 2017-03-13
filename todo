@@ -1,4 +1,3 @@
-* Implement PrepareIndices/Normals/Tangents/UVS (uv defaults to x-z local space overlay)
 * Calculate v_world_bitangent and normal_basis per-vertex rather than per-fragment?
 
 * Begin implementing 3D scene management
