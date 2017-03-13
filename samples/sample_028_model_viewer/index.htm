@@ -25,6 +25,7 @@
 			mat_wood          : { file : "mat/wood.mat"},
 			mat_snooker_ball  : { file : "mat/snooker-ball.mat"},
 			mat_carpet        : { file : "mat/carpet.mat"},
+
 			mdl_bunny         : { file : "model/bunny.obj", scale : 20 },
 
 			mat_shadow        : { file : "mat/shadow.mat"},
@@ -42,14 +43,14 @@
 
 				// ====================================================================================================================================
 				// Camera
-				var cam = new Engine.Camera.Perspective({ position: [0, 4, -5] });
-				cam.AttachHelper(new Engine.Camera.Helper.Roam({ forward : [0, 0, 1] }));
+				var cam = new Engine.Camera.Perspective({ position: [0, 2, 5] });
+				cam.AttachHelper(new Engine.Camera.Helper.Roam({ forward : [0, 0, -1] }));
 
 				// ====================================================================================================================================
 				// Shadows
 				var shadow_type = 2;
 				var shadow_rt = Engine.Gfx.CreateRenderTarget("Shadow", 1024, 1024, true);
-				var shadow_preview_enabled = true;
+				var shadow_preview_enabled = false;
 				var shadow_cam = new Engine.Camera.Orthographic({ size : [1024, 1024] });
 				var shadow_preview_size = [100, 100];
 				var shadow_preview_padding = [10, 10];
@@ -70,9 +71,9 @@
 				// ====================================================================================================================================
 				// Materials
 				var floor_material = new Engine.Gfx.Material();
+				var material_index = 0;
 				var materials =
 				[
-					resources["mat_bunny"],
 					resources["mat_sponge"],
 					resources["mat_plasma"],
 					resources["mat_carpet"],
@@ -137,7 +138,7 @@
 					var mat_index = 0;
 
 					// Bind material
-					var material = (override_material == null)? materials[5] : override_material;
+					var material = (override_material == null)? materials[material_index] : override_material;
 					Engine.Gfx.BindMaterial(material, sun, override_material == null);
 
 					// Position on grid
@@ -146,7 +147,7 @@
 					// Rotate?
 					if(model_rotate_enabled)
 					{
-						mat4.rotate(mtx_trans, mtx_trans, Engine.Time.elapsed_s / 3.0, [0, 1, 0]);
+						//mat4.rotate(mtx_trans, mtx_trans, Engine.Time.elapsed_s / 3.0, [0, 1, 0]);
 					}
 
 					// Bind transform
@@ -177,6 +178,11 @@
 
 					// Update light
 					update_light();
+
+					if(Engine.Keyboard.IsPressed("m", true))
+					{
+						material_index = (material_index + 1) % materials.length;
+					}
 
 					if(Engine.Keyboard.IsPressed("n", true))
 					{
@@ -240,6 +246,26 @@
 						Engine.Gfx.SetShaderProperty("u_trans_world", mtx_trans, Engine.Gfx.SP_MATRIX4);
 						Engine.Gfx.BindTexture(shadow_rt.depth_texture, 0);
 						Engine.Gfx.DrawQuad();
+					}
+
+					// Debug normals
+					var model = resources["mdl_bunny"];
+					var prim = model.model_data.primitives[0];
+					var verts = prim.vertex_buffers[0].stream;
+					var indices = prim.vertex_buffers[1].stream;
+					var normals = prim.vertex_buffers[3].stream;
+
+					// Debug draw normals
+					for(var i = 0; i < indices.length; i +=3)
+					{
+						var vert_offset = indices[i] * 3;
+						var vx = verts[vert_offset + 0];
+						var vy = verts[vert_offset + 1];
+						var vz = verts[vert_offset + 2];
+						var vert = [ vx, vy, vz ];
+						var normal = [ normals[vert_offset], normals[vert_offset + 1], normals[vert_offset + 2] ];
+						var end = [ vert[0] + normal[0], vert[1] + normal[1], vert[2] + normal[2] ];
+						Engine.Debug.DrawLine3D(cam, vert, end, Engine.Colour.Orange, 1);
 					}
 				};
 				return on_render;
