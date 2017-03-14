@@ -51,7 +51,7 @@
 				// Shadows
 				var shadow_type = 2;
 				var shadow_rt = Engine.Gfx.CreateRenderTarget("Shadow", 1024, 1024, true);
-				var shadow_preview_enabled = false;
+				var shadow_preview_enabled = true;
 				var shadow_cam = new Engine.Camera.Orthographic({ size : [200, 200] });
 				var shadow_preview_size = [100, 100];
 				var shadow_preview_padding = [10, 10];
@@ -211,7 +211,7 @@
 
 					// fix this manual code
 					mat4.lookAt(shadow_cam.mtx_view, sun.position, lookat, [0, 0, 1]);
-					mat4.ortho(shadow_cam.mtx_proj,-20, 20, -20, 20, -10, 80);
+					mat4.ortho(shadow_cam.mtx_proj,-10, 10, -10, 10, -10, 80);
 					mat4.multiply(shadow_cam.mtx_view_proj, shadow_cam.mtx_proj, shadow_cam.mtx_view);
 					mat4.invert(shadow_cam.mtx_view_inverse, shadow_cam.mtx_view);
 
