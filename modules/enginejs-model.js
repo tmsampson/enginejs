@@ -19,16 +19,32 @@ Engine.Model =
 		var scale = Engine.Util.IsDefined(descriptor.scale)? descriptor.scale : 1.0;
 		Engine.Net.FetchResource(descriptor.file, function(obj_data)
 		{
-			var vertex_stream = [];
-			var uv_stream = [];
-			var normal_stream = [];
-			var index_stream = [];
+			var obj_prims = [];
+			var obj_current_prim = null;
+
+			// Trim whitespace
+			obj_data = obj_data.replace(/ +(?= )/g,'');
 
 			// Parse
+			var parsing_faces = true;
 			var lines = obj_data.split("\n");
 			for(var i = 0; i < lines.length; ++i)
 			{
 				var line = lines[i];
+
+				// Next prim?
+				if(parsing_faces && line[0] != "f")
+				{
+					obj_current_prim =
+					{
+						vertices : [],
+						uvs      : [],
+						normals  : [],
+						faces    : [],
+					};
+					obj_prims.push(obj_current_prim);
+				}
+				parsing_faces = false;
 
 				// Skip comments
 				if(line[0] == "#") { continue; }
@@ -40,7 +56,7 @@ Engine.Model =
 					var p0 = parseFloat(values[1]) * scale;
 					var p1 = parseFloat(values[2]) * scale;
 					var p2 = parseFloat(values[3]) * scale;
-					vertex_stream.push(p0, p1, p2);
+					obj_current_prim.vertices.push(p0, p1, p2);
 				}
 
 				// Process Parameter Space Vertices
@@ -55,7 +71,7 @@ Engine.Model =
 					var values = line.split(" ");
 					var u = parseFloat(values[1]);
 					var v = parseFloat(values[2]);
-					uv_stream.push(u, v);
+					obj_current_prim.uvs.push(u, v);
 				}
 
 				// Process normals
@@ -65,69 +81,109 @@ Engine.Model =
 					var nx = parseFloat(values[1]);
 					var ny = parseFloat(values[2]);
 					var nz = parseFloat(values[3]);
-					normal_stream.push(nx, ny, nz);
+					obj_current_prim.normals.push(nx, ny, nz);
 				}
 
 				// Process face
 				if(line[0] == "f")
 				{
+					parsing_faces = true;
 					var values = line.split(" ");
-					var i0 = parseInt(values[1]);
-					var i1 = parseInt(values[2]);
-					var i2 = parseInt(values[3]);
-					index_stream.push(i0 -1, i1 -1, i2 -1);
+					var e0 = values[1];
+					var e1 = values[2];
+					var e2 = values[3];
+					obj_current_prim.faces.push(e0, e1, e2);
 				}
 			}
 
-			// Build vertex buffers
-			var vertex_buffers = [];
-
-			if(vertex_stream.length > 0)
+			// Trim last prim if empty
+			if(obj_current_prim.faces.length == 0)
 			{
-				vertex_buffers.push(
-				{
-					name           : "vertices",
-					attribute_name : "a_pos",
-					item_size      : 3,
-					draw_mode      : "triangles",
-					stream         : vertex_stream
-				});
+				obj_prims.pop();
 			}
 
-			if(index_stream.length > 0)
+			// Expand / assemble obj primitive streams
+			var model_prims = []
+			for(var i = 0; i < obj_prims.length; ++i)
 			{
-				vertex_buffers.push(
+				// Setup model prim
+				var obj_prim = obj_prims[i];
+				var model_prim_vertex_buffers = [];
+				var model_prim =
 				{
-					name           : "indices",
-					attribute_name : "",
-					item_size      : 1,
-					draw_mode      : "triangles",
-					stream         : index_stream
-				});
-			}
+					name           : "obj prim " + i,
+					vertex_buffers : model_prim_vertex_buffers
+				};
+				model_prims.push(model_prim);
 
-			if(normal_stream.length > 0)
-			{
-				vertex_buffers.push(
-				{
-					name           : "normals",
-					attribute_name : "a_normal",
-					item_size      : 3,
-					draw_mode      : "triangles",
-					stream         : normal_stream
-				});
-			}
+				var model_verices = [];
+				var model_uvs = [];
+				var model_normals = [];
 
-			if(uv_stream.length > 0)
-			{
-				vertex_buffers.push(
+				for(var face_index = 0; face_index < obj_prim.faces.length; face_index +=3)
 				{
-					name           : "texture-coordinates",
-					attribute_name : "a_uv",
-					item_size      : 2,
-					draw_mode      : "triangles",
-					stream         : uv_stream
-				});
+					var face_components = [ obj_prim.faces[face_index + 0], obj_prim.faces[face_index + 1], obj_prim.faces[face_index + 2] ];
+					for(var j = 0; j < face_components.length; ++j)
+					{
+						var face_elements = face_components[j].split("/");
+
+						// Expand vertices
+						if(face_elements.length >= 1)
+						{
+							var vertex_offset = (face_elements[0] -1) * 3;
+							model_verices.push(obj_prim.vertices[vertex_offset + 0], obj_prim.vertices[vertex_offset + 1], obj_prim.vertices[vertex_offset + 2]);
+						}
+						// Expand uvs
+						if(face_elements.length >= 2 && face_elements[1] != "")
+						{
+							var uv_offset = (face_elements[1] -1) * 2;
+							model_uvs.push(obj_prim.uvs[uv_offset + 0], 1.0 - obj_prim.uvs[uv_offset + 1]);
+						}
+						// Expand normals
+						if(face_elements.length >= 3 && face_elements[2] != "")
+						{
+							var normal_offset = (face_elements[2] -1) * 3;
+							model_normals.push(obj_prim.normals[normal_offset + 0], obj_prim.normals[normal_offset + 1], obj_prim.normals[normal_offset + 2]);
+						}
+					}
+				}
+
+				// Build vertex buffers
+				if(model_verices.length > 0)
+				{
+					model_prim_vertex_buffers.push(
+					{
+						name           : "vertices",
+						attribute_name : "a_pos",
+						item_size      : 3,
+						draw_mode      : "triangles",
+						stream         : model_verices
+					});
+				}
+
+				if(model_uvs.length > 0)
+				{
+					model_prim_vertex_buffers.push(
+					{
+						name           : "texture-coordinates",
+						attribute_name : "a_uv",
+						item_size      : 2,
+						draw_mode      : "triangles",
+						stream         : model_uvs
+					});
+				}
+
+				if(model_normals.length > 0)
+				{
+					model_prim_vertex_buffers.push(
+					{
+						name           : "normals",
+						attribute_name : "a_normal",
+						item_size      : 3,
+						draw_mode      : "triangles",
+						stream         : model_normals
+					});
+				}
 			}
 
 			// Build enginejs model
@@ -136,13 +192,7 @@ Engine.Model =
 				name: descriptor.file,
 				model_data:
 				{
-					primitives :
-					[
-						{
-							name : "faces",
-							vertex_buffers : vertex_buffers
-						}
-					]
+					primitives : model_prims
 				},
 			};
 
@@ -173,7 +223,7 @@ Engine.Model =
 				if(buffer.name == "indices")             { index_buffer = buffer;   }
 			}
 
-			// Check vertices
+			// Ensure we have vertices!
 			if(vertex_buffer == null)
 			{
 				Engine.LogError("Model " + model_file + " '" + primitive.name + "' primitive has no vertex buffer!");
@@ -203,7 +253,10 @@ Engine.Model =
 				}
 
 				// Prepare normals?
-				normal_buffer = Engine.Model.PrepareNormals(primitive, normal_buffer, vertex_buffer, index_buffer);
+				if(normal_buffer == null || normal_buffer.stream.length == 0)
+				{
+					normal_buffer = Engine.Model.PrepareNormals(primitive, normal_buffer, vertex_buffer, index_buffer);
+				}
 
 				// Prepare tangents?
 				if(tangent_buffer == null || tangent_buffer.stream.length == 0)
@@ -243,7 +296,7 @@ Engine.Model =
 			primitive.vertex_buffers.push(uv_buffer);
 		}
 
-		// For now, overlay uv's onto local x-z plane (scaled by 10)
+		// For now, overlay uv's onto local x-z plane
 		for(var i = 0; i < vertex_buffer.stream.length; i += 3)
 		{
 			var vx = vertex_buffer.stream[i];
