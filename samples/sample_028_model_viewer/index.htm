@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="utf-8" />
 
-		<title>Engine Sample: Standard material system</title>
+		<title>Engine Sample: Model Viewer</title>
 
 		<!-- EngineJS -->
 		<script type="text/javascript" src="enginejs/jquery.js"></script>
@@ -16,6 +16,7 @@
 		<script language="javascript">
 		var resources =
 		{
+			mat_bear          : { file : "mat/bear.mat"},
 			mat_sponge        : { file : "mat/sponge.mat"},
 			mat_plasma        : { file : "mat/plasma.mat"},
 			mat_wool          : { file : "mat/wool.mat"},
@@ -25,7 +26,7 @@
 			mat_snooker_ball  : { file : "mat/snooker-ball.mat"},
 			mat_carpet        : { file : "mat/carpet.mat"},
 
-			mdl_bunny         : { file : "model/bunny.obj", scale : 20 },
+			mdl_bear         : { file : "model/bear.obj", scale : 0.2 },
 
 			mat_shadow        : { file : "mat/shadow.mat"},
 		};
@@ -51,7 +52,7 @@
 				var shadow_type = 2;
 				var shadow_rt = Engine.Gfx.CreateRenderTarget("Shadow", 1024, 1024, true);
 				var shadow_preview_enabled = false;
-				var shadow_cam = new Engine.Camera.Orthographic({ size : [1024, 1024] });
+				var shadow_cam = new Engine.Camera.Orthographic({ size : [200, 200] });
 				var shadow_preview_size = [100, 100];
 				var shadow_preview_padding = [10, 10];
 				var shadow_preview_cam = new Engine.Camera.Orthographic();
@@ -74,6 +75,7 @@
 				var material_index = 0;
 				var materials =
 				[
+					resources["mat_bear"],
 					resources["mat_sponge"],
 					resources["mat_plasma"],
 					resources["mat_carpet"],
@@ -113,23 +115,22 @@
 					sun.direction = [ -sun.position[0] / len, -sun.position[1] / len, 0 ];
 
 					// Process gamepad input
-					//var gamepad = Engine.Gamepad.Pads[0];
-					//if(gamepad)
+					sun.angle += Engine.Keyboard.IsPressed("u")? -1 : (Engine.Keyboard.IsPressed("i")? 1 : 0);
+					var gamepad = Engine.Gamepad.Pads[0];
+					if(gamepad)
 					{
-						sun.angle += Engine.Keyboard.IsPressed("u")? -1 : (Engine.Keyboard.IsPressed("i")? 1 : 0);
-
-						// if(gamepad.IsPressed("lt"))
-						// {
-						// 	sun.colour[0] -= 0.01;
-						// 	sun.colour[1] -= 0.01;
-						// 	sun.colour[2] -= 0.01;
-						// }
-						// if(gamepad.IsPressed("rt"))
-						// {
-						// 	sun.colour[0] += 0.01;
-						// 	sun.colour[1] += 0.01;
-						// 	sun.colour[2] += 0.01;
-						// }
+						if(gamepad.IsPressed("lt"))
+						{
+							sun.colour[0] -= 0.01;
+							sun.colour[1] -= 0.01;
+							sun.colour[2] -= 0.01;
+						}
+						if(gamepad.IsPressed("rt"))
+						{
+							sun.colour[0] += 0.01;
+							sun.colour[1] += 0.01;
+							sun.colour[2] += 0.01;
+						}
 					}
 				};
 
@@ -163,7 +164,7 @@
 					}
 
 					// Draw model
-					Engine.Gfx.DrawModel(resources["mdl_bunny"]);
+					Engine.Gfx.DrawModel(resources["mdl_bear"]);
 				}
 
 				var RenderMainPass = function()
@@ -255,7 +256,7 @@
 					}
 					if(debug_draw_normals)
 					{
-						var model = resources["mdl_bunny"];
+						var model = resources["mdl_bear"];
 						var prim = model.model_data.primitives[0];
 						var verts = prim.vertex_buffers[0].stream;
 						var indices = prim.vertex_buffers[1].stream;
