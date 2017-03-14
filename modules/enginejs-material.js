@@ -1,5 +1,5 @@
 // **************************************************
-//# sourceURL=modules/enginejs-material-standard.js
+//# sourceURL=modules/enginejs-material.js
 // **************************************************
 
 Engine.Gfx.Material = function(prevent_default)

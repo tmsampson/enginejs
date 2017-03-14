@@ -37,7 +37,7 @@ var Engine =
 		{ name : "EngineJS-Gamepad",           js : "enginejs/modules/enginejs-gamepad.js",           ie : "load"     },
 		{ name : "EngineJS-Touch",             js : "enginejs/modules/enginejs-touch.js",             ie : "load"     },
 		{ name : "EngineJS-Gfx",               js : "enginejs/modules/enginejs-gfx.js",               ie : "load"     },
-		{ name : "EngineJS-Material-Standard", js : "enginejs/modules/enginejs-material-standard.js", ie : "load"     },
+		{ name : "EngineJS-Material",          js : "enginejs/modules/enginejs-material.js",          ie : "load"     },
 		{ name : "EngineJS-Geometry",          js : "enginejs/modules/enginejs-geometry.js",          ie : "load"     },
 		{ name : "EngineJS-Model",             js : "enginejs/modules/enginejs-model.js",             ie : "load"     },
 		{ name : "EngineJS-Game-2D",           js : "enginejs/modules/enginejs-game-2d.js",           ie : "load"     },
