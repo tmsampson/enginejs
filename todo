@@ -1,3 +1,5 @@
+* Move normal debug drawing code and make it work for indexed/non-indexed models
+* Add support for obj materials
 * Begin implementing 3D scene management
 	* Need to be able to choose whether a mesh casts shadows
 
