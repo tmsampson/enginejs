@@ -40,6 +40,7 @@ var Engine =
 		{ name : "EngineJS-Material",          js : "enginejs/modules/enginejs-material.js",          ie : "load"     },
 		{ name : "EngineJS-Geometry",          js : "enginejs/modules/enginejs-geometry.js",          ie : "load"     },
 		{ name : "EngineJS-Model",             js : "enginejs/modules/enginejs-model.js",             ie : "load"     },
+		{ name : "EngineJS-Model-Import-Obj",  js : "enginejs/modules/enginejs-model-import-obj.js",  ie : "load"     },
 		{ name : "EngineJS-Game-2D",           js : "enginejs/modules/enginejs-game-2d.js",           ie : "load"     },
 		{ name : "EngineJS-Audio",             js : "enginejs/modules/enginejs-audio.js",             ie : "override" },
 		{ name : "EngineJS-Editor",            js : "enginejs/modules/enginejs-editor.js",            ie : "load"     },
