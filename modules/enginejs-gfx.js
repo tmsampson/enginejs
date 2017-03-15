@@ -366,10 +366,18 @@ Engine.Gfx =
 			// Create gl texture
 			var texture_object =
 			{
-				resource : Engine.GL.createTexture(),
-				width    : this.width,
-				height   : this.height
+				resource   : Engine.GL.createTexture(),
+				width      : this.width,
+				height     : this.height,
+				descriptor : descriptor,
+				is_npot    : !Engine.Math.IsPowerOfTwo(this.width) || !Engine.Math.IsPowerOfTwo(this.height)
 			};
+
+			// Warn about N.P.O.T (Non Power of Two) textures
+			if(texture_object.is_npot)
+			{
+				Engine.LogWarning(descriptor.file + " texture dimensions not a power of two. Mipmapping & tiling will be disabled!");
+			}
 
 			// Bind
 			Engine.GL.bindTexture(Engine.GL.TEXTURE_2D, texture_object.resource);
@@ -377,10 +385,31 @@ Engine.Gfx =
 			// Setup params
 			Engine.GL.texImage2D(Engine.GL.TEXTURE_2D, 0, Engine.GL.RGBA, Engine.GL.RGBA, Engine.GL.UNSIGNED_BYTE, img_object);
 
-			// Generate mip chain
-			Engine.GL.generateMipmap(Engine.GL.TEXTURE_2D);
-			Engine.GL.texParameteri(Engine.GL.TEXTURE_2D, Engine.GL.TEXTURE_MAG_FILTER, Engine.GL.LINEAR);
-			Engine.GL.texParameteri(Engine.GL.TEXTURE_2D, Engine.GL.TEXTURE_MIN_FILTER, Engine.GL.LINEAR_MIPMAP_NEAREST);
+			// Generate mip chain?
+			if(!texture_object.is_npot)
+			{
+				Engine.GL.generateMipmap(Engine.GL.TEXTURE_2D);
+				Engine.GL.texParameteri(Engine.GL.TEXTURE_2D, Engine.GL.TEXTURE_MAG_FILTER, Engine.GL.LINEAR);
+				Engine.GL.texParameteri(Engine.GL.TEXTURE_2D, Engine.GL.TEXTURE_MIN_FILTER, Engine.GL.LINEAR_MIPMAP_NEAREST);
+			}
+			else
+			{
+				Engine.GL.texParameteri(Engine.GL.TEXTURE_2D, Engine.GL.TEXTURE_MAG_FILTER, Engine.GL.LINEAR);
+				Engine.GL.texParameteri(Engine.GL.TEXTURE_2D, Engine.GL.TEXTURE_MIN_FILTER, Engine.GL.LINEAR);
+			}
+
+			// Set uv wrap mode
+			if(!texture_object.is_npot)
+			{
+				Engine.GL.texParameteri(Engine.GL.TEXTURE_2D, Engine.GL.TEXTURE_WRAP_S, Engine.GL.REPEAT);
+				Engine.GL.texParameteri(Engine.GL.TEXTURE_2D, Engine.GL.TEXTURE_WRAP_T, Engine.GL.REPEAT);
+			}
+			else
+			{
+				Engine.GL.texParameteri(Engine.GL.TEXTURE_2D, Engine.GL.TEXTURE_WRAP_S, Engine.GL.CLAMP_TO_EDGE);
+				Engine.GL.texParameteri(Engine.GL.TEXTURE_2D, Engine.GL.TEXTURE_WRAP_T, Engine.GL.CLAMP_TO_EDGE);
+			}
+			
 
 			// Enable anisotropic filtering?
 			if(Engine.Gfx.Extension_Anisotropic_Filtering)
