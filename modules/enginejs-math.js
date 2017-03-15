@@ -44,6 +44,11 @@ Engine.Math =
 		return (radians * 180) / Engine.Math.PI;
 	},
 
+	IsPowerOfTwo : function(x)
+	{
+		return x > 0 && (x & (x - 1)) === 0;
+	},
+
 	AABB2D : function(min, max)
 	{
 		this.min = min;
