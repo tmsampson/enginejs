@@ -6,24 +6,28 @@ Engine.Model.Importers.OBJ =
 {
 	Load : function(descriptor, callback)
 	{
+		// Grab scale factor  from descriptor (optional)
 		var scale = Engine.Util.IsDefined(descriptor.scale)? descriptor.scale : 1.0;
+
+		// Go grab the obj file
 		Engine.Net.FetchResource(descriptor.file, function(obj_data)
 		{
+			// Trim excess whitespace
+			obj_data = obj_data.replace(/ +(?= )/g, '');
+
+			// Setup parse
 			var obj_prims = [];
 			var obj_current_prim = null;
-
-			// Trim whitespace
-			obj_data = obj_data.replace(/ +(?= )/g,'');
+			var is_parsing_faces = true;
 
 			// Parse
-			var parsing_faces = true;
 			var lines = obj_data.split("\n");
 			for(var i = 0; i < lines.length; ++i)
 			{
 				var line = lines[i];
 
 				// Next prim?
-				if(parsing_faces && line[0] != "f")
+				if(is_parsing_faces && line[0] != "f")
 				{
 					obj_current_prim =
 					{
@@ -34,7 +38,7 @@ Engine.Model.Importers.OBJ =
 					};
 					obj_prims.push(obj_current_prim);
 				}
-				parsing_faces = false;
+				is_parsing_faces = false;
 
 				// Skip comments
 				if(line[0] == "#") { continue; }
@@ -49,7 +53,7 @@ Engine.Model.Importers.OBJ =
 					obj_current_prim.vertices.push(p0, p1, p2);
 				}
 
-				// Process Parameter Space Vertices
+				// Process parameter space vertices
 				if(line[0] == "v" && line[1] == "p")
 				{
 					// Not currently supported
@@ -77,7 +81,7 @@ Engine.Model.Importers.OBJ =
 				// Process face
 				if(line[0] == "f")
 				{
-					parsing_faces = true;
+					is_parsing_faces = true;
 					var values = line.split(" ");
 					var e0 = values[1];
 					var e1 = values[2];
@@ -96,49 +100,61 @@ Engine.Model.Importers.OBJ =
 			var model_prims = []
 			for(var i = 0; i < obj_prims.length; ++i)
 			{
-				// Setup model prim
+				// Grab the obj prim
 				var obj_prim = obj_prims[i];
+
+				// Setup equivalent model prim
 				var model_prim_vertex_buffers = [];
-				var model_prim =
+				model_prims.push(
 				{
 					name           : "obj prim " + i,
 					vertex_buffers : model_prim_vertex_buffers
-				};
-				model_prims.push(model_prim);
+				});
 
+				// Setup streams for model buffers
+				// Note: The faces specified in the obj file are not directly compatible with webgl index buffers as they reference mixed length
+				//       streams. For example the obj might have 10 vertices, 4 uvs, 4 normals and 20 faces. For this reason we
+				//       fully expand all streams and don't use an index buffer. Maybe this could be smarter and figure out whether or not
+				//       it's worth trying to assemble an index buffer for the expanded data!
 				var model_verices = [];
 				var model_uvs = [];
 				var model_normals = [];
 
+				// For each obj file face...
 				for(var face_index = 0; face_index < obj_prim.faces.length; face_index +=3)
 				{
-					var face_components = [ obj_prim.faces[face_index + 0], obj_prim.faces[face_index + 1], obj_prim.faces[face_index + 2] ];
-					for(var j = 0; j < face_components.length; ++j)
+					// For each of the 3 vertices on this this face...
+					var face_vertices = [ obj_prim.faces[face_index + 0], obj_prim.faces[face_index + 1], obj_prim.faces[face_index + 2] ];
+					for(var j = 0; j < face_vertices.length; ++j)
 					{
-						var face_elements = face_components[j].split("/");
+						var face_vertex = face_vertices[j].split("/");
 
-						// Expand vertices
-						if(face_elements.length >= 1)
+						// Extract vertex attributes
+						var pos_index    = (face_vertex.length >= 1 && face_vertex[0] != "")? (face_vertex[0] -1) * 3 : null;
+						var uv_index     = (face_vertex.length >= 2 && face_vertex[1] != "")? (face_vertex[1] -1) * 2 : null;
+						var normal_index = (face_vertex.length >= 3 && face_vertex[2] != "")? (face_vertex[2] -1) * 3 : null;
+
+						// Add vertex position to enginejs model stream?
+						if(pos_index != null)
 						{
-							var vertex_offset = (face_elements[0] -1) * 3;
-							model_verices.push(obj_prim.vertices[vertex_offset + 0], obj_prim.vertices[vertex_offset + 1], obj_prim.vertices[vertex_offset + 2]);
+							model_verices.push(obj_prim.vertices[pos_index + 0], obj_prim.vertices[pos_index + 1], obj_prim.vertices[pos_index + 2]);
 						}
-						// Expand uvs
-						if(face_elements.length >= 2 && face_elements[1] != "")
+
+						// Add texture co-ordinate to enginejs model stream?
+						if(uv_index != null)
 						{
-							var uv_offset = (face_elements[1] -1) * 2;
-							model_uvs.push(obj_prim.uvs[uv_offset + 0], 1.0 - obj_prim.uvs[uv_offset + 1]);
+							model_uvs.push(obj_prim.uvs[uv_index + 0], 1.0 - obj_prim.uvs[uv_index + 1]);
 						}
-						// Expand normals
-						if(face_elements.length >= 3 && face_elements[2] != "")
+
+						// Add normal to enginejs model stream?
+						if(normal_index != null)
 						{
-							var normal_offset = (face_elements[2] -1) * 3;
-							model_normals.push(obj_prim.normals[normal_offset + 0], obj_prim.normals[normal_offset + 1], obj_prim.normals[normal_offset + 2]);
+							model_normals.push(obj_prim.normals[normal_index + 0], obj_prim.normals[normal_index + 1], obj_prim.normals[normal_index + 2]);
 						}
 					}
 				}
 
-				// Build vertex buffers
+				// Generate enginejs vertex buffers from our expanded streams
 				if(model_verices.length > 0)
 				{
 					model_prim_vertex_buffers.push(
