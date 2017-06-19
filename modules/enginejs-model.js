@@ -8,19 +8,66 @@ Engine.Model =
 	{
 		Engine.Net.FetchResource(descriptor.file, function(model_json)
 		{
+			// Parse model json
 			var model_file = jQuery.parseJSON(model_json);
-			var model_object = Engine.Model.PrepareModel(model_file);
-			callback(model_object);
+
+			// 2. Prepare / finalise model
+			var prepare_model = function()
+			{
+				var model_object = Engine.Model.PrepareModel(model_file);
+				callback(model_object);
+			};
+
+			// 1. Load in any external materials?
+			if(Engine.Util.IsDefined(model_file.materials) && !Engine.Util.IsEmptyObject(model_file.materials))
+			{
+				Engine.Resource.LoadBatch(model_file.materials, function()
+				{
+					prepare_model();
+				});
+			}
+			else
+			{
+				prepare_model();
+			}
 		});
 	},
 
 	PrepareModel : function(model_file)
 	{
+		var has_materials = Engine.Util.IsDefined(model_file.materials);
 		var primitives = model_file.model_data.primitives;
 		for(var i = 0; i < primitives.length; ++i)
 		{
 			// Grab primitive
 			var primitive = primitives[i];
+
+			// Verify & hookup material reference
+			if(Engine.Util.IsDefined(primitive.material))
+			{
+				var material_id = primitive.material;
+				if(material_id == "[none]")
+				{
+					// Don't warn about primitives which intentionally specify material.
+					// This could be the case when the code is expected to manually bind 
+					// it's own shaders / materials.
+				}
+				else if(has_materials && Engine.Util.IsDefined(model_file.materials[material_id]))
+				{
+					primitive.material = model_file.materials[material_id];
+				}
+				else
+				{
+					Engine.LogError("Material '" + material_id + "' referenced by model primitive '" + primitive.name + "' was not found!");
+					Engine.LogWarning("Model primitive '" + primitive.name + "' will use default material instead");
+					primitive.material = Engine.Resources["mat_standard_default"];
+				}
+			}
+			else
+			{
+				Engine.LogWarning("Model primitive '" + primitive.name + "' has no material specified, default material applied");
+				primitive.material = Engine.Resources["mat_standard_default"];
+			}
 
 			// Find and grab vertex buffers
 			var vertex_buffer = null, uv_buffer = null, normal_buffer = null, tangent_buffer = null, index_buffer = null;

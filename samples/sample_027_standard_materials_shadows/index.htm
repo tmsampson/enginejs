@@ -101,6 +101,7 @@
 					arc_radius : [30, 15],
 					arc_lift   : 5
 				};
+				Engine.Gfx.SetDirectionalLight(sun);
 
 				function update_light()
 				{
@@ -142,7 +143,7 @@
 					// Draw light as sphere
 					mat4.translate(mtx_trans, Engine.Math.IdentityMatrix, sun.position);
 					mat4.scale(mtx_trans, mtx_trans, [0.4, 0.4, 0.4]);
-					Engine.Gfx.BindMaterial(sun.material, sun)
+					Engine.Gfx.BindMaterial(sun.material)
 					Engine.Gfx.SetShaderProperty("u_trans_world", mtx_trans, Engine.Gfx.SP_MATRIX4);
 					Engine.Gfx.DrawModel(sun.model);
 
@@ -159,7 +160,7 @@
 						{
 							// Bind material
 							var material = (override_material == null)? materials[mat_index++ % materials.length] : override_material;
-							Engine.Gfx.BindMaterial(material, sun, override_material == null);
+							Engine.Gfx.BindMaterial(material, override_material == null);
 
 							// Position on grid
 							mat4.translate(mtx_trans, Engine.Math.IdentityMatrix, [i * 3, 1.2, j * 3]);
@@ -218,7 +219,7 @@
 
 					// Draw floor
 					mat4.scale(mtx_trans, Engine.Math.IdentityMatrix, [100, 1, 100]);
-					Engine.Gfx.BindMaterial(floor_material, sun, true);
+					Engine.Gfx.BindMaterial(floor_material, true);
 					Engine.Gfx.SetShaderProperty("u_trans_world", mtx_trans, Engine.Gfx.SP_MATRIX4);
 					Engine.Gfx.SetShaderProperty("u_shadow_type", shadow_type, Engine.Gfx.SP_INT)
 					Engine.Gfx.SetShaderProperty("u_trans_shadow", shadow_cam.mtx_view_proj, Engine.Gfx.SP_MATRIX4);

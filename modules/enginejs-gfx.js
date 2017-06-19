@@ -484,9 +484,14 @@ Engine.Gfx =
 	// **********************************************
 	// Material functionality (forward to Engine.Material)
 	// **********************************************
-	BindMaterial : function(material, sun, use_shadows)
+	SetDirectionalLight : function(directional_light)
 	{
-		material.Bind(sun, use_shadows);
+		this.directional_light = directional_light;
+	},
+
+	BindMaterial : function(material, use_shadows)
+	{
+		material.Bind(this.directional_light, use_shadows);
 	},
 
 	// **********************************************
@@ -637,6 +642,12 @@ Engine.Gfx =
 			// Always bind index buffer last
 			if(index_buffer) { this.BindVertexBuffer(index_buffer.vbo); }
 
+			// Bind material
+			if(Engine.Util.IsDefined(prims[i].material) && prims[i].material != "[none]")
+			{
+				Engine.Gfx.BindMaterial(prims[i].material);
+			}
+
 			// Draw primitive
 			if(!bind_only)
 			{
@@ -780,6 +791,11 @@ Engine.Gfx =
 	active_camera        : null,  // Used to bind with shader uniforms
 	wireframe_mode       : false, // Per draw-call
 	force_wireframe_mode : false, // Override all draw calls
+	directional_light     :       // Used by material system / shaders
+	{
+		direction  : [ 0, -1, 0 ],
+		colour     : [ 0.7, 0.7, 0.7 ],
+	},
 
 	// **********************************************
 	// Look up tables

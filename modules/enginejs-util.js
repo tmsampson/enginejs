@@ -37,6 +37,11 @@ Engine.Util =
 		return typeof x !== 'undefined';
 	},
 
+	IsEmptyObject : function(x)
+	{
+		return $.isEmptyObject(x);
+	},
+
 	CopyToClipboard : function(text)
 	{
 		// Uses prompt, allowing user to manually copy the text (using ctrl+c)
