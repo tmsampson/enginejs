@@ -118,8 +118,7 @@
 					mat4.translate(mtx_trans, Engine.Math.IdentityMatrix, sun.pos);
 					mat4.scale(mtx_trans, mtx_trans, [0.2, 0.2, 0.2]);
 					Engine.Gfx.BindMaterial(sun.material)
-					Engine.Gfx.SetShaderProperty("u_trans_world", mtx_trans, Engine.Gfx.SP_MATRIX4);
-					Engine.Gfx.DrawModel(sun.model);
+					Engine.Gfx.DrawModel(sun.model, mtx_trans, false, false);
 
 					// Draw light basis
 					Engine.Debug.DrawArrow3D(cam, sun.pos, [sun.pos[0] + 3, sun.pos[1],     sun.pos[2]],     Engine.Colour.Red, 1);
@@ -168,8 +167,7 @@
 					// Draw floor
 					mat4.scale(mtx_trans, Engine.Math.IdentityMatrix, [100, 0, 100]);
 					Engine.Gfx.BindMaterial(floor_material);
-					Engine.Gfx.SetShaderProperty("u_trans_world", mtx_trans, Engine.Gfx.SP_MATRIX4);
-					Engine.Gfx.DrawModel(floor_model);
+					Engine.Gfx.DrawModel(floor_model, mtx_trans, false, false);
 
 					// Draw object_models
 					var mat_index = 0;
@@ -189,11 +187,8 @@
 								mat4.rotate(mtx_trans, mtx_trans, Engine.Time.elapsed_s / 3.0, [0, 1, 0]);
 							}
 
-							// Bind transform
-							Engine.Gfx.SetShaderProperty("u_trans_world", mtx_trans, Engine.Gfx.SP_MATRIX4);
-
 							// Draw model
-							Engine.Gfx.DrawModel(object_models[model_index]);
+							Engine.Gfx.DrawModel(object_models[model_index], mtx_trans, false, false);
 						}
 					}
 				};

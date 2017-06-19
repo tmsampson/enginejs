@@ -25,9 +25,8 @@
 				{
 					mat4.translate(mtx_trans, Engine.Math.IdentityMatrix, pos);
 					mat4.scale(mtx_trans, mtx_trans, [size, size, 0.0]);
-					Engine.Gfx.SetShaderProperty("u_trans_world", mtx_trans, Engine.Gfx.SP_MATRIX4);
 					Engine.Gfx.SetShaderProperty("u_colour", colour, Engine.Gfx.SP_COLOUR);
-					Engine.Gfx.DrawModel(model);
+					Engine.Gfx.DrawModel(model, mtx_trans, false, false);
 				};
 
 				var angle = (Math.PI * 2.0) / 3.0;
