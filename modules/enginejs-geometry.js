@@ -39,7 +39,7 @@ Engine.Geometry =
 		var half_z_size = z_size / 2;
 
 		// Setup empty model with 1 prim
-		var prim = { name : "Plane mesh", vertex_buffers : [] }
+		var prim = { name : "Plane mesh", material : "[none]", vertex_buffers : [] }
 		var model = { name : "Plane", is_loaded : true, model_data : { primitives : [prim] } };
 
 		// Generate verts
@@ -130,7 +130,7 @@ Engine.Geometry =
 		}
 
 		// Setup empty model with 1 prim
-		var prim = { name : "Circle faces", vertex_buffers : [] }
+		var prim = { name : "Circle faces", material : "[none]", vertex_buffers : [] }
 		var model = { name : "Circle", is_loaded : true, model_data : { primitives : [prim] } };
 
 		// Generate verts
@@ -194,7 +194,7 @@ Engine.Geometry =
 		var pi = Math.PI;
 
 		// Setup empty model with 1 prim
-		var prim = { name : "Sphere faces", vertex_buffers : [] }
+		var prim = { name : "Sphere faces", material : "[none]", vertex_buffers : [] }
 		var model = { name : "Sphere", is_loaded : true, model_data : { primitives : [prim] } };
 
 		// Generate verts

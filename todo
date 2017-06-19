@@ -1,6 +1,14 @@
-* Move normal debug drawing code and make it work for indexed/non-indexed models
+* 2D model prims should use material "[none]" because there is no 2D material system
+* 3D models should not specify and therefore receive the default material
+	- When applying the default material, this *must* be added to the models material list and then referenced as "default"
+* Existing samples which use 3D models but *dont* demonstrate materials need a way to manually bind their own shaders
+	- Need a version of Engine.Gfx.DrawModel which allows you to override the shaders
+	- Need a way to set materials (by name) on a model (updates models material list *not* prims)
+
+* Move model viewer into tools category
 * Add support for materials in enginejs model json format
 * Add support for obj materials
+* Move normal debug drawing code and make it work for indexed/non-indexed models
 * Add more tets models to model viewer
 * Begin implementing 3D scene management
 	* Need to be able to choose whether a mesh casts shadows

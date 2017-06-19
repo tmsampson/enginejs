@@ -1,12 +1,16 @@
 {
-	"name"       : "Cube",
+	"name"       : "Cube Sponge",
+	"materials"  :
+	{
+		"sponge" : { "file": "enginejs/resources/materials/sponge.mat" }
+	},
 	"model_data" :
 	{
 		"primitives" :
 		[
 			{
 				"name"           : "faces",
-				"material"       : "[none]",
+				"material"       : "sponge",
 				"vertex_buffers" :
 				[
 					{

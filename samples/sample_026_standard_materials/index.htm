@@ -85,6 +85,7 @@
 					direction : [ 0, -1, 0 ],
 					colour    : [ 0.4, 0.4, 0.4 ],
 				};
+				Engine.Gfx.SetDirectionalLight(sun);
 
 				function update_light()
 				{
@@ -116,7 +117,7 @@
 					// Draw light as sphere
 					mat4.translate(mtx_trans, Engine.Math.IdentityMatrix, sun.pos);
 					mat4.scale(mtx_trans, mtx_trans, [0.2, 0.2, 0.2]);
-					Engine.Gfx.BindMaterial(sun.material, sun)
+					Engine.Gfx.BindMaterial(sun.material)
 					Engine.Gfx.SetShaderProperty("u_trans_world", mtx_trans, Engine.Gfx.SP_MATRIX4);
 					Engine.Gfx.DrawModel(sun.model);
 
@@ -166,7 +167,7 @@
 
 					// Draw floor
 					mat4.scale(mtx_trans, Engine.Math.IdentityMatrix, [100, 0, 100]);
-					Engine.Gfx.BindMaterial(floor_material, sun);
+					Engine.Gfx.BindMaterial(floor_material);
 					Engine.Gfx.SetShaderProperty("u_trans_world", mtx_trans, Engine.Gfx.SP_MATRIX4);
 					Engine.Gfx.DrawModel(floor_model);
 
@@ -177,7 +178,7 @@
 						for(var j = -10; j <= 10; ++j)
 						{
 							// Bind material
-							Engine.Gfx.BindMaterial(materials[mat_index++ % materials.length], sun);
+							Engine.Gfx.BindMaterial(materials[mat_index++ % materials.length]);
 
 							// Position on grid
 							mat4.translate(mtx_trans, Engine.Math.IdentityMatrix, [i * 3, 1.2, j * 3]);

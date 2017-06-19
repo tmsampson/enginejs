@@ -4,14 +4,14 @@
 
 Engine.Gfx.Material = function(prevent_default)
 {
-	this.version        = 1.0;
-	this.name           = "Unknown";
-	this.type           = "standard";
-	this.shader         = null; // fragment shader
-	this.shader_program = null; // compiled shader program
-	this.shader_defines = [ ];
-	this.config         = { };
-	this.properties     = { };
+	this.version           = 1.0;
+	this.name              = "Unknown";
+	this.type              = "standard";
+	this.shader            = null; // fragment shader
+	this.shader_program    = null; // compiled shader program
+	this.shader_defines    = [ ];
+	this.config            = { };
+	this.properties        = { };
 
 	// Unless otherwise specified, new materials should be constructed by copying the default material
 	if(!prevent_default)
