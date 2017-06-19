@@ -305,13 +305,13 @@ Engine.Debug =
 				{
 					var prim = Engine.Debug.prim_queue[i];
 					Engine.Gfx.SetShaderProperty("u_colour", prim.colour, Engine.Gfx.SP_COLOUR);
-					Engine.Gfx.SetShaderProperty("u_trans_world", prim.mtx, Engine.Gfx.SP_MATRIX4);
 					switch(prim.type)
 					{
 						case "rect":
+							Engine.Gfx.SetShaderProperty("u_trans_world", prim.mtx, Engine.Gfx.SP_MATRIX4);
 							Engine.Gfx.DrawQuad(); break;
 						case "circle":
-							Engine.Gfx.DrawModel(Engine.Debug.circle_model); break;
+							Engine.Gfx.DrawModel(Engine.Debug.circle_model, prim.mtx, false, false); break;
 					}
 				}
 			}

@@ -482,11 +482,18 @@ Engine.Gfx =
 	},
 
 	// **********************************************
-	// Material functionality (forward to Engine.Material)
+	// Material functionality
 	// **********************************************
 	SetDirectionalLight : function(directional_light)
 	{
 		this.directional_light = directional_light;
+	},
+
+	SetShadowParams : function(shadow_map_rt, shadow_map_type, shadow_map_mtx)
+	{
+		this.shadow_map_rt = shadow_map_rt;
+		this.shadow_map_type = shadow_map_type;
+		this.shadow_map_mtx = shadow_map_mtx;
 	},
 
 	BindMaterial : function(material, use_shadows)
@@ -600,9 +607,21 @@ Engine.Gfx =
 	// **********************************************
 	// Model functionality
 	// **********************************************
-	DrawModel : function(model, bind_only)
+	DrawModel : function(model, world_mtx, bind_materials, bind_shadow_map, submit_geometry)
 	{
-		bind_only = typeof bind_only !== 'undefined' ? bind_only : false;
+		// Possible use cases:
+		// 		DrawModel(my_model)                              // kinda lazy, no matrix specified, default to identity
+		// 		DrawModel(my_model, my_mtx)                      // "normal" usage
+		// 		DrawModel(my_model, my_mtx, false)               // I bound my shader + uniforms + matrices + textures manually upfront, don't try and do this for me! (my_mtx will be ignored)
+		// 		DrawModel(my_model, null, false)                 // I bound my shader + uniforms + matrices + textures manually upfront, don't try and do this for me!
+		// 		DrawModel(my_model, my_mtx, false, false, false) // I bound my shader + uniforms + matrices + textures manually upfront, and plan to submit the geometry myself next! (perhaps mutliple times with slightly different uniforms?)
+		// 		DrawModel(my_model, my_mtx, true, true, false)   // Bit odd, maybe I want to manually submit the geometry several times with the same materials bound?
+
+		// Setup defaults
+		world_mtx = Engine.Util.IsDefined(world_mtx)? world_mtx : Engine.Math.IdentityMatrix;
+		bind_materials = Engine.Util.IsDefined(bind_materials)? bind_materials : true;
+		bind_shadow_map = Engine.Util.IsDefined(bind_shadow_map)? bind_shadow_map : true;
+		submit_geometry = Engine.Util.IsDefined(submit_geometry)? submit_geometry : true;
 
 		// Make sure model has been "loaded" (vertex buffer objects have been created)
 		if(!model.hasOwnProperty("is_loaded"))
@@ -642,14 +661,32 @@ Engine.Gfx =
 			// Always bind index buffer last
 			if(index_buffer) { this.BindVertexBuffer(index_buffer.vbo); }
 
-			// Bind material
-			if(Engine.Util.IsDefined(prims[i].material) && prims[i].material != "[none]")
+			// Bind material?
+			if(bind_materials)
 			{
-				Engine.Gfx.BindMaterial(prims[i].material);
+				var material = Engine.Util.IsDefined(prims[i].material)? prims[i].material : Engine.Resources["mat_standard_default"];
+				Engine.Gfx.BindMaterial(material, bind_shadow_map);
 			}
 
-			// Draw primitive
-			if(!bind_only)
+			// Set world matrix?
+			if(world_mtx != null)
+			{
+				Engine.Gfx.SetShaderProperty("u_trans_world", world_mtx, Engine.Gfx.SP_MATRIX4);
+			}
+
+			// Bind shadow map?
+			if(bind_shadow_map && Engine.Gfx.shadow_map_rt != null)
+			{
+				// Bind shadow map texture (depth only)
+				Engine.Gfx.BindTexture(Engine.Gfx.shadow_map_rt.depth_texture, 3, "u_shadow_map");
+
+				// Bind shadow map uniforms
+				Engine.Gfx.SetShaderProperty("u_shadow_type", Engine.Gfx.shadow_map_type, Engine.Gfx.SP_INT)
+				Engine.Gfx.SetShaderProperty("u_trans_shadow", Engine.Gfx.shadow_map_mtx, Engine.Gfx.SP_MATRIX4);
+			}
+
+			// Submit geometry for drawing?
+			if(submit_geometry)
 			{
 				this.DrawArray();
 			}
@@ -697,7 +734,7 @@ Engine.Gfx =
 
 	DrawQuad : function(bind_only)
 	{
-		this.DrawModel(Engine.Resources["ml_quad"], bind_only);
+		this.DrawModel(Engine.Resources["ml_quad"], null, false, false, !bind_only);
 	},
 
 	// **********************************************
@@ -791,11 +828,18 @@ Engine.Gfx =
 	active_camera        : null,  // Used to bind with shader uniforms
 	wireframe_mode       : false, // Per draw-call
 	force_wireframe_mode : false, // Override all draw calls
-	directional_light     :       // Used by material system / shaders
+	directional_light    :        // Used by material system / shaders
 	{
 		direction  : [ 0, -1, 0 ],
 		colour     : [ 0.7, 0.7, 0.7 ],
 	},
+
+	// **********************************************
+	// Shadow stuff (WIP)
+	// **********************************************
+	shadow_map_rt       : null,
+	shadow_map_type     : 0,
+	shadow_map_mtx      : null,
 
 	// **********************************************
 	// Look up tables

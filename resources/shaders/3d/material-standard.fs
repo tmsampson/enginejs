@@ -191,7 +191,7 @@ void main(void)
 	vec2 shadow_map_uv = shadow_pos.xy;
 	float fragment_depth = shadow_pos.z;
 
-	float shadow = 0.0;
+	float shadow = 0.0;	
 	if(u_shadow_type == 0)
 	{
 		shadow = get_shadow_hard(shadow_map_uv, fragment_depth);

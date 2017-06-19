@@ -144,8 +144,7 @@
 					mat4.translate(mtx_trans, Engine.Math.IdentityMatrix, sun.position);
 					mat4.scale(mtx_trans, mtx_trans, [0.4, 0.4, 0.4]);
 					Engine.Gfx.BindMaterial(sun.material)
-					Engine.Gfx.SetShaderProperty("u_trans_world", mtx_trans, Engine.Gfx.SP_MATRIX4);
-					Engine.Gfx.DrawModel(sun.model);
+					Engine.Gfx.DrawModel(sun.model, mtx_trans, false, false);
 
 					// Draw light direction
 					Engine.Debug.DrawLine3D(cam, sun.position, [0, 0, 0], Engine.Colour.Orange, 1);
@@ -158,10 +157,6 @@
 					{
 						for(var j = -5; j <= 5; ++j)
 						{
-							// Bind material
-							var material = (override_material == null)? materials[mat_index++ % materials.length] : override_material;
-							Engine.Gfx.BindMaterial(material, override_material == null);
-
 							// Position on grid
 							mat4.translate(mtx_trans, Engine.Math.IdentityMatrix, [i * 3, 1.2, j * 3]);
 
@@ -171,20 +166,21 @@
 								mat4.rotate(mtx_trans, mtx_trans, Engine.Time.elapsed_s / 3.0, [0, 1, 0]);
 							}
 
-							// Bind transform
-							Engine.Gfx.SetShaderProperty("u_trans_world", mtx_trans, Engine.Gfx.SP_MATRIX4);
-
-							if(override_material == null && material != resources["mat_plasma"]) // only bind shadows for main render pass exluding custom plasma shader
-							{
-								Engine.Gfx.SetShaderProperty("u_shadow_type", shadow_type, Engine.Gfx.SP_INT)
-								Engine.Gfx.SetShaderProperty("u_trans_shadow", shadow_cam.mtx_view_proj, Engine.Gfx.SP_MATRIX4);
-
-								// Bind shadow map
-								Engine.Gfx.BindTexture(shadow_rt.depth_texture, 3, "u_shadow_map");
-							}
-
 							// Draw model
-							Engine.Gfx.DrawModel(object_models[model_index]);
+							var model = object_models[model_index];
+							Engine.Gfx.BindMaterial(materials[mat_index++ % materials.length]);
+							if(override_material == null)
+							{
+								// Main render pass | Normal draw with shadow sampling enabled
+								Engine.Gfx.SetShadowParams(shadow_rt, shadow_type, shadow_cam.mtx_view_proj);
+								Engine.Gfx.DrawModel(model, mtx_trans, false);
+							}
+							else
+							{
+								// Shadow pass | Uses custom shadow material, with shadow sampling disabled
+								Engine.Gfx.BindMaterial(override_material, false);
+								Engine.Gfx.DrawModel(model, mtx_trans, false, false);
+							}
 						}
 					}
 				}
@@ -220,11 +216,8 @@
 					// Draw floor
 					mat4.scale(mtx_trans, Engine.Math.IdentityMatrix, [100, 1, 100]);
 					Engine.Gfx.BindMaterial(floor_material, true);
-					Engine.Gfx.SetShaderProperty("u_trans_world", mtx_trans, Engine.Gfx.SP_MATRIX4);
-					Engine.Gfx.SetShaderProperty("u_shadow_type", shadow_type, Engine.Gfx.SP_INT)
-					Engine.Gfx.SetShaderProperty("u_trans_shadow", shadow_cam.mtx_view_proj, Engine.Gfx.SP_MATRIX4);
-					Engine.Gfx.BindTexture(shadow_rt.depth_texture, 3, "u_shadow_map");
-					Engine.Gfx.DrawModel(floor_model);
+					Engine.Gfx.SetShadowParams(shadow_rt, shadow_type, shadow_cam.mtx_view_proj);
+					Engine.Gfx.DrawModel(floor_model, mtx_trans, false);
 
 					DrawObjects();
 				};
