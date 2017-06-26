@@ -59,5 +59,10 @@ Engine.Util =
 			hash |= 0; // Convert to 32-bit integer
 		}
 		return hash;
-	}
+	},
+
+	ParseJSON(json, allow_comments)
+	{
+		return jQuery.parseJSON(allow_comments? JSON.minify(json) : json);
+	},
 };

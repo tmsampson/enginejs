@@ -229,7 +229,7 @@ Engine.Resource.RegisterLoadFunction("mat", function(descriptor, callback)
 	// Load the material JSON
 	Engine.Net.FetchResource(descriptor.file, function(json)
 	{
-		var material_json = jQuery.parseJSON(json);
+		var material_json = Engine.Util.ParseJSON(json, true);
 
 		// Setup new material and apply JSON
 		var material = new Engine.Gfx.Material(true);
