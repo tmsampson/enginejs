@@ -12,11 +12,11 @@
 	{
 		"float"      :
 		{
-			"specular_shininess"  : 0.01
+			"specular_shininess"  : 0.005
 		},
 		"vec4"       :
 		{
-			"albedo_colour"       : [1, 1, 1, 1],
+			"albedo_colour"       : [1, 0.078, 0.576, 1],
 			"specular_colour"     : [0.8, 0.8, 0.8, 1]
 		}
 	}
