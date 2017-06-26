@@ -59,7 +59,7 @@ Engine.Model =
 			}
 			else
 			{
-				Engine.LogWarning("Model primitive '" + primitive.name + "' has no material specified, default material applied");
+				// No material specified for this prim, use the default material instead
 				primitive.material = Engine.Resources["mat_standard_default"];
 			}
 
