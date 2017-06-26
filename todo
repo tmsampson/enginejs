@@ -1,7 +1,6 @@
 * Add support for obj materials
-* What happens when you try and render one of the 2d samples with a material set in the .model (no 3d lighting etc?!)
-	Will need a way to specify that normal map is bump texture and convert in shader, see: https://stackoverflow.com/questions/5281261/generating-a-normal-map-from-a-height-map
-		- Branch or permutation? probably branch to avoid explosion of permutations?!
+* Will need a way to specify that normal map is bump texture and convert in shader, see: https://stackoverflow.com/questions/5281261/generating-a-normal-map-from-a-height-map
+	- Branch or permutation? probably branch to avoid explosion of permutations?!
 
 * Need a way to set materials (by name) on a model
 * Need support for sampling shadows in custom materials!
