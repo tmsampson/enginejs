@@ -78,6 +78,7 @@ Engine.Gfx.Material = function(prevent_default)
 		}
 
 		// 2. Bind sun params
+		Engine.Gfx.SetShaderProperty("u_sun_ambient", sun.ambient, Engine.Gfx.SP_VEC3, true);
 		Engine.Gfx.SetShaderProperty("u_sun_colour", sun.colour, Engine.Gfx.SP_VEC3, true);
 		Engine.Gfx.SetShaderProperty("u_sun_dir", sun.direction, Engine.Gfx.SP_VEC3, true);
 

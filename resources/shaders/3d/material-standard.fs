@@ -30,6 +30,7 @@ varying vec3 v_world_tangent;
 uniform vec3 u_cam_pos;
 
 // Global lighting
+uniform vec3 u_sun_ambient;
 uniform vec3 u_sun_colour;
 uniform vec3 u_sun_dir; // normalised
 
@@ -137,7 +138,7 @@ void main(void)
 	// Ambient
 	// *************************************************************************************
 	vec4 material_albedo = texture2D(albedo_map, v_uv.xy * albedo_map_repeat) * albedo_colour;
-	vec4 ambient = material_albedo * vec4(u_sun_colour, 1.0);
+	vec4 ambient = material_albedo * vec4(u_sun_ambient, 1.0);
 
 	// *************************************************************************************
 	// Diffuse
