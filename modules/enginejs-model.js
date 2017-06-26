@@ -46,13 +46,7 @@ Engine.Model =
 			if(Engine.Util.IsDefined(primitive.material))
 			{
 				var material_id = primitive.material;
-				if(material_id == "[none]")
-				{
-					// Don't warn about primitives which intentionally specify material.
-					// This could be the case when the code is expected to manually bind 
-					// it's own shaders / materials.
-				}
-				else if(has_materials && Engine.Util.IsDefined(model_file.materials[material_id]))
+				if(has_materials && Engine.Util.IsDefined(model_file.materials[material_id]))
 				{
 					primitive.material = model_file.materials[material_id];
 				}
