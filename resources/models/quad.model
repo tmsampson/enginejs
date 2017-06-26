@@ -6,7 +6,6 @@
 		[
 			{
 				"name"           : "face",
-				"material"       : "[none]",
 				"vertex_buffers" :
 				[
 					{
