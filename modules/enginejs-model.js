@@ -9,7 +9,7 @@ Engine.Model =
 		Engine.Net.FetchResource(descriptor.file, function(model_json)
 		{
 			// Parse model json
-			var model_file = jQuery.parseJSON(model_json);
+			var model_file = Engine.Util.ParseJSON(model_json, true);
 
 			// 2. Prepare / finalise model
 			var prepare_model = function()

@@ -1092,7 +1092,7 @@ Engine.Resource.RegisterLoadFunction("background", function(descriptor, callback
 {
 	Engine.Net.FetchResource(descriptor.file, function(background_json)
 	{
-		var json = jQuery.parseJSON(background_json);
+		var json = Engine.Util.ParseJSON(background_json, true);
 		var background_object = new Engine.Game2D.Background();
 		$.extend(background_object, json);
 
@@ -1144,7 +1144,7 @@ Engine.Resource.RegisterLoadFunction("sprite", function(descriptor, callback)
 {
 	Engine.Net.FetchResource(descriptor.file, function(sprite_json)
 	{
-		var json = jQuery.parseJSON(sprite_json);
+		var json = Engine.Util.ParseJSON(sprite_json, true);
 		var sprite_object = new Engine.Game2D.Sprite();
 		$.extend(sprite_object, json);
 

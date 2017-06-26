@@ -193,7 +193,7 @@ Engine.Gfx =
 				property_info_json = property_info_json.replace(property_info_end_token, "");
 				try
 				{
-					shader_property_info = JSON.parse(property_info_json);
+					shader_property_info = Engine.Util.ParseJSON(property_info_json, true);
 				}
 				catch(e)
 				{
