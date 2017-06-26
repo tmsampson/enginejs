@@ -31,6 +31,7 @@ Engine.Model.Importers.OBJ =
 				{
 					obj_current_prim =
 					{
+						name     : "none",
 						vertices : [],
 						uvs      : [],
 						normals  : [],
@@ -78,6 +79,13 @@ Engine.Model.Importers.OBJ =
 					obj_current_prim.normals.push(nx, ny, nz);
 				}
 
+				// Process object / group name
+				if(line[0] == "o" || (line[0] == "g" && obj_current_prim == "none"))
+				{
+					var values = line.split(" ");
+					obj_current_prim.name = values[1];
+				}
+
 				// Process face
 				if(line[0] == "f")
 				{
@@ -107,7 +115,7 @@ Engine.Model.Importers.OBJ =
 				var model_prim_vertex_buffers = [];
 				model_prims.push(
 				{
-					name           : "obj prim " + i,
+					name           : obj_prim.name,
 					vertex_buffers : model_prim_vertex_buffers
 				});
 
