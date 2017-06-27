@@ -20,21 +20,23 @@ Engine.Model.Importers.OBJ =
 			var obj_current_prim = null;
 			var is_parsing_faces = true;
 
+			// Global pos / uv / normal banks
+			var obj_file_vertices = [];
+			var obj_file_uvs = [];
+			var obj_file_normals = [];
+
 			// Parse
 			var lines = obj_data.split("\n");
 			for(var i = 0; i < lines.length; ++i)
 			{
-				var line = lines[i];
+				var line = lines[i].trim();
 
 				// Next prim?
-				if(is_parsing_faces && line[0] != "f")
+				if(is_parsing_faces && line[0] != "f") // && (line.substr(0, 6) != "usemtl")
 				{
 					obj_current_prim =
 					{
 						name     : "none",
-						vertices : [],
-						uvs      : [],
-						normals  : [],
 						faces    : [],
 					};
 					obj_prims.push(obj_current_prim);
@@ -51,7 +53,7 @@ Engine.Model.Importers.OBJ =
 					var p0 = parseFloat(values[1]) * scale;
 					var p1 = parseFloat(values[2]) * scale;
 					var p2 = parseFloat(values[3]) * scale;
-					obj_current_prim.vertices.push(p0, p1, p2);
+					obj_file_vertices.push(p0, p1, p2);
 				}
 
 				// Process parameter space vertices
@@ -66,7 +68,7 @@ Engine.Model.Importers.OBJ =
 					var values = line.split(" ");
 					var u = parseFloat(values[1]);
 					var v = parseFloat(values[2]);
-					obj_current_prim.uvs.push(u, v);
+					obj_file_uvs.push(u, v);
 				}
 
 				// Process normals
@@ -76,7 +78,7 @@ Engine.Model.Importers.OBJ =
 					var nx = parseFloat(values[1]);
 					var ny = parseFloat(values[2]);
 					var nz = parseFloat(values[3]);
-					obj_current_prim.normals.push(nx, ny, nz);
+					obj_file_normals.push(nx, ny, nz);
 				}
 
 				// Process object / group name
@@ -91,10 +93,18 @@ Engine.Model.Importers.OBJ =
 				{
 					is_parsing_faces = true;
 					var values = line.split(" ");
-					var e0 = values[1];
-					var e1 = values[2];
-					var e2 = values[3];
-					obj_current_prim.faces.push(e0, e1, e2);
+
+					if(values.length == 4)
+					{
+						// Triangle
+						obj_current_prim.faces.push(values[1], values[2], values[3]);
+					}
+					else if(values.length > 4)
+					{
+						// Quad
+						obj_current_prim.faces.push(values[1], values[2], values[3]);
+						obj_current_prim.faces.push(values[1], values[3], values[4]);
+					}
 				}
 			}
 
@@ -124,9 +134,9 @@ Engine.Model.Importers.OBJ =
 				//       streams. For example the obj might have 10 vertices, 4 uvs, 4 normals and 20 faces. For this reason we
 				//       fully expand all streams and don't use an index buffer. Maybe this could be smarter and figure out whether or not
 				//       it's worth trying to assemble an index buffer for the expanded data!
-				var model_verices = [];
-				var model_uvs = [];
-				var model_normals = [];
+				var prim_vertices = [];
+				var prim_uvs = [];
+				var prim_normals = [];
 
 				// For each obj file face...
 				for(var face_index = 0; face_index < obj_prim.faces.length; face_index +=3)
@@ -138,32 +148,32 @@ Engine.Model.Importers.OBJ =
 						var face_vertex = face_vertices[j].split("/");
 
 						// Extract vertex attributes
-						var pos_index    = (face_vertex.length >= 1 && face_vertex[0] != "")? (face_vertex[0] -1) * 3 : null;
-						var uv_index     = (face_vertex.length >= 2 && face_vertex[1] != "")? (face_vertex[1] -1) * 2 : null;
-						var normal_index = (face_vertex.length >= 3 && face_vertex[2] != "")? (face_vertex[2] -1) * 3 : null;
+						var pos_index    = (face_vertex.length >= 1 && face_vertex[0] != "")? ((face_vertex[0] - 1) * 3) : null;
+						var uv_index     = (face_vertex.length >= 2 && face_vertex[1] != "")? ((face_vertex[1] - 1) * 2) : null;
+						var normal_index = (face_vertex.length >= 3 && face_vertex[2] != "")? ((face_vertex[2] - 1) * 3) : null;
 
 						// Add vertex position to enginejs model stream?
 						if(pos_index != null)
 						{
-							model_verices.push(obj_prim.vertices[pos_index + 0], obj_prim.vertices[pos_index + 1], obj_prim.vertices[pos_index + 2]);
+							prim_vertices.push(obj_file_vertices[pos_index + 0], obj_file_vertices[pos_index + 1], obj_file_vertices[pos_index + 2]);
 						}
 
 						// Add texture co-ordinate to enginejs model stream?
 						if(uv_index != null)
 						{
-							model_uvs.push(obj_prim.uvs[uv_index + 0], 1.0 - obj_prim.uvs[uv_index + 1]);
+							prim_uvs.push(obj_file_uvs[uv_index + 0], 1.0 - obj_file_uvs[uv_index + 1]);
 						}
 
 						// Add normal to enginejs model stream?
 						if(normal_index != null)
 						{
-							model_normals.push(obj_prim.normals[normal_index + 0], obj_prim.normals[normal_index + 1], obj_prim.normals[normal_index + 2]);
+							prim_normals.push(obj_file_normals[normal_index + 0], obj_file_normals[normal_index + 1], obj_file_normals[normal_index + 2]);
 						}
 					}
 				}
 
 				// Generate enginejs vertex buffers from our expanded streams
-				if(model_verices.length > 0)
+				if(prim_vertices.length > 0)
 				{
 					model_prim_vertex_buffers.push(
 					{
@@ -171,11 +181,11 @@ Engine.Model.Importers.OBJ =
 						attribute_name : "a_pos",
 						item_size      : 3,
 						draw_mode      : "triangles",
-						stream         : model_verices
+						stream         : prim_vertices
 					});
 				}
 
-				if(model_uvs.length > 0)
+				if(prim_uvs.length > 0)
 				{
 					model_prim_vertex_buffers.push(
 					{
@@ -183,11 +193,11 @@ Engine.Model.Importers.OBJ =
 						attribute_name : "a_uv",
 						item_size      : 2,
 						draw_mode      : "triangles",
-						stream         : model_uvs
+						stream         : prim_uvs
 					});
 				}
 
-				if(model_normals.length > 0)
+				if(prim_normals.length > 0)
 				{
 					model_prim_vertex_buffers.push(
 					{
@@ -195,7 +205,7 @@ Engine.Model.Importers.OBJ =
 						attribute_name : "a_normal",
 						item_size      : 3,
 						draw_mode      : "triangles",
-						stream         : model_normals
+						stream         : prim_normals
 					});
 				}
 			}
