@@ -1,3 +1,5 @@
+* Calculate bounding box for loaded models
+	- Need an accessor which will scale / rotate accordingly
 * Add support for obj materials
 * Will need a way to specify that normal map is bump texture and convert in shader, see: https://stackoverflow.com/questions/5281261/generating-a-normal-map-from-a-height-map
 	- Branch or permutation? probably branch to avoid explosion of permutations?!
