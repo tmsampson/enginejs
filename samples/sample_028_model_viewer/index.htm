@@ -25,11 +25,15 @@
 			mat_wood          : { file : "mat/wood.mat"},
 			mat_snooker_ball  : { file : "mat/snooker-ball.mat"},
 			mat_carpet        : { file : "mat/carpet.mat"},
-
-			//mdl_bear         : { file : "model/bear.obj", scale : 0.2 },
-			mdl_bear         : { file : "enginejs/resources/models/cube-sponge.model" },
-
 			mat_shadow        : { file : "mat/shadow.mat"},
+
+			mdl_dummy         : { file : "model/dummy.obj", scale : 0.02 },
+			mdl_bear          : { file : "model/bear.obj", scale : 0.2 },
+			mdl_ring          : { file : "model/ring.obj", scale : 10 },
+			mdl_bender        : { file : "model/bender.obj", scale : 0.2 },
+			mdl_dodge         : { file : "model/dodge.obj", scale : 0.2 },
+			mdl_cube_sponge   : { file : "enginejs/resources/models/cube-sponge.model" },
+
 		};
 
 		$(document).ready(function()
@@ -66,9 +70,15 @@
 				var object_models =
 				[
 					Engine.Geometry.MakeSphere(),
-					Engine.Resources["ml_cube"],
-					Engine.Geometry.MakePlane({ x_size : 2, z_size : 2}),
+					resources["mdl_dodge"],
+					resources["mdl_bender"],
+					resources["mdl_bear"],
+					resources["mdl_dummy"],
+					resources["mdl_ring"],
+					resources["mdl_cube_sponge"],
+					Engine.Resources["ml_cube"]
 				];
+				var model_index = 0;
 
 				// ====================================================================================================================================
 				// Materials
@@ -137,10 +147,10 @@
 					}
 				};
 
-				var DrawModel = function(override_material)
+				var DrawModel = function(model, override_material)
 				{
 					// Position on grid
-					mat4.translate(mtx_trans, Engine.Math.IdentityMatrix, [0, 2, 0]);
+					mat4.translate(mtx_trans, Engine.Math.IdentityMatrix, [0, -model.min_vert[1], 0]);
 
 					// Rotate?
 					if(model_rotate_enabled && !debug_draw_normals)
@@ -153,13 +163,13 @@
 					{
 						// Main render pass | Normal draw with shadow sampling enabled
 						Engine.Gfx.SetShadowParams(shadow_rt, shadow_type, shadow_cam.mtx_view_proj);
-						Engine.Gfx.DrawModel(resources["mdl_bear"], mtx_trans);
+						Engine.Gfx.DrawModel(model, mtx_trans);
 					}
 					else
 					{
 						// Shadow pass | Uses custom shadow material, with shadow sampling disabled
 						Engine.Gfx.BindMaterial(override_material, false);
-						Engine.Gfx.DrawModel(resources["mdl_bear"], mtx_trans, false, false);
+						Engine.Gfx.DrawModel(model, mtx_trans, false, false);
 					}
 				}
 
@@ -178,7 +188,7 @@
 
 					if(Engine.Keyboard.IsPressed("m", true))
 					{
-						material_index = (material_index + 1) % materials.length;
+						model_index = (model_index + 1) % object_models.length;
 					}
 
 					if(Engine.Keyboard.IsPressed("r", true))
@@ -193,7 +203,7 @@
 					Engine.Gfx.DrawModel(floor_model, mtx_trans, false, true);
 
 					// Draw loaded model
-					DrawModel();
+					DrawModel(object_models[model_index]);
 				};
 
 				var RenderShadowPass = function()
@@ -211,7 +221,7 @@
 
 					Engine.Gfx.BindCamera(shadow_cam);
 
-					DrawModel(resources["mat_shadow"]);
+					DrawModel(object_models[model_index], resources["mat_shadow"]);
 
 					Engine.Gfx.UnBindRenderTarget(shadow_rt);
 				};

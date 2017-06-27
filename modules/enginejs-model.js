@@ -37,6 +37,10 @@ Engine.Model =
 	{
 		var has_materials = Engine.Util.IsDefined(model_file.materials);
 		var primitives = model_file.model_data.primitives;
+
+		model_file.min_vert = [ 10000000, 10000000, 10000000 ];
+		model_file.max_vert = [ -10000000, -10000000, -10000000 ];
+
 		for(var i = 0; i < primitives.length; ++i)
 		{
 			// Grab primitive
@@ -81,6 +85,18 @@ Engine.Model =
 			{
 				Engine.LogError("Model " + model_file + " '" + primitive.name + "' primitive has no vertex buffer!");
 				return;
+			}
+
+			// Extract local min / max
+			for(var j = 0; j < vertex_buffer.stream.length; j += 3)
+			{
+				var x = vertex_buffer.stream[j + 0];
+				var y = vertex_buffer.stream[j + 1];
+				var z = vertex_buffer.stream[j + 2];
+
+				model_file.min_vert[0] = Math.min(model_file.min_vert[0], x); model_file.max_vert[0] = Math.max(model_file.max_vert[0], x);
+				model_file.min_vert[1] = Math.min(model_file.min_vert[1], y); model_file.max_vert[1] = Math.max(model_file.max_vert[1], y);
+				model_file.min_vert[2] = Math.min(model_file.min_vert[2], z); model_file.max_vert[2] = Math.max(model_file.max_vert[2], z);
 			}
 
 			// We only carry out further preparations using triangle topology
