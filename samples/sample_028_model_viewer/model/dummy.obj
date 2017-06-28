@@ -1,6 +1,6 @@
 # This file uses centimeters as units for non-parametric coordinates.
 
-mtllib dummy_obj.mtl
+mtllib dummy.obj.mtl
 v 3.198048 110.331436 4.178912
 v 1.846380 110.331436 5.530481
 v -0.000000 110.331528 6.025145

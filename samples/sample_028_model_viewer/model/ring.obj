@@ -4,7 +4,7 @@
 # Right Hemisphere, LTD
 # http://www.righthemisphere.com/
 # 
-mtllib celticring.mtl
+mtllib ring.obj.mtl
 # object object
 g object
 v 0.01925 -0.00423 -0.11201

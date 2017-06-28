@@ -1,7 +1,7 @@
 # 3ds Max Wavefront OBJ Exporter v0.94b - (c)2007 guruware
 # File Created: 09.06.2011 17:09:41
 
-mtllib Bender.mtl
+mtllib bender.obj.mtl
 
 #
 # object Line01
