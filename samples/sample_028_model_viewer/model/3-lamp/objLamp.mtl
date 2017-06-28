@@ -1,0 +1,22 @@
+newmtl blinn4SG
+illum 4
+Kd 1.00 1.00 1.00
+Ka 0.00 0.00 0.00
+Tf 0.44 0.44 0.44
+Ni 1.00
+Ks 1.00 1.00 1.00
+newmtl blinn5SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 1.00 1.00 1.00
+newmtl lambert2SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd -s 0.769231 0.769231 CNCR07L.JPG
+bump -s 0.769231 0.769231 CNCR07LB.JPG -bm 1
+Ni 1.00
