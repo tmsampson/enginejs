@@ -16,28 +16,18 @@
 		<script language="javascript">
 		var resources =
 		{
-			mat_bear          : { file : "mat/bear.mat"},
-			mat_sponge        : { file : "mat/sponge.mat"},
-			mat_plasma        : { file : "mat/plasma.mat"},
-			mat_wool          : { file : "mat/wool.mat"},
-			mat_shiny_plastic : { file : "mat/shiny-plastic.mat"},
-			mat_stone         : { file : "mat/stone.mat"},
 			mat_wood          : { file : "mat/wood.mat"},
-			mat_snooker_ball  : { file : "mat/snooker-ball.mat"},
-			mat_carpet        : { file : "mat/carpet.mat"},
 			mat_shadow        : { file : "mat/shadow.mat"},
 
-			mdl_key           : { file : "model/1-key/Key_B_02.obj", scale : 0.2 },
-			mdl_tree          : { file : "model/2-tree/OC41_1.obj", scale : 5 },
-			mdl_lamp          : { file : "model/3-lamp/objLamp.obj", scale : 0.2 },
+			mdl_ring          : { file : "model/ring/ring.obj", scale : 12 },
+			mdl_key           : { file : "model/key/Key_B_02.obj", scale : 0.5 },
+			mdl_tree          : { file : "model/tree/OC41_1.obj", scale : 8 },
+			mdl_bear          : { file : "model/bear/bear.obj", scale : 0.15 },
+			mdl_dummy         : { file : "model/dummy/dummy.obj", scale : 0.018 },
+			mdl_bunny         : { file : "model/bunny/bunny.obj", scale : 18 },
+			//mdl_car           : { file : "model/car/car.obj", scale : 0.2 },
 
-			// mdl_dummy         : { file : "model/dummy.obj", scale : 0.02 },
-			// mdl_bear          : { file : "model/bear.obj", scale : 0.2 },
-			// mdl_ring          : { file : "model/ring.obj", scale : 10 },
-			// mdl_bender        : { file : "model/bender.obj", scale : 0.2 },
-			// mdl_dodge         : { file : "model/dodge.obj", scale : 0.2 },
 			mdl_cube_sponge   : { file : "enginejs/resources/models/cube-sponge.model" },
-
 		};
 
 		$(document).ready(function()
@@ -65,24 +55,23 @@
 				var shadow_preview_size = [100, 100];
 				var shadow_preview_padding = [10, 10];
 				var shadow_preview_cam = new Engine.Camera.Orthographic();
-				var shadow_preview_program  = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_general_transformed_uv_flipped"],
-				                              Engine.Resources["fs_unlit_textured"]);
+				var shadow_preview_program = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_general_transformed_uv_flipped"],
+				                             Engine.Resources["fs_unlit_textured"]);
 
 				// ====================================================================================================================================
 				// Models
 				var floor_model = Engine.Resources["ml_floor_tile"];
 				var object_models =
 				[
+					resources["mdl_ring"],
 					resources["mdl_key"],
 					resources["mdl_tree"],
-					resources["mdl_lamp"],
+					resources["mdl_bear"],
+					resources["mdl_dummy"],
+					resources["mdl_bunny"],
+					//resources["mdl_car"],
 
 					Engine.Geometry.MakeSphere(),
-					// resources["mdl_dodge"],
-					// resources["mdl_bender"],
-					// resources["mdl_bear"],
-					// resources["mdl_dummy"],
-					// resources["mdl_ring"],
 					resources["mdl_cube_sponge"],
 					Engine.Resources["ml_cube"]
 				];
@@ -171,7 +160,10 @@
 					{
 						// Main render pass | Normal draw with shadow sampling enabled
 						Engine.Gfx.SetShadowParams(shadow_rt, shadow_type, shadow_cam.mtx_view_proj);
+						//Engine.Gfx.BindMaterial(resources["mat_sponge"], false);
 						Engine.Gfx.DrawModel(model, mtx_trans);
+						//Engine.Gfx.DrawModel(model, mtx_trans, false, false);
+
 					}
 					else
 					{
