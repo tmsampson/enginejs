@@ -199,7 +199,7 @@
 					// Draw floor
 					mat4.scale(mtx_trans, Engine.Math.IdentityMatrix, [100, 1, 100]);
 					Engine.Gfx.SetShadowParams(shadow_rt, shadow_type, shadow_cam.mtx_view_proj);
-					Engine.Gfx.BindMaterial(resources["mat_stone"], true);
+					Engine.Gfx.BindMaterial(resources["mat_wood"], true);
 					Engine.Gfx.DrawModel(floor_model, mtx_trans, false, true);
 
 					// Draw loaded model
