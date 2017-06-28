@@ -118,7 +118,8 @@ var Engine =
 		fs_mat_standard_amb_lit_spec_specmap_normalmap_fresnel_shadow : { file: "enginejs/resources/shaders/3d/material-standard.fs", define : [ "USE_DIFFUSE", "USE_SPECULAR", "USE_SPECULAR_MAP", "USE_NORMAL_MAP", "USE_FRESNEL", "USE_SHADOWS" ] },
 
 		// Materials
-		mat_standard_default                                          : { file: "enginejs/resources/materials/default.mat"   },
+		mat_standard_default                                          : { file: "enginejs/resources/materials/default.mat"              },
+		mat_standard_sponge                                           : { file: "enginejs/resources/materials/sponge.mat"               },
 		mat_standard_grid_xz_fog_custom                               : { file: "enginejs/resources/materials/grid-xz-fog-custom.mat"   },
 
 		// Models
