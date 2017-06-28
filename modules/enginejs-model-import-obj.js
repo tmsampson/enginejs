@@ -17,7 +17,9 @@ Engine.Model.Importers.OBJ =
 
 			// Setup parse
 			var obj_prims = [];
+			var material_file = "";
 			var obj_current_prim = null;
+			var obj_current_material = "";
 			var is_parsing_faces = true;
 
 			// Global pos / uv / normal banks
@@ -32,16 +34,39 @@ Engine.Model.Importers.OBJ =
 				var line = lines[i].trim();
 
 				// Next prim?
-				if(is_parsing_faces && line[0] != "f") // && (line.substr(0, 6) != "usemtl")
+				if(is_parsing_faces && line[0] != "f")
 				{
 					obj_current_prim =
 					{
 						name     : "none",
 						faces    : [],
 					};
+
+					if(obj_current_material != "")
+					{
+						obj_current_prim.material = obj_current_material;
+					}
+
 					obj_prims.push(obj_current_prim);
 				}
 				is_parsing_faces = false;
+
+				// Grab material library file?
+				if(line.substr(0, 6) == "mtllib")
+				{
+					var values = line.split(" ");
+					material_file = values[1];
+				}
+
+				// Grab material for this prim?
+				if(line.substr(0, 6) == "usemtl")
+				{
+					var values = line.split(" ");
+
+					// Apply to this prim *and* all subsequent prims
+					obj_current_material = values[1];
+					obj_current_prim.material = obj_current_material;
+				}
 
 				// Skip comments
 				if(line[0] == "#") { continue; }
@@ -82,10 +107,9 @@ Engine.Model.Importers.OBJ =
 				}
 
 				// Process object / group name
-				if(line[0] == "o" || (line[0] == "g" && obj_current_prim == "none"))
+				if(line[0] == "o" || (line[0] == "g" && obj_current_prim.name == "none"))
 				{
-					var values = line.split(" ");
-					obj_current_prim.name = values[1];
+					obj_current_prim.name = line.substring(2).trim();
 				}
 
 				// Process face
@@ -108,14 +132,43 @@ Engine.Model.Importers.OBJ =
 				}
 			}
 
+			// Load
+			if(material_file != "")
+			{
+
+			}
+
 			// Trim last prim if empty
 			if(obj_current_prim.faces.length == 0)
 			{
 				obj_prims.pop();
 			}
 
-			// Expand / assemble obj primitive streams
+			// ******************************************************************************************
+			// ******************************************************************************************
+			// ******************************************************************************************
+			// ******************************************************************************************
+			// ******************************************************************************************
+			// ******************************************************************************************
+			// ******************************************************************************************
+
+			// Build enginejs model
 			var model_prims = []
+			var model_file =
+			{
+				name: descriptor.file,
+				materials : [],
+				model_data:
+				{
+					primitives : model_prims
+				},
+			};
+
+			// Dummy materials (REMOVE THIS!!)
+			var dummy_materials = [ Engine.Resources["mat_standard_default"], Engine.Resources["mat_standard_sponge"] ];
+			var dummy_material_index = 0;
+
+			// Expand / assemble obj primitive streams
 			for(var i = 0; i < obj_prims.length; ++i)
 			{
 				// Grab the obj prim
@@ -123,11 +176,27 @@ Engine.Model.Importers.OBJ =
 
 				// Setup equivalent model prim
 				var model_prim_vertex_buffers = [];
-				model_prims.push(
+				var model_prim = 
 				{
 					name           : obj_prim.name,
 					vertex_buffers : model_prim_vertex_buffers
-				});
+				};
+
+				if(Engine.Util.IsDefined(obj_prim.material))
+				{
+					var material_name = obj_prim.material;
+
+					// For now, add a dummy material to the model (REMOVE THIS!!)
+					if(!Engine.Util.IsDefined(model_file.materials[material_name]))
+					{
+						model_file.materials[material_name] = dummy_materials[dummy_material_index]
+						dummy_material_index = (dummy_material_index + 1) % dummy_materials.length;
+					}
+
+					model_prim.material = material_name;
+				}
+
+				model_prims.push(model_prim);
 
 				// Setup streams for model buffers
 				// Note: The faces specified in the obj file are not directly compatible with webgl index buffers as they reference mixed length
@@ -209,16 +278,6 @@ Engine.Model.Importers.OBJ =
 					});
 				}
 			}
-
-			// Build enginejs model
-			var model_file =
-			{
-				name: descriptor.file,
-				model_data:
-				{
-					primitives : model_prims
-				},
-			};
 
 			// Prepare and finalise model
 			var model_object = Engine.Model.PrepareModel(model_file);
