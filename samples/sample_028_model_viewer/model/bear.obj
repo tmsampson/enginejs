@@ -6,7 +6,7 @@
 #
 # Bounding box of geometry = (-4.71417,0.381019,-20.1426) to (5.52928,20.0957,8.69794).
 
-mtllib bear-obj.mtl
+mtllib bear.obj.mtl
 
 # Coordinates for object 'bear'
 v 0.436699 9.430003 -0.161837 
