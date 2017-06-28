@@ -27,11 +27,15 @@
 			mat_carpet        : { file : "mat/carpet.mat"},
 			mat_shadow        : { file : "mat/shadow.mat"},
 
-			mdl_dummy         : { file : "model/dummy.obj", scale : 0.02 },
-			mdl_bear          : { file : "model/bear.obj", scale : 0.2 },
-			mdl_ring          : { file : "model/ring.obj", scale : 10 },
-			mdl_bender        : { file : "model/bender.obj", scale : 0.2 },
-			mdl_dodge         : { file : "model/dodge.obj", scale : 0.2 },
+			mdl_key           : { file : "model/1-key/Key_B_02.obj", scale : 0.2 },
+			mdl_tree          : { file : "model/2-tree/OC41_1.obj", scale : 5 },
+			mdl_lamp          : { file : "model/3-lamp/objLamp.obj", scale : 0.2 },
+
+			// mdl_dummy         : { file : "model/dummy.obj", scale : 0.02 },
+			// mdl_bear          : { file : "model/bear.obj", scale : 0.2 },
+			// mdl_ring          : { file : "model/ring.obj", scale : 10 },
+			// mdl_bender        : { file : "model/bender.obj", scale : 0.2 },
+			// mdl_dodge         : { file : "model/dodge.obj", scale : 0.2 },
 			mdl_cube_sponge   : { file : "enginejs/resources/models/cube-sponge.model" },
 
 		};
@@ -69,12 +73,16 @@
 				var floor_model = Engine.Resources["ml_floor_tile"];
 				var object_models =
 				[
+					resources["mdl_key"],
+					resources["mdl_tree"],
+					resources["mdl_lamp"],
+
 					Engine.Geometry.MakeSphere(),
-					resources["mdl_dodge"],
-					resources["mdl_bender"],
-					resources["mdl_bear"],
-					resources["mdl_dummy"],
-					resources["mdl_ring"],
+					// resources["mdl_dodge"],
+					// resources["mdl_bender"],
+					// resources["mdl_bear"],
+					// resources["mdl_dummy"],
+					// resources["mdl_ring"],
 					resources["mdl_cube_sponge"],
 					Engine.Resources["ml_cube"]
 				];
@@ -106,7 +114,7 @@
 					position   : [0, 5, 0],
 					angle      : 1,	// -90 --> 90 arc
 					direction  : [0, -1, 0],
-					ambient   : [ 0.4, 0.4, 0.4 ],
+					ambient   : [ 0.6, 0.6, 0.6 ],
 					colour     : [0.7, 0.7, 0.7],
 					arc_radius : [30, 15],
 					arc_lift   : 5
