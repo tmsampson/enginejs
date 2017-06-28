@@ -910,8 +910,12 @@ Engine.Gfx.ShaderPropertySetterFuncFromString =
 	"mat4"      : Engine.Gfx.SP_MATRIX4
 };
 
-// Resource loading
+// Texture resource loading
 Engine.Resource.RegisterLoadFunction("png", Engine.Gfx.LoadTexture);
 Engine.Resource.RegisterLoadFunction("jpg", Engine.Gfx.LoadTexture);
+Engine.Resource.RegisterLoadFunction("bmp", Engine.Gfx.LoadTexture);
+Engine.Resource.RegisterLoadFunction("tga", Engine.Gfx.LoadTexture);
+
+// Vertex / fragment shader resource loading
 Engine.Resource.RegisterLoadFunction("vs",  Engine.Gfx.LoadShader);
 Engine.Resource.RegisterLoadFunction("fs",  Engine.Gfx.LoadShader);
