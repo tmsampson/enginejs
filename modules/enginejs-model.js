@@ -57,14 +57,14 @@ Engine.Model =
 				else
 				{
 					Engine.LogError("Material '" + material_id + "' referenced by model primitive '" + primitive.name + "' was not found!");
-					Engine.LogWarning("Model primitive '" + primitive.name + "' will use default material instead");
-					primitive.material = Engine.Resources["mat_standard_default"];
+					Engine.LogWarning("Model primitive '" + primitive.name + "' will use 'missing' material instead");
+					primitive.material = Engine.Resources["mat_standard_missing"];
 				}
 			}
 			else
 			{
-				// No material specified for this prim, use the default material instead
-				primitive.material = Engine.Resources["mat_standard_default"];
+				// No material specified for this prim, use the 'missing' material instead
+				primitive.material = Engine.Resources["mat_standard_missing"];
 			}
 
 			// Find and grab vertex buffers

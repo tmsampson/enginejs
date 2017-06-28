@@ -664,7 +664,7 @@ Engine.Gfx =
 			// Bind material?
 			if(bind_materials)
 			{
-				var material = Engine.Util.IsDefined(prims[i].material)? prims[i].material : Engine.Resources["mat_standard_default"];
+				var material = Engine.Util.IsDefined(prims[i].material)? prims[i].material : Engine.Resources["mat_standard_missing"];
 				Engine.Gfx.BindMaterial(material, bind_shadow_map);
 			}
 

@@ -119,6 +119,7 @@ var Engine =
 
 		// Materials
 		mat_standard_default                                          : { file: "enginejs/resources/materials/default.mat"              },
+		mat_standard_missing                                          : { file: "enginejs/resources/materials/missing.mat"              },
 		mat_standard_sponge                                           : { file: "enginejs/resources/materials/sponge.mat"               },
 		mat_standard_grid_xz_fog_custom                               : { file: "enginejs/resources/materials/grid-xz-fog-custom.mat"   },
 
