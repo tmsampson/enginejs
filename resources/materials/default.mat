@@ -5,24 +5,19 @@
 	"config"         :
 	{
 		"lighting_enabled"        : true,
-		"specular_enabled"        : true,
-		"fresnel_enabled"         : true
+		"specular_enabled"        : true
 	},
 	"properties"     :
 	{
 		"float"      :
 		{
 			"normal_strength"     : 1.0,
-			"specular_shininess"  : 0.03,
-			"fresnel_scale"       : 0.6,
-			"fresnel_bias"        : 0,
-			"fresnel_power"       : 2
+			"specular_shininess"  : 0.03
 		},
 		"vec4"       :
 		{
-			"albedo_colour"       : [0.95, 0.0,  1.0,  1.0],
-			"specular_colour"     : [1, 0, 0.8, 1],
-			"fresnel_colour"      : [1, 0, 0.8, 1]
+			"albedo_colour"       : [1, 1, 1, 1],
+			"specular_colour"     : [1, 1, 1, 1]
 		}
 	}
 }
