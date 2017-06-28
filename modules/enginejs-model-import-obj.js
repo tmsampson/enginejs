@@ -4,8 +4,9 @@
 
 Engine.Model.Importers.OBJ =
 {
-	LoadMaterialsFile : function(materials_file, callback)
+	LoadMaterialsFile : function(materials_file, model_dir, callback)
 	{
+		var obj_textures = [];
 		var obj_materials = [];
 
 		// Go grab the .obj file
@@ -15,30 +16,115 @@ Engine.Model.Importers.OBJ =
 			materials_file_data = materials_file_data.replace(/ +(?= )/g, '');
 			var lines = materials_file_data.split("\n");
 
-			// Setup parse
-			var current_material = null;
-
-			// Parse
+			// Gather any textures we need to load
 			for(var i = 0; i < lines.length; ++i)
 			{
 				var line = lines[i].trim();
 
-				// new material found?
-				if(line.substr(0, 6) == "newmtl")
+				// Gather 
+				if(line.substr(0, 6) == "map_Ka" || line.substr(0, 6) == "map_Kd" ||
+				   line.substr(0, 6) == "map_Ks" || line.substr(0, 8) == "map_bump" ||
+				   line.substr(0, 4) == "bump")
 				{
 					var values = line.split(" ");
-					var material_name = values[1];
+					if(values.length > 1)
+					{
+						// Look for filename on this row 
+						// Note: spec says the filename should always be last after any options,
+						//       however I've found files where this isn't the case!
+						for(var j = 0; j < values.length; ++j)
+						{
+							var texture_name_full = values[j];
+							var parts = texture_name_full.split('.');
+							if(parts.length > 1)
+							{
+								var extension = parts.pop().toLowerCase();
+								var is_supported_texture = (extension == "png")  || (extension == "tif") ||
+														   (extension == "bmp")  || (extension == "jpg") ||
+														   (extension == "jpeg") || (extension == "tga");
 
-					// Apply to this prim *and* all subsequent prims
-					current_material = new Engine.Gfx.Material();
-					current_material.SetColour("albedo_colour", Engine.Colour.Random());
+								// Register texture for loading?
+								if(is_supported_texture && !obj_textures[texture_name_full])
+								{
+									// If texture name is a path, assume texture is in same folder local to materials file
+									// and strip out the path completely
+									var texture_name = texture_name_full.replace(/^.*[\\\/]/, '');
+									obj_textures[texture_name_full] = { "file" : model_dir + texture_name };
 
-					// Store new material in bank
-					obj_materials[material_name] = current_material;
+									// Break out of loop, we found our texture filename!
+									break;
+								}
+							}
+						}
+					}
 				}
 			}
 
-			callback(obj_materials);
+			var parse_material = function(lines)
+			{
+				// Setup parse
+				var current_material = null;
+				var current_albedo_colour = [];
+
+				// Parse
+				for(var i = 0; i < lines.length; ++i)
+				{
+					var line = lines[i].trim();
+
+					// new material found?
+					if(line.substr(0, 6) == "newmtl")
+					{
+						var values = line.split(" ");
+						var material_name = values[1];
+
+						// Apply to this prim *and* all subsequent prims
+						current_material = new Engine.Gfx.Material();
+						current_material.SetColour("albedo_colour", Engine.Colour.Random());
+
+						// Store new material in bank
+						obj_materials[material_name] = current_material;
+
+						// Setup material defaults
+					}
+
+					// Parse albedo colour
+					if(line.substr(0, 2) == "Kd")
+					{
+						var values = line.split(" ");
+						current_material.SetColour("albedo_colour", [ values[1], values[2], values[3], 1 ]);
+					}
+
+					// Parse specular colour
+					if(line.substr(0, 2) == "Ks")
+					{
+						var values = line.split(" ");
+						current_material.SetColour("specular_colour", [ values[1], values[2], values[3], 1 ]);
+					}
+
+					// Parse specular power
+					if(line.substr(0, 2) == "Ns")
+					{
+						var values = line.split(" ");
+						current_material.SetFloat("specular_shininess", values[1]);
+					}
+				}
+			}
+
+			var texture_count = Object.keys(obj_textures).length;
+
+			if(texture_count > 0)
+			{
+				Engine.Resource.LoadBatch(obj_textures, function()
+				{
+					parse_material(lines);
+					callback(obj_materials);
+				});
+			}
+			else
+			{
+				parse_material(lines);
+				callback(obj_materials);
+			}
 		});
 	},
 
@@ -295,6 +381,8 @@ Engine.Model.Importers.OBJ =
 
 	Load : function(descriptor, callback)
 	{
+		var model_dir = descriptor.file.substring(0, descriptor.file.lastIndexOf("/") + 1);
+
 		// Go grab the .obj file
 		Engine.Net.FetchResource(descriptor.file, function(obj_file_data)
 		{
@@ -309,7 +397,6 @@ Engine.Model.Importers.OBJ =
 				var line = lines[i];
 				if(line.substr(0, 6) == "mtllib")
 				{
-					var model_dir = descriptor.file.substring(0, descriptor.file.lastIndexOf("/") + 1);
 					materials_file = model_dir + line.split(" ")[1];
 					break;
 				}
@@ -331,7 +418,7 @@ Engine.Model.Importers.OBJ =
 			else
 			{
 				// 1. Load the materials file first
-				Engine.Model.Importers.OBJ.LoadMaterialsFile(materials_file, function(obj_materials)
+				Engine.Model.Importers.OBJ.LoadMaterialsFile(materials_file, model_dir, function(obj_materials)
 				{
 					// 2. Then load the model, (passing the loaded materials)
 					load_model(obj_materials);
