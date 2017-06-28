@@ -16,6 +16,46 @@ Engine.Model.Importers.OBJ =
 			materials_file_data = materials_file_data.replace(/ +(?= )/g, '');
 			var lines = materials_file_data.split("\n");
 
+			var get_texture_from_line = function(line)
+			{
+				var values = line.split(" ");
+
+				// Ignore entries which specify only the type of texture (e.g. "map_Ka") without
+				// providing an actual texture filename!
+				if(values.length <= 1)
+				{
+					return null;
+				}
+
+				// Look for filename on this row 
+				// Note: spec says the filename should always be last after any options,
+				//       however I've found files where this isn't the case!
+				for(var j = 0; j < values.length; ++j)
+				{
+					var texture_filename_full = values[j];
+					var parts = texture_filename_full.split('.');
+					if(parts.length > 1)
+					{
+						// Valid extension?
+						var extension = parts.pop().toLowerCase();
+						if((extension == "png") || (extension == "tif") ||
+						   (extension == "bmp")  || (extension == "jpg") ||
+						   (extension == "jpeg") || (extension == "tga"))
+						{
+							// If texture name is a path, assume texture is in same folder local to materials file
+							// and strip out the path completely
+							var texture_filename = texture_filename_full.replace(/^.*[\\\/]/, '');
+
+							// Break out of loop, we found our texture filename!
+							return { key : texture_filename_full, filename : texture_filename };
+						}
+					}
+				}
+
+				// No texture found
+				return null;
+			}
+
 			// Gather any textures we need to load
 			for(var i = 0; i < lines.length; ++i)
 			{
@@ -26,36 +66,12 @@ Engine.Model.Importers.OBJ =
 				   line.substr(0, 6) == "map_Ks" || line.substr(0, 8) == "map_bump" ||
 				   line.substr(0, 4) == "bump")
 				{
-					var values = line.split(" ");
-					if(values.length > 1)
+					var result = get_texture_from_line(line);
+
+					// Register texture for loading?
+					if(result != null && !obj_textures[result.key])
 					{
-						// Look for filename on this row 
-						// Note: spec says the filename should always be last after any options,
-						//       however I've found files where this isn't the case!
-						for(var j = 0; j < values.length; ++j)
-						{
-							var texture_name_full = values[j];
-							var parts = texture_name_full.split('.');
-							if(parts.length > 1)
-							{
-								var extension = parts.pop().toLowerCase();
-								var is_supported_texture = (extension == "png")  || (extension == "tif") ||
-														   (extension == "bmp")  || (extension == "jpg") ||
-														   (extension == "jpeg") || (extension == "tga");
-
-								// Register texture for loading?
-								if(is_supported_texture && !obj_textures[texture_name_full])
-								{
-									// If texture name is a path, assume texture is in same folder local to materials file
-									// and strip out the path completely
-									var texture_name = texture_name_full.replace(/^.*[\\\/]/, '');
-									obj_textures[texture_name_full] = { "file" : model_dir + texture_name };
-
-									// Break out of loop, we found our texture filename!
-									break;
-								}
-							}
-						}
+						obj_textures[result.key] = { "file" : model_dir + result.filename };
 					}
 				}
 			}
@@ -77,14 +93,20 @@ Engine.Model.Importers.OBJ =
 						var values = line.split(" ");
 						var material_name = values[1];
 
+						// Finalise previous material?
+						// Note: This makes sure the material selects the
+						//       correct shader permutation
+						if(current_material != null)
+						{
+							current_material.InitStandardShader();
+						}
+
 						// Apply to this prim *and* all subsequent prims
 						current_material = new Engine.Gfx.Material();
-						current_material.SetColour("albedo_colour", Engine.Colour.Random());
+						current_material.name = material_name;
 
 						// Store new material in bank
 						obj_materials[material_name] = current_material;
-
-						// Setup material defaults
 					}
 
 					// Parse albedo colour
@@ -98,6 +120,7 @@ Engine.Model.Importers.OBJ =
 					if(line.substr(0, 2) == "Ks")
 					{
 						var values = line.split(" ");
+						current_material.SetConfig("specular_enabled", true);
 						current_material.SetColour("specular_colour", [ values[1], values[2], values[3], 1 ]);
 					}
 
@@ -107,6 +130,44 @@ Engine.Model.Importers.OBJ =
 						var values = line.split(" ");
 						current_material.SetFloat("specular_shininess", values[1]);
 					}
+
+					// Parse albedo map
+					if(line.substr(0, 6) == "map_Ka" || line.substr(0, 6) == "map_Kd")
+					{
+						var result = get_texture_from_line(line);
+						if(result != null && Engine.Util.IsDefined(obj_textures[result.key]))
+						{
+							current_material.SetSampler2D("albedo_map", obj_textures[result.key]);
+						}
+					}
+
+					// Parse specular map
+					if(line.substr(0, 6) == "map_Ks")
+					{
+						var result = get_texture_from_line(line);
+						if(result != null && Engine.Util.IsDefined(obj_textures[result.key]))
+						{
+							current_material.SetSampler2D("specular_map", obj_textures[result.key]);
+						}
+					}
+
+					// Parse "bump" map (converted to normal map in standard material shader)
+					if(line.substr(0, 8) == "map_bump" || line.substr(0, 4) == "bump")
+					{
+						var result = get_texture_from_line(line);
+						if(result != null && Engine.Util.IsDefined(obj_textures[result.key]))
+						{
+							current_material.SetSampler2D("normal_map", obj_textures[result.key]);
+						}
+					}
+				}
+
+				// Finalise final material?
+				// Note: This makes sure the material selects the
+				//       correct shader permutation!
+				if(current_material != null)
+				{
+					current_material.InitStandardShader();
 				}
 			}
 
