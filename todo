@@ -1,6 +1,3 @@
-* Rename Engine.Resources["ml_cube"] --> Engine.Resources["mdl_cube"] for consistency
-	- Same for other models loaded in engine.js
-
 * Sort out the specular exponent!
 * Add support for alpha textures (enable blending)
 * Add support for optionally centering obj files on load (via hint in descriptor)
