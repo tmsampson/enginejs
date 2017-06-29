@@ -734,7 +734,7 @@ Engine.Gfx =
 
 	DrawQuad : function(bind_only)
 	{
-		this.DrawModel(Engine.Resources["ml_quad"], null, false, false, !bind_only);
+		this.DrawModel(Engine.Resources["mdl_quad"], null, false, false, !bind_only);
 	},
 
 	// **********************************************

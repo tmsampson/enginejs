@@ -16,8 +16,8 @@
 			Engine.Init(function()
 			{
 				var mtx_trans = mat4.create();
-				var model_cube  = Engine.Resources["ml_cube"];
-				var model_floor = Engine.Resources["ml_floor_tile"];
+				var model_cube  = Engine.Resources["mdl_cube"];
+				var model_floor = Engine.Resources["mdl_floor_tile"];
 				var cam = new Engine.Camera.Perspective({ position : [5.0, 2.5, 5.0],
 				                                          look_at  : [0.0, 0.5, 0.0] });
 				var program_floor  = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_general_transformed"],

@@ -124,10 +124,10 @@ var Engine =
 		mat_standard_grid_xz_fog_custom                               : { file: "enginejs/resources/materials/grid-xz-fog-custom.mat"   },
 
 		// Models
-		ml_quad                                                       : { file: "enginejs/resources/models/quad.model"       },
-		ml_floor_tile                                                 : { file: "enginejs/resources/models/floor_tile.model" },
-		ml_tri                                                        : { file: "enginejs/resources/models/tri.model"        },
-		ml_cube                                                       : { file: "enginejs/resources/models/cube.model"       },
+		mdl_quad                                                      : { file: "enginejs/resources/models/quad.model"       },
+		mdl_floor_tile                                                : { file: "enginejs/resources/models/floor_tile.model" },
+		mdl_tri                                                       : { file: "enginejs/resources/models/tri.model"        },
+		mdl_cube                                                      : { file: "enginejs/resources/models/cube.model"       },
 	},
 
 	// *************************************************************************************

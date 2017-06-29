@@ -15,7 +15,7 @@
 		{
 			Engine.Init(function()
 			{
-				var model_floor = Engine.Resources["ml_floor_tile"];
+				var model_floor = Engine.Resources["mdl_floor_tile"];
 				var mtx_trans = mat4.create(); mat4.scale(mtx_trans, mtx_trans, [100, 0.0, 100]);
 				var cam = new Engine.Camera.Perspective({ position : [5.0, 2.5, 5.0],
 				                                          look_at  : [0.0, 0.0, 0.0] });
