@@ -1,11 +1,11 @@
 * Add material editor tool
 	- https://www.npmjs.com/package/jquery-ui.accordion.multiple
 
-* Add support for alpha textures (enable blending)
 * Add support for optionally centering obj files on load (via hint in descriptor)
 * Add more tests models to model viewer
 * Will need a way to specify that normal map is bump texture and convert in shader, see: https://stackoverflow.com/questions/5281261/generating-a-normal-map-from-a-height-map
 	- Branch or permutation? probably branch to avoid explosion of permutations?!
+* Add support for alpha textures (enable blending)
 
 * Add model viewer features
 	- Draw model-space basis axis (toggleable)
@@ -18,6 +18,7 @@
 * Calculate bounding box for loaded models
 	- Need an accessor which will scale / rotate accordingly
 
+* Integrate bullet - https://github.com/adambom/bullet.js/
 * Need support for sampling shadows in custom materials!
 
 * Begin implementing 3D scene management
