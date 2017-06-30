@@ -1,12 +1,15 @@
-* Sort out the specular exponent!
+* Move model viewer into tools category
+* Add material editor tool
+	- https://www.npmjs.com/package/jquery-ui.accordion.multiple
+
 * Add support for alpha textures (enable blending)
 * Add support for optionally centering obj files on load (via hint in descriptor)
-* Add support for optionally rotating obj files on load (via hint in descriptor)
 * Add more tests models to model viewer
 * Will need a way to specify that normal map is bump texture and convert in shader, see: https://stackoverflow.com/questions/5281261/generating-a-normal-map-from-a-height-map
 	- Branch or permutation? probably branch to avoid explosion of permutations?!
-* Move model viewer into tools category
+
 * Add model viewer features
+	- Draw model-space basis axis (toggleable)
  	- Move normal debug drawing code and make it work for all models (indexed or non-indexed)
  	- Control lighting
  	- Control rotation
