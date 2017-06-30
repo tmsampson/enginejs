@@ -21,10 +21,10 @@
 
 			mdl_ring          : { file : "model/ring/ring.obj", scale : 12 },
 			mdl_key           : { file : "model/key/Key_B_02.obj", scale : 0.5 },
-			mdl_tree          : { file : "model/tree/OC41_1.obj", scale : 8 },
 			mdl_bear          : { file : "model/bear/bear.obj", scale : 0.15 },
 			mdl_dummy         : { file : "model/dummy/dummy.obj", scale : 0.018 },
 			mdl_bunny         : { file : "model/bunny/bunny.obj", scale : 18 },
+			mdl_tree          : { file : "model/tree/OC41_1.obj", scale : 8, rotate : [ -90, 0, 0 ] },
 			//mdl_car           : { file : "model/car/car.obj", scale : 0.2 },
 
 			mdl_cube_sponge   : { file : "enginejs/resources/models/cube-sponge.model" },
@@ -63,17 +63,20 @@
 				var floor_model = Engine.Resources["mdl_floor_tile"];
 				var object_models =
 				[
-					Engine.Geometry.MakeSphere(),
-
+					// Wavefront .obj files
 					resources["mdl_ring"],
 					resources["mdl_key"],
-					resources["mdl_tree"],
 					resources["mdl_bear"],
 					resources["mdl_dummy"],
 					resources["mdl_bunny"],
+					resources["mdl_tree"],
 					//resources["mdl_car"],
 
+					// Custom EngineJS model
 					resources["mdl_cube_sponge"],
+
+					// Built-in resources
+					Engine.Geometry.MakeSphere(),
 					Engine.Resources["mdl_cube"]
 				];
 				var model_index = 0;
