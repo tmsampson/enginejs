@@ -33,12 +33,12 @@ Engine.Math =
 	{
 		return Math.floor(Math.random() * (max - min + 1) + min);
 	},
-	
+
 	DegToRad : function(degrees)
 	{
 		return (degrees * Engine.Math.PI) / 180;
 	},
-	
+
 	RadToDeg : function(radians)
 	{
 		return (radians * 180) / Engine.Math.PI;
