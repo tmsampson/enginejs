@@ -117,7 +117,6 @@ Engine.Gfx.Material = function(prevent_default)
 		{
 			Engine.Gfx.BindTexture(this.properties.sampler2D.normal_map, 2, "normal_map");
 			Engine.Gfx.SetShaderProperty("normal_map_repeat", this.properties.vec2.normal_map_repeat, Engine.Gfx.SP_VEC2);
-			Engine.Gfx.SetShaderProperty("normal_strength", this.properties.float.normal_strength, Engine.Gfx.SP_FLOAT);
 		}
 
 		// 4. Bind fresnel params?

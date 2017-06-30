@@ -69,6 +69,8 @@
 
 				// Setup new green material on the fly
 				materials[0].SetColour("albedo_colour", [0, 1, 0, 1]);
+				materials[0].SetFloat("specular_shininess", 7);
+				materials[0].SetColour("specular_colour", [0.4, 0.4, 0.4, 1]);
 				materials[0].SetConfig("fresnel_enabled", true);
 				materials[0].SetColour("fresnel_colour", [0.8, 1, 0.8, 1]);
 				materials[0].SetFloat("fresnel_scale", 0.4);

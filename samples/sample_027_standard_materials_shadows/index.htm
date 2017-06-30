@@ -25,6 +25,7 @@
 			mat_snooker_ball  : { file : "mat/snooker-ball.mat"},
 			mat_carpet        : { file : "mat/carpet.mat"},
 
+			mat_floor         : { file : "mat/floor.mat"},
 			mat_shadow        : { file : "mat/shadow.mat"},
 		};
 
@@ -67,7 +68,6 @@
 
 				// ====================================================================================================================================
 				// Materials
-				var floor_material = new Engine.Gfx.Material();
 				var materials =
 				[
 					new Engine.Gfx.Material(), // setup below
@@ -83,6 +83,8 @@
 
 				// Setup new green material on the fly
 				materials[0].SetColour("albedo_colour", [0, 1, 0, 1]);
+				materials[0].SetFloat("specular_shininess", 7);
+				materials[0].SetColour("specular_colour", [0.4, 0.4, 0.4, 1]);
 				materials[0].SetConfig("fresnel_enabled", true);
 				materials[0].SetColour("fresnel_colour", [0.8, 1, 0.8, 1]);
 				materials[0].SetFloat("fresnel_scale", 0.4);
@@ -97,7 +99,7 @@
 					position   : [0, 5, 0],
 					angle      : 1,	// -90 --> 90 arc
 					direction  : [ 0, -1, 0 ],
-					ambient    : [ 0.4, 0.4, 0.4 ],
+					ambient    : [ 0.6, 0.6, 0.6 ],
 					colour     : [ 0.4, 0.4, 0.4 ],
 					arc_radius : [30, 15],
 					arc_lift   : 5
@@ -216,7 +218,7 @@
 
 					// Draw floor
 					mat4.scale(mtx_trans, Engine.Math.IdentityMatrix, [100, 1, 100]);
-					Engine.Gfx.BindMaterial(floor_material, true);
+					Engine.Gfx.BindMaterial(resources["mat_floor"], true);
 					Engine.Gfx.SetShadowParams(shadow_rt, shadow_type, shadow_cam.mtx_view_proj);
 					Engine.Gfx.DrawModel(floor_model, mtx_trans, false);
 

@@ -74,6 +74,8 @@ void main(void)
 
 		#ifdef USE_SHADOWS
 		v_shadow_pos = u_trans_shadow * v_world_pos;
+		v_shadow_pos.xyz /= v_shadow_pos.w; // perspective divide
+		v_shadow_pos = v_shadow_pos * 0.5 + 0.5; // [-1..1] --> [0..1]
 		#endif
 
 	#else

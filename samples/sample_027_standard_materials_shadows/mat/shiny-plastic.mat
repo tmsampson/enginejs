@@ -12,8 +12,7 @@
 	{
 		"float"      :
 		{
-			"normal_strength"     : 1.0,
-			"specular_shininess"  : 0.03,
+			"specular_shininess"  : 150,
 			"fresnel_scale"       : 0.6,
 			"fresnel_bias"        : 0,
 			"fresnel_power"       : 2

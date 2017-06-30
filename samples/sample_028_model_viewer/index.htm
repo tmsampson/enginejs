@@ -16,7 +16,7 @@
 		<script language="javascript">
 		var resources =
 		{
-			mat_wood          : { file : "mat/wood.mat"},
+			mat_floor         : { file : "mat/floor.mat"},
 			mat_shadow        : { file : "mat/shadow.mat"},
 
 			mdl_ring          : { file : "model/ring/ring.obj", scale : 12 },
@@ -63,6 +63,8 @@
 				var floor_model = Engine.Resources["mdl_floor_tile"];
 				var object_models =
 				[
+					Engine.Geometry.MakeSphere(),
+
 					resources["mdl_ring"],
 					resources["mdl_key"],
 					resources["mdl_tree"],
@@ -71,28 +73,10 @@
 					resources["mdl_bunny"],
 					//resources["mdl_car"],
 
-					Engine.Geometry.MakeSphere(),
 					resources["mdl_cube_sponge"],
 					Engine.Resources["mdl_cube"]
 				];
 				var model_index = 0;
-
-				// ====================================================================================================================================
-				// Materials
-				var floor_material = new Engine.Gfx.Material();
-				var material_index = 0;
-				var materials =
-				[
-					resources["mat_bear"],
-					resources["mat_sponge"],
-					resources["mat_plasma"],
-					resources["mat_carpet"],
-					resources["mat_shiny_plastic"],
-					resources["mat_wool"],
-					resources["mat_wood"],
-					resources["mat_stone"],
-					resources["mat_snooker_ball"],
-				];
 
 				// ====================================================================================================================================
 				// Light
@@ -199,7 +183,7 @@
 					// Draw floor
 					mat4.scale(mtx_trans, Engine.Math.IdentityMatrix, [100, 1, 100]);
 					Engine.Gfx.SetShadowParams(shadow_rt, shadow_type, shadow_cam.mtx_view_proj);
-					Engine.Gfx.BindMaterial(resources["mat_wood"], true);
+					Engine.Gfx.BindMaterial(resources["mat_floor"], true);
 					Engine.Gfx.DrawModel(floor_model, mtx_trans, false, true);
 
 					// Draw loaded model
