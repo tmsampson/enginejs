@@ -194,6 +194,16 @@ Engine.Model.Importers.OBJ =
 		// Grab scale factor from descriptor (optional)
 		var scale = Engine.Util.IsDefined(descriptor.scale)? descriptor.scale : 1.0;
 
+		// Build rotation matrix?
+		var rotation_mtx = null;
+		if(Engine.Util.IsDefined(descriptor.rotate) && descriptor.rotate.length == 3)
+		{
+			rotation_mtx = mat4.create();
+			mat4.rotate(rotation_mtx, Engine.Math.IdentityMatrix, Engine.Math.DegToRad(descriptor.rotate[0]), [1, 0, 0]);
+			mat4.rotate(rotation_mtx, rotation_mtx, Engine.Math.DegToRad(descriptor.rotate[1]), [0, 1, 0]);
+			mat4.rotate(rotation_mtx, rotation_mtx, Engine.Math.DegToRad(descriptor.rotate[2]), [0, 0, 1]);
+		}
+
 		// Setup parse
 		var obj_prims = [];
 		var material_file = "";
@@ -249,7 +259,18 @@ Engine.Model.Importers.OBJ =
 				var p0 = parseFloat(values[1]) * scale;
 				var p1 = parseFloat(values[2]) * scale;
 				var p2 = parseFloat(values[3]) * scale;
-				obj_file_vertices.push(p0, p1, p2);
+
+				// Apply import rotation?
+				if(rotation_mtx != null)
+				{
+					var vec = vec3.fromValues(p0, p1, p2);
+					vec3.transformMat4(vec, vec, rotation_mtx);
+					obj_file_vertices.push(vec[0], vec[1], vec[2]);
+				}
+				else
+				{
+					obj_file_vertices.push(p0, p1, p2);
+				}
 			}
 
 			// Process parameter space vertices
