@@ -12,8 +12,7 @@
 	{
 		"float"      :
 		{
-			"normal_strength"     : 1.0,
-			"specular_shininess"  : 0.2,
+			"specular_shininess"  : 28,
 			"fresnel_scale"       : 0.6,
 			"fresnel_bias"        : 0,
 			"fresnel_power"       : 2
@@ -22,7 +21,7 @@
 		{
 			"albedo_colour"       : [1, 1, 0.8, 1],
 			"specular_colour"     : [1, 1, 1, 1],
-			"fresnel_colour"      : [0.3, 0.3, 0.3, 1]
+			"fresnel_colour"      : [0.4, 0.4, 0.4, 1]
 		}
 	}
 }

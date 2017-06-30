@@ -17,13 +17,12 @@
 		},
 		"float"      :
 		{
-			"normal_strength"     : 1.0,
-			"specular_shininess"  : 0.05
+			"specular_shininess"  : 4
 		},
 		"vec4"       :
 		{
 			"albedo_colour"       : [1, 0, 0, 1],
-			"specular_colour"     : [1, 1, 1, 1]
+			"specular_colour"     : [0.8, 0.8, 0.8, 1]
 		}
 	}
 }

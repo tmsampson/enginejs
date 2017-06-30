@@ -7,7 +7,6 @@ precision highp float;
 	"albedo_map_repeat"   : { "name" : "Albedo Texture Tiling", "default" : [1, 1]             },
 	"normal_map"          : { "name" : "Normal Map"                                            },
 	"normal_map_repeat"   : { "name" : "Normal Map Tiling",     "default" : [1, 1]             },
-	"normal_strength"     : { "name" : "Normal Strength",       "default" : 1.0                },
 	"specular_colour"     : { "name" : "Specular Colour",       "default" : [0.5, 0.5, 0.5, 1] },
 	"specular_map"        : { "name" : "Specular Map"                                          },
 	"specular_map_repeat" : { "name" : "Specular Map Tiling",   "default" : [1, 1]             },
@@ -38,7 +37,6 @@ uniform vec3 u_sun_dir; // normalised
 uniform vec4 albedo_colour;
 uniform vec4 specular_colour;
 uniform float specular_shininess;
-uniform float normal_strength;
 
 #ifdef USE_FRESNEL
 uniform vec4 fresnel_colour;
@@ -126,12 +124,9 @@ void main(void)
 	normal_basis[2] = normalize(v_world_normal);
 
 	vec3 normal = normal_basis * normalize((material_normal.xyz * 2.0) - 1.0);
-
-	// Scale normal
-	normal *= normal_strength;
 #else
 	// Use vertex normals
-	vec3 normal = v_world_normal;
+	vec3 normal = normalize(v_world_normal);
 #endif
 
 	// *************************************************************************************
@@ -152,19 +147,17 @@ void main(void)
 	// *************************************************************************************
 	// Speular
 	// *************************************************************************************
-	vec4 specular = vec4(0.0);
+	vec4 specular = vec4(0.0); // default
+
 #ifdef USE_SPECULAR
-	if(dot(u_sun_dir, normal) < 0.0)
-	{
-		vec3 reflected_ray = normalize(reflect(u_sun_dir, normal)); // reflect light about surface normal
-		vec3 to_cam = normalize(u_cam_pos - v_world_pos.xyz);
-		float cam_dot = max(0.0, dot(reflected_ray, to_cam));
-		specular = specular_colour * clamp(vec4(u_sun_colour, 1.0) * max(0.0, dot(normal, -u_sun_dir)) * pow(cam_dot, specular_shininess * 128.0), 0.0, 1.0); // 
-	}
+	vec3 frag_to_light = -u_sun_dir;
+	vec3 frag_to_cam = normalize(u_cam_pos - v_world_pos.xyz);
+	vec3 half_vector = normalize(frag_to_light + frag_to_cam);
+	specular = specular_colour * vec4(u_sun_colour, 1.0) * pow(max(dot(normal, half_vector), 0.0), specular_shininess);
 
 	#ifdef USE_SPECULAR_MAP
-	vec4 specular_map = texture2D(specular_map, v_uv.xy * specular_map_repeat);
-	specular *= specular_map;
+		vec4 specular_map = texture2D(specular_map, v_uv.xy * specular_map_repeat);
+		specular *= specular_map;
 	#endif
 #endif
 
@@ -183,16 +176,12 @@ void main(void)
 	// Composite
 	gl_FragColor = mix(ambient + diffuse + specular, fresnel_colour, fresnel);
 
+	// Contribute shadows?
 	#ifdef USE_SHADOWS
-	// Calculate projected shadow position (xy = screen space, z = depth)
-	vec3 shadow_pos = v_shadow_pos.xyz / v_shadow_pos.w; // perspective divide
-	shadow_pos = shadow_pos * 0.5 + 0.5; // [-1..1] --> [0..1]
+	vec2 shadow_map_uv = v_shadow_pos.xy;
+	float fragment_depth = v_shadow_pos.z;
 
-	// Contribute shadows
-	vec2 shadow_map_uv = shadow_pos.xy;
-	float fragment_depth = shadow_pos.z;
-
-	float shadow = 0.0;	
+	float shadow = 0.0;
 	if(u_shadow_type == 0)
 	{
 		shadow = get_shadow_hard(shadow_map_uv, fragment_depth);

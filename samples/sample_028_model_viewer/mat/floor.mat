@@ -17,18 +17,16 @@
 		},
 		"float"      :
 		{
-			"specular_shininess"  : 0.05
+			"specular_shininess"  : 10
 		},
 		"vec2"       :
 		{
-			"albedo_map_repeat"   : [5, 5],
-			"normal_map_repeat"   : [5, 5],
-			"specular_map_repeat" : [5, 5]
+			"albedo_map_repeat"   : [ 10, 10 ]
 		},
 		"vec4"       :
 		{
-			"albedo_colour"       : [0.8, 0.5, 0.5, 1],
-			"specular_colour"     : [1, 1, 1, 1]
+			"albedo_colour"       : [1, 0.4, 0, 1],
+			"specular_colour"     : [0.8, 0.8, 0.8, 1]
 		}
 	}
 }
