@@ -1,5 +1,7 @@
 * Add material editor tool
 	- https://www.npmjs.com/package/jquery-ui.accordion.multiple
+	- http://stevesanderson.github.io/fixed-height-layouts-demo/two-columns.html
+* Re-skin existing tools
 
 * Add support for optionally centering obj files on load (via hint in descriptor)
 * Add more tests models to model viewer
