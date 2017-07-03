@@ -9,8 +9,6 @@ var Engine =
 		"enginejs/resources/libs/hashCode-v1.0.0.js",
 		"enginejs/resources/libs/webtoolkit.md5.js",
 		"enginejs/resources/libs/gl-matrix.js",
-		"enginejs/resources/libs/jquery-ui.min.js",
-		"enginejs/resources/css/third_party/jquery-ui/jquery-ui.css",
 		"enginejs/resources/libs/minify.json.js",
 	],
 
