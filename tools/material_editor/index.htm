@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+
+		<title>Engine Sample: Material Editor</title>
+
+		<!-- EngineJS -->
+		<script type="text/javascript" src="enginejs/jquery.js"></script>
+		<script type="text/javascript" src="enginejs/engine.js"></script>
+		<script type="text/javascript" src="enginejs/resources/libs/jquery-ui.min.js"></script>
+		<script type="text/javascript" src="enginejs/resources/libs/jquery-ui.accordion.multiple.js"></script>
+
+		<!-- EngineJS App Framework -->
+		<link rel='stylesheet' href='enginejs/resources/css/app.css' />
+		<link rel="stylesheet" href="enginejs/resources/css/third_party/jquery-ui/jquery-ui.css">
+
+		<!-- Spectrum colour picker -->
+		<script src='enginejs/resources/misc/spectrum/spectrum.js'></script>
+		<link rel='stylesheet' href='enginejs/resources/misc/spectrum/spectrum.css' />
+
+		<script language="javascript">
+		var resources =
+		{
+			mat_sample : { file : "mat/wood.mat" }
+		};
+
+		var do_resize = function()
+		{
+			var canvas = document.getElementById("foo");
+
+			var width = canvas.clientWidth;
+			var height = canvas.clientHeight;
+
+			Engine.Canvas.Resize(width, height);
+		};
+		window.addEventListener('resize', do_resize);
+
+		$(document).ready(function()
+		{
+			var on_load = function()
+			{
+				// ====================================================================================================================================
+				// Misc
+				var mtx_trans = mat4.create();
+				var model_index = 0;
+				var model_rotate_enabled = true;
+				var debug_draw_normals = false;
+				do_resize();
+				Engine.Canvas.EnableContextMenu(false);
+
+				// ====================================================================================================================================
+				// Camera
+				var cam = new Engine.Camera.Perspective({ position: [0, 0, -3] });
+				cam.AttachHelper(new Engine.Camera.Helper.Orbit(
+				{
+					look_at : [0, 0, 0],
+					radius  : [3, 1.5, 10],
+					angles  : [0, 0],
+					min_y   : -(Math.PI / 2) - 0.2,
+					max_y   : (Math.PI / 2) - 0.1
+				}));
+
+				// ====================================================================================================================================
+				// Models
+				var object_models =
+				[
+					Engine.Geometry.MakeSphere(),
+					Engine.Resources["mdl_cube"]
+				];
+				var model_index = 0;
+
+				// ====================================================================================================================================
+				// Light
+				var sun =
+				{
+					model      : Engine.Geometry.MakeSphere(),
+					material   : new Engine.Gfx.Material(),
+					position   : [0, 5, 0],
+					angle      : 1,	// -90 --> 90 arc
+					direction  : [0, -1, 0],
+					ambient   : [ 0.6, 0.6, 0.6 ],
+					colour     : [0.7, 0.7, 0.7],
+					arc_radius : [30, 15],
+					arc_lift   : 5
+				};
+				Engine.Gfx.SetDirectionalLight(sun);
+
+				function update_light()
+				{
+					// Update light angle
+					sun.angle -= Engine.Mouse.GetWheelDelta() / 50;
+					sun.angle = Engine.Math.Clamp(sun.angle, -90, 90);
+
+					// Update light position
+					sun.position[0] = Math.sin(Engine.Math.DegToRad(sun.angle)) * sun.arc_radius[0];
+					sun.position[1] = sun.arc_lift + Math.cos(Engine.Math.DegToRad(sun.angle)) * sun.arc_radius[1];
+
+					// Update light direction
+					var len = Math.sqrt((sun.position[0] * sun.position[0]) + (sun.position[1]  * sun.position[1]));
+					sun.direction = [ -sun.position[0] / len, -sun.position[1] / len, 0 ];
+
+					// Process gamepad input
+					sun.angle += Engine.Keyboard.IsPressed("u")? -1 : (Engine.Keyboard.IsPressed("i")? 1 : 0);
+					var gamepad = Engine.Gamepad.Pads[0];
+					if(gamepad)
+					{
+						if(gamepad.IsPressed("lt"))
+						{
+							sun.colour[0] -= 0.01;
+							sun.colour[1] -= 0.01;
+							sun.colour[2] -= 0.01;
+						}
+						if(gamepad.IsPressed("rt"))
+						{
+							sun.colour[0] += 0.01;
+							sun.colour[1] += 0.01;
+							sun.colour[2] += 0.01;
+						}
+					}
+				};
+
+				var on_render = function()
+				{
+					// Clear
+					Engine.Gfx.Clear(Engine.Colour.Black);
+					Engine.Gfx.SetDepthTestMode(Engine.GL.LESS, true);
+
+					// Update & bind camera
+					cam.Update();
+					Engine.Gfx.BindCamera(cam);
+
+					// Update light
+					update_light();
+
+					if(Engine.Keyboard.IsPressed("m", true))
+					{
+						model_index = (model_index + 1) % object_models.length;
+					}
+
+					if(Engine.Keyboard.IsPressed("r", true))
+					{
+						model_rotate_enabled = !model_rotate_enabled;
+					}
+
+					// Position on grid
+					var model = object_models[model_index];
+					mat4.translate(mtx_trans, Engine.Math.IdentityMatrix, [0, 0, 0]);
+
+					// Rotate?
+					if($('#dorot').is(":checked") && !debug_draw_normals)
+					{
+						mat4.rotate(mtx_trans, mtx_trans, Engine.Time.elapsed_s / 3.0, [0, 1, 0]);
+					}
+
+					// Draw model
+					Engine.Gfx.BindMaterial(resources["mat_sample"]);
+					Engine.Gfx.DrawModel(model, mtx_trans, false, false);
+				};
+				return on_render;
+			};
+
+			//$( "input" ).checkboxradio();
+			$( "#accordion" ).accordion({ multiple: true, collapsible : true, animate: 50 });
+			Engine.Init(on_load, resources);
+		});
+
+		</script>
+	</head>
+
+	<body>
+		<div class="header row">
+			<h2 style="margin:0px; margin-top:5px; margin-left:5px; padding:0px;">Material Editor</h2>
+		</div>
+
+		<div class="body row">
+			<div class="left col">
+				<canvas id="foo" style="margin:0px; width:100%; height:100%; vertical-align: bottom"></canvas>
+			</div>
+			<div class="right col scroll-y" style="color:blue">
+				<div id="accordion">
+					<h3>Material</h3>
+					<div>
+						<p>
+						Mauris mauris ante, blandit et, ultrices a, suscipit eget, quam. Integer
+						ut neque. Vivamus nisi metus, molestie vel, gravida in, condimentum sit
+						amet, nunc. Nam a nibh. Donec suscipit eros. Nam mi. Proin viverra leo ut
+						odio. Curabitur malesuada. Vestibulum a velit eu ante scelerisque vulputate.
+						</p>
+					</div>
+
+					<h3>Lighting</h3>
+					<div>
+						<p>
+						Sed non urna. Donec et ante. Phasellus eu ligula. Vestibulum sit amet
+						purus. Vivamus hendrerit, dolor at aliquet laoreet, mauris turpis porttitor
+						velit, faucibus interdum tellus libero ac justo. Vivamus non quam. In
+						suscipit faucibus urna.
+						</p>
+					</div>
+
+					<h3>Debug</h3>
+					<div>
+						<label for="checkbox-1">Enable Rotation</label>
+						<input type="checkbox" name="checkbox-1" id="dorot">
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="footer row">
+			My footer
+		</div>
+	</body>
+</html>

@@ -114,6 +114,7 @@ function CreateSymlink(src, dest)
 // Setup symlinks
 CreateSymlink(enginejs_root + "/tools/sprite_previewer/enginejs", enginejs_root);
 CreateSymlink(enginejs_root + "/tools/shader_joy/enginejs", enginejs_root);
+CreateSymlink(enginejs_root + "/tools/material_editor/enginejs", enginejs_root);
 CreateSymlink(enginejs_root + "/tools/model_viewer/enginejs", enginejs_root);
 var samples = GetDirectories(enginejs_root + "/samples");
 for(var i = 0; i < samples.length; ++i)
