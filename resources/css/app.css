@@ -14,12 +14,12 @@ body { margin: 0; -webkit-text-size-adjust: 100%; }
 @media screen and (orientation:landscape) { .iemobile .page { bottom: 75px; } }
 
 /* Specific pane configuration */
-.header.row { height: 35px; background: #333; color:orange; }
-.body.row { top: 35px; bottom: 50px; background: #FFF; padding: 0px; }
-.footer.row { height: 50px; bottom: 0; background: #333; color: White; font-family: Segoe UI, Helvetica, Arial, Sans-Serif; }
+.header.row { height: 35px; background: #333; color:orange; background-image:url('../../resources/img/logo.png'); background-size: 110px; background-repeat: no-repeat; background-position: right 5px top 1px }
+.body.row { top: 35px; bottom: 20px; background: #FFF; padding: 0px; }
+.footer.row { height: 20px; bottom: 0; background: #333; color: White; font-family: Segoe UI, Helvetica, Arial, Sans-Serif; }
 
 .left.col { right: 400px; left: 0px ; }
-.right.col { left: ; right: 0px ; width:400px; background: #333; }
+.right.col { left: ; right: 0px ; width:400px; background: #696969; padding:0px; }
 .header.row { height: 35px; padding:0px }
-.body.row { top: 35px; bottom: 50px; }
-.footer.row { height: 50px; bottom: ; line-height: 50px; }
+.body.row { top: 35px; bottom: 20px; }
+.footer.row { height: 20px; bottom: ; font-size:12px; padding-left: 10px; padding-top:2px; }

@@ -8,12 +8,15 @@
 		<!-- EngineJS -->
 		<script type="text/javascript" src="enginejs/jquery.js"></script>
 		<script type="text/javascript" src="enginejs/engine.js"></script>
-		<script type="text/javascript" src="enginejs/resources/libs/jquery-ui.min.js"></script>
+		<script type="text/javascript" src="enginejs/resources/libs/jquery-ui.js"></script>
 		<script type="text/javascript" src="enginejs/resources/libs/jquery-ui.accordion.multiple.js"></script>
+		<script type="text/javascript" src="enginejs/resources/libs/jquery-ui.ion.check/js/ion.checkRadio.min.js"></script>
 
 		<!-- EngineJS App Framework -->
 		<link rel='stylesheet' href='enginejs/resources/css/app.css' />
 		<link rel="stylesheet" href="enginejs/resources/css/third_party/jquery-ui/jquery-ui.css">
+		<link rel="stylesheet" href="enginejs/resources/libs/jquery-ui.ion.check/css/ion.checkRadio.css">
+		<link rel="stylesheet" href="enginejs/resources/libs/jquery-ui.ion.check/css/ion.checkRadio.dark.css">
 
 		<!-- Spectrum colour picker -->
 		<script src='enginejs/resources/misc/spectrum/spectrum.js'></script>
@@ -22,7 +25,7 @@
 		<script language="javascript">
 		var resources =
 		{
-			mat_sample : { file : "mat/wood.mat" }
+			mat_custom : { file : "mat/wood.mat" }
 		};
 
 		var do_resize = function()
@@ -44,10 +47,16 @@
 				// Misc
 				var mtx_trans = mat4.create();
 				var model_index = 0;
-				var model_rotate_enabled = true;
+				var model_rotation = 0;
 				var debug_draw_normals = false;
 				do_resize();
 				Engine.Canvas.EnableContextMenu(false);
+
+				var mat = resources["mat_custom"];
+				$("#app_footer").text("Loaded: '" + mat.name + "' [ " + mat.descriptor.file + " ]");
+				$("#info_name").text(mat.name);
+				$("#info_path").text(mat.descriptor.file);
+				$("#info_shader").text(mat.shader.descriptor.file);
 
 				// ====================================================================================================================================
 				// Camera
@@ -138,30 +147,30 @@
 						model_index = (model_index + 1) % object_models.length;
 					}
 
-					if(Engine.Keyboard.IsPressed("r", true))
-					{
-						model_rotate_enabled = !model_rotate_enabled;
-					}
-
 					// Position on grid
 					var model = object_models[model_index];
 					mat4.translate(mtx_trans, Engine.Math.IdentityMatrix, [0, 0, 0]);
 
 					// Rotate?
-					if($('#dorot').is(":checked") && !debug_draw_normals)
+					if($("input[name='dorot']").is(":checked") && !debug_draw_normals)
 					{
-						mat4.rotate(mtx_trans, mtx_trans, Engine.Time.elapsed_s / 3.0, [0, 1, 0]);
+						model_rotation += Engine.Time.delta_s / 3.0;
 					}
+					mat4.rotate(mtx_trans, mtx_trans, model_rotation, [0, 1, 0]);
 
 					// Draw model
-					Engine.Gfx.BindMaterial(resources["mat_sample"]);
+					Engine.Gfx.BindMaterial(resources["mat_custom"]);
 					Engine.Gfx.DrawModel(model, mtx_trans, false, false);
 				};
 				return on_render;
 			};
 
-			//$( "input" ).checkboxradio();
-			$( "#accordion" ).accordion({ multiple: true, collapsible : true, animate: 50 });
+			$("input").ionCheckRadio();
+			$("#menu").menu();
+			$("#accordion").accordion({ active : false, multiple: true, collapsible : true, animate: 50, heightStyle: "content" });
+			$("#accordion").accordion('option', 'active' , 3); // open info section
+			$("#accordion").accordion('option', 'active' , 2); // open info section
+			$("#accordion").accordion('option', 'active' , 0); // open info section
 			Engine.Init(on_load, resources);
 		});
 
@@ -170,7 +179,7 @@
 
 	<body>
 		<div class="header row">
-			<h2 style="margin:0px; margin-top:5px; margin-left:5px; padding:0px;">Material Editor</h2>
+			<h2 style="margin:0px; margin-top:0px; margin-left:5px; padding:0px; font-family: Segoe UI,Arial,sans-serif; float:left; width:200px;">Material Editor</h2>
 		</div>
 
 		<div class="body row">
@@ -179,7 +188,7 @@
 			</div>
 			<div class="right col scroll-y" style="color:blue">
 				<div id="accordion">
-					<h3>Material</h3>
+					<h3 style="margin-top:0px">Material</h3>
 					<div>
 						<p>
 						Mauris mauris ante, blandit et, ultrices a, suscipit eget, quam. Integer
@@ -189,7 +198,7 @@
 						</p>
 					</div>
 
-					<h3>Lighting</h3>
+					<h3 style="margin-top:0px">Lighting</h3>
 					<div>
 						<p>
 						Sed non urna. Donec et ante. Phasellus eu ligula. Vestibulum sit amet
@@ -199,17 +208,26 @@
 						</p>
 					</div>
 
-					<h3>Debug</h3>
+					<h3 style="margin-top:0px">Debug</h3>
+					<div style="-moz-user-select: none; -webkit-user-select: none; -ms-user-select:none; user-select:none;-o-user-select:none;" unselectable="on">
+						<label>
+							<input type="checkbox" name="dorot" value="dd">
+							Enable Rotation
+						</label>
+					</div>
+
+					<h3 style="margin-top:0px">Info</h3>
 					<div>
-						<label for="checkbox-1">Enable Rotation</label>
-						<input type="checkbox" name="checkbox-1" id="dorot">
+						<label><strong>Name: </strong></label><span id="info_name"></span><br/>
+						<label><strong>Path: </strong></label><span id="info_path"></span><br/>
+						<label><strong>Shader: </strong></label><span id="info_shader"></span><br/>
 					</div>
 				</div>
 			</div>
 		</div>
 
-		<div class="footer row">
-			My footer
+		<div id="app_footer" class="footer row">
+			Loading...
 		</div>
 	</body>
 </html>
