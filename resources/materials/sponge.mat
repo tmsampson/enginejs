@@ -12,9 +12,9 @@
 	{
 		"sampler2D"  :
 		{
-			"albedo_map"          : { "file": "img/sponge_a.png" },
-			"normal_map"          : { "file": "img/sponge_n.png" },
-			"specular_map"        : { "file": "img/sponge_s.png" }
+			"albedo_map"          : { "file": "enginejs/resources/img/materials/sponge/sponge_a.png" },
+			"normal_map"          : { "file": "enginejs/resources/img/materials/sponge/sponge_n.png" },
+			"specular_map"        : { "file": "enginejs/resources/img/materials/sponge/sponge_s.png" }
 		},
 		"float"      :
 		{
