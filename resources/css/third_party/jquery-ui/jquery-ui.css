@@ -743,7 +743,7 @@ button.ui-button::-moz-focus-inner {
 	z-index: 1;
 	font-size: .7em;
 	display: block;
-	border: 0;
+	border: 0;  
 	background-position: 0 0;
 }
 
@@ -757,7 +757,7 @@ button.ui-button::-moz-focus-inner {
 	height: .8em;
 }
 .ui-slider-horizontal .ui-slider-handle {
-	top: -.3em;
+	top: -2px;
 	margin-left: -.6em;
 }
 .ui-slider-horizontal .ui-slider-range {
@@ -904,8 +904,9 @@ body .ui-tooltip {
 }
 .ui-widget-content {
 	/*border: 1px solid #9c9c9c;*/
-	background: #696969 url("images/ui-bg_highlight-hard_25_696969_1x100.png") 50% top repeat-x;
+	/*background: #696969 url("images/ui-bg_highlight-hard_25_696969_1x100.png") 50% top repeat-x;*/
 	color: #ffffff;
+	background-color: #888;
 }
 .ui-widget-content a {
 	color: #ffffff;

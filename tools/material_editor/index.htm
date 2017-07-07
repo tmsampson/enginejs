@@ -22,6 +22,73 @@
 		<script src='enginejs/resources/misc/spectrum/spectrum.js'></script>
 		<link rel='stylesheet' href='enginejs/resources/misc/spectrum/spectrum.css' />
 
+		<style>
+		.editor_section_heading
+		{
+			margin-top:0px !important;
+		}
+
+		.editor_section
+		{
+			overflow:hidden !important;
+		}
+
+		.editor_section h4
+		{
+			margin: 0px;
+			margin-left:-15px;
+			margin-bottom:6px;
+			padding:0px;
+			color : #EEE;
+			text-decoration: underline
+		}
+
+		.editor_row
+		{
+			/*border:1px solid yellow;*/
+			margin-left:-15px;
+			margin-bottom:3px;
+			width:370px;
+			height:25px;
+			overflow:hidden;
+		}
+
+		.editor_row .editor_label
+		{
+			width:130px;
+			float:left;
+			clear:right;
+			-moz-user-select: none;
+			-webkit-user-select: none;
+			-ms-user-select:none;
+			user-select:none;
+			-o-user-select:none;
+			overflow:hidden;
+		}
+
+		.editor_row .editor_slider
+		{
+			width:220px;
+			float:left;
+			position:relative;
+			top: 5px;
+		}
+
+		.editor_row input[type="color"]
+		{
+			height:20px;
+		}
+
+		.editor_row input[type="text"]
+		{
+			-webkit-border-radius: 6px;
+			-moz-border-radius: 6px;
+			border-radius: 6px;
+			width:220px;
+			font-size:12px;
+		}
+		</style>
+
 		<script language="javascript">
 		var resources =
 		{
@@ -54,9 +121,10 @@
 
 				var mat = resources["mat_custom"];
 				$("#app_footer").text("Loaded: '" + mat.name + "' [ " + mat.descriptor.file + " ]");
-				$("#info_name").text(mat.name);
-				$("#info_path").text(mat.descriptor.file);
-				$("#info_shader").text(mat.shader.descriptor.file);
+				$("#info_name").val(mat.name);
+				$("#info_type").val(mat.type);
+				$("#info_path").val(mat.descriptor.file);
+				$("#info_shader").val(mat.shader.descriptor.file);
 
 				// ====================================================================================================================================
 				// Camera
@@ -98,8 +166,7 @@
 				function update_light()
 				{
 					// Update light angle
-					sun.angle -= Engine.Mouse.GetWheelDelta() / 50;
-					sun.angle = Engine.Math.Clamp(sun.angle, -90, 90);
+					sun.angle = $("#slider_light_angle").slider("values", 0);
 
 					// Update light position
 					sun.position[0] = Math.sin(Engine.Math.DegToRad(sun.angle)) * sun.arc_radius[0];
@@ -109,24 +176,19 @@
 					var len = Math.sqrt((sun.position[0] * sun.position[0]) + (sun.position[1]  * sun.position[1]));
 					sun.direction = [ -sun.position[0] / len, -sun.position[1] / len, 0 ];
 
-					// Process gamepad input
-					sun.angle += Engine.Keyboard.IsPressed("u")? -1 : (Engine.Keyboard.IsPressed("i")? 1 : 0);
-					var gamepad = Engine.Gamepad.Pads[0];
-					if(gamepad)
-					{
-						if(gamepad.IsPressed("lt"))
-						{
-							sun.colour[0] -= 0.01;
-							sun.colour[1] -= 0.01;
-							sun.colour[2] -= 0.01;
-						}
-						if(gamepad.IsPressed("rt"))
-						{
-							sun.colour[0] += 0.01;
-							sun.colour[1] += 0.01;
-							sun.colour[2] += 0.01;
-						}
-					}
+					// Ambient
+					var amb_intensity = $("#slider_amb_intensity").slider("values", 0);
+					var amb_colour = Engine.Colour.FromHex($("#amb_colour").val());
+					sun.ambient[0] = amb_colour[0] * (amb_intensity / 100);
+					sun.ambient[1] = amb_colour[1] * (amb_intensity / 100);
+					sun.ambient[2] = amb_colour[2] * (amb_intensity / 100);
+
+					// Directional
+					var light_intensity = $("#slider_light_intensity").slider("values", 0);
+					var light_colour = Engine.Colour.FromHex($("#light_colour").val());
+					sun.colour[0] = light_colour[0] * (light_intensity / 100);
+					sun.colour[1] = light_colour[1] * (light_intensity / 100);
+					sun.colour[2] = light_colour[2] * (light_intensity / 100);
 				};
 
 				var on_render = function()
@@ -165,12 +227,17 @@
 				return on_render;
 			};
 
-			$("input").ionCheckRadio();
+			$("input[name='dorot']").ionCheckRadio();
 			$("#menu").menu();
 			$("#accordion").accordion({ active : false, multiple: true, collapsible : true, animate: 50, heightStyle: "content" });
 			$("#accordion").accordion('option', 'active' , 3); // open info section
-			$("#accordion").accordion('option', 'active' , 2); // open info section
-			$("#accordion").accordion('option', 'active' , 0); // open info section
+			$("#accordion").accordion('option', 'active' , 2); // open debug section
+			$("#accordion").accordion('option', 'active' , 1); // open light section
+			$("#accordion").accordion('option', 'active' , 0); // open mat section
+			$("#slider_amb_intensity").slider({ min : 0, max : 100, value: 50 });
+			$("#slider_light_intensity").slider({ min : 0, max : 100, value: 50 });
+			$("#slider_light_angle").slider({ min : -90, max : 90, value: 45 });
+
 			Engine.Init(on_load, resources);
 		});
 
@@ -188,7 +255,7 @@
 			</div>
 			<div class="right col scroll-y" style="color:blue">
 				<div id="accordion">
-					<h3 style="margin-top:0px">Material</h3>
+					<h3 class="editor_section_heading">Material</h3>
 					<div>
 						<p>
 						Mauris mauris ante, blandit et, ultrices a, suscipit eget, quam. Integer
@@ -198,29 +265,63 @@
 						</p>
 					</div>
 
-					<h3 style="margin-top:0px">Lighting</h3>
-					<div>
-						<p>
-						Sed non urna. Donec et ante. Phasellus eu ligula. Vestibulum sit amet
-						purus. Vivamus hendrerit, dolor at aliquet laoreet, mauris turpis porttitor
-						velit, faucibus interdum tellus libero ac justo. Vivamus non quam. In
-						suscipit faucibus urna.
-						</p>
+					<h3 class="editor_section_heading">Lighting</h3>
+					<div class="editor_section">
+						<h4>Ambient Light</h4>
+						<div class="editor_row">
+							<div class="editor_label">Ambient Colour:</div>
+							<input id="amb_colour" type="color" value="#ffffff"/>
+						</div>
+
+						<div class="editor_row">
+							<div class="editor_label">Ambient Intensity:</div>
+							<div id='slider_amb_intensity' class="editor_slider"></div>
+						</div>
+
+						<br/>
+						<h4>Directional Light</h4>
+						<div class="editor_row">
+							<div class="editor_label">Light Colour:</div>
+							<input id="light_colour" type="color" value="#ffffff"/>
+						</div>
+
+						<div class="editor_row">
+							<div class="editor_label">Light Intensity:</div>
+							<div id='slider_light_intensity' class="editor_slider"></div>
+						</div>
+
+						<div class="editor_row">
+							<div class="editor_label">Light Angle:</div>
+							<div id='slider_light_angle' class="editor_slider"></div>
+						</div>
 					</div>
 
-					<h3 style="margin-top:0px">Debug</h3>
-					<div style="-moz-user-select: none; -webkit-user-select: none; -ms-user-select:none; user-select:none;-o-user-select:none;" unselectable="on">
-						<label>
-							<input type="checkbox" name="dorot" value="dd">
-							Enable Rotation
-						</label>
+					<h3 class="editor_section_heading">Debug</h3>
+					<div class="editor_section">
+						<div class="editor_row">
+							<div class="editor_label">Enable Rotation</div>
+							<label><input type="checkbox" name="dorot" value="dd"></label>
+						</div>
 					</div>
 
-					<h3 style="margin-top:0px">Info</h3>
-					<div>
-						<label><strong>Name: </strong></label><span id="info_name"></span><br/>
-						<label><strong>Path: </strong></label><span id="info_path"></span><br/>
-						<label><strong>Shader: </strong></label><span id="info_shader"></span><br/>
+					<h3 class="editor_section_heading">Info</h3>
+					<div class="editor_section">
+						<div class="editor_row">
+							<div class="editor_label">Name:</div>
+							<input id="info_name" type="text" disabled/>
+						</div>
+						<div class="editor_row">
+							<div class="editor_label">Type:</div>
+							<input id="info_type" type="text" disabled/>
+						</div>
+						<div class="editor_row">
+							<div class="editor_label">Path:</div>
+							<input id="info_path" type="text" disabled/>
+						</div>
+						<div class="editor_row">
+							<div class="editor_label">Shader:</div>
+							<input id="info_shader" type="text" disabled/>
+						</div>
 					</div>
 				</div>
 			</div>
