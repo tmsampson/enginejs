@@ -175,6 +175,13 @@ Engine.Gfx.Material = function(prevent_default)
 	// Config Setters
 	this.SetConfig = function(config_param_name, new_value)
 	{
+		// Early out if the value hasn't changed to prevent having to call InitStandardShader
+		if(Engine.Util.IsDefined(this.config[config_param_name]) &&
+		   this.config[config_param_name] == new_value)
+		{
+			return;
+		}
+
 		this.config[config_param_name] = new_value;
 
 		// Important: Modifying config parameters for standard shaders means we potentially need to select a new shader permutation
