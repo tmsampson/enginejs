@@ -139,7 +139,8 @@ void main(void)
 	// Diffuse
 	// *************************************************************************************
 #ifdef USE_DIFFUSE
-	vec4 diffuse = material_albedo * vec4(u_sun_colour, 1.0) * max(0.0, dot(normal, -u_sun_dir));
+	float n_dot_l = max(0.0, dot(normal, -u_sun_dir));
+	vec4 diffuse = material_albedo * vec4(u_sun_colour, 1.0) * n_dot_l;
 #else
 	vec4 diffuse = vec4(0.0);
 #endif
@@ -153,7 +154,7 @@ void main(void)
 	vec3 frag_to_light = -u_sun_dir;
 	vec3 frag_to_cam = normalize(u_cam_pos - v_world_pos.xyz);
 	vec3 half_vector = normalize(frag_to_light + frag_to_cam);
-	specular = specular_colour * vec4(u_sun_colour, 1.0) * pow(max(dot(normal, half_vector), 0.0), specular_shininess);
+	specular = n_dot_l * specular_colour * vec4(u_sun_colour, 1.0) * pow(max(dot(normal, half_vector), 0.0), specular_shininess);
 
 	#ifdef USE_SPECULAR_MAP
 		vec4 specular_map = texture2D(specular_map, v_uv.xy * specular_map_repeat);
