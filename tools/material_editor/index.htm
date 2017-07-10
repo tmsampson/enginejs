@@ -105,7 +105,14 @@
 		<script language="javascript">
 		var resources =
 		{
-			mat_custom : { file : "mat/wood.mat" }
+			mat_sponge        : { file : "mat/sponge.mat"},
+			mat_wool          : { file : "mat/wool.mat"},
+			mat_shiny_plastic : { file : "mat/shiny-plastic.mat"},
+			mat_rusty_metal   : { file : "mat/rusty-metal.mat"},
+			mat_stone         : { file : "mat/stone.mat"},
+			mat_wood          : { file : "mat/wood.mat"},
+			mat_snooker_ball  : { file : "mat/snooker-ball.mat"},
+			mat_carpet        : { file : "mat/carpet.mat"},
 		};
 
 		var do_resize = function()
@@ -119,6 +126,217 @@
 		};
 		window.addEventListener('resize', do_resize);
 
+		// ====================================================================================================================================
+		// Light
+		var model_rotation = 0;
+		var sun =
+		{
+			position   : [0, 5, 0],
+			angle      : 1,	// -90 --> 90 arc
+			direction  : [0, -1, 0],
+			ambient   : [ 0.6, 0.6, 0.6 ],
+			colour     : [0.7, 0.7, 0.7],
+			arc_radius : [30, 15],
+			arc_lift   : 5
+		};
+
+		// ====================================================================================================================================
+		// Materials
+		var object_materials = [];
+		var material_index = 0;
+
+		var init_ui = function()
+		{
+			// Populate material section
+			$("#mat_albedo_texture_repeat_x").spinner({ step: 0.5, numberFormat: "n" });
+			$("#mat_albedo_texture_repeat_y").spinner({ step: 0.5, numberFormat: "n" });
+			$("input[name='mat_specular_enabled']").ionCheckRadio();
+			$("#mat_specular_shininess").slider({ min : 0, max : 100, value: 8 });
+			$("#mat_specular_texture_repeat_x").spinner({ step: 0.5, numberFormat: "n" });
+			$("#mat_specular_texture_repeat_y").spinner({ step: 0.5, numberFormat: "n" });
+			$("#mat_normal_texture_repeat_x").spinner({ step: 0.5, numberFormat: "n" });
+			$("#mat_normal_texture_repeat_y").spinner({ step: 0.5, numberFormat: "n" });
+			$("input[name='mat_fresnel_enabled']").ionCheckRadio();
+			$("#mat_fresnel_scale").slider({ min : 0, max : 100, value: 60 });
+			$("#mat_fresnel_bias").slider({ min : 0, max : 100, value: 0 });
+			$("#mat_fresnel_power").slider({ min : 0, max : 10, value: 5 });
+
+			// Populate lighting section
+			$("#slider_amb_intensity").slider({ min : 0, max : 100, value: 50 });
+			$("#slider_light_intensity").slider({ min : 0, max : 100, value: 50 });
+			$("#slider_light_angle").slider({ min : -90, max : 90, value: 45 });
+
+			// Populate debug section
+			$("input[name='debug_rotation_enabled']").ionCheckRadio();
+		};
+
+		var populate_ui = function()
+		{
+			// Grab loaded material
+			var mat = object_materials[material_index];
+
+			// Update status bar
+			$("#app_footer").text("Loaded: '" + mat.name + "' [ " + mat.descriptor.file + " ]");
+
+			// Populate material section
+			$("#mat_albedo_colour").val("#ffffff");
+			if(Engine.Util.IsDefined(mat.properties.vec4.albedo_colour))
+			{
+				var hex_string = Engine.Colour.ToHex(mat.properties.vec4.albedo_colour);
+				$("#mat_albedo_colour").val(hex_string);
+			}
+			$("#mat_albedo_texture").val("");
+			if(Engine.Util.IsDefined(mat.properties.sampler2D.albedo_map) &&
+				mat.properties.sampler2D.albedo_map != null)
+			{
+				$("#mat_albedo_texture").val(mat.properties.sampler2D.albedo_map.descriptor.file);
+			}
+			$("#mat_albedo_texture_repeat_x").val(1);
+			$("#mat_albedo_texture_repeat_y").val(1)
+			if(Engine.Util.IsDefined(mat.properties.vec2.albedo_map_repeat))
+			{
+				var albedo_repeat = mat.properties.vec2.albedo_map_repeat;
+				$("#mat_albedo_texture_repeat_x").val(albedo_repeat[0]);
+				$("#mat_albedo_texture_repeat_y").val(albedo_repeat[1]);
+			}
+			$("input[name='mat_specular_enabled']")[0].checked = false;
+			$("input[name='mat_specular_enabled']").trigger("change");
+			$("#mat_specular_colour").val("#ffffff");
+			$("#mat_specular_shininess").slider("option", "value", 8);
+			$("#mat_specular_texture").val("");
+			$("#mat_specular_texture_repeat_x").val(1);
+			$("#mat_specular_texture_repeat_y").val(1)
+			if(Engine.Util.IsDefined(mat.config.specular_enabled) && mat.config.specular_enabled)
+			{
+				$("input[name='mat_specular_enabled']")[0].checked = mat.config.specular_enabled;
+				$("input[name='mat_specular_enabled']").trigger("change");
+
+				if(Engine.Util.IsDefined(mat.properties.vec4.specular_colour))
+				{
+					var hex_string = Engine.Colour.ToHex(mat.properties.vec4.specular_colour);
+					$("#mat_specular_colour").val(hex_string);
+				}
+				if(Engine.Util.IsDefined(mat.properties.float.specular_shininess))
+				{
+					$("#mat_specular_shininess").slider("option", "value", mat.properties.float.specular_shininess);
+				}
+				if(Engine.Util.IsDefined(mat.properties.sampler2D.specular_map) &&
+					mat.properties.sampler2D.specular_map != null)
+				{
+					$("#mat_specular_texture").val(mat.properties.sampler2D.specular_map.descriptor.file);
+				}
+				if(Engine.Util.IsDefined(mat.properties.vec2.specular_map_repeat))
+				{
+					var specular_repeat = mat.properties.vec2.specular_map_repeat;
+					$("#mat_specular_texture_repeat_x").val(specular_repeat[0]);
+					$("#mat_specular_texture_repeat_y").val(specular_repeat[1]);
+				}
+			}
+
+			$("#mat_normal_texture").val("");
+			$("#mat_normal_texture_repeat_x").val(1);
+			$("#mat_normal_texture_repeat_y").val(1)
+			if(Engine.Util.IsDefined(mat.properties.sampler2D.normal_map) &&
+				mat.properties.sampler2D.normal_map != null)
+			{
+				$("#mat_normal_texture").val(mat.properties.sampler2D.normal_map.descriptor.file);
+			}
+			if(Engine.Util.IsDefined(mat.properties.vec2.normal_map_repeat))
+			{
+				var normal_repeat = mat.properties.vec2.normal_map_repeat;
+				$("#mat_normal_texture_repeat_x").val(normal_repeat[0]);
+				$("#mat_normal_texture_repeat_y").val(normal_repeat[1]);
+			}
+			$("input[name='mat_fresnel_enabled']")[0].checked = false;
+			$("input[name='mat_fresnel_enabled']").trigger("change");
+			$("#mat_fresnel_colour").val("#ffffff");
+			$("#mat_fresnel_scale").slider("option", "value", 60);
+			$("#mat_fresnel_bias").slider("option", "value", 0);
+			$("#mat_fresnel_power").slider("option", "value", 5);
+			if(Engine.Util.IsDefined(mat.config.fresnel_enabled) && mat.config.fresnel_enabled)
+			{
+				$("input[name='mat_fresnel_enabled']")[0].checked = mat.config.fresnel_enabled;
+				$("input[name='mat_fresnel_enabled']").trigger("change");
+
+				if(Engine.Util.IsDefined(mat.properties.vec4.fresnel_colour))
+				{
+					var hex_string = Engine.Colour.ToHex(mat.properties.vec4.fresnel_colour);
+					$("#mat_fresnel_colour").val(hex_string);
+				}
+				if(Engine.Util.IsDefined(mat.properties.float.fresnel_scale))
+				{
+					$("#mat_fresnel_scale").slider("option", "value", mat.properties.float.fresnel_scale);
+				}
+				if(Engine.Util.IsDefined(mat.properties.float.fresnel_bias))
+				{
+					$("#mat_fresnel_bias").slider("option", "value", mat.properties.float.fresnel_bias);
+				}
+				if(Engine.Util.IsDefined(mat.properties.float.fresnel_power))
+				{
+					$("#mat_fresnel_power").slider("option", "value", mat.properties.float.fresnel_power);
+				}
+			}
+
+			// Populate info section
+			$("#info_name").val(mat.name);
+			$("#info_type").val(mat.type);
+			$("#info_path").val(mat.descriptor.file);
+			$("#info_file_size").val(mat.descriptor.file_size + " bytes");
+			$("#info_shader").val(mat.shader.descriptor.file);
+		};
+
+		var bind_ui = function()
+		{
+			// Grab loaded material
+			var mat = object_materials[material_index];
+
+			// Bind material data
+			mat.SetColour("albedo_colour", Engine.Colour.FromHex($("#mat_albedo_colour").val()));
+			mat.SetVector2("albedo_map_repeat", [ $("#mat_albedo_texture_repeat_x").val(), $("#mat_albedo_texture_repeat_y").val() ]);
+			mat.SetConfig("specular_enabled", $("input[name='mat_specular_enabled']").is(":checked"));
+			mat.SetColour("specular_colour", Engine.Colour.FromHex($("#mat_specular_colour").val()));
+			mat.SetFloat("specular_shininess", [ $("#mat_specular_shininess").slider("values", 0) ]);
+			mat.SetVector2("specular_map_repeat", [ $("#mat_specular_texture_repeat_x").val(), $("#mat_specular_texture_repeat_y").val() ]);
+			mat.SetVector2("normal_map_repeat", [ $("#mat_normal_texture_repeat_x").val(), $("#mat_normal_texture_repeat_y").val() ]);
+			mat.SetConfig("fresnel_enabled", $("input[name='mat_fresnel_enabled']").is(":checked"));
+			mat.SetColour("fresnel_colour", Engine.Colour.FromHex($("#mat_fresnel_colour").val()));
+			mat.SetFloat("fresnel_scale", [ $("#mat_fresnel_scale").slider("values", 0) / 100 ]);
+			mat.SetFloat("fresnel_bias", [ $("#mat_fresnel_bias").slider("values", 0) / 100 ]);
+			mat.SetFloat("fresnel_power", [ $("#mat_fresnel_power").slider("values", 0) ]);
+
+			// Update light angle
+			sun.angle = $("#slider_light_angle").slider("values", 0);
+
+			// Update light position
+			sun.position[2] = Math.sin(Engine.Math.DegToRad(sun.angle)) * sun.arc_radius[0];
+			sun.position[1] = sun.arc_lift + Math.cos(Engine.Math.DegToRad(sun.angle)) * sun.arc_radius[1];
+			sun.position[0] = 0;
+
+			// Update light direction
+			var len = Math.sqrt((sun.position[2] * sun.position[2]) + (sun.position[1]  * sun.position[1]));
+			sun.direction = [ -sun.position[0] / len, -sun.position[1] / len, sun.position[2] / len ];
+
+			// Ambient
+			var amb_intensity = $("#slider_amb_intensity").slider("values", 0);
+			var amb_colour = Engine.Colour.FromHex($("#amb_colour").val());
+			sun.ambient[0] = amb_colour[0] * (amb_intensity / 100);
+			sun.ambient[1] = amb_colour[1] * (amb_intensity / 100);
+			sun.ambient[2] = amb_colour[2] * (amb_intensity / 100);
+
+			// Directional
+			var light_intensity = $("#slider_light_intensity").slider("values", 0);
+			var light_colour = Engine.Colour.FromHex($("#light_colour").val());
+			sun.colour[0] = light_colour[0] * (light_intensity / 100);
+			sun.colour[1] = light_colour[1] * (light_intensity / 100);
+			sun.colour[2] = light_colour[2] * (light_intensity / 100);
+
+			// Rotate?
+			if($("input[name='debug_rotation_enabled']").is(":checked"))
+			{
+				model_rotation += Engine.Time.delta_s / 3.0;
+			}
+		};
+
 		$(document).ready(function()
 		{
 			var on_load = function()
@@ -127,17 +345,33 @@
 				// Misc
 				var mtx_trans = mat4.create();
 				var model_index = 0;
-				var model_rotation = 0;
-				var debug_draw_normals = false;
 				do_resize();
 				Engine.Canvas.EnableContextMenu(false);
 
-				var mat = resources["mat_custom"];
-				$("#app_footer").text("Loaded: '" + mat.name + "' [ " + mat.descriptor.file + " ]");
-				$("#info_name").val(mat.name);
-				$("#info_type").val(mat.type);
-				$("#info_path").val(mat.descriptor.file);
-				$("#info_shader").val(mat.shader.descriptor.file);
+				object_materials =
+				[
+					resources["mat_sponge"],
+					resources["mat_carpet"],
+					resources["mat_shiny_plastic"],
+					resources["mat_rusty_metal"],
+					resources["mat_wool"],
+					resources["mat_wood"],
+					resources["mat_stone"],
+					resources["mat_snooker_ball"],
+				];
+
+				// ====================================================================================================================================
+				// Populate UI
+				populate_ui();
+
+				// ====================================================================================================================================
+				// Models
+				var object_models =
+				[
+					Engine.Geometry.MakeSphere(),
+					Engine.Resources["mdl_cube"]
+				];
+				var model_index = 0;
 
 				// ====================================================================================================================================
 				// Camera
@@ -151,58 +385,10 @@
 					max_y   : (Math.PI / 2) - 0.1
 				}));
 
-				// ====================================================================================================================================
-				// Models
-				var object_models =
-				[
-					Engine.Geometry.MakeSphere(),
-					Engine.Resources["mdl_cube"]
-				];
-				var model_index = 0;
 
 				// ====================================================================================================================================
 				// Light
-				var sun =
-				{
-					model      : Engine.Geometry.MakeSphere(),
-					material   : new Engine.Gfx.Material(),
-					position   : [0, 5, 0],
-					angle      : 1,	// -90 --> 90 arc
-					direction  : [0, -1, 0],
-					ambient   : [ 0.6, 0.6, 0.6 ],
-					colour     : [0.7, 0.7, 0.7],
-					arc_radius : [30, 15],
-					arc_lift   : 5
-				};
 				Engine.Gfx.SetDirectionalLight(sun);
-
-				function update_light()
-				{
-					// Update light angle
-					sun.angle = $("#slider_light_angle").slider("values", 0);
-
-					// Update light position
-					sun.position[0] = Math.sin(Engine.Math.DegToRad(sun.angle)) * sun.arc_radius[0];
-					sun.position[1] = sun.arc_lift + Math.cos(Engine.Math.DegToRad(sun.angle)) * sun.arc_radius[1];
-
-					// Update light direction
-					var len = Math.sqrt((sun.position[0] * sun.position[0]) + (sun.position[1]  * sun.position[1]));
-					sun.direction = [ -sun.position[0] / len, -sun.position[1] / len, 0 ];
-
-					// Ambient
-					var amb_intensity = $("#slider_amb_intensity").slider("values", 0);
-					var amb_colour = Engine.Colour.FromHex($("#amb_colour").val());
-					sun.ambient[0] = amb_colour[0] * (amb_intensity / 100);
-					sun.ambient[1] = amb_colour[1] * (amb_intensity / 100);
-					sun.ambient[2] = amb_colour[2] * (amb_intensity / 100);
-
-					// Directional
-					var light_intensity = $("#slider_light_intensity").slider("values", 0);
-					var light_colour = Engine.Colour.FromHex($("#light_colour").val());
-					sun.colour[0] = light_colour[0] * (light_intensity / 100);
-					sun.colour[1] = light_colour[1] * (light_intensity / 100);
-					sun.colour[2] = light_colour[2] * (light_intensity / 100);
-				};
 
 				var on_render = function()
 				{
@@ -214,54 +400,42 @@
 					cam.Update();
 					Engine.Gfx.BindCamera(cam);
 
-					// Update light
-					update_light();
+					// Bind data from UI
+					bind_ui();
+
+					if(Engine.Keyboard.IsPressed("t", true))
+					{
+						model_index = (model_index + 1) % object_models.length;
+					}
 
 					if(Engine.Keyboard.IsPressed("m", true))
 					{
-						model_index = (model_index + 1) % object_models.length;
+						material_index = (material_index + 1) % object_materials.length;
+						init_ui();
+						populate_ui();
 					}
 
 					// Position on grid
 					var model = object_models[model_index];
 					mat4.translate(mtx_trans, Engine.Math.IdentityMatrix, [0, 0, 0]);
-
-					// Rotate?
-					if($("input[name='dorot']").is(":checked") && !debug_draw_normals)
-					{
-						model_rotation += Engine.Time.delta_s / 3.0;
-					}
 					mat4.rotate(mtx_trans, mtx_trans, model_rotation, [0, 1, 0]);
 
 					// Draw model
-					Engine.Gfx.BindMaterial(resources["mat_custom"]);
+					Engine.Gfx.BindMaterial(object_materials[material_index]);
 					Engine.Gfx.DrawModel(model, mtx_trans, false, false);
 				};
 				return on_render;
 			};
 
-			$("input[name='dorot']").ionCheckRadio();
-			$("#menu").menu();
+			// Initialise UI
 			$("#accordion").accordion({ active : false, multiple: true, collapsible : true, animate: 50, heightStyle: "content" });
 			$("#accordion").accordion('option', 'active' , 3); // open info section
 			$("#accordion").accordion('option', 'active' , 2); // open debug section
 			$("#accordion").accordion('option', 'active' , 1); // open light section
 			$("#accordion").accordion('option', 'active' , 0); // open mat section
-			$("#slider_amb_intensity").slider({ min : 0, max : 100, value: 50 });
-			$("#slider_light_intensity").slider({ min : 0, max : 100, value: 50 });
-			$("#slider_light_angle").slider({ min : -90, max : 90, value: 45 });
-			$("#mat_albedo_texture_repeat_x").spinner({ step: 0.5, numberFormat: "n" });
-			$("#mat_albedo_texture_repeat_y").spinner({ step: 0.5, numberFormat: "n" });
-			$("input[name='mat_specular_enabled']").ionCheckRadio();
-			$("#mat_specular_shininess").slider({ min : 0, max : 100, value: 8 });
-			$("#mat_specular_texture_repeat_x").spinner({ step: 0.5, numberFormat: "n" });
-			$("#mat_specular_texture_repeat_y").spinner({ step: 0.5, numberFormat: "n" });
-			$("#mat_normal_texture_repeat_x").spinner({ step: 0.5, numberFormat: "n" });
-			$("#mat_normal_texture_repeat_y").spinner({ step: 0.5, numberFormat: "n" });
-			$("#mat_fresnel_scale").slider({ min : 0, max : 100, value: 60 });
-			$("#mat_fresnel_bias").slider({ min : 0, max : 100, value: 0 });
-			$("#mat_fresnel_power").slider({ min : 0, max : 100, value: 20 });
+			init_ui();
 
+			// Initialise engine
 			Engine.Init(on_load, resources);
 		});
 
@@ -300,7 +474,7 @@
 						<h4>Specular</h4>
 						<div class="editor_row">
 							<div class="editor_label">Enabled:</div>
-							<label><input type="checkbox" name="mat_specular_enabled" value="dd"></label>
+							<label><input type="checkbox" name="mat_specular_enabled"></label>
 						</div>
 						<div class="editor_row">
 							<div class="editor_label">Colour:</div>
@@ -334,6 +508,10 @@
 
 						<br/>
 						<h4>Fresnel</h4>
+						<div class="editor_row">
+							<div class="editor_label">Enabled:</div>
+							<label><input type="checkbox" name="mat_fresnel_enabled"></label>
+						</div>
 						<div class="editor_row">
 							<div class="editor_label">Colour:</div>
 							<input id="mat_fresnel_colour" type="color" value="#ffffff"/>
@@ -387,7 +565,7 @@
 					<div class="editor_section">
 						<div class="editor_row">
 							<div class="editor_label">Enable Rotation</div>
-							<label><input type="checkbox" name="dorot" value="dd"></label>
+							<label><input type="checkbox" name="debug_rotation_enabled" value="dd"></label>
 						</div>
 					</div>
 
@@ -404,6 +582,10 @@
 						<div class="editor_row">
 							<div class="editor_label">Path:</div>
 							<input id="info_path" type="text" disabled/>
+						</div>
+						<div class="editor_row">
+							<div class="editor_label">File Size:</div>
+							<input id="info_file_size" type="text" disabled/>
 						</div>
 						<div class="editor_row">
 							<div class="editor_label">Shader:</div>
