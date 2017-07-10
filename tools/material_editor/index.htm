@@ -36,11 +36,14 @@
 		.editor_section h4
 		{
 			margin: 0px;
-			margin-left:-15px;
-			margin-bottom:6px;
-			padding:0px;
-			color : #EEE;
-			text-decoration: underline
+			margin-left: -15px;
+			margin-bottom: 8px;
+			padding: 0px;
+			color: #EEE;
+			border-bottom: 2px solid #424242;
+			width: 109%;
+			padding-bottom: 2px;
+			color: #424242;
 		}
 
 		.editor_row
@@ -86,6 +89,16 @@
 			border-radius: 6px;
 			width:220px;
 			font-size:12px;
+		}
+
+		.editor_row .editor_float_small
+		{
+			width:40px;
+			height:15px;
+			float:left;
+			clear:right;
+			font-size:0.8em;
+			padding:0px;
 		}
 		</style>
 
@@ -237,6 +250,17 @@
 			$("#slider_amb_intensity").slider({ min : 0, max : 100, value: 50 });
 			$("#slider_light_intensity").slider({ min : 0, max : 100, value: 50 });
 			$("#slider_light_angle").slider({ min : -90, max : 90, value: 45 });
+			$("#mat_albedo_texture_repeat_x").spinner({ step: 0.5, numberFormat: "n" });
+			$("#mat_albedo_texture_repeat_y").spinner({ step: 0.5, numberFormat: "n" });
+			$("input[name='mat_specular_enabled']").ionCheckRadio();
+			$("#mat_specular_shininess").slider({ min : 0, max : 100, value: 8 });
+			$("#mat_specular_texture_repeat_x").spinner({ step: 0.5, numberFormat: "n" });
+			$("#mat_specular_texture_repeat_y").spinner({ step: 0.5, numberFormat: "n" });
+			$("#mat_normal_texture_repeat_x").spinner({ step: 0.5, numberFormat: "n" });
+			$("#mat_normal_texture_repeat_y").spinner({ step: 0.5, numberFormat: "n" });
+			$("#mat_fresnel_scale").slider({ min : 0, max : 100, value: 60 });
+			$("#mat_fresnel_bias").slider({ min : 0, max : 100, value: 0 });
+			$("#mat_fresnel_power").slider({ min : 0, max : 100, value: 20 });
 
 			Engine.Init(on_load, resources);
 		});
@@ -256,13 +280,76 @@
 			<div class="right col scroll-y" style="color:blue">
 				<div id="accordion">
 					<h3 class="editor_section_heading">Material</h3>
-					<div>
-						<p>
-						Mauris mauris ante, blandit et, ultrices a, suscipit eget, quam. Integer
-						ut neque. Vivamus nisi metus, molestie vel, gravida in, condimentum sit
-						amet, nunc. Nam a nibh. Donec suscipit eros. Nam mi. Proin viverra leo ut
-						odio. Curabitur malesuada. Vestibulum a velit eu ante scelerisque vulputate.
-						</p>
+					<div class="editor_section">
+						<h4>Albedo</h4>
+						<div class="editor_row">
+							<div class="editor_label">Colour:</div>
+							<input id="mat_albedo_colour" type="color" value="#ffffff"/>
+						</div>
+						<div class="editor_row">
+							<div class="editor_label">Texture:</div>
+							<input id="mat_albedo_texture" type="text" disabled/>
+						</div>
+						<div class="editor_row">
+							<div class="editor_label">Texture Repeat:</div>
+							<input id="mat_albedo_texture_repeat_x" class="editor_float_small" value="1.00">
+							<input id="mat_albedo_texture_repeat_y" class="editor_float_small" value="1.00">
+						</div>
+
+						<br/>
+						<h4>Specular</h4>
+						<div class="editor_row">
+							<div class="editor_label">Enabled:</div>
+							<label><input type="checkbox" name="mat_specular_enabled" value="dd"></label>
+						</div>
+						<div class="editor_row">
+							<div class="editor_label">Colour:</div>
+							<input id="mat_specular_colour" type="color" value="#ffffff"/>
+						</div>
+						<div class="editor_row">
+							<div class="editor_label">Shininess:</div>
+							<div id='mat_specular_shininess' class="editor_slider"></div>
+						</div>
+						<div class="editor_row">
+							<div class="editor_label">Texture:</div>
+							<input id="mat_specular_texture" type="text" disabled/>
+						</div>
+						<div class="editor_row">
+							<div class="editor_label">Texture Repeat:</div>
+							<input id="mat_specular_texture_repeat_x" class="editor_float_small" value="1.00">
+							<input id="mat_specular_texture_repeat_y" class="editor_float_small" value="1.00">
+						</div>
+
+						<br/>
+						<h4>Normal</h4>
+						<div class="editor_row">
+							<div class="editor_label">Texture:</div>
+							<input id="mat_normal_texture" type="text" disabled/>
+						</div>
+						<div class="editor_row">
+							<div class="editor_label">Texture Repeat:</div>
+							<input id="mat_normal_texture_repeat_x" class="editor_float_small" value="1.00">
+							<input id="mat_normal_texture_repeat_y" class="editor_float_small" value="1.00">
+						</div>
+
+						<br/>
+						<h4>Fresnel</h4>
+						<div class="editor_row">
+							<div class="editor_label">Colour:</div>
+							<input id="mat_fresnel_colour" type="color" value="#ffffff"/>
+						</div>
+						<div class="editor_row">
+							<div class="editor_label">Scale:</div>
+							<div id='mat_fresnel_scale' class="editor_slider"></div>
+						</div>
+						<div class="editor_row">
+							<div class="editor_label">Bias:</div>
+							<div id='mat_fresnel_bias' class="editor_slider"></div>
+						</div>
+						<div class="editor_row">
+							<div class="editor_label">Power:</div>
+							<div id='mat_fresnel_power' class="editor_slider"></div>
+						</div>
 					</div>
 
 					<h3 class="editor_section_heading">Lighting</h3>
