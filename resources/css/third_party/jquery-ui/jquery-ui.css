@@ -796,6 +796,7 @@ button.ui-button::-moz-focus-inner {
 	overflow: hidden;
 	padding: 0;
 	vertical-align: middle;
+	height:20px;
 }
 .ui-spinner-input {
 	border: none;
