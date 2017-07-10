@@ -233,8 +233,9 @@ Engine.Gfx.Material.Clone = function(original_material)
 Engine.Resource.RegisterLoadFunction("mat", function(descriptor, callback)
 {
 	// Load the material JSON
-	Engine.Net.FetchResource(descriptor.file, function(json)
+	Engine.Net.FetchResource(descriptor.file, function(json, file_size)
 	{
+		descriptor.file_size = file_size;
 		var material_json = Engine.Util.ParseJSON(json, true);
 
 		// Setup new material and apply JSON
@@ -310,7 +311,7 @@ Engine.Resource.RegisterLoadFunction("mat", function(descriptor, callback)
 				material.shader_program = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_general_transformed_uv_normals_tangents"],
 				                                                         material.shader);
 				on_shader_loaded();
-			})
+			});
 		}
 	});
 });
