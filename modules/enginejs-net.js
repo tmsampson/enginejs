@@ -7,14 +7,18 @@ Engine.Net =
 	FetchResource : function(resource_url, callback)
 	{
 		callback = callback || false;
-		jQuery.ajax(
+		var request = jQuery.ajax(
 		{
 			url     : resource_url + Engine.Net.MakeCachPreventionString(resource_url),
 			async   : callback,
 			cache   : false,
 			success : function(data)
 			{
-				if(callback) { callback(data); }
+				if(callback)
+				{
+					var size = request.getResponseHeader("Content-Length");
+					callback(data, size);
+				}
 			},
 			error   : function(err)
 			{
@@ -28,21 +32,22 @@ Engine.Net =
 		// No support for binary ajax calls in jQuery, using XHTML Request Level 2 instead
 		// see: http://bugs.jquery.com/ticket/11461
 		callback = callback || false;
-		var xhr = new XMLHttpRequest();
-		xhr.open("GET", resource_url + Engine.Net.MakeCachPreventionString(resource_url), true);
-		xhr.responseType = 'arraybuffer';
-		xhr.onload = function(e)
+		var request = new XMLHttpRequest();
+		request.open("GET", resource_url + Engine.Net.MakeCachPreventionString(resource_url), true);
+		request.responseType = 'arraybuffer';
+		request.onload = function(e)
 		{
 			if(this.status == 200)
 			{
-				if(callback) { callback(xhr.response); }
+				var size = request.getResponseHeader("Content-Length");
+				if(callback) { callback(request.response, size); }
 			}
 			else
 			{
 				Engine.LogError("Failed fetching resource: " + resource_url);
 			}
 		};
-		xhr.send();
+		request.send();
 	},
 
 	MakeCachPreventionString : function(resource_url)
