@@ -1,0 +1,39 @@
+{
+	"version"        : 1.0,
+	"name"           : "Sponge",
+	"type"           : "standard",
+	"config"         :
+	{
+		"lighting_enabled"        : true,
+		"specular_enabled"        : true,
+		"fresnel_enabled"         : true
+	},
+	"properties"     :
+	{
+		"sampler2D"  :
+		{
+			"albedo_map"          : { "file": "img/sponge_a.png" },
+			"normal_map"          : { "file": "img/sponge_n.png" },
+			"specular_map"        : { "file": "img/sponge_s.png" }
+		},
+		"float"      :
+		{
+			"specular_shininess"  : 0.4,
+			"fresnel_scale"       : 0.1,
+			"fresnel_bias"        : 0,
+			"fresnel_power"       : 2.5
+		},
+		"vec2"       :
+		{
+			"albedo_map_repeat"   : [2, 2],
+			"normal_map_repeat"   : [2, 2],
+			"specular_map_repeat" : [2, 2]
+		},
+		"vec4"       :
+		{
+			"albedo_colour"       : [1, 1, 1, 1],
+			"specular_colour"     : [0.2, 0.2, 0.2, 1],
+			"fresnel_colour"      : [1, 1, 1, 1]
+		}
+	}
+}
