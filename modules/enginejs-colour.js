@@ -35,5 +35,18 @@ Engine.Colour =
 		}
 
 		return [0, 0, 0, 1];
+	},
+
+	ToHex     : function(colour)
+	{
+		var component_to_hex = function(c)
+		{
+			var hex = c.toString(16);
+			return hex.length == 1 ? "0" + hex : hex;
+		};
+
+		return "#" + component_to_hex(parseInt(colour[0] * 255)) +
+					 component_to_hex(parseInt(colour[1] * 255)) +
+					 component_to_hex(parseInt(colour[2] * 255));
 	}
 };
