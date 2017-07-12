@@ -13,7 +13,7 @@
 		<script type="text/javascript" src="enginejs/resources/libs/jquery-ui.ion.check/js/ion.checkRadio.min.js"></script>
 
 		<!-- EngineJS App Framework -->
-		<link rel='stylesheet' href='enginejs/resources/css/app.css' />
+		<link rel='stylesheet' href='enginejs/resources/css/editor.css' />
 		<link rel="stylesheet" href="enginejs/resources/css/third_party/jquery-ui/jquery-ui.css">
 		<link rel="stylesheet" href="enginejs/resources/libs/jquery-ui.ion.check/css/ion.checkRadio.css">
 		<link rel="stylesheet" href="enginejs/resources/libs/jquery-ui.ion.check/css/ion.checkRadio.dark.css">
@@ -21,86 +21,6 @@
 		<!-- Spectrum colour picker -->
 		<script src='enginejs/resources/misc/spectrum/spectrum.js'></script>
 		<link rel='stylesheet' href='enginejs/resources/misc/spectrum/spectrum.css' />
-
-		<style>
-		.editor_section_heading
-		{
-			margin-top:0px !important;
-		}
-
-		.editor_section
-		{
-			overflow:hidden !important;
-		}
-
-		.editor_section h4
-		{
-			margin: 0px;
-			margin-left: -15px;
-			margin-bottom: 8px;
-			padding: 0px;
-			color: #EEE;
-			border-bottom: 2px solid #424242;
-			width: 109%;
-			padding-bottom: 2px;
-			color: #424242;
-		}
-
-		.editor_row
-		{
-			/*border:1px solid yellow;*/
-			margin-left:-15px;
-			margin-bottom:3px;
-			width:370px;
-			height:25px;
-			overflow:hidden;
-		}
-
-		.editor_row .editor_label
-		{
-			width:130px;
-			float:left;
-			clear:right;
-			-moz-user-select: none;
-			-webkit-user-select: none;
-			-ms-user-select:none;
-			user-select:none;
-			-o-user-select:none;
-			overflow:hidden;
-		}
-
-		.editor_row .editor_slider
-		{
-			width:220px;
-			float:left;
-			position:relative;
-			top: 5px;
-		}
-
-		.editor_row input[type="color"]
-		{
-			height:20px;
-		}
-
-		.editor_row input[type="text"]
-		{
-			-webkit-border-radius: 6px;
-			-moz-border-radius: 6px;
-			border-radius: 6px;
-			width:220px;
-			font-size:12px;
-		}
-
-		.editor_row .editor_float_small
-		{
-			width:40px;
-			height:15px;
-			float:left;
-			clear:right;
-			font-size:0.8em;
-			padding:0px;
-		}
-		</style>
 
 		<script language="javascript">
 		var resources =
@@ -117,11 +37,9 @@
 
 		var do_resize = function()
 		{
-			var canvas = document.getElementById("foo");
-
+			var canvas = document.getElementsByTagName("canvas")[0];
 			var width = canvas.clientWidth;
 			var height = canvas.clientHeight;
-
 			Engine.Canvas.Resize(width, height);
 		};
 		window.addEventListener('resize', do_resize);
@@ -147,24 +65,40 @@
 
 		var init_ui = function()
 		{
-			// Populate material section
-			$("#mat_albedo_texture_repeat_x").spinner({ step: 0.5, numberFormat: "n" });
-			$("#mat_albedo_texture_repeat_y").spinner({ step: 0.5, numberFormat: "n" });
+			// Init / reset material albedo section
+			$("#mat_albedo_colour").val("#ffffff");
+			$("#mat_albedo_texture").val("");
+			$("#mat_albedo_texture_repeat_x").spinner({ step: 0.5, numberFormat: "n", value : 1 });
+			$("#mat_albedo_texture_repeat_y").spinner({ step: 0.5, numberFormat: "n", value : 1 });
+
+			// Init / reset material specular section
 			$("input[name='mat_specular_enabled']").ionCheckRadio();
+			$("input[name='mat_specular_enabled']")[0].checked = false;
+			$("input[name='mat_specular_enabled']").trigger("change");
+			$("#mat_specular_colour").val("#ffffff");
 			$("#mat_specular_shininess").slider({ min : 0, max : 100, value: 8 });
-			$("#mat_specular_texture_repeat_x").spinner({ step: 0.5, numberFormat: "n" });
-			$("#mat_specular_texture_repeat_y").spinner({ step: 0.5, numberFormat: "n" });
-			$("#mat_normal_texture_repeat_x").spinner({ step: 0.5, numberFormat: "n" });
-			$("#mat_normal_texture_repeat_y").spinner({ step: 0.5, numberFormat: "n" });
+			$("#mat_specular_texture").val("");
+			$("#mat_specular_texture_repeat_x").spinner({ step: 0.5, numberFormat: "n", value : 1 });
+			$("#mat_specular_texture_repeat_y").spinner({ step: 0.5, numberFormat: "n", value : 1 });
+
+			// Init / reset material normal section
+			$("#mat_normal_texture").val("");
+			$("#mat_normal_texture_repeat_x").spinner({ step: 0.5, numberFormat: "n", value : 1 });
+			$("#mat_normal_texture_repeat_y").spinner({ step: 0.5, numberFormat: "n", value : 1 });
+
+			// Init / reset material fresnel section
 			$("input[name='mat_fresnel_enabled']").ionCheckRadio();
+			$("input[name='mat_fresnel_enabled']")[0].checked = false;
+			$("input[name='mat_fresnel_enabled']").trigger("change");
+			$("#mat_fresnel_colour").val("#ffffff");
 			$("#mat_fresnel_scale").slider({ min : 0, max : 100, value: 60 });
 			$("#mat_fresnel_bias").slider({ min : 0, max : 100, value: 0 });
 			$("#mat_fresnel_power").slider({ min : 0, max : 10, value: 5 });
 
-			// Populate lighting section
-			$("#slider_amb_intensity").slider({ min : 0, max : 100, value: 50 });
-			$("#slider_light_intensity").slider({ min : 0, max : 100, value: 50 });
-			$("#slider_light_angle").slider({ min : -90, max : 90, value: 45 });
+			// Init / reset lighting section
+			$("#ambient_light_intensity").slider({ min : 0, max : 100, value: 50 });
+			$("#directional_light_intensity").slider({ min : 0, max : 100, value: 50 });
+			$("#directional_light_angle").slider({ min : -90, max : 90, value: 45 });
 
 			// Populate debug section
 			$("input[name='debug_rotation_enabled']").ionCheckRadio();
@@ -178,34 +112,25 @@
 			// Update status bar
 			$("#app_footer").text("Loaded: '" + mat.name + "' [ " + mat.descriptor.file + " ]");
 
-			// Populate material section
-			$("#mat_albedo_colour").val("#ffffff");
+			// Populate material albedo section
 			if(Engine.Util.IsDefined(mat.properties.vec4.albedo_colour))
 			{
 				var hex_string = Engine.Colour.ToHex(mat.properties.vec4.albedo_colour);
 				$("#mat_albedo_colour").val(hex_string);
 			}
-			$("#mat_albedo_texture").val("");
 			if(Engine.Util.IsDefined(mat.properties.sampler2D.albedo_map) &&
 				mat.properties.sampler2D.albedo_map != null)
 			{
 				$("#mat_albedo_texture").val(mat.properties.sampler2D.albedo_map.descriptor.file);
 			}
-			$("#mat_albedo_texture_repeat_x").val(1);
-			$("#mat_albedo_texture_repeat_y").val(1)
 			if(Engine.Util.IsDefined(mat.properties.vec2.albedo_map_repeat))
 			{
 				var albedo_repeat = mat.properties.vec2.albedo_map_repeat;
 				$("#mat_albedo_texture_repeat_x").val(albedo_repeat[0]);
 				$("#mat_albedo_texture_repeat_y").val(albedo_repeat[1]);
 			}
-			$("input[name='mat_specular_enabled']")[0].checked = false;
-			$("input[name='mat_specular_enabled']").trigger("change");
-			$("#mat_specular_colour").val("#ffffff");
-			$("#mat_specular_shininess").slider("option", "value", 8);
-			$("#mat_specular_texture").val("");
-			$("#mat_specular_texture_repeat_x").val(1);
-			$("#mat_specular_texture_repeat_y").val(1)
+
+			// Populate material specular section
 			if(Engine.Util.IsDefined(mat.config.specular_enabled) && mat.config.specular_enabled)
 			{
 				$("input[name='mat_specular_enabled']")[0].checked = mat.config.specular_enabled;
@@ -233,11 +158,9 @@
 				}
 			}
 
-			$("#mat_normal_texture").val("");
-			$("#mat_normal_texture_repeat_x").val(1);
-			$("#mat_normal_texture_repeat_y").val(1)
+			// Populate material normal section
 			if(Engine.Util.IsDefined(mat.properties.sampler2D.normal_map) &&
-				mat.properties.sampler2D.normal_map != null)
+			   mat.properties.sampler2D.normal_map != null)
 			{
 				$("#mat_normal_texture").val(mat.properties.sampler2D.normal_map.descriptor.file);
 			}
@@ -247,12 +170,8 @@
 				$("#mat_normal_texture_repeat_x").val(normal_repeat[0]);
 				$("#mat_normal_texture_repeat_y").val(normal_repeat[1]);
 			}
-			$("input[name='mat_fresnel_enabled']")[0].checked = false;
-			$("input[name='mat_fresnel_enabled']").trigger("change");
-			$("#mat_fresnel_colour").val("#ffffff");
-			$("#mat_fresnel_scale").slider("option", "value", 60);
-			$("#mat_fresnel_bias").slider("option", "value", 0);
-			$("#mat_fresnel_power").slider("option", "value", 5);
+
+			// Populate material fresnel section
 			if(Engine.Util.IsDefined(mat.config.fresnel_enabled) && mat.config.fresnel_enabled)
 			{
 				$("input[name='mat_fresnel_enabled']")[0].checked = mat.config.fresnel_enabled;
@@ -304,10 +223,8 @@
 			mat.SetFloat("fresnel_bias", [ $("#mat_fresnel_bias").slider("values", 0) / 100 ]);
 			mat.SetFloat("fresnel_power", [ $("#mat_fresnel_power").slider("values", 0) ]);
 
-			// Update light angle
-			sun.angle = $("#slider_light_angle").slider("values", 0);
-
-			// Update light position
+			// Bind light position
+			sun.angle = $("#directional_light_angle").slider("values", 0);
 			sun.position[2] = Math.sin(Engine.Math.DegToRad(sun.angle)) * sun.arc_radius[0];
 			sun.position[1] = sun.arc_lift + Math.cos(Engine.Math.DegToRad(sun.angle)) * sun.arc_radius[1];
 			sun.position[0] = 0;
@@ -316,19 +233,19 @@
 			var len = Math.sqrt((sun.position[2] * sun.position[2]) + (sun.position[1]  * sun.position[1]));
 			sun.direction = [ -sun.position[0] / len, -sun.position[1] / len, sun.position[2] / len ];
 
-			// Ambient
-			var amb_intensity = $("#slider_amb_intensity").slider("values", 0);
-			var amb_colour = Engine.Colour.FromHex($("#amb_colour").val());
-			sun.ambient[0] = amb_colour[0] * (amb_intensity / 100);
-			sun.ambient[1] = amb_colour[1] * (amb_intensity / 100);
-			sun.ambient[2] = amb_colour[2] * (amb_intensity / 100);
+			// Bind light ambient properties
+			var amb_intensity = $("#ambient_light_intensity").slider("values", 0);
+			var ambient_directional_light_colour = Engine.Colour.FromHex($("#ambient_directional_light_colour").val());
+			sun.ambient[0] = ambient_directional_light_colour[0] * (amb_intensity / 100);
+			sun.ambient[1] = ambient_directional_light_colour[1] * (amb_intensity / 100);
+			sun.ambient[2] = ambient_directional_light_colour[2] * (amb_intensity / 100);
 
-			// Directional
-			var light_intensity = $("#slider_light_intensity").slider("values", 0);
-			var light_colour = Engine.Colour.FromHex($("#light_colour").val());
-			sun.colour[0] = light_colour[0] * (light_intensity / 100);
-			sun.colour[1] = light_colour[1] * (light_intensity / 100);
-			sun.colour[2] = light_colour[2] * (light_intensity / 100);
+			// Bind light directional properties
+			var light_intensity = $("#directional_light_intensity").slider("values", 0);
+			var directional_light_colour = Engine.Colour.FromHex($("#directional_light_colour").val());
+			sun.colour[0] = directional_light_colour[0] * (light_intensity / 100);
+			sun.colour[1] = directional_light_colour[1] * (light_intensity / 100);
+			sun.colour[2] = directional_light_colour[2] * (light_intensity / 100);
 
 			// Rotate?
 			if($("input[name='debug_rotation_enabled']").is(":checked"))
@@ -385,7 +302,6 @@
 					max_y   : (Math.PI / 2) - 0.1
 				}));
 
-
 				// ====================================================================================================================================
 				// Light
 				Engine.Gfx.SetDirectionalLight(sun);
@@ -415,12 +331,10 @@
 						populate_ui();
 					}
 
-					// Position on grid
+					// Draw model
 					var model = object_models[model_index];
 					mat4.translate(mtx_trans, Engine.Math.IdentityMatrix, [0, 0, 0]);
 					mat4.rotate(mtx_trans, mtx_trans, model_rotation, [0, 1, 0]);
-
-					// Draw model
 					Engine.Gfx.BindMaterial(object_materials[material_index]);
 					Engine.Gfx.DrawModel(model, mtx_trans, false, false);
 				};
@@ -428,11 +342,12 @@
 			};
 
 			// Initialise UI
-			$("#accordion").accordion({ active : false, multiple: true, collapsible : true, animate: 50, heightStyle: "content" });
-			$("#accordion").accordion('option', 'active' , 3); // open info section
-			$("#accordion").accordion('option', 'active' , 2); // open debug section
-			$("#accordion").accordion('option', 'active' , 1); // open light section
-			$("#accordion").accordion('option', 'active' , 0); // open mat section
+			$("#accordion").accordion({ multiple: true, collapsible : true, animate: 50, heightStyle: "content" });
+			for(var i = 0; i < 4; ++i)
+			{
+				$("#accordion").accordion('option', 'active' , i);
+			}
+
 			init_ui();
 
 			// Initialise engine
@@ -449,7 +364,7 @@
 
 		<div class="body row">
 			<div class="left col">
-				<canvas id="foo" style="margin:0px; width:100%; height:100%; vertical-align: bottom"></canvas>
+				<canvas style="margin:0px; width:100%; height:100%; vertical-align: bottom"></canvas>
 			</div>
 			<div class="right col scroll-y" style="color:blue">
 				<div id="accordion">
@@ -535,29 +450,29 @@
 						<h4>Ambient Light</h4>
 						<div class="editor_row">
 							<div class="editor_label">Ambient Colour:</div>
-							<input id="amb_colour" type="color" value="#ffffff"/>
+							<input id="ambient_directional_light_colour" type="color" value="#ffffff"/>
 						</div>
 
 						<div class="editor_row">
 							<div class="editor_label">Ambient Intensity:</div>
-							<div id='slider_amb_intensity' class="editor_slider"></div>
+							<div id='ambient_light_intensity' class="editor_slider"></div>
 						</div>
 
 						<br/>
 						<h4>Directional Light</h4>
 						<div class="editor_row">
 							<div class="editor_label">Light Colour:</div>
-							<input id="light_colour" type="color" value="#ffffff"/>
+							<input id="directional_light_colour" type="color" value="#ffffff"/>
 						</div>
 
 						<div class="editor_row">
 							<div class="editor_label">Light Intensity:</div>
-							<div id='slider_light_intensity' class="editor_slider"></div>
+							<div id='directional_light_intensity' class="editor_slider"></div>
 						</div>
 
 						<div class="editor_row">
 							<div class="editor_label">Light Angle:</div>
-							<div id='slider_light_angle' class="editor_slider"></div>
+							<div id='directional_light_angle' class="editor_slider"></div>
 						</div>
 					</div>
 
@@ -565,7 +480,7 @@
 					<div class="editor_section">
 						<div class="editor_row">
 							<div class="editor_label">Enable Rotation</div>
-							<label><input type="checkbox" name="debug_rotation_enabled" value="dd"></label>
+							<label><input type="checkbox" name="debug_rotation_enabled"></label>
 						</div>
 					</div>
 
