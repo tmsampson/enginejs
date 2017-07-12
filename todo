@@ -1,6 +1,4 @@
 * Work on material editor
-	- Tidy up!
-	- Set defaults in init_ui instead of populate_ui
 	- Add support for custom materials (plasma)
 * Re-skin existing tools
 
