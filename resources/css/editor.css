@@ -1,4 +1,4 @@
-/* Generic pane rules */
+/* Generic page rules */
 body { margin: 0; -webkit-text-size-adjust: 100%; }
 .page { left: 0; right: 0; top: 0; bottom: 0; }
 .row, .col, .page { overflow: hidden; position: absolute; }
@@ -13,7 +13,7 @@ body { margin: 0; -webkit-text-size-adjust: 100%; }
 .iemobile .page { bottom: -6px; }
 @media screen and (orientation:landscape) { .iemobile .page { bottom: 75px; } }
 
-/* Specific pane configuration */
+/* Global layout panes configuration */
 .header.row { height: 35px; background: #333; color:orange; background-image:url('../../resources/img/logo.png'); background-size: 110px; background-repeat: no-repeat; background-position: right 5px top 1px }
 .body.row { top: 35px; bottom: 20px; background: #FFF; padding: 0px; }
 .footer.row { height: 20px; bottom: 0; background: #333; color: White; font-family: Segoe UI, Helvetica, Arial, Sans-Serif; }
@@ -23,3 +23,82 @@ body { margin: 0; -webkit-text-size-adjust: 100%; }
 .header.row { height: 35px; padding:0px }
 .body.row { top: 35px; bottom: 20px; }
 .footer.row { height: 20px; bottom: ; font-size:12px; padding-left: 10px; padding-top:2px; }
+
+/* Editor styles */
+.editor_section_heading
+{
+	margin-top:0px !important;
+}
+
+.editor_section
+{
+	overflow:hidden !important;
+}
+
+.editor_section h4
+{
+	margin: 0px;
+	margin-left: -15px;
+	margin-bottom: 8px;
+	padding: 0px;
+	color: #EEE;
+	border-bottom: 2px solid #424242;
+	width: 109%;
+	padding-bottom: 2px;
+	color: #424242;
+}
+
+.editor_row
+{
+	/*border:1px solid yellow;*/
+	margin-left:-15px;
+	margin-bottom:3px;
+	width:370px;
+	height:25px;
+	overflow:hidden;
+}
+
+.editor_row .editor_label
+{
+	width:130px;
+	float:left;
+	clear:right;
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	-ms-user-select:none;
+	user-select:none;
+	-o-user-select:none;
+	overflow:hidden;
+}
+
+.editor_row .editor_slider
+{
+	width:220px;
+	float:left;
+	position:relative;
+	top: 5px;
+}
+
+.editor_row input[type="color"]
+{
+	height:20px;
+}
+
+.editor_row input[type="text"]
+{
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;
+	border-radius: 6px;
+	width:220px;
+	font-size:12px;
+}
+
+.editor_row .editor_float_small
+{
+	width:40px;
+	height:15px;
+	float:left;
+	clear:right;
+	font-size:0.8em;
+	padding:0px;
+}
