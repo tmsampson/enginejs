@@ -52,7 +52,7 @@
 			position   : [0, 5, 0],
 			angle      : 1,	// -90 --> 90 arc
 			direction  : [0, -1, 0],
-			ambient   : [ 0.6, 0.6, 0.6 ],
+			ambient    : [ 0.6, 0.6, 0.6 ],
 			colour     : [0.7, 0.7, 0.7],
 			arc_radius : [30, 15],
 			arc_lift   : 5
@@ -76,7 +76,7 @@
 			$("input[name='mat_specular_enabled']")[0].checked = false;
 			$("input[name='mat_specular_enabled']").trigger("change");
 			$("#mat_specular_colour").val("#ffffff");
-			$("#mat_specular_shininess").slider({ min : 0, max : 100, value: 8 });
+			$("#mat_specular_shininess").slider({ min : 1, max : 100, value: 8 });
 			$("#mat_specular_texture").val("");
 			$("#mat_specular_texture_repeat_x").spinner({ step: 0.5, numberFormat: "n", value : 1 });
 			$("#mat_specular_texture_repeat_y").spinner({ step: 0.5, numberFormat: "n", value : 1 });
