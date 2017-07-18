@@ -188,6 +188,12 @@ Engine.Camera.Helper =
 
 		this.Update = function(camera)
 		{
+			// Only process when mouse is over canvas
+			if(!Engine.Mouse.IsOverCanvas())
+			{
+				return;
+			}
+
 			// Zoom
 			var wheel_delta = Engine.Mouse.GetWheelDelta();
 			if(wheel_delta != 0)
@@ -233,11 +239,12 @@ Engine.Camera.Helper =
 
 		this.Update = function(camera)
 		{
+			var process_mouse = Engine.Mouse.IsOverCanvas(); // Only process when mouse is over canvas
 			var gamepad = Engine.Gamepad.Pads[0];
 			vec3.cross(this.right, this.forward, camera.up);
 
 			// Apply mouse look?
-			if(Engine.Mouse.IsPressed() || Engine.Mouse.IsPressed("right"))
+			if(process_mouse && (Engine.Mouse.IsPressed() || Engine.Mouse.IsPressed("right")))
 			{
 				this.ApplyLook(Engine.Mouse.GetDelta())
 			}
