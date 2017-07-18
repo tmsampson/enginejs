@@ -81,7 +81,7 @@ Engine.Mouse =
 	IsOverCanvas : function()
 	{
 		var mouse_pos = this.GetPosition();
-		var canvas_size = this.GetSize();
+		var canvas_size = Engine.Canvas.GetSize();
 		return mouse_pos[0] > 0 && mouse_pos[0] < canvas_size[0] &&
 			   mouse_pos[1] > 0 && mouse_pos[1] < canvas_size[1];
 	}
