@@ -1,5 +1,7 @@
+* Fix bug! Looks like material editor fresnel bias/scale sliders use 0-100 to represent
+  0-1 but dont multiply by 100 when loading in the value! need to verify and fix (material values will need to be / 100? )
+
 * Work on material editor
-	- Add support for reflection maps (cubemaps)
 	- Add support for custom materials (plasma)
 	- Add support for custom materials sampling:
 		- Shadows
