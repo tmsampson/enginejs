@@ -452,6 +452,21 @@ Engine.Gfx =
 		this.SetShaderProperty(sampler_name, idx, Engine.Gfx.SP_SAMPLER);
 	},
 
+	BindCubeMap : function(cube_map, idx, sampler_name)
+	{
+		// We support binding by our cube-map (wrapper) object or raw WebGL cube-map texture
+		var cube_map_resource = cube_map.hasOwnProperty("resource")? cube_map.resource :
+		                                                             cube_map;
+
+		// If no sampler name is specified use default based on index e.g. "u_tx0"
+		if(sampler_name == undefined) { sampler_name = ("u_tx" + idx); }
+
+		// Bind texture
+		Engine.GL.activeTexture(Engine.GL.TEXTURE0 + idx);
+		Engine.GL.bindTexture(Engine.GL.TEXTURE_CUBE_MAP, cube_map_resource);
+		this.SetShaderProperty(sampler_name, idx, Engine.Gfx.SP_SAMPLER_CUBE);
+	},
+
 	BindTextureArray : function(texture_array, sampler_name)
 	{
 		// If no sampler name is specified use default sampler array
@@ -930,6 +945,7 @@ Engine.Gfx =
 	SP_INT_ARRAY     : function(gl, uniform_location, new_value) { gl.uniform1iv(uniform_location,       new_value); },
 	SP_SAMPLER       : function(gl, uniform_location, new_value) { gl.uniform1i(uniform_location,        new_value); },
 	SP_SAMPLER_ARRAY : function(gl, uniform_location, new_value) { gl.uniform1iv(uniform_location,       new_value); },
+	SP_SAMPLER_CUBE  : function(gl, uniform_location, new_value) { gl.uniform1i(uniform_location,        new_value); },
 	SP_VEC2          : function(gl, uniform_location, new_value) { gl.uniform2fv(uniform_location,       new_value); },
 	SP_VEC2_ARRAY    : function(gl, uniform_location, new_value) { gl.uniform2fv(uniform_location,       new_value); },
 	SP_VEC3          : function(gl, uniform_location, new_value) { gl.uniform3fv(uniform_location,       new_value); },
