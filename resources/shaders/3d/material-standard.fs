@@ -16,7 +16,7 @@ precision highp float;
 	"fresnel_bias"        : { "name" : "Fresnel Bias",          "default" : 0                  },
 	"fresnel_power"       : { "name" : "Fresnel Power",         "default" : 2.5                },
 	"reflection_map"      : { "name" : "Reflection Map"                                        },
-	"reflection_amount"   : { "name" : "Reflection Amount",      "default" : 0.1               }
+	"reflection_amount"   : { "name" : "Reflection Amount",      "default" : 0.5               }
 }
 #endif
 
