@@ -19,7 +19,7 @@
 		},
 		"samplerCube" :
 		{
-			"reflection_map"      : { "file": "img/lake/lake.cubemap" }
+			"reflection_map"      : { "file": "img/valley/valley.cubemap" }
 		},
 		"float"       :
 		{

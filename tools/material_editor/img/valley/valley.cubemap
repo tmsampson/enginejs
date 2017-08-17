@@ -1,0 +1,13 @@
+{
+	"version"  : "1.0",
+	"name"     : "Valley",
+	"textures" :
+	{
+		"tx_left"   : { "file": "img/valley/valley_left.png" },
+		"tx_right"  : { "file": "img/valley/valley_right.png" },
+		"tx_top"    : { "file": "img/valley/valley_top.png" },
+		"tx_bottom" : { "file": "img/valley/valley_bottom.png" },
+		"tx_front"  : { "file": "img/valley/valley_front.png" },
+		"tx_back"   : { "file": "img/valley/valley_back.png" }
+	}
+}
