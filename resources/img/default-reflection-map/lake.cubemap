@@ -1,0 +1,13 @@
+{
+	"version"  : "1.0",
+	"name"     : "Lake",
+	"textures" :
+	{
+		"tx_left"   : { "file": "enginejs/resources/img/default-reflection-map/lake_left.png" },
+		"tx_right"  : { "file": "enginejs/resources/img/default-reflection-map/lake_right.png" },
+		"tx_top"    : { "file": "enginejs/resources/img/default-reflection-map/lake_top.png" },
+		"tx_bottom" : { "file": "enginejs/resources/img/default-reflection-map/lake_bottom.png" },
+		"tx_front"  : { "file": "enginejs/resources/img/default-reflection-map/lake_front.png" },
+		"tx_back"   : { "file": "enginejs/resources/img/default-reflection-map/lake_back.png" }
+	}
+}

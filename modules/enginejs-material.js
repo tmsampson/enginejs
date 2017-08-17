@@ -132,10 +132,13 @@ Engine.Gfx.Material = function(prevent_default)
 			Engine.Gfx.SetShaderProperty("fresnel_power", this.properties.float.fresnel_power, Engine.Gfx.SP_FLOAT);
 		}
 
-		// 5. Bind custom reflection map?
-		if(this.config.reflection_enabled && this.config.custom_reflection_map)
+		// 5. Bind reflection map?
+		if(this.config.reflection_enabled)
 		{
-			Engine.Gfx.BindCubeMap(this.properties.samplerCube.reflection_map, 3, "reflection_map");
+			// Select reflection map (custom or default)
+			var reflection_map = this.config.custom_reflection_map? this.properties.samplerCube.reflection_map :
+			                                                        Engine.Gfx.GetDefaultReflectionMap();
+			Engine.Gfx.BindCubeMap(reflection_map, 3, "reflection_map");
 			Engine.Gfx.SetShaderProperty("reflection_amount", this.properties.float.reflection_amount, Engine.Gfx.SP_FLOAT);
 		}
 	}

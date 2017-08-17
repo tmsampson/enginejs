@@ -101,7 +101,7 @@
 			$("input[name='mat_reflection_enabled']")[0].checked = false;
 			$("input[name='mat_reflection_enabled']").trigger("change");
 			$("#mat_reflection_map").val("");
-			$("#mat_reflection_amount").slider({ min : 0, max : 100, value: 0 });
+			$("#mat_reflection_amount").slider({ min : 0, max : 100, value: 50 });
 
 			// Init / reset lighting section
 			$("#ambient_light_intensity").slider({ min : 0, max : 100, value: 50 });
@@ -522,12 +522,12 @@
 					<h3 class="editor_section_heading">General</h3>
 					<div class="editor_section">
 						<div class="editor_row">
-							<div class="editor_label">Draw Reflection Map</div>
-							<label><input type="checkbox" name="general_draw_reflection_map"></label>
-						</div>
-						<div class="editor_row">
 							<div class="editor_label">Enable Rotation</div>
 							<label><input type="checkbox" name="general_rotation_enabled"></label>
+						</div>
+						<div class="editor_row">
+							<div class="editor_label">Draw Reflection Map</div>
+							<label><input type="checkbox" name="general_draw_reflection_map"></label>
 						</div>
 					</div>
 
