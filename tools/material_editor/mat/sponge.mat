@@ -14,8 +14,7 @@
 		{
 			"albedo_map"          : { "file": "img/sponge_a.png"      },
 			"normal_map"          : { "file": "img/sponge_n.png"      },
-			"specular_map"        : { "file": "img/sponge_s.png"      },
-			"reflection_map"      : { "file": "img/lake/lake.cubemap" }
+			"specular_map"        : { "file": "img/sponge_s.png"      }
 		},
 		"float"      :
 		{
