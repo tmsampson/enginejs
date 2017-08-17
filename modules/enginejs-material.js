@@ -136,6 +136,7 @@ Engine.Gfx.Material = function(prevent_default)
 		if(this.config.reflection_enabled && this.config.custom_reflection_map)
 		{
 			Engine.Gfx.BindCubeMap(this.properties.samplerCube.reflection_map, 3, "reflection_map");
+			Engine.Gfx.SetShaderProperty("reflection_amount", this.properties.float.reflection_amount, Engine.Gfx.SP_FLOAT);
 		}
 	}
 

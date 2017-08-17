@@ -95,13 +95,21 @@
 			$("#mat_fresnel_bias").slider({ min : 0, max : 100, value: 0 });
 			$("#mat_fresnel_power").slider({ min : 0, max : 10, value: 5 });
 
+			// Init / reset material reflection section
+			$("input[name='mat_reflection_enabled']").ionCheckRadio();
+			$("input[name='mat_reflection_enabled']")[0].checked = false;
+			$("input[name='mat_reflection_enabled']").trigger("change");
+			$("#mat_reflection_map").val("");
+			$("#mat_reflection_amount").slider({ min : 0, max : 100, value: 0 });
+
 			// Init / reset lighting section
 			$("#ambient_light_intensity").slider({ min : 0, max : 100, value: 50 });
 			$("#directional_light_intensity").slider({ min : 0, max : 100, value: 50 });
 			$("#directional_light_angle").slider({ min : -90, max : 90, value: 45 });
 
-			// Populate debug section
-			$("input[name='debug_rotation_enabled']").ionCheckRadio();
+			// Populate general section
+			$("input[name='general_rotation_enabled']").ionCheckRadio();
+			$("input[name='general_draw_reflection_map']").ionCheckRadio();
 		};
 
 		var populate_ui = function()
@@ -196,6 +204,22 @@
 				}
 			}
 
+			// Populate material reflection section
+			if(Engine.Util.IsDefined(mat.config.reflection_enabled) && mat.config.reflection_enabled)
+			{
+				$("input[name='mat_reflection_enabled']")[0].checked = mat.config.reflection_enabled;
+				$("input[name='mat_reflection_enabled']").trigger("change");
+				if(Engine.Util.IsDefined(mat.config.custom_reflection_map) &&
+			       mat.config.custom_reflection_map != null)
+				{
+					$("#mat_reflection_map").val(mat.properties.samplerCube.reflection_map.descriptor.file);
+				}
+				if(Engine.Util.IsDefined(mat.properties.float.reflection_amount))
+				{
+					$("#mat_reflection_amount").slider("option", "value", mat.properties.float.reflection_amount * 100);
+				}
+			}
+
 			// Populate info section
 			$("#info_name").val(mat.name);
 			$("#info_type").val(mat.type);
@@ -222,6 +246,8 @@
 			mat.SetFloat("fresnel_scale", [ $("#mat_fresnel_scale").slider("values", 0) / 100 ]);
 			mat.SetFloat("fresnel_bias", [ $("#mat_fresnel_bias").slider("values", 0) / 100 ]);
 			mat.SetFloat("fresnel_power", [ $("#mat_fresnel_power").slider("values", 0) ]);
+			mat.SetConfig("reflection_enabled", $("input[name='mat_reflection_enabled']").is(":checked"));
+			mat.SetFloat("reflection_amount", [ $("#mat_reflection_amount").slider("values", 0) / 100 ]);
 
 			// Bind light position
 			sun.angle = $("#directional_light_angle").slider("values", 0);
@@ -248,7 +274,7 @@
 			sun.colour[2] = directional_light_colour[2] * (light_intensity / 100);
 
 			// Rotate?
-			if($("input[name='debug_rotation_enabled']").is(":checked"))
+			if($("input[name='general_rotation_enabled']").is(":checked"))
 			{
 				model_rotation += Engine.Time.delta_s / 3.0;
 			}
@@ -443,6 +469,21 @@
 							<div class="editor_label">Power:</div>
 							<div id='mat_fresnel_power' class="editor_slider"></div>
 						</div>
+
+						<br/>
+						<h4>Reflection</h4>
+						<div class="editor_row">
+							<div class="editor_label">Enabled:</div>
+							<label><input type="checkbox" name="mat_reflection_enabled"></label>
+						</div>
+						<div class="editor_row">
+							<div class="editor_label">Texture:</div>
+							<input id="mat_reflection_map" type="text" disabled/>
+						</div>
+						<div class="editor_row">
+							<div class="editor_label">Amount:</div>
+							<div id='mat_reflection_amount' class="editor_slider"></div>
+						</div>
 					</div>
 
 					<h3 class="editor_section_heading">Lighting</h3>
@@ -476,11 +517,15 @@
 						</div>
 					</div>
 
-					<h3 class="editor_section_heading">Debug</h3>
+					<h3 class="editor_section_heading">General</h3>
 					<div class="editor_section">
 						<div class="editor_row">
+							<div class="editor_label">Draw Reflection Map</div>
+							<label><input type="checkbox" name="general_draw_reflection_map"></label>
+						</div>
+						<div class="editor_row">
 							<div class="editor_label">Enable Rotation</div>
-							<label><input type="checkbox" name="debug_rotation_enabled"></label>
+							<label><input type="checkbox" name="general_rotation_enabled"></label>
 						</div>
 					</div>
 
