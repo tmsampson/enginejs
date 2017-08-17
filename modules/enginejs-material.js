@@ -44,6 +44,10 @@ Engine.Gfx.Material = function(prevent_default)
 		// Fresnel
 		shader_name += Engine.Util.IsDefined(this.config.fresnel_enabled) && this.config.fresnel_enabled? "_fresnel" : ""
 
+		// Reflection map
+		this.config.uses_reflection_map = Engine.Util.IsDefined(this.properties.sampler2D) && this.properties.sampler2D.reflection_map != null;
+		shader_name += this.config.uses_reflection_map? "_reflectionmap" : ""
+
 		// Catch bad shader permutations
 		if(!Engine.Util.IsDefined(Engine.Resources[shader_name]))
 		{
