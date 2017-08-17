@@ -500,6 +500,17 @@ Engine.Gfx =
 	// **********************************************
 	// Cube / reflection map functionality
 	// **********************************************
+	default_reflection_map : null,
+	GetDefaultReflectionMap : function()
+	{
+		return this.default_reflection_map;
+	},
+
+	SetDefaultReflectionMap : function(reflection_map)
+	{
+		this.default_reflection_map = reflection_map;
+	},
+
 	LoadCubeMap : function(descriptor, callback)
 	{
 		Engine.Net.FetchResource(descriptor.file, function(cubemap_json)

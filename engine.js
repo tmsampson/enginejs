@@ -68,6 +68,9 @@ var Engine =
 		tx_missing                                                    : { file: "enginejs/resources/img/missing-texture.png" },
 		sfx_blank                                                     : { file: "enginejs/resources/audio/blank.mp3"         },
 
+		// Default reflection map
+		tx_default_reflection_map                                     : { file: "enginejs/resources/img/default-reflection-map/lake.cubemap" },
+
 		// Misc basic shaders
 		fs_unlit_colour                                               : { file: "enginejs/resources/shaders/basic/unlit-colour.fs" },
 		fs_unlit_textured                                             : { file: "enginejs/resources/shaders/basic/unlit-textured.fs" },
@@ -290,6 +293,9 @@ var Engine =
 	PreGameLoopInit : function()
 	{
 		Engine.Debug.PreGameLoopInit();
+
+		// Register default reflection map
+		Engine.Gfx.SetDefaultReflectionMap(Engine.Resources["tx_default_reflection_map"]);
 	},
 
 	// *************************************************************************************
