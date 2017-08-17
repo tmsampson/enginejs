@@ -151,10 +151,10 @@ var Engine =
 
 		// Models
 		mdl_quad                                                      : { file: "enginejs/resources/models/quad.model"       },
-		mdl_floor_tile                                                : { file: "enginejs/resources/models/floor_tile.model" },
+		mdl_floor_tile                                                : { file: "enginejs/resources/models/floor-tile.model" },
 		mdl_tri                                                       : { file: "enginejs/resources/models/tri.model"        },
 		mdl_cube                                                      : { file: "enginejs/resources/models/cube.model"       },
-		mdl_sky_box                                                   : { file: "enginejs/resources/models/sky-box.model"       },
+		mdl_sky_box                                                   : { file: "enginejs/resources/models/sky-box.model"    },
 	},
 
 	// *************************************************************************************
