@@ -981,14 +981,15 @@ Engine.Gfx.ResizeViewport();
 
 Engine.Gfx.ShaderPropertySetterFuncFromString =
 {
-	"float"     : Engine.Gfx.SP_FLOAT,
-	"int"       : Engine.Gfx.SP_INT,
-	"sampler2D" : Engine.Gfx.SP_SAMPLER,
-	"vec2"      : Engine.Gfx.SP_VEC2,
-	"vec3"      : Engine.Gfx.SP_VEC3,
-	"vec4"      : Engine.Gfx.SP_VEC4,
-	"mat3"      : Engine.Gfx.SP_MATRIX3,
-	"mat4"      : Engine.Gfx.SP_MATRIX4
+	"float"       : Engine.Gfx.SP_FLOAT,
+	"int"         : Engine.Gfx.SP_INT,
+	"sampler2D"   : Engine.Gfx.SP_SAMPLER,
+	"samplerCube" : Engine.Gfx.SP_SAMPLER_CUBE,
+	"vec2"        : Engine.Gfx.SP_VEC2,
+	"vec3"        : Engine.Gfx.SP_VEC3,
+	"vec4"        : Engine.Gfx.SP_VEC4,
+	"mat3"        : Engine.Gfx.SP_MATRIX3,
+	"mat4"        : Engine.Gfx.SP_MATRIX4
 };
 
 // Texture resource loading

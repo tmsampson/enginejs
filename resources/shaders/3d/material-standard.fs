@@ -14,7 +14,9 @@ precision highp float;
 	"fresnel_colour"      : { "name" : "Fresnel Colour",        "default" : [1, 1, 1, 1]       },
 	"fresnel_scale"       : { "name" : "Fresnel Scale",         "default" : 0.1                },
 	"fresnel_bias"        : { "name" : "Fresnel Bias",          "default" : 0                  },
-	"fresnel_power"       : { "name" : "Fresnel Power",         "default" : 2.5                }
+	"fresnel_power"       : { "name" : "Fresnel Power",         "default" : 2.5                },
+	"reflection_map"      : { "name" : "Reflection Map"                                        },
+	"reflection_amount"   : { "name" : "Reflection Amount",      "default" : 0.1               }
 }
 #endif
 
@@ -61,6 +63,7 @@ uniform vec2      specular_map_repeat;
 
 #if defined(USE_REFLECTION_MAP)
 uniform samplerCube reflection_map;
+uniform float reflection_amount;
 #endif
 
 // Shadows
@@ -181,18 +184,20 @@ void main(void)
 	float fresnel = 0.0;
 #endif
 
-	// *************************************************************************************
-	// Reflection
-	// *************************************************************************************
-#if defined(USE_REFLECTION_MAP)
-	vec4 reflection_map_sample = textureCube(reflection_map, reflect(-frag_to_cam, normal));
-	//gl_FragColor = reflection_map_sample; return;
-#endif
-
 	// Composite
 	gl_FragColor = mix(ambient + diffuse + specular, fresnel_colour, fresnel);
 
+	// *************************************************************************************
+	// Contribute reflections?
+	// *************************************************************************************
+#if defined(USE_REFLECTION_MAP)
+	vec4 reflection_map_sample = textureCube(reflection_map, reflect(-frag_to_cam, normal));
+	gl_FragColor = mix(gl_FragColor, reflection_map_sample, reflection_amount);
+#endif
+
+	// *************************************************************************************
 	// Contribute shadows?
+	// *************************************************************************************
 #if defined(USE_SHADOWS)
 	vec2 shadow_map_uv = v_shadow_pos.xy;
 	float fragment_depth = v_shadow_pos.z;
