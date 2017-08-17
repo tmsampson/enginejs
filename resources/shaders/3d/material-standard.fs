@@ -59,6 +59,10 @@ uniform sampler2D specular_map;
 uniform vec2      specular_map_repeat;
 #endif
 
+#ifdef USE_REFLECTION_MAP
+uniform samplerCube reflection_map;
+#endif
+
 // Shadows
 #ifdef USE_SHADOWS
 uniform sampler2D u_shadow_map;
