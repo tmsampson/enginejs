@@ -24,9 +24,9 @@
 		},
 		"vec2"       :
 		{
-			"albedo_map_repeat"   : [1, 1],
-			"normal_map_repeat"   : [1, 1],
-			"specular_map_repeat" : [1, 1]
+			"albedo_map_repeat"   : [2, 2],
+			"normal_map_repeat"   : [2, 2],
+			"specular_map_repeat" : [2, 2]
 		},
 		"vec4"       :
 		{

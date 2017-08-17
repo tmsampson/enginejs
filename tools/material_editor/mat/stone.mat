@@ -19,6 +19,12 @@
 		{
 			"specular_shininess"  : 25
 		},
+		"vec2"       :
+		{
+			"albedo_map_repeat"   : [2, 2],
+			"normal_map_repeat"   : [2, 2],
+			"specular_map_repeat" : [2, 2]
+		},
 		"vec4"       :
 		{
 			"albedo_colour"       : [1, 1, 1, 1],
