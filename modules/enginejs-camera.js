@@ -188,26 +188,24 @@ Engine.Camera.Helper =
 
 		this.Update = function(camera)
 		{
-			// Only process when mouse is over canvas
-			if(!Engine.Mouse.IsOverCanvas())
+			// Only process input when mouse is over canvas
+			if(Engine.Mouse.IsOverCanvas())
 			{
-				return;
-			}
+				// Zoom
+				var wheel_delta = Engine.Mouse.GetWheelDelta();
+				if(wheel_delta != 0)
+				{
+					this.radius[0] -= wheel_delta * Engine.Time.delta_s / 3;
+					this.radius[0] = Engine.Math.Clamp(this.radius[0], this.radius[1], this.radius[2]);
+				}
 
-			// Zoom
-			var wheel_delta = Engine.Mouse.GetWheelDelta();
-			if(wheel_delta != 0)
-			{
-				this.radius[0] -= wheel_delta * Engine.Time.delta_s / 3;
-				this.radius[0] = Engine.Math.Clamp(this.radius[0], this.radius[1], this.radius[2]);
-			}
-
-			// Pan
-			if(Engine.Mouse.IsPressed())
-			{
-				var mouse_delta = Engine.Mouse.GetDelta();
-				this.angles[0] += mouse_delta[0] * Engine.Time.delta_s / 3;
-				this.angles[1] = Engine.Math.Clamp(this.angles[1] - mouse_delta[1] * Engine.Time.delta_s / 3, this.min_y, this.max_y);
+				// Pan
+				if(Engine.Mouse.IsPressed())
+				{
+					var mouse_delta = Engine.Mouse.GetDelta();
+					this.angles[0] += mouse_delta[0] * Engine.Time.delta_s / 3;
+					this.angles[1] = Engine.Math.Clamp(this.angles[1] - mouse_delta[1] * Engine.Time.delta_s / 3, this.min_y, this.max_y);
+				}
 			}
 
 			// Update
