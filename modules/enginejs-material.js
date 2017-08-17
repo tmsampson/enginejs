@@ -260,12 +260,16 @@ Engine.Resource.RegisterLoadFunction("mat", function(descriptor, callback)
 					material.properties[shader_property_info.type] = { };
 				}
 
-				// Does this material provide a value for the shader property?
+				// Does this material provide a value for the shader property? If not, use the
+				// (mandatory) default value specified in the shader
+				// Note: Defult textures cannot be specified in the shader, so if encounter a sampler
+				//       exposed in the shader which does not have a value provided in the material,
+				//       default to null
 				var material_property_bank = material.properties[shader_property_info.type];
 				if(!material_property_bank.hasOwnProperty(property_name))
 				{
-					// Setup a material property with the default value provided in the shader
-					// Note: If the missing property is a the albedo map sampler, we bind a 1x1 plain white texture
+					// Setup a material property with the default value provided in the shader (or default to null)
+					// Note: If the missing property is the albedo map sampler, we bind a 1x1 plain white texture
 					if(shader_property_info.type == "sampler2D")
 					{
 						material_property_bank[property_name] = (property_name == "albedo_map")? Engine.Resources["tx_white"] : null;
