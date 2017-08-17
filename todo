@@ -1,5 +1,9 @@
 * Work on material editor
+	- Add support for reflection maps (cubemaps)
 	- Add support for custom materials (plasma)
+	- Add support for custom materials sampling:
+		- Shadows
+		- Reflection maps
 * Re-skin existing tools
 
 * Add support for optionally centering obj files on load (via hint in descriptor)
