@@ -45,8 +45,8 @@ Engine.Gfx.Material = function(prevent_default)
 		shader_name += Engine.Util.IsDefined(this.config.fresnel_enabled) && this.config.fresnel_enabled? "_fresnel" : ""
 
 		// Reflection map
-		this.config.uses_reflection_map = Engine.Util.IsDefined(this.properties.sampler2D) && this.properties.sampler2D.reflection_map != null;
-		shader_name += this.config.uses_reflection_map? "_reflectionmap" : ""
+		this.config.custom_reflection_map = Engine.Util.IsDefined(this.properties.samplerCube) && this.properties.samplerCube.reflection_map != null;
+		shader_name += this.config.reflection_enabled? "_reflectionmap" : ""
 
 		// Catch bad shader permutations
 		if(!Engine.Util.IsDefined(Engine.Resources[shader_name]))
@@ -131,6 +131,12 @@ Engine.Gfx.Material = function(prevent_default)
 			Engine.Gfx.SetShaderProperty("fresnel_bias", this.properties.float.fresnel_bias, Engine.Gfx.SP_FLOAT);
 			Engine.Gfx.SetShaderProperty("fresnel_power", this.properties.float.fresnel_power, Engine.Gfx.SP_FLOAT);
 		}
+
+		// 5. Bind custom reflection map?
+		if(this.config.reflection_enabled && this.config.custom_reflection_map)
+		{
+			Engine.Gfx.BindCubeMap(this.properties.samplerCube.reflection_map, 3, "reflection_map");
+		}
 	}
 
 	this.BindProperties = function()
@@ -196,34 +202,38 @@ Engine.Gfx.Material = function(prevent_default)
 	}
 
 	// Property Getters
-	this.GetTexture   = function(sampler_name)  { return Engine.Util.IsDefined(this.properties.sampler2D)? this.properties.sampler2D[sampler_name] : null  };
-	this.GetSampler2D = function(sampler_name)  { return Engine.Util.IsDefined(this.properties.sampler2D)? this.properties.sampler2D[sampler_name] : null  };
-	this.GetInteger   = function(property_name) { return Engine.Util.IsDefined(this.properties.int)? this.properties.int[property_name] : null             };
-	this.GetInt       = function(property_name) { return Engine.Util.IsDefined(this.properties.int)? this.properties.int[property_name] : null             };
-	this.GetFloat     = function(property_name) { return Engine.Util.IsDefined(this.properties.float)? this.properties.float[property_name] : null         };
-	this.GetVector2   = function(property_name) { return Engine.Util.IsDefined(this.properties.vec2)? this.properties.vec2[property_name] : null           };
-	this.GetVec2      = function(property_name) { return Engine.Util.IsDefined(this.properties.vec2)? this.properties.vec2[property_name] : null           };
-	this.GetVector3   = function(property_name) { return Engine.Util.IsDefined(this.properties.vec3)? this.properties.vec3[property_name] : null           };
-	this.GetVec3      = function(property_name) { return Engine.Util.IsDefined(this.properties.vec3)? this.properties.vec3[property_name] : null           };
-	this.GetVector4   = function(property_name) { return Engine.Util.IsDefined(this.properties.vec4)? this.properties.vec4[property_name] : null           };
-	this.GetVec4      = function(property_name) { return Engine.Util.IsDefined(this.properties.vec4)? this.properties.vec4[property_name] : null           };
-	this.GetColour    = function(property_name) { return Engine.Util.IsDefined(this.properties.vec4)? this.properties.vec4[property_name] : null           };
-	this.GetColor     = function(property_name) { return Engine.Util.IsDefined(this.properties.vec4)? this.properties.vec4[property_name] : null           };
+	this.GetTexture     = function(sampler_name)  { return Engine.Util.IsDefined(this.properties.sampler2D)? this.properties.sampler2D[sampler_name] : null      };
+	this.GetSampler2D   = function(sampler_name)  { return Engine.Util.IsDefined(this.properties.sampler2D)? this.properties.sampler2D[sampler_name] : null      };
+	this.GetSamplerCube = function(sampler_name)  { return Engine.Util.IsDefined(this.properties.samplerCube)? this.properties.samplerCube[sampler_name] : null  };
+	this.GetCubeMap     = function(sampler_name)  { return Engine.Util.IsDefined(this.properties.samplerCube)? this.properties.samplerCube[sampler_name] : null  };
+	this.GetInteger     = function(property_name) { return Engine.Util.IsDefined(this.properties.int)? this.properties.int[property_name] : null                 };
+	this.GetInt         = function(property_name) { return Engine.Util.IsDefined(this.properties.int)? this.properties.int[property_name] : null                 };
+	this.GetFloat       = function(property_name) { return Engine.Util.IsDefined(this.properties.float)? this.properties.float[property_name] : null             };
+	this.GetVector2     = function(property_name) { return Engine.Util.IsDefined(this.properties.vec2)? this.properties.vec2[property_name] : null               };
+	this.GetVec2        = function(property_name) { return Engine.Util.IsDefined(this.properties.vec2)? this.properties.vec2[property_name] : null               };
+	this.GetVector3     = function(property_name) { return Engine.Util.IsDefined(this.properties.vec3)? this.properties.vec3[property_name] : null               };
+	this.GetVec3        = function(property_name) { return Engine.Util.IsDefined(this.properties.vec3)? this.properties.vec3[property_name] : null               };
+	this.GetVector4     = function(property_name) { return Engine.Util.IsDefined(this.properties.vec4)? this.properties.vec4[property_name] : null               };
+	this.GetVec4        = function(property_name) { return Engine.Util.IsDefined(this.properties.vec4)? this.properties.vec4[property_name] : null               };
+	this.GetColour      = function(property_name) { return Engine.Util.IsDefined(this.properties.vec4)? this.properties.vec4[property_name] : null               };
+	this.GetColor       = function(property_name) { return Engine.Util.IsDefined(this.properties.vec4)? this.properties.vec4[property_name] : null               };
 
 	// Property Setters
-	this.SetTexture   = function(sampler_name, new_value)  { if(!Engine.Util.IsDefined(this.properties.sampler2D)) { this.properties.sampler2D = { sampler_name : new_value }} else { this.properties.sampler2D[sampler_name] = new_value; } };
-	this.SetSampler2D = function(sampler_name, new_value)  { if(!Engine.Util.IsDefined(this.properties.sampler2D)) { this.properties.sampler2D = { sampler_name : new_value }} else { this.properties.sampler2D[sampler_name] = new_value; } };
-	this.SetInteger   = function(property_name, new_value) { if(!Engine.Util.IsDefined(this.properties.int)) { this.properties.int = { property_name : new_value }} else { this.properties.int[property_name] = new_value; }                 };
-	this.SetInt       = function(property_name, new_value) { if(!Engine.Util.IsDefined(this.properties.int)) { this.properties.int = { property_name : new_value }} else { this.properties.int[property_name] = new_value; }                 };
-	this.SetFloat     = function(property_name, new_value) { if(!Engine.Util.IsDefined(this.properties.float)) { this.properties.float = { property_name : new_value }} else { this.properties.float[property_name] = new_value; }           };
-	this.SetVector2   = function(property_name, new_value) { if(!Engine.Util.IsDefined(this.properties.vec2)) { this.properties.vec2 = { property_name : new_value }} else { this.properties.vec2[property_name] = new_value; }              };
-	this.SetVec2      = function(property_name, new_value) { if(!Engine.Util.IsDefined(this.properties.vec2)) { this.properties.vec2 = { property_name : new_value }} else { this.properties.vec2[property_name] = new_value; }              };
-	this.SetVector3   = function(property_name, new_value) { if(!Engine.Util.IsDefined(this.properties.vec3)) { this.properties.vec3 = { property_name : new_value }} else { this.properties.vec3[property_name] = new_value; }              };
-	this.SetVec3      = function(property_name, new_value) { if(!Engine.Util.IsDefined(this.properties.vec3)) { this.properties.vec3 = { property_name : new_value }} else { this.properties.vec3[property_name] = new_value; }              };
-	this.SetVector4   = function(property_name, new_value) { if(!Engine.Util.IsDefined(this.properties.vec4)) { this.properties.vec4 = { property_name : new_value }} else { this.properties.vec4[property_name] = new_value; }              };
-	this.SetVec4      = function(property_name, new_value) { if(!Engine.Util.IsDefined(this.properties.vec4)) { this.properties.vec4 = { property_name : new_value }} else { this.properties.vec4[property_name] = new_value; }              };
-	this.SetColour    = function(property_name, new_value) { if(!Engine.Util.IsDefined(this.properties.vec4)) { this.properties.vec4 = { property_name : new_value }} else { this.properties.vec4[property_name] = new_value; }              };
-	this.SetColor     = function(property_name, new_value) { if(!Engine.Util.IsDefined(this.properties.vec4)) { this.properties.vec4 = { property_name : new_value }} else { this.properties.vec4[property_name] = new_value; }              };
+	this.SetTexture     = function(sampler_name, new_value)  { if(!Engine.Util.IsDefined(this.properties.sampler2D)) { this.properties.sampler2D = { sampler_name : new_value }} else { this.properties.sampler2D[sampler_name] = new_value; } };
+	this.SetSampler2D   = function(sampler_name, new_value)  { if(!Engine.Util.IsDefined(this.properties.sampler2D)) { this.properties.sampler2D = { sampler_name : new_value }} else { this.properties.sampler2D[sampler_name] = new_value; } };
+	this.SetSamplerCube = function(sampler_name, new_value)  { if(!Engine.Util.IsDefined(this.properties.samplerCube)) { this.properties.samplerCube = { sampler_name : new_value }} else { this.properties.samplerCube[sampler_name] = new_value; } };
+	this.SetCubeMap     = function(sampler_name, new_value)  { if(!Engine.Util.IsDefined(this.properties.samplerCube)) { this.properties.samplerCube = { sampler_name : new_value }} else { this.properties.samplerCube[sampler_name] = new_value; } };
+	this.SetInteger     = function(property_name, new_value) { if(!Engine.Util.IsDefined(this.properties.int)) { this.properties.int = { property_name : new_value }} else { this.properties.int[property_name] = new_value; }                 };
+	this.SetInt         = function(property_name, new_value) { if(!Engine.Util.IsDefined(this.properties.int)) { this.properties.int = { property_name : new_value }} else { this.properties.int[property_name] = new_value; }                 };
+	this.SetFloat       = function(property_name, new_value) { if(!Engine.Util.IsDefined(this.properties.float)) { this.properties.float = { property_name : new_value }} else { this.properties.float[property_name] = new_value; }           };
+	this.SetVector2     = function(property_name, new_value) { if(!Engine.Util.IsDefined(this.properties.vec2)) { this.properties.vec2 = { property_name : new_value }} else { this.properties.vec2[property_name] = new_value; }              };
+	this.SetVec2        = function(property_name, new_value) { if(!Engine.Util.IsDefined(this.properties.vec2)) { this.properties.vec2 = { property_name : new_value }} else { this.properties.vec2[property_name] = new_value; }              };
+	this.SetVector3     = function(property_name, new_value) { if(!Engine.Util.IsDefined(this.properties.vec3)) { this.properties.vec3 = { property_name : new_value }} else { this.properties.vec3[property_name] = new_value; }              };
+	this.SetVec3        = function(property_name, new_value) { if(!Engine.Util.IsDefined(this.properties.vec3)) { this.properties.vec3 = { property_name : new_value }} else { this.properties.vec3[property_name] = new_value; }              };
+	this.SetVector4     = function(property_name, new_value) { if(!Engine.Util.IsDefined(this.properties.vec4)) { this.properties.vec4 = { property_name : new_value }} else { this.properties.vec4[property_name] = new_value; }              };
+	this.SetVec4        = function(property_name, new_value) { if(!Engine.Util.IsDefined(this.properties.vec4)) { this.properties.vec4 = { property_name : new_value }} else { this.properties.vec4[property_name] = new_value; }              };
+	this.SetColour      = function(property_name, new_value) { if(!Engine.Util.IsDefined(this.properties.vec4)) { this.properties.vec4 = { property_name : new_value }} else { this.properties.vec4[property_name] = new_value; }              };
+	this.SetColor       = function(property_name, new_value) { if(!Engine.Util.IsDefined(this.properties.vec4)) { this.properties.vec4 = { property_name : new_value }} else { this.properties.vec4[property_name] = new_value; }              };
 };
 
 Engine.Gfx.Material.Clone = function(original_material)
@@ -246,8 +256,8 @@ Engine.Resource.RegisterLoadFunction("mat", function(descriptor, callback)
 		var material = new Engine.Gfx.Material(true);
 		$.extend(material, material_json);
 
-		// 3. Cross reference material properties with shader properties
-		var on_textures_loaded = function()
+		// 4. Cross reference material properties with shader properties
+		var on_ready = function()
 		{
 			// For each property exposed in shader...
 			for (var property_name in material.shader.property_info)
@@ -283,7 +293,23 @@ Engine.Resource.RegisterLoadFunction("mat", function(descriptor, callback)
 
 			// Finished
 			callback(material);
-		}
+		};
+
+		// 3. Load cube-maps?
+		var on_textures_loaded = function()
+		{
+			if(Engine.Util.IsDefined(material.properties.samplerCube))
+			{
+				Engine.Resource.LoadBatch(material.properties.samplerCube, function()
+				{
+					on_ready();
+				});
+			}
+			else
+			{
+				on_ready();
+			}
+		};
 
 		// 2. Load textures
 		var on_shader_loaded = function()
