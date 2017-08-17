@@ -773,6 +773,18 @@ Engine.Gfx =
 		var offset = optional_offset || 0;
 		var count  = optional_count  || this.current_vertex_buffer_object.item_count;
 
+		// Set face culling
+		var enable_backface_culling = (draw_mode == Engine.GL.TRIANGLES);
+		Engine.GL.cullFace(Engine.GL.BACK);
+		if(enable_backface_culling)
+		{
+			Engine.GL.enable(Engine.GL.CULL_FACE);
+		}
+		else
+		{
+			Engine.GL.disable(Engine.GL.CULL_FACE);
+		}
+
 		if(is_index_buffer)
 		{
 			// Draw indexed
