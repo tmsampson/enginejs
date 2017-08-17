@@ -370,7 +370,8 @@ Engine.Gfx =
 				width      : this.width,
 				height     : this.height,
 				descriptor : descriptor,
-				is_npot    : !Engine.Math.IsPowerOfTwo(this.width) || !Engine.Math.IsPowerOfTwo(this.height)
+				is_npot    : !Engine.Math.IsPowerOfTwo(this.width) || !Engine.Math.IsPowerOfTwo(this.height),
+				img_object : img_object
 			};
 
 			// Warn about N.P.O.T (Non Power of Two) textures
@@ -479,6 +480,58 @@ Engine.Gfx =
 	{
 		Engine.GL.texParameteri(Engine.GL.TEXTURE_2D, Engine.GL.TEXTURE_MAG_FILTER, mag);
 		Engine.GL.texParameteri(Engine.GL.TEXTURE_2D, Engine.GL.TEXTURE_MIN_FILTER, min);
+	},
+
+	// **********************************************
+	// Cube / reflection map functionality
+	// **********************************************
+	LoadCubeMap : function(descriptor, callback)
+	{
+		Engine.Net.FetchResource(descriptor.file, function(cubemap_json)
+		{
+			var cubemap = Engine.Util.ParseJSON(cubemap_json, true);
+
+			// Load in textures
+			Engine.Resource.LoadBatch(cubemap.textures, function()
+			{
+				// Ensure each face texture is present
+				if(!Engine.Util.IsDefined(cubemap.textures.tx_left))   { Engine.LogError("Cubemap missing left face texture");  return; }
+				if(!Engine.Util.IsDefined(cubemap.textures.tx_right))  { Engine.LogError("Cubemap missing right face texture");  return; }
+				if(!Engine.Util.IsDefined(cubemap.textures.tx_top))    { Engine.LogError("Cubemap missing top face texture"); return; }
+				if(!Engine.Util.IsDefined(cubemap.textures.tx_bottom)) { Engine.LogError("Cubemap missing bottom face texture");  return; }
+				if(!Engine.Util.IsDefined(cubemap.textures.tx_front))  { Engine.LogError("Cubemap missing front face texture");  return; }
+				if(!Engine.Util.IsDefined(cubemap.textures.tx_back))   { Engine.LogError("Cubemap missing back face texture");  return; }
+
+				// Setup & bind cubemap texture
+				var cubemap_texture = Engine.GL.createTexture();
+				Engine.GL.bindTexture(Engine.GL.TEXTURE_CUBE_MAP, cubemap_texture);
+
+				// Add faces textures to cubemap
+				Engine.GL.texImage2D(Engine.GL.TEXTURE_CUBE_MAP_NEGATIVE_X, 0, Engine.GL.RGBA, Engine.GL.RGBA, Engine.GL.UNSIGNED_BYTE, cubemap.textures.tx_left.img_object);
+				Engine.GL.texImage2D(Engine.GL.TEXTURE_CUBE_MAP_POSITIVE_X, 0, Engine.GL.RGBA, Engine.GL.RGBA, Engine.GL.UNSIGNED_BYTE, cubemap.textures.tx_right.img_object);
+				Engine.GL.texImage2D(Engine.GL.TEXTURE_CUBE_MAP_NEGATIVE_Y, 0, Engine.GL.RGBA, Engine.GL.RGBA, Engine.GL.UNSIGNED_BYTE, cubemap.textures.tx_bottom.img_object);
+				Engine.GL.texImage2D(Engine.GL.TEXTURE_CUBE_MAP_POSITIVE_Y, 0, Engine.GL.RGBA, Engine.GL.RGBA, Engine.GL.UNSIGNED_BYTE, cubemap.textures.tx_top.img_object);
+				Engine.GL.texImage2D(Engine.GL.TEXTURE_CUBE_MAP_NEGATIVE_Z, 0, Engine.GL.RGBA, Engine.GL.RGBA, Engine.GL.UNSIGNED_BYTE, cubemap.textures.tx_front.img_object);
+				Engine.GL.texImage2D(Engine.GL.TEXTURE_CUBE_MAP_POSITIVE_Z, 0, Engine.GL.RGBA, Engine.GL.RGBA, Engine.GL.UNSIGNED_BYTE, cubemap.textures.tx_back.img_object);
+
+				// Configure cubemap texture
+				Engine.GL.texParameteri(Engine.GL.TEXTURE_CUBE_MAP, Engine.GL.TEXTURE_MAG_FILTER, Engine.GL.LINEAR);
+				Engine.GL.texParameteri(Engine.GL.TEXTURE_CUBE_MAP, Engine.GL.TEXTURE_MIN_FILTER, Engine.GL.LINEAR);
+				Engine.GL.texParameteri(Engine.GL.TEXTURE_CUBE_MAP, Engine.GL.TEXTURE_WRAP_S, Engine.GL.CLAMP_TO_EDGE);
+				Engine.GL.texParameteri(Engine.GL.TEXTURE_CUBE_MAP, Engine.GL.TEXTURE_WRAP_T, Engine.GL.CLAMP_TO_EDGE);
+
+				// Create cubemap object
+				var cubemap_object =
+				{
+					descriptor    : descriptor,
+					resource      : cubemap_texture,
+					face_textures : cubemap.textures
+				};
+
+				// Return cubemap resource
+				callback(cubemap_object);
+			});
+		});
 	},
 
 	// **********************************************
@@ -915,6 +968,9 @@ Engine.Resource.RegisterLoadFunction("png", Engine.Gfx.LoadTexture);
 Engine.Resource.RegisterLoadFunction("jpg", Engine.Gfx.LoadTexture);
 Engine.Resource.RegisterLoadFunction("bmp", Engine.Gfx.LoadTexture);
 Engine.Resource.RegisterLoadFunction("tga", Engine.Gfx.LoadTexture);
+
+// Cube / reflection map loading
+Engine.Resource.RegisterLoadFunction("cubemap", Engine.Gfx.LoadCubeMap);
 
 // Vertex / fragment shader resource loading
 Engine.Resource.RegisterLoadFunction("vs",  Engine.Gfx.LoadShader);
