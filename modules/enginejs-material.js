@@ -57,7 +57,7 @@ Engine.Gfx.Material = function(prevent_default)
 
 		// Apply shader
 		this.shader_perumation = shader_name;
-		this.shader = Engine.Resources[shader_name]; 					  // Select pre-compiled permutation
+		this.shader = Engine.Resources[shader_name];                      // Select pre-compiled permutation
 		this.shader_shadowed = Engine.Resources[shader_name + "_shadow"]; // Select pre-compiled permutation with shadows enabled
 		this.shader_program = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_general_transformed_uv_normals_tangents"],
 		                                                     this.shader);
