@@ -128,8 +128,6 @@ void main(void)
 	normal_basis[2] = normalize(v_world_normal);
 
 	vec3 normal = normal_basis * normalize((material_normal.xyz * 2.0) - 1.0);
-	normal = normalize(v_world_normal);
-
 #else
 	// Use vertex normals
 	vec3 normal = normalize(v_world_normal);
@@ -187,8 +185,8 @@ void main(void)
 	// Reflection
 	// *************************************************************************************
 #if defined(USE_REFLECTION_MAP)
-	vec4 temp_unused = textureCube(reflection_map, reflect(-frag_to_cam, normal));
-	gl_FragColor = temp_unused; return;
+	vec4 reflection_map_sample = textureCube(reflection_map, reflect(-frag_to_cam, normal));
+	//gl_FragColor = reflection_map_sample; return;
 #endif
 
 	// Composite
