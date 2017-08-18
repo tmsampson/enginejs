@@ -561,6 +561,34 @@ Engine.Gfx =
 	},
 
 	// **********************************************
+	// Skybox functionality
+	// **********************************************
+	DrawSkybox : function(scale, skybox_texture)
+	{
+		// Select skybox texture
+		if(!Engine.Util.IsDefined(skybox_texture))
+		{
+			skybox_texture = this.default_reflection_map;
+		}
+
+		// Bind skybox shader
+		this.current_shader_program = this.skybox_shader_program;
+		Engine.GL.useProgram(this.skybox_shader_program.resource);
+
+		// Bind view / projection (drop translation)
+		var mtx_trans = mat4.create(); mat4.scale(mtx_trans, Engine.Math.IdentityMatrix, [scale, scale, scale]);
+		this.SetShaderProperty("u_trans_world", mtx_trans, Engine.Gfx.SP_MATRIX4, true);
+		this.SetShaderProperty("u_trans_view", this.active_camera.mtx_view, Engine.Gfx.SP_MATRIX4, true);
+		this.SetShaderProperty("u_trans_proj", this.active_camera.mtx_proj, Engine.Gfx.SP_MATRIX4, true);
+
+		// Bind skybox texture
+		this.BindCubeMap(skybox_texture, 0, "skybox_texture");
+
+		// Draw skybox
+		this.DrawModel(Engine.Resources["mdl_skybox"], null, false);
+	},
+
+	// **********************************************
 	// Material functionality
 	// **********************************************
 	SetDirectionalLight : function(directional_light)
@@ -913,6 +941,16 @@ Engine.Gfx =
 		}
 	},
 
+	PreGameLoopInit : function()
+	{
+		// Set default reflection map
+		Engine.Gfx.SetDefaultReflectionMap(Engine.Resources["tx_default_reflection_map"]);
+
+		// Compile skybox shaders
+		this.skybox_shader_program = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_skybox"],
+		                                                            Engine.Resources["fs_skybox"]);
+	},
+
 	// **********************************************
 	// Properties
 	// **********************************************
@@ -924,6 +962,11 @@ Engine.Gfx =
 		direction  : [ 0, -1, 0 ],
 		colour     : [ 0.7, 0.7, 0.7 ],
 	},
+
+	// **********************************************
+	// Skybox stuff
+	// **********************************************
+	skybox_shader_program : null, // Compiled during PreGameLoopInit
 
 	// **********************************************
 	// Shadow stuff (WIP)

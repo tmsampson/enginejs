@@ -88,6 +88,10 @@ var Engine =
 		fs_2d_background                                              : { file: "enginejs/resources/shaders/2d/background.fs" },
 		fs_2d_sprite                                                  : { file: "enginejs/resources/shaders/2d/sprite.fs" },
 
+		// Skybox shaders
+		vs_skybox                                                     : { file: "enginejs/resources/shaders/misc/skybox.vs" },
+		fs_skybox                                                     : { file: "enginejs/resources/shaders/misc/skybox.fs" },
+
 		// Standard material system (shader permutations)
 		fs_mat_standard_amb                                                         : { file: "enginejs/resources/shaders/3d/material-standard.fs", define : [] },
 		fs_mat_standard_amb_lit                                                     : { file: "enginejs/resources/shaders/3d/material-standard.fs", define : [ "USE_DIFFUSE" ] },
@@ -157,7 +161,7 @@ var Engine =
 		mdl_floor_tile                                                : { file: "enginejs/resources/models/floor-tile.model" },
 		mdl_tri                                                       : { file: "enginejs/resources/models/tri.model"        },
 		mdl_cube                                                      : { file: "enginejs/resources/models/cube.model"       },
-		mdl_sky_box                                                   : { file: "enginejs/resources/models/sky-box.model"    },
+		mdl_skybox                                                    : { file: "enginejs/resources/models/sky-box.model"    },
 	},
 
 	// *************************************************************************************
@@ -295,7 +299,7 @@ var Engine =
 		Engine.Debug.PreGameLoopInit();
 
 		// Register default reflection map
-		Engine.Gfx.SetDefaultReflectionMap(Engine.Resources["tx_default_reflection_map"]);
+		Engine.Gfx.PreGameLoopInit();
 	},
 
 	// *************************************************************************************
