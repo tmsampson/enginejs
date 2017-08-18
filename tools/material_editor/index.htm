@@ -110,7 +110,8 @@
 
 			// Populate general section
 			$("input[name='general_rotation_enabled']").ionCheckRadio();
-			$("input[name='general_draw_reflection_map']").ionCheckRadio();
+			$("input[name='general_draw_skybox']").ionCheckRadio();
+			$("#general_skybox_scale").slider({ min : 1, max : 60, value: 7 });
 		};
 
 		var populate_ui = function()
@@ -363,8 +364,21 @@
 					var model = object_models[model_index];
 					mat4.translate(mtx_trans, Engine.Math.IdentityMatrix, [0, 0, 0]);
 					mat4.rotate(mtx_trans, mtx_trans, model_rotation, [0, 1, 0]);
-					Engine.Gfx.BindMaterial(object_materials[material_index]);
+					var active_material = object_materials[material_index];
+					Engine.Gfx.BindMaterial(active_material);
 					Engine.Gfx.DrawModel(model, mtx_trans, false, false);
+
+					// Draw kybox
+					var draw_skybox = active_material.config.reflection_enabled &&
+					                  $("input[name='general_draw_skybox']").is(":checked");
+					if(draw_skybox)
+					{
+						var has_custom_reflection_map = Engine.Util.IsDefined(active_material.config.custom_reflection_map) &&
+						                                active_material.config.custom_reflection_map != null;
+						var skybox_texture = has_custom_reflection_map? active_material.properties.samplerCube.reflection_map : null;
+						var skybox_scale = $("#general_skybox_scale").slider("values", 0);
+						Engine.Gfx.DrawSkybox(skybox_scale, skybox_texture);
+					}
 				};
 				return on_render;
 			};
@@ -527,7 +541,11 @@
 						</div>
 						<div class="editor_row">
 							<div class="editor_label">Draw Reflection Map</div>
-							<label><input type="checkbox" name="general_draw_reflection_map"></label>
+							<label><input type="checkbox" name="general_draw_skybox"></label>
+						</div>
+						<div class="editor_row">
+							<div class="editor_label">Reflection Map Scale:</div>
+							<div id='general_skybox_scale' class="editor_slider"></div>
 						</div>
 					</div>
 
