@@ -12,6 +12,7 @@ Engine.Camera =
 		this.viewport = { size : [1, 1], position: [0, 0] };
 		this.mtx_view = mat4.create();
 		this.mtx_view_inverse = mat4.create();
+		this.mtx_view_without_translation = mat4.create();
 		this.mtx_proj = mat4.create();
 		this.mtx_view_proj = mat4.create();
 		this.viewport_pos  = [ 0, 0 ];
@@ -58,6 +59,13 @@ Engine.Camera =
 
 			// Maintain inverse view matrix
 			mat4.invert(this.mtx_view_inverse, this.mtx_view);
+
+			// Maintain view matrix with zero translation (used for things like skybox rendering)
+			mat4.copy(this.mtx_view_without_translation, this.mtx_view);
+			this.mtx_view_without_translation[12] = 0;
+			this.mtx_view_without_translation[13] = 0;
+			this.mtx_view_without_translation[14] = 0;
+			this.mtx_view_without_translation[15] = 1;
 		};
 	},
 
@@ -143,7 +151,7 @@ Engine.Camera =
 		this.fov      = 45.0;
 		this.aspect   = Engine.Canvas.GetAspectRatio();
 		this.near     = 0.1;
-		this.far      = 100;
+		this.far      = 1000;
 		$.extend(this, user_config); // Override defaults
 
 		this.UpdateMatrices = function()
