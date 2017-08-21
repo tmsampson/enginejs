@@ -575,17 +575,25 @@ Engine.Gfx =
 		this.current_shader_program = this.skybox_shader_program;
 		Engine.GL.useProgram(this.skybox_shader_program.resource);
 
-		// Bind view / projection (drop translation)
+		// Bind view / projection
 		var mtx_trans = mat4.create(); mat4.scale(mtx_trans, Engine.Math.IdentityMatrix, [scale, scale, scale]);
 		this.SetShaderProperty("u_trans_world", mtx_trans, Engine.Gfx.SP_MATRIX4, true);
-		this.SetShaderProperty("u_trans_view", this.active_camera.mtx_view, Engine.Gfx.SP_MATRIX4, true);
+		this.SetShaderProperty("u_trans_view", this.active_camera.mtx_view_without_translation, Engine.Gfx.SP_MATRIX4, true);
 		this.SetShaderProperty("u_trans_proj", this.active_camera.mtx_proj, Engine.Gfx.SP_MATRIX4, true);
 
 		// Bind skybox texture
 		this.BindCubeMap(skybox_texture, 0, "skybox_texture");
 
 		// Draw skybox
+		// Note: Use LEQUAL depth test, as z value writen in shader is always max depth, so
+		//       skybox is always drawn behind everything else and we only shade fragments
+		//       which haven't already had some depth value written to them
+		var previous_state = Engine.Gfx.IsDepthTestEnabled();			// backup state
+		var previous_mode = Engine.Gfx.GetDepthTestMode();				// backup state
+		Engine.Gfx.SetDepthTestMode(Engine.GL.LEQUAL, true);
 		this.DrawModel(Engine.Resources["mdl_skybox"], null, false);
+		Engine.Gfx.EnableDepthTest(previous_state);						// restore state
+		Engine.Gfx.SetDepthTestMode(previous_mode);						// restore state
 	},
 
 	// **********************************************
@@ -895,10 +903,20 @@ Engine.Gfx =
 		this.SetStateBool(Engine.GL.DEPTH_TEST, new_value);
 	},
 
+	IsDepthTestEnabled : function()
+	{
+		return Engine.GL.isEnabled(Engine.GL.DEPTH_TEST);
+	},
+
 	SetDepthTestMode : function(mode, also_enable)
 	{
 		Engine.GL.depthFunc(mode);
 		if(also_enable) { this.EnableDepthTest(true); }
+	},
+
+	GetDepthTestMode : function()
+	{
+		return Engine.GL.getParameter(Engine.GL.DEPTH_FUNC);
 	},
 
 	// **********************************************
