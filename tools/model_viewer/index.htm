@@ -147,10 +147,7 @@
 					{
 						// Main render pass | Normal draw with shadow sampling enabled
 						Engine.Gfx.SetShadowParams(shadow_rt, shadow_type, shadow_cam.mtx_view_proj);
-						//Engine.Gfx.BindMaterial(resources["mat_sponge"], false);
 						Engine.Gfx.DrawModel(model, mtx_trans);
-						//Engine.Gfx.DrawModel(model, mtx_trans, false, false);
-
 					}
 					else
 					{
