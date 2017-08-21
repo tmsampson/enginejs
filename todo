@@ -1,3 +1,7 @@
+* Add bear model to material viewer
+* Add support for optionally centering obj files on load (via hint in descriptor)
+* Add support for refraction!
+
 * Fix bug! Looks like material editor fresnel bias/scale sliders use 0-100 to represent
   0-1 but dont multiply by 100 when loading in the value! need to verify and fix (material values will need to be / 100? )
 
@@ -8,7 +12,6 @@
 		- Reflection maps
 * Re-skin existing tools
 
-* Add support for optionally centering obj files on load (via hint in descriptor)
 * Add more tests models to model viewer
 * Will need a way to specify that normal map is bump texture and convert in shader, see: https://stackoverflow.com/questions/5281261/generating-a-normal-map-from-a-height-map
 	- Branch or permutation? probably branch to avoid explosion of permutations?!
