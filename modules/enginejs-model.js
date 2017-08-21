@@ -14,7 +14,7 @@ Engine.Model =
 			// 2. Prepare / finalise model
 			var prepare_model = function()
 			{
-				var model_object = Engine.Model.PrepareModel(model_file);
+				var model_object = Engine.Model.PrepareModel(model_file, descriptor);
 				callback(model_object);
 			};
 
@@ -33,14 +33,90 @@ Engine.Model =
 		});
 	},
 
-	PrepareModel : function(model_file)
+	PrepareModel : function(model_file, descriptor)
 	{
 		var has_materials = Engine.Util.IsDefined(model_file.materials);
 		var primitives = model_file.model_data.primitives;
 
+		// Were centre / scaling request on import?
+		var scale_on_import = descriptor && Engine.Util.IsDefined(descriptor.scale);
+		var import_scale_factor = scale_on_import? descriptor.scale : 1.0;
+
+		// Apply rotation matrix on import?
+		var import_rotation_mtx = null;
+		if(descriptor && Engine.Util.IsDefined(descriptor.rotate) && descriptor.rotate.length == 3)
+		{
+			import_rotation_mtx = mat4.create();
+			mat4.rotate(import_rotation_mtx, Engine.Math.IdentityMatrix, Engine.Math.DegToRad(descriptor.rotate[0]), [1, 0, 0]);
+			mat4.rotate(import_rotation_mtx, import_rotation_mtx, Engine.Math.DegToRad(descriptor.rotate[1]), [0, 1, 0]);
+			mat4.rotate(import_rotation_mtx, import_rotation_mtx, Engine.Math.DegToRad(descriptor.rotate[2]), [0, 0, 1]);
+		}
+
+		// First pass to calculate bounds
 		model_file.min_vert = [ 10000000, 10000000, 10000000 ];
 		model_file.max_vert = [ -10000000, -10000000, -10000000 ];
+		for(var i = 0; i < primitives.length; ++i)
+		{
+			var buffers = primitives[i].vertex_buffers;
+			for(var j = 0; j < buffers.length; ++j)
+			{
+				var buffer = buffers[j];
+				if(buffer.attribute_name == "a_pos")
+				{
+					for(var j = 0; j < buffer.stream.length; j += 3)
+					{
+						// Apply import rotation?
+						if(import_rotation_mtx != null)
+						{
+							var vec = vec3.fromValues(buffer.stream[j + 0], buffer.stream[j + 1], buffer.stream[j + 2]);
+							vec3.transformMat4(vec, vec, import_rotation_mtx);
+							buffer.stream[j + 0] = vec[0];
+							buffer.stream[j + 1] = vec[1];
+							buffer.stream[j + 2] = vec[2];
+						}
 
+						// Apply import scale?
+						if(scale_on_import)
+						{
+							buffer.stream[j + 0] *= import_scale_factor;
+							buffer.stream[j + 1] *= import_scale_factor;
+							buffer.stream[j + 2] *= import_scale_factor;
+						}
+
+						// Enlarge model bounds?
+						var pos = [ buffer.stream[j + 0], buffer.stream[j + 1], buffer.stream[j + 2]]
+						model_file.min_vert[0] = Math.min(model_file.min_vert[0], pos[0]); model_file.max_vert[0] = Math.max(model_file.max_vert[0], pos[0]);
+						model_file.min_vert[1] = Math.min(model_file.min_vert[1], pos[1]); model_file.max_vert[1] = Math.max(model_file.max_vert[1], pos[1]);
+						model_file.min_vert[2] = Math.min(model_file.min_vert[2], pos[2]); model_file.max_vert[2] = Math.max(model_file.max_vert[2], pos[2]);
+					}
+				}
+			}
+		}
+
+		// Calculate model size and centroid
+		var size =
+		[
+			model_file.max_vert[0] - model_file.min_vert[0],
+			model_file.max_vert[1] - model_file.min_vert[1],
+			model_file.max_vert[2] - model_file.min_vert[2]
+		];
+		var centroid =
+		[
+			model_file.min_vert[0] + (size[0] * 0.5),
+			model_file.min_vert[1] + (size[1] * 0.5),
+			model_file.min_vert[2] + (size[2] * 0.5)
+		];
+
+		// Centre bounds?
+		var centre_on_import = descriptor && Engine.Util.IsDefined(descriptor.centre) && descriptor.centre;
+		if(centre_on_import)
+		{
+			model_file.min_vert[0] -= centroid[0]; model_file.max_vert[0] -= centroid[0];
+			model_file.min_vert[1] -= centroid[1]; model_file.max_vert[1] -= centroid[1];
+			model_file.min_vert[2] -= centroid[2]; model_file.max_vert[2] -= centroid[2];
+		}
+
+		// Second pass to prepare the model
 		for(var i = 0; i < primitives.length; ++i)
 		{
 			// Grab primitive
@@ -87,22 +163,21 @@ Engine.Model =
 				return;
 			}
 
-			// Extract local min / max
-			for(var j = 0; j < vertex_buffer.stream.length; j += 3)
-			{
-				var x = vertex_buffer.stream[j + 0];
-				var y = vertex_buffer.stream[j + 1];
-				var z = vertex_buffer.stream[j + 2];
-
-				model_file.min_vert[0] = Math.min(model_file.min_vert[0], x); model_file.max_vert[0] = Math.max(model_file.max_vert[0], x);
-				model_file.min_vert[1] = Math.min(model_file.min_vert[1], y); model_file.max_vert[1] = Math.max(model_file.max_vert[1], y);
-				model_file.min_vert[2] = Math.min(model_file.min_vert[2], z); model_file.max_vert[2] = Math.max(model_file.max_vert[2], z);
-			}
-
 			// We only carry out further preparations using triangle topology
 			// TODO: Add support to prep functions for triangle strip / fan etc
 			if(vertex_buffer.draw_mode == "triangles")
 			{
+				// Centre / scale model?
+				if(centre_on_import)
+				{
+					for(var j = 0; j < vertex_buffer.stream.length; j += 3)
+					{
+						vertex_buffer.stream[j + 0] -= centroid[0];
+						vertex_buffer.stream[j + 1] -= centroid[1];
+						vertex_buffer.stream[j + 2] -= centroid[2];
+					}
+				}
+
 				// Prepare indices?
 				// Note: For now, if we don't have an index buffer that's fine, but for the sake of simplicity / consistency,
 				//       let's build a temporary one now for further processing below...
