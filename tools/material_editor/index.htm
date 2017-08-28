@@ -34,6 +34,7 @@
 			mat_wood          : { file : "mat/wood.mat" },
 			mat_snooker_ball  : { file : "mat/snooker-ball.mat" },
 			mat_carpet        : { file : "mat/carpet.mat" },
+			mdl_bunny         : { file : "model/stanford-bunny.obj", scale : 0.7, centre : true },
 		};
 
 		var do_resize = function()
@@ -315,7 +316,8 @@
 				var object_models =
 				[
 					Engine.Geometry.MakeSphere(),
-					Engine.Resources["mdl_cube"]
+					Engine.Resources["mdl_cube"],
+					resources["mdl_bunny"]
 				];
 				var model_index = 0;
 
