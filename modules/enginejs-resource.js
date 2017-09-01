@@ -59,7 +59,7 @@ Engine.Resource =
 		}
 
 		// Is this resource type supported?
-		var extension = descriptor.file.split('.').pop().toLowerCase();
+		var extension = Engine.Util.GetExtension(descriptor.file);
 		if(extension in Engine.Resource.LoadFunctions)
 		{
 			Engine.Resource.LoadFunctions[extension](descriptor, function(resource_object)
