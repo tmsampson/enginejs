@@ -1,5 +1,3 @@
-* Add bear model to material viewer
-* Add support for optionally centering obj files on load (via hint in descriptor)
 * Add support for refraction!
 
 * Fix bug! Looks like material editor fresnel bias/scale sliders use 0-100 to represent
@@ -7,7 +5,7 @@
 
 * Work on material editor
 	- Add support for custom materials (plasma)
-	- Add support for custom materials sampling:
+	- Add support for sampling the following from custom materials:
 		- Shadows
 		- Reflection maps
 * Re-skin existing tools
