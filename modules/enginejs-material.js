@@ -44,9 +44,11 @@ Engine.Gfx.Material = function(prevent_default)
 		// Fresnel
 		shader_name += Engine.Util.IsDefined(this.config.fresnel_enabled) && this.config.fresnel_enabled? "_fresnel" : ""
 
-		// Reflection map
-		this.config.custom_reflection_map = Engine.Util.IsDefined(this.properties.samplerCube) && this.properties.samplerCube.reflection_map != null;
+		// Reflections enabled?
 		shader_name += this.config.reflection_enabled? "_reflectionmap" : ""
+
+		// Custom reflection map provided?
+		this.config.custom_reflection_map = Engine.Util.IsDefined(this.properties.samplerCube) && this.properties.samplerCube.reflection_map != null;
 
 		// Catch bad shader permutations
 		if(!Engine.Util.IsDefined(Engine.Resources[shader_name]))
@@ -253,7 +255,10 @@ Engine.Resource.RegisterLoadFunction("mat", function(descriptor, callback)
 	// Load the material JSON
 	Engine.Net.FetchResource(descriptor.file, function(json, file_size)
 	{
+		// Store file size
 		descriptor.file_size = file_size;
+
+		// Parse material
 		var material_json = Engine.Util.ParseJSON(json, true);
 
 		// Setup new material and apply JSON
