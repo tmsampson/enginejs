@@ -8,6 +8,15 @@
 		<!-- EngineJS -->
 		<script type="text/javascript" src="enginejs/jquery.js"></script>
 		<script type="text/javascript" src="enginejs/engine.js"></script>
+		<script type="text/javascript" src="enginejs/resources/libs/jquery-ui.js"></script>
+		<script type="text/javascript" src="enginejs/resources/libs/jquery-ui.accordion.multiple.js"></script>
+		<script type="text/javascript" src="enginejs/resources/libs/jquery-ui.ion.check/js/ion.checkRadio.min.js"></script>
+
+		<!-- EngineJS App Framework -->
+		<link rel='stylesheet' href='enginejs/resources/css/editor.css' />
+		<link rel="stylesheet" href="enginejs/resources/css/third_party/jquery-ui/jquery-ui.css">
+		<link rel="stylesheet" href="enginejs/resources/libs/jquery-ui.ion.check/css/ion.checkRadio.css">
+		<link rel="stylesheet" href="enginejs/resources/libs/jquery-ui.ion.check/css/ion.checkRadio.dark.css">
 
 		<!-- Spectrum colour picker -->
 		<script src='enginejs/resources/misc/spectrum/spectrum.js'></script>
@@ -21,14 +30,110 @@
 
 			mdl_ring          : { file : "model/ring/ring.obj", scale : 12 },
 			mdl_key           : { file : "model/key/Key_B_02.obj", scale : 0.5 },
-			mdl_bear          : { file : "model/bear/bear.obj", scale : 0.15, centre : true },
-			mdl_dummy         : { file : "model/dummy/dummy.obj", scale : 0.018 },
-			mdl_bunny         : { file : "model/bunny/bunny.obj", scale : 1, centre : true },
+			mdl_bear          : { file : "model/bear/bear.obj", scale : 0.12, centre : true },
+			mdl_dummy         : { file : "model/dummy/dummy.obj", scale : 0.013 },
+			mdl_bunny         : { file : "model/bunny/stanford-bunny.obj", scale : 0.75, centre : true },
 			mdl_f16           : { file : "model/f16/f16.obj", scale : 2.3, centre : true },
-			mdl_tree          : { file : "model/tree/OC41_1.obj", scale : 8, rotate : [ -90, 0, 0 ] },
-			//mdl_car           : { file : "model/car/car.obj", scale : 0.2 },
+			mdl_tree          : { file : "model/tree/OC41_1.obj", scale : 7, rotate : [ -90, 0, 0 ] },
 
 			mdl_cube_sponge   : { file : "enginejs/resources/models/cube-sponge.model" },
+		};
+
+		var model_index = 0;
+		var object_models = [ ];
+		var model_rotation = 0;
+
+		// ====================================================================================================================================
+		// Light
+		var sun =
+		{
+			position   : [0, 5, 0],
+			angle      : 1,	// -90 --> 90 arc
+			direction  : [0, -1, 0],
+			ambient   : [ 0.6, 0.6, 0.6 ],
+			colour     : [0.7, 0.7, 0.7],
+			arc_radius : [30, 15],
+			arc_lift   : 5
+		};
+
+		var do_resize = function()
+		{
+			var canvas = document.getElementsByTagName("canvas")[0];
+			var width = canvas.clientWidth;
+			var height = canvas.clientHeight;
+			Engine.Canvas.Resize(width, height);
+		};
+		window.addEventListener('resize', do_resize);
+
+		var init_ui = function(init_lighting)
+		{
+			// Init / reset lighting section?
+			if(init_lighting)
+			{
+				$("#ambient_light_intensity").slider({ min : 0, max : 100, value: 65 });
+				$("#directional_light_intensity").slider({ min : 0, max : 100, value: 50 });
+				$("#directional_light_angle").slider({ min : -90, max : 90, value: 45 });
+			}
+
+			// Init general section
+			$("input[name='general_rotation_enabled']").ionCheckRadio();
+			$("input[name='general_draw_floor']").ionCheckRadio();
+			$("input[name='general_draw_floor']")[0].checked = true;
+			$("input[name='general_draw_normals']").ionCheckRadio();
+			$("input[name='general_draw_shadow_map_preview']").ionCheckRadio();
+			$("input[name='general_draw_shadow_map_preview']")[0].checked = true;
+			$("input[name='general_draw_skybox']").ionCheckRadio();
+			$("#general_skybox_scale").slider({ min : 1, max : 60, value: 7 });
+		};
+
+		var populate_ui = function()
+		{
+			// Grab loaded model
+			var model = object_models[model_index];
+
+			// Update status bar
+			var has_descriptor = Engine.Util.IsDefined(model.descriptor);
+			var model_file_path = has_descriptor? model.descriptor.file : "None";
+			$("#app_footer").text("Loaded: '" + model.name + "' [ " + model_file_path + " ]");
+
+			// Populate info section
+			$("#info_name").val(model.name);
+			$("#info_import_format").val(model.import_format);
+			$("#info_path").val(model_file_path);
+			$("#info_file_size").val((has_descriptor? model.descriptor.file_size : 0) + " bytes");
+		};
+
+		var bind_ui = function()
+		{
+			// Bind light position
+			sun.angle = $("#directional_light_angle").slider("values", 0);
+			sun.position[2] = Math.sin(Engine.Math.DegToRad(sun.angle)) * sun.arc_radius[0];
+			sun.position[1] = sun.arc_lift + Math.cos(Engine.Math.DegToRad(sun.angle)) * sun.arc_radius[1];
+			sun.position[0] = 0;
+
+			// Update light direction
+			var len = Math.sqrt((sun.position[2] * sun.position[2]) + (sun.position[1]  * sun.position[1]));
+			sun.direction = [ -sun.position[0] / len, -sun.position[1] / len, sun.position[2] / len ];
+
+			// Bind light ambient properties
+			var amb_intensity = $("#ambient_light_intensity").slider("values", 0);
+			var ambient_directional_light_colour = Engine.Colour.FromHex($("#ambient_directional_light_colour").val());
+			sun.ambient[0] = ambient_directional_light_colour[0] * (amb_intensity / 100);
+			sun.ambient[1] = ambient_directional_light_colour[1] * (amb_intensity / 100);
+			sun.ambient[2] = ambient_directional_light_colour[2] * (amb_intensity / 100);
+
+			// Bind light directional properties
+			var light_intensity = $("#directional_light_intensity").slider("values", 0);
+			var directional_light_colour = Engine.Colour.FromHex($("#directional_light_colour").val());
+			sun.colour[0] = directional_light_colour[0] * (light_intensity / 100);
+			sun.colour[1] = directional_light_colour[1] * (light_intensity / 100);
+			sun.colour[2] = directional_light_colour[2] * (light_intensity / 100);
+
+			// Rotate?
+			if($("input[name='general_rotation_enabled']").is(":checked"))
+			{
+				model_rotation += Engine.Time.delta_s / 3.0;
+			}
 		};
 
 		$(document).ready(function()
@@ -38,20 +143,27 @@
 				// ====================================================================================================================================
 				// Misc
 				var mtx_trans = mat4.create();
-				var model_index = 0;
-				var model_rotate_enabled = true;
 				var debug_draw_normals = false;
+				do_resize();
+				Engine.Canvas.EnableContextMenu(false);
+				Engine.Gfx.SetDirectionalLight(sun);
 
 				// ====================================================================================================================================
 				// Camera
-				var cam = new Engine.Camera.Perspective({ position: [0, 2, 5] });
-				cam.AttachHelper(new Engine.Camera.Helper.Roam({ forward : [0, 0, -1] }));
+				var cam = new Engine.Camera.Perspective({ position: [0, 0, 0] });
+				cam.AttachHelper(new Engine.Camera.Helper.Orbit(
+				{
+					look_at : [0, 0, 0],
+					radius  : [5.5, 1.5, 10],
+					angles  : [1.58, 0.477],
+					min_y   : -(Math.PI / 2) - 0.2,
+					max_y   : (Math.PI / 2) - 0.1
+				}));
 
 				// ====================================================================================================================================
 				// Shadows
 				var shadow_type = 2;
 				var shadow_rt = Engine.Gfx.CreateRenderTarget("Shadow", 1024, 1024, true);
-				var shadow_preview_enabled = true;
 				var shadow_cam = new Engine.Camera.Orthographic({ size : [200, 200] });
 				var shadow_preview_size = [100, 100];
 				var shadow_preview_padding = [10, 10];
@@ -62,7 +174,7 @@
 				// ====================================================================================================================================
 				// Models
 				var floor_model = Engine.Resources["mdl_floor_tile"];
-				var object_models =
+				object_models =
 				[
 					// Wavefront .obj files
 					resources["mdl_f16"],
@@ -72,7 +184,6 @@
 					resources["mdl_dummy"],
 					resources["mdl_bunny"],
 					resources["mdl_tree"],
-					//resources["mdl_car"],
 
 					// Custom EngineJS model
 					resources["mdl_cube_sponge"],
@@ -81,38 +192,11 @@
 					Engine.Geometry.MakeSphere(),
 					Engine.Resources["mdl_cube"]
 				];
-				var model_index = 0;
 
-				// ====================================================================================================================================
-				// Light
-				var sun =
-				{
-					model      : Engine.Geometry.MakeSphere(),
-					material   : new Engine.Gfx.Material(),
-					position   : [0, 5, 0],
-					angle      : 1,	// -90 --> 90 arc
-					direction  : [0, -1, 0],
-					ambient   : [ 0.6, 0.6, 0.6 ],
-					colour     : [0.7, 0.7, 0.7],
-					arc_radius : [30, 15],
-					arc_lift   : 5
-				};
-				Engine.Gfx.SetDirectionalLight(sun);
+				populate_ui();
 
 				function update_light()
 				{
-					// Update light angle
-					sun.angle -= Engine.Mouse.GetWheelDelta() / 50;
-					sun.angle = Engine.Math.Clamp(sun.angle, -90, 90);
-
-					// Update light position
-					sun.position[0] = Math.sin(Engine.Math.DegToRad(sun.angle)) * sun.arc_radius[0];
-					sun.position[1] = sun.arc_lift + Math.cos(Engine.Math.DegToRad(sun.angle)) * sun.arc_radius[1];
-
-					// Update light direction
-					var len = Math.sqrt((sun.position[0] * sun.position[0]) + (sun.position[1]  * sun.position[1]));
-					sun.direction = [ -sun.position[0] / len, -sun.position[1] / len, 0 ];
-
 					// Process gamepad input
 					sun.angle += Engine.Keyboard.IsPressed("u")? -1 : (Engine.Keyboard.IsPressed("i")? 1 : 0);
 					var gamepad = Engine.Gamepad.Pads[0];
@@ -138,11 +222,8 @@
 					// Position on grid
 					mat4.translate(mtx_trans, Engine.Math.IdentityMatrix, [0, -model.min_vert[1], 0]);
 
-					// Rotate?
-					if(model_rotate_enabled && !debug_draw_normals)
-					{
-						mat4.rotate(mtx_trans, mtx_trans, Engine.Time.elapsed_s / 3.0, [0, 1, 0]);
-					}
+					// Rotate
+					mat4.rotate(mtx_trans, mtx_trans, model_rotation, [0, 1, 0]);
 
 					// Draw model
 					if(override_material == null)
@@ -175,18 +256,17 @@
 					if(Engine.Keyboard.IsPressed("m", true))
 					{
 						model_index = (model_index + 1) % object_models.length;
+						populate_ui();
 					}
 
-					if(Engine.Keyboard.IsPressed("r", true))
+					// Draw floor?
+					if($("input[name='general_draw_floor']").is(":checked"))
 					{
-						model_rotate_enabled = !model_rotate_enabled;
+						mat4.scale(mtx_trans, Engine.Math.IdentityMatrix, [100, 1, 100]);
+						Engine.Gfx.SetShadowParams(shadow_rt, shadow_type, shadow_cam.mtx_view_proj);
+						Engine.Gfx.BindMaterial(resources["mat_floor"], true);
+						Engine.Gfx.DrawModel(floor_model, mtx_trans, false, true);
 					}
-
-					// Draw floor
-					mat4.scale(mtx_trans, Engine.Math.IdentityMatrix, [100, 1, 100]);
-					Engine.Gfx.SetShadowParams(shadow_rt, shadow_type, shadow_cam.mtx_view_proj);
-					Engine.Gfx.BindMaterial(resources["mat_floor"], true);
-					Engine.Gfx.DrawModel(floor_model, mtx_trans, false, true);
 
 					// Draw loaded model
 					DrawModel(object_models[model_index]);
@@ -214,6 +294,9 @@
 
 				var on_render = function()
 				{
+					// Bind UI
+					bind_ui();
+
 					// Shadow pass
 					RenderShadowPass();
 
@@ -226,8 +309,7 @@
 					}
 
 					// Shadow map preview?
-					if(Engine.Keyboard.IsPressed("p", true)) { shadow_preview_enabled = !shadow_preview_enabled; }
-					if(shadow_preview_enabled)
+					if($("input[name='general_draw_shadow_map_preview']").is(":checked"))
 					{
 						shadow_preview_cam.Update();
 						Engine.Gfx.BindCamera(shadow_preview_cam);
@@ -240,38 +322,141 @@
 					}
 
 					// Debug draw normals?
-					if(Engine.Keyboard.IsPressed("n", true))
-					{
-						debug_draw_normals = !debug_draw_normals;
-					}
-					if(debug_draw_normals)
-					{
-						var model = resources["mdl_bear"];
-						var prim = model.model_data.primitives[0];
-						var verts = prim.vertex_buffers[0].stream;
-						var indices = prim.vertex_buffers[1].stream;
-						var normals = prim.vertex_buffers[3].stream;
-						for(var i = 0; i < indices.length; i +=3)
-						{
-							var vert_offset = indices[i] * 3;
-							var vx = verts[vert_offset + 0];
-							var vy = verts[vert_offset + 1];
-							var vz = verts[vert_offset + 2];
-							var vert = [ vx, vy, vz ];
-							var normal = [ normals[vert_offset], normals[vert_offset + 1], normals[vert_offset + 2] ];
-							var end = [ vert[0] + normal[0], vert[1] + normal[1], vert[2] + normal[2] ];
-							Engine.Debug.DrawLine3D(cam, vert, end, Engine.Colour.Orange, 1);
-						}
-					}
+					// if(Engine.Keyboard.IsPressed("n", true))
+					// {
+					// 	debug_draw_normals = !debug_draw_normals;
+					// }
+					// if(debug_draw_normals)
+					// {
+					// 	var model = resources["mdl_bear"];
+					// 	var prim = model.model_data.primitives[0];
+					// 	var verts = prim.vertex_buffers[0].stream;
+					// 	var indices = prim.vertex_buffers[1].stream;
+					// 	var normals = prim.vertex_buffers[3].stream;
+					// 	for(var i = 0; i < indices.length; i +=3)
+					// 	{
+					// 		var vert_offset = indices[i] * 3;
+					// 		var vx = verts[vert_offset + 0];
+					// 		var vy = verts[vert_offset + 1];
+					// 		var vz = verts[vert_offset + 2];
+					// 		var vert = [ vx, vy, vz ];
+					// 		var normal = [ normals[vert_offset], normals[vert_offset + 1], normals[vert_offset + 2] ];
+					// 		var end = [ vert[0] + normal[0], vert[1] + normal[1], vert[2] + normal[2] ];
+					// 		Engine.Debug.DrawLine3D(cam, vert, end, Engine.Colour.Orange, 1);
+					// 	}
+					// }
 				};
 				return on_render;
 			};
+
+			// Initialise UI
+			$("#accordion").accordion({ multiple: true, collapsible : true, animate: 50, heightStyle: "content" });
+			for(var i = 0; i < 3; ++i)
+			{
+				$("#accordion").accordion('option', 'active' , i);
+			}
+			init_ui(true);
+
 			Engine.Init(on_init, resources);
 		});
 		</script>
 	</head>
 
 	<body>
-		<canvas width="1024" height="640">
+		<div class="header row">
+			<h2 style="margin:0px; margin-top:0px; margin-left:5px; padding:0px; font-family: Segoe UI,Arial,sans-serif; float:left; width:200px;">Model Viewer</h2>
+		</div>
+
+		<div class="body row">
+			<div class="left col">
+				<canvas style="margin:0px; width:100%; height:100%; vertical-align: bottom"></canvas>
+			</div>
+			<div class="right col scroll-y" style="color:blue">
+				<div id="accordion">
+					<h3 class="editor_section_heading">Lighting</h3>
+					<div class="editor_section">
+						<h4>Ambient Light</h4>
+						<div class="editor_row">
+							<div class="editor_label">Ambient Colour:</div>
+							<input id="ambient_directional_light_colour" type="color" value="#ffffff"/>
+						</div>
+
+						<div class="editor_row">
+							<div class="editor_label">Ambient Intensity:</div>
+							<div id='ambient_light_intensity' class="editor_slider"></div>
+						</div>
+
+						<br/>
+						<h4>Directional Light</h4>
+						<div class="editor_row">
+							<div class="editor_label">Light Colour:</div>
+							<input id="directional_light_colour" type="color" value="#ffffff"/>
+						</div>
+
+						<div class="editor_row">
+							<div class="editor_label">Light Intensity:</div>
+							<div id='directional_light_intensity' class="editor_slider"></div>
+						</div>
+
+						<div class="editor_row">
+							<div class="editor_label">Light Angle:</div>
+							<div id='directional_light_angle' class="editor_slider"></div>
+						</div>
+					</div>
+
+					<h3 class="editor_section_heading">General</h3>
+					<div class="editor_section">
+						<div class="editor_row">
+							<div class="editor_label">Enable Rotation</div>
+							<label><input type="checkbox" name="general_rotation_enabled"></label>
+						</div>
+						<div class="editor_row">
+							<div class="editor_label">Draw Floor</div>
+							<label><input type="checkbox" name="general_draw_floor"></label>
+						</div>
+						<div class="editor_row">
+							<div class="editor_label">Draw Normals</div>
+							<label><input type="checkbox" name="general_draw_normals"></label>
+						</div>
+						<div class="editor_row">
+							<div class="editor_label">Draw Shadow Map</div>
+							<label><input type="checkbox" name="general_draw_shadow_map_preview"></label>
+						</div>
+						<div class="editor_row">
+							<div class="editor_label">Draw Reflection Map</div>
+							<label><input type="checkbox" name="general_draw_skybox"></label>
+						</div>
+						<div class="editor_row">
+							<div class="editor_label">Reflection Map Scale:</div>
+							<div id='general_skybox_scale' class="editor_slider"></div>
+						</div>
+					</div>
+
+					<h3 class="editor_section_heading">Info</h3>
+					<div class="editor_section">
+						<div class="editor_row">
+							<div class="editor_label">Name:</div>
+							<input id="info_name" type="text" disabled/>
+						</div>
+						<div class="editor_row">
+							<div class="editor_label">Import Format:</div>
+							<input id="info_import_format" type="text" disabled/>
+						</div>
+						<div class="editor_row">
+							<div class="editor_label">Path:</div>
+							<input id="info_path" type="text" disabled/>
+						</div>
+						<div class="editor_row">
+							<div class="editor_label">File Size:</div>
+							<input id="info_file_size" type="text" disabled/>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div id="app_footer" class="footer row">
+			Loading...
+		</div>
 	</body>
 </html>
