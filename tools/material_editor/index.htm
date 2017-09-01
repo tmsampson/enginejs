@@ -25,13 +25,14 @@
 		<script language="javascript">
 		var resources =
 		{
-			mat_reflective    : { file : "mat/reflective.mat" },
 			mat_sponge        : { file : "mat/sponge.mat" },
 			mat_wool          : { file : "mat/wool.mat" },
 			mat_shiny_plastic : { file : "mat/shiny-plastic.mat" },
 			mat_rusty_metal   : { file : "mat/rusty-metal.mat" },
+			mat_shiny_metal   : { file : "mat/shiny-metal.mat" },
 			mat_stone         : { file : "mat/stone.mat" },
 			mat_wood          : { file : "mat/wood.mat" },
+			mat_wood_shiny    : { file : "mat/wood-shiny.mat" },
 			mat_snooker_ball  : { file : "mat/snooker-ball.mat" },
 			mat_carpet        : { file : "mat/carpet.mat" },
 			mdl_bunny         : { file : "model/stanford-bunny.obj", scale : 0.7, centre : true },
@@ -65,7 +66,7 @@
 		var object_materials = [];
 		var material_index = 0;
 
-		var init_ui = function()
+		var init_ui = function(init_lighting)
 		{
 			// Init / reset material albedo section
 			$("#mat_albedo_colour").val("#ffffff");
@@ -104,12 +105,15 @@
 			$("#mat_reflection_map").val("");
 			$("#mat_reflection_amount").slider({ min : 0, max : 100, value: 50 });
 
-			// Init / reset lighting section
-			$("#ambient_light_intensity").slider({ min : 0, max : 100, value: 50 });
-			$("#directional_light_intensity").slider({ min : 0, max : 100, value: 50 });
-			$("#directional_light_angle").slider({ min : -90, max : 90, value: 45 });
+			// Init / reset lighting section?
+			if(init_lighting)
+			{
+				$("#ambient_light_intensity").slider({ min : 0, max : 100, value: 50 });
+				$("#directional_light_intensity").slider({ min : 0, max : 100, value: 50 });
+				$("#directional_light_angle").slider({ min : -90, max : 90, value: 45 });
+			}
 
-			// Populate general section
+			// Init general section
 			$("input[name='general_rotation_enabled']").ionCheckRadio();
 			$("input[name='general_draw_skybox']").ionCheckRadio();
 			$("#general_skybox_scale").slider({ min : 1, max : 60, value: 7 });
@@ -212,10 +216,13 @@
 			{
 				$("input[name='mat_reflection_enabled']")[0].checked = mat.config.reflection_enabled;
 				$("input[name='mat_reflection_enabled']").trigger("change");
-				if(Engine.Util.IsDefined(mat.config.custom_reflection_map) &&
-			       mat.config.custom_reflection_map != null)
+				if(Engine.Util.IsDefined(mat.config.custom_reflection_map) && mat.config.custom_reflection_map)
 				{
 					$("#mat_reflection_map").val(mat.properties.samplerCube.reflection_map.descriptor.file);
+				}
+				else
+				{
+					$("#mat_reflection_map").val("[Engine Default]");
 				}
 				if(Engine.Util.IsDefined(mat.properties.float.reflection_amount))
 				{
@@ -285,7 +292,7 @@
 
 		$(document).ready(function()
 		{
-			var on_load = function()
+			var on_init = function()
 			{
 				// ====================================================================================================================================
 				// Misc
@@ -296,13 +303,14 @@
 
 				object_materials =
 				[
-					resources["mat_reflective"],
 					resources["mat_sponge"],
 					resources["mat_carpet"],
 					resources["mat_shiny_plastic"],
 					resources["mat_rusty_metal"],
+					resources["mat_shiny_metal"],
 					resources["mat_wool"],
 					resources["mat_wood"],
+					resources["mat_wood_shiny"],
 					resources["mat_stone"],
 					resources["mat_snooker_ball"],
 				];
@@ -358,7 +366,7 @@
 					if(Engine.Keyboard.IsPressed("m", true))
 					{
 						material_index = (material_index + 1) % object_materials.length;
-						init_ui();
+						init_ui(false);
 						populate_ui();
 					}
 
@@ -391,11 +399,10 @@
 			{
 				$("#accordion").accordion('option', 'active' , i);
 			}
-
-			init_ui();
+			init_ui(true);
 
 			// Initialise engine
-			Engine.Init(on_load, resources);
+			Engine.Init(on_init, resources);
 		});
 
 		</script>
