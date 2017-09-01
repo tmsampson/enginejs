@@ -1,0 +1,30 @@
+{
+	"version"        : 1.0,
+	"name"           : "Wood Shiny",
+	"type"           : "standard",
+	"config"         :
+	{
+		"lighting_enabled"        : true,
+		"specular_enabled"        : true,
+		"fresnel_enabled"         : false,
+		"reflection_enabled"      : true
+	},
+	"properties"     :
+	{
+		"sampler2D"  :
+		{
+			"albedo_map"          : { "file": "img/wood_a.png" },
+			"normal_map"          : { "file": "img/wood_n.png" }
+		},
+		"float"      :
+		{
+			"specular_shininess"  : 4,
+			"reflection_amount"   : 0.5
+		},
+		"vec4"       :
+		{
+			"albedo_colour"       : [1, 0, 0, 1],
+			"specular_colour"     : [0.8, 0.8, 0.8, 1]
+		}
+	}
+}
