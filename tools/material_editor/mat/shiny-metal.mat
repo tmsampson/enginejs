@@ -1,0 +1,35 @@
+{
+	"version"        : 1.0,
+	"name"           : "Shiny Metal",
+	"type"           : "standard",
+	"config"         :
+	{
+		"lighting_enabled"        : true,
+		"specular_enabled"        : true,
+		"fresnel_enabled"         : false,
+		"reflection_enabled"      : true
+	},
+	"properties"     :
+	{
+		"sampler2D"  :
+		{
+			"albedo_map"          : { "file": "img/rusty_metal_a.jpg" },
+			"normal_map"          : { "file": "img/rusty_metal_n.jpg" },
+			"specular_map"        : { "file": "img/rusty_metal_s.jpg" }
+		},
+		"samplerCube" :
+		{
+			"reflection_map"      : { "file": "img/valley/valley.cubemap" }
+		},
+		"float"      :
+		{
+			"specular_shininess"  : 20,
+			"reflection_amount"   : 0.7
+		},
+		"vec4"       :
+		{
+			"albedo_colour"       : [1, 1, 1, 1],
+			"specular_colour"     : [1, 1, 1, 1]
+		}
+	}
+}
