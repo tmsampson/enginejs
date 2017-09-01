@@ -65,4 +65,14 @@ Engine.Util =
 	{
 		return jQuery.parseJSON(allow_comments? JSON.minify(json) : json);
 	},
+
+	GetFilename(path)
+	{
+		return path.replace(/^.*[\\\/]/, '');
+	},
+
+	GetExtension(file)
+	{
+		return file.split('.').pop().toLowerCase()
+	}
 };
