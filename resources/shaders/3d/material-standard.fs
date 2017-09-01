@@ -136,11 +136,24 @@ void main(void)
 	vec3 normal = normalize(v_world_normal);
 #endif
 
+	// Calculate frag --> cam?
+#if defined(USE_SPECULAR) || defined(USE_REFLECTION_MAP)
+	vec3 frag_to_cam = normalize(u_cam_pos - v_world_pos.xyz);
+#endif
+
 	// *************************************************************************************
 	// Ambient
 	// *************************************************************************************
 	vec4 material_albedo = texture2D(albedo_map, v_uv.xy * albedo_map_repeat) * albedo_colour;
 	vec4 ambient = material_albedo * vec4(u_sun_ambient, 1.0);
+
+	// *************************************************************************************
+	// Contribute reflections?
+	// *************************************************************************************
+#if defined(USE_REFLECTION_MAP)
+	vec4 reflection_map_sample = textureCube(reflection_map, reflect(-frag_to_cam, normal));
+	ambient = mix(ambient, reflection_map_sample, reflection_amount);
+#endif
 
 	// *************************************************************************************
 	// Diffuse
@@ -156,10 +169,6 @@ void main(void)
 	// Speular
 	// *************************************************************************************
 	vec4 specular = vec4(0.0); // default
-
-#if defined(USE_SPECULAR) || defined(USE_REFLECTION_MAP)
-	vec3 frag_to_cam = normalize(u_cam_pos - v_world_pos.xyz);
-#endif
 
 #if defined(USE_SPECULAR)
 	vec3 frag_to_light = -u_sun_dir;
@@ -186,14 +195,6 @@ void main(void)
 
 	// Composite
 	gl_FragColor = mix(ambient + diffuse + specular, fresnel_colour, fresnel);
-
-	// *************************************************************************************
-	// Contribute reflections?
-	// *************************************************************************************
-#if defined(USE_REFLECTION_MAP)
-	vec4 reflection_map_sample = textureCube(reflection_map, reflect(-frag_to_cam, normal));
-	gl_FragColor = mix(gl_FragColor, reflection_map_sample, reflection_amount);
-#endif
 
 	// *************************************************************************************
 	// Contribute shadows?
