@@ -6,8 +6,11 @@ Engine.Model =
 {
 	Load : function(descriptor, callback)
 	{
-		Engine.Net.FetchResource(descriptor.file, function(model_json)
+		Engine.Net.FetchResource(descriptor.file, function(model_json, file_size)
 		{
+			// Store file size
+			descriptor.file_size = file_size;
+
 			// Parse model json
 			var model_file = Engine.Util.ParseJSON(model_json, true);
 
@@ -37,6 +40,11 @@ Engine.Model =
 	{
 		var has_materials = Engine.Util.IsDefined(model_file.materials);
 		var primitives = model_file.model_data.primitives;
+
+		// Set import format
+		var has_descriptor = Engine.Util.IsDefined(descriptor);
+		var model_extension = has_descriptor? Engine.Util.GetExtension(descriptor.file) : "";
+		model_file.import_format = (model_extension == "obj")? "Wavefront OBJ" : (has_descriptor? "EngineJS JSON" : "None (Procedural)");
 
 		// Were centre / scaling request on import?
 		var scale_on_import = descriptor && Engine.Util.IsDefined(descriptor.scale);

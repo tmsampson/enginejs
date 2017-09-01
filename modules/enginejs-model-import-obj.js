@@ -318,7 +318,7 @@ Engine.Model.Importers.OBJ =
 		var model_prims = []
 		var model_file =
 		{
-			name: descriptor.file,
+			name: Engine.Util.GetFilename(descriptor.file),
 			materials : loaded_obj_materials,
 			model_data:
 			{
@@ -436,8 +436,11 @@ Engine.Model.Importers.OBJ =
 		var model_dir = descriptor.file.substring(0, descriptor.file.lastIndexOf("/") + 1);
 
 		// Go grab the .obj file
-		Engine.Net.FetchResource(descriptor.file, function(obj_file_data)
+		Engine.Net.FetchResource(descriptor.file, function(obj_file_data, file_size)
 		{
+			// Store file size
+			descriptor.file_size = file_size;
+
 			// Trim excess whitespace and split into lines
 			obj_file_data = obj_file_data.replace(/ +(?= )/g, '');
 			var lines = obj_file_data.split("\n");
