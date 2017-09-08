@@ -71,31 +71,44 @@ Engine.Model =
 				var buffer = buffers[j];
 				if(buffer.attribute_name == "a_pos")
 				{
-					for(var j = 0; j < buffer.stream.length; j += 3)
+					for(var k = 0; k < buffer.stream.length; k += 3)
 					{
 						// Apply import rotation?
 						if(import_rotation_mtx != null)
 						{
-							var vec = vec3.fromValues(buffer.stream[j + 0], buffer.stream[j + 1], buffer.stream[j + 2]);
+							var vec = vec3.fromValues(buffer.stream[k + 0], buffer.stream[k + 1], buffer.stream[k + 2]);
 							vec3.transformMat4(vec, vec, import_rotation_mtx);
-							buffer.stream[j + 0] = vec[0];
-							buffer.stream[j + 1] = vec[1];
-							buffer.stream[j + 2] = vec[2];
+							buffer.stream[k + 0] = vec[0];
+							buffer.stream[k + 1] = vec[1];
+							buffer.stream[k + 2] = vec[2];
 						}
 
 						// Apply import scale?
 						if(scale_on_import)
 						{
-							buffer.stream[j + 0] *= import_scale_factor;
-							buffer.stream[j + 1] *= import_scale_factor;
-							buffer.stream[j + 2] *= import_scale_factor;
+							buffer.stream[k + 0] *= import_scale_factor;
+							buffer.stream[k + 1] *= import_scale_factor;
+							buffer.stream[k + 2] *= import_scale_factor;
 						}
 
 						// Enlarge model bounds?
-						var pos = [ buffer.stream[j + 0], buffer.stream[j + 1], buffer.stream[j + 2]]
+						var pos = [ buffer.stream[k + 0], buffer.stream[k + 1], buffer.stream[k + 2]]
 						model_file.min_vert[0] = Math.min(model_file.min_vert[0], pos[0]); model_file.max_vert[0] = Math.max(model_file.max_vert[0], pos[0]);
 						model_file.min_vert[1] = Math.min(model_file.min_vert[1], pos[1]); model_file.max_vert[1] = Math.max(model_file.max_vert[1], pos[1]);
 						model_file.min_vert[2] = Math.min(model_file.min_vert[2], pos[2]); model_file.max_vert[2] = Math.max(model_file.max_vert[2], pos[2]);
+					}
+				}
+
+				// Apply import rotation to normals?
+				if(import_rotation_mtx != null && buffer.attribute_name == "a_normal")
+				{
+					for(var k = 0; k < buffer.stream.length; k += 3)
+					{
+						var vec = vec3.fromValues(buffer.stream[k + 0], buffer.stream[k + 1], buffer.stream[k + 2]);
+						vec3.transformMat4(vec, vec, import_rotation_mtx);
+						buffer.stream[k + 0] = vec[0];
+						buffer.stream[k + 1] = vec[1];
+						buffer.stream[k + 2] = vec[2];
 					}
 				}
 			}
