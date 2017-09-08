@@ -41,6 +41,11 @@ Engine.Model =
 		var has_materials = Engine.Util.IsDefined(model_file.materials);
 		var primitives = model_file.model_data.primitives;
 
+		// Setup model-space axis (can be affected by import rotation)
+		model_file.right = vec3.fromValues(1, 0, 0);
+		model_file.up = vec3.fromValues(0, 1, 0);
+		model_file.forward = vec3.fromValues(0, 0, 1);
+
 		// Set import format
 		var has_descriptor = Engine.Util.IsDefined(descriptor);
 		var model_extension = has_descriptor? Engine.Util.GetExtension(descriptor.file) : "";
@@ -58,6 +63,11 @@ Engine.Model =
 			mat4.rotate(import_rotation_mtx, Engine.Math.IdentityMatrix, Engine.Math.DegToRad(descriptor.rotate[0]), [1, 0, 0]);
 			mat4.rotate(import_rotation_mtx, import_rotation_mtx, Engine.Math.DegToRad(descriptor.rotate[1]), [0, 1, 0]);
 			mat4.rotate(import_rotation_mtx, import_rotation_mtx, Engine.Math.DegToRad(descriptor.rotate[2]), [0, 0, 1]);
+
+			// Rotate model-space primary axis
+			vec3.transformMat4(model_file.right, model_file.right, import_rotation_mtx);
+			vec3.transformMat4(model_file.up, model_file.up, import_rotation_mtx);
+			vec3.transformMat4(model_file.forward, model_file.forward, import_rotation_mtx);
 		}
 
 		// First pass to calculate bounds
@@ -241,6 +251,7 @@ Engine.Model =
 		model_file.DebugDrawVertexData = Engine.Model.DebugDrawVertexData;
 		model_file.DebugDrawNormals = Engine.Model.DebugDrawNormals;
 		model_file.DebugDrawTangents = Engine.Model.DebugDrawTangents;
+		model_file.DebugDrawAxis = Engine.Model.DebugDrawAxis;
 
 		// Finalise loaded model
 		model_file.is_loaded = true;
@@ -496,6 +507,26 @@ Engine.Model =
 	DebugDrawTangents : function(cam, world_mtx, stream_index)
 	{
 		this.DebugDrawVertexData(cam, world_mtx, Engine.Model.VERTEX_STREAM_INDEX_TANGENT, Engine.Colour.Blue);
+	},
+
+	DebugDrawAxis : function(cam, world_mtx, length)
+	{
+		// Transform model origin to world space
+		var origin = vec3.fromValues(0, 0, 0);
+		vec3.transformMat4(origin, origin, world_mtx);
+
+		// Create 3x3 matrix for transforming normals
+		var world_mtx_no_trans = mat3.create();
+		mat3.fromMat4(world_mtx_no_trans, world_mtx);
+
+		// Transform model-space axis
+		var world_right = vec3.create(); vec3.transformMat3(world_right, this.right, world_mtx_no_trans);
+		var world_up = vec3.create(); vec3.transformMat3(world_up, this.up, world_mtx_no_trans);
+		var world_forward = vec3.create(); vec3.transformMat3(world_forward, this.forward, world_mtx_no_trans);
+
+		Engine.Debug.DrawLine3D(cam, origin, [ origin[0] + (world_right[0] * length), origin[1] + (world_right[1] * length), origin[2] + (world_right[2] * length) ], Engine.Colour.Red, 1);
+		Engine.Debug.DrawLine3D(cam, origin, [ origin[0] + (world_up[0] * length), origin[1] + (world_up[1] * length), origin[2] + (world_up[2] * length) ], Engine.Colour.Green, 1);
+		Engine.Debug.DrawLine3D(cam, origin, [ origin[0] + (world_forward[0] * length), origin[1] + (world_forward[1] * length), origin[2] + (world_forward[2] * length) ], Engine.Colour.Blue, 1);
 	},
 
 	// Custom importers hook in here

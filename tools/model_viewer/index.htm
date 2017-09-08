@@ -81,6 +81,7 @@
 			$("input[name='general_draw_floor']")[0].checked = true;
 			$("input[name='general_draw_normals']").ionCheckRadio();
 			$("input[name='general_draw_tangents']").ionCheckRadio();
+			$("input[name='general_draw_axis']").ionCheckRadio();
 			$("input[name='general_draw_shadow_map_preview']").ionCheckRadio();
 			$("input[name='general_draw_shadow_map_preview']")[0].checked = true;
 			$("input[name='general_draw_skybox']").ionCheckRadio();
@@ -177,13 +178,13 @@
 				object_models =
 				[
 					// Wavefront .obj files
-					// resources["mdl_f16"],
-					// resources["mdl_ring"],
-					// resources["mdl_key"],
-					// resources["mdl_bear"],
-					// resources["mdl_dummy"],
-					// resources["mdl_bunny"],
-					// resources["mdl_tree"],
+					resources["mdl_f16"],
+					resources["mdl_ring"],
+					resources["mdl_key"],
+					resources["mdl_bear"],
+					resources["mdl_dummy"],
+					resources["mdl_bunny"],
+					resources["mdl_tree"],
 
 					// Custom EngineJS model
 					resources["mdl_cube_sponge"],
@@ -242,6 +243,13 @@
 						if($("input[name='general_draw_tangents']").is(":checked"))
 						{
 							model.DebugDrawTangents(cam, mtx_trans);
+						}
+
+						// Debug draw axis?
+						if($("input[name='general_draw_axis']").is(":checked"))
+						{
+							var axis_draw_length = 5.0;
+							model.DebugDrawAxis(cam, mtx_trans, axis_draw_length);
 						}
 					}
 					else
@@ -408,6 +416,10 @@
 						<div class="editor_row">
 							<div class="editor_label">Draw Tangents</div>
 							<label><input type="checkbox" name="general_draw_tangents"></label>
+						</div>
+						<div class="editor_row">
+							<div class="editor_label">Draw Model Axis</div>
+							<label><input type="checkbox" name="general_draw_axis"></label>
 						</div>
 						<div class="editor_row">
 							<div class="editor_label">Draw Shadow Map</div>
