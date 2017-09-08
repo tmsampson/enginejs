@@ -225,7 +225,9 @@ Engine.Model =
 		}
 
 		// Add some debug / helper functions
+		model_file.DebugDrawVertexData = Engine.Model.DebugDrawVertexData;
 		model_file.DebugDrawNormals = Engine.Model.DebugDrawNormals;
+		model_file.DebugDrawTangents = Engine.Model.DebugDrawTangents;
 
 		// Finalise loaded model
 		model_file.is_loaded = true;
@@ -408,7 +410,10 @@ Engine.Model =
 		return tangent_buffer;
 	},
 
-	DebugDrawNormals : function(cam, world_mtx)
+	VERTEX_STREAM_INDEX_NORMAL  : 0,
+	VERTEX_STREAM_INDEX_TANGENT : 1,
+
+	DebugDrawVertexData : function(cam, world_mtx, stream_index, colour)
 	{
 		// Create 3x3 matrix for transforming normals
 		var world_mtx_no_trans = mat3.create();
@@ -420,6 +425,25 @@ Engine.Model =
 		for(var i = 0; i < prims.length; ++i)
 		{
 			var prim = prims[i];
+
+			// Select prim stream (normal / tangent)
+			var vector_stream = null;
+			if(stream_index == Engine.Model.VERTEX_STREAM_INDEX_NORMAL)
+			{
+				if(!Engine.Util.IsDefined(prim.normals))
+				{
+					continue;
+				}
+				vector_stream = prim.normals.stream;
+			}
+			else if(stream_index == Engine.Model.VERTEX_STREAM_INDEX_TANGENT)
+			{
+				if(!Engine.Util.IsDefined(prim.tangents))
+				{
+					continue;
+				}
+				vector_stream = prim.tangents.stream;
+			}
 
 			// For each triangle...
 			for(var j = 0; j < prim.indices.stream.length; ++j)
@@ -434,21 +458,31 @@ Engine.Model =
 				);
 				vec3.transformMat4(line_start, line_start, world_mtx);
 
-				// Grab and transform normal
-				normal = vec3.fromValues
+				// Grab and transform direction vector (normal / tangent)
+				direction = vec3.fromValues
 				(
-					prim.normals.stream[vert_offset + 0],
-					prim.normals.stream[vert_offset + 1],
-					prim.normals.stream[vert_offset + 2]
+					vector_stream[vert_offset + 0],
+					vector_stream[vert_offset + 1],
+					vector_stream[vert_offset + 2]
 				);
-				vec3.transformMat3(normal, normal, world_mtx_no_trans);
-				vec3.normalize(normal, normal);
+				vec3.transformMat3(direction, direction, world_mtx_no_trans);
+				vec3.normalize(direction, direction);
 
-				// Draw normal
-				vec3.add(line_end, line_start, normal);
-				Engine.Debug.DrawLine3D(cam, line_start, line_end, Engine.Colour.Orange, 1);
+				// Draw direction vector
+				vec3.add(line_end, line_start, direction);
+				Engine.Debug.DrawLine3D(cam, line_start, line_end, colour, 1);
 			}
 		}
+	},
+
+	DebugDrawNormals : function(cam, world_mtx, stream_index)
+	{
+		this.DebugDrawVertexData(cam, world_mtx, Engine.Model.VERTEX_STREAM_INDEX_NORMAL, Engine.Colour.Green);
+	},
+
+	DebugDrawTangents : function(cam, world_mtx, stream_index)
+	{
+		this.DebugDrawVertexData(cam, world_mtx, Engine.Model.VERTEX_STREAM_INDEX_TANGENT, Engine.Colour.Blue);
 	},
 
 	// Custom importers hook in here
