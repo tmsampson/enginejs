@@ -752,11 +752,11 @@ Engine.Gfx =
 			var index_buffer = null;
 
 			// Bind vertex buffers
-			var vertex_buffers = prims[i].vertex_buffers;
-			for(var j = 0; j < vertex_buffers.length; ++j)
+			var buffers = prims[i].buffers;
+			for(var j = 0; j < buffers.length; ++j)
 			{
 				// Is this an index buffer?
-				if(vertex_buffers[j].vbo.buffer_type == Engine.GL.ELEMENT_ARRAY_BUFFER)
+				if(buffers[j].vbo.buffer_type == Engine.GL.ELEMENT_ARRAY_BUFFER)
 				{
 					// Only allow a single index buffer per-prim
 					if(index_buffer)
@@ -766,11 +766,11 @@ Engine.Gfx =
 					}
 
 					// Always bind index buffers last
-					index_buffer = vertex_buffers[j];
+					index_buffer = buffers[j];
 					continue;
 				}
 
-				this.BindVertexBuffer(vertex_buffers[j].vbo);
+				this.BindVertexBuffer(buffers[j].vbo);
 			}
 
 			// Always bind index buffer last

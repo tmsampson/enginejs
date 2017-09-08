@@ -65,7 +65,7 @@ Engine.Model =
 		model_file.max_vert = [ -10000000, -10000000, -10000000 ];
 		for(var i = 0; i < primitives.length; ++i)
 		{
-			var buffers = primitives[i].vertex_buffers;
+			var buffers = primitives[i].buffers;
 			for(var j = 0; j < buffers.length; ++j)
 			{
 				var buffer = buffers[j];
@@ -151,11 +151,10 @@ Engine.Model =
 				primitive.material = Engine.Resources["mat_standard_missing"];
 			}
 
-			// Find and grab vertex buffers
-			var buffers = primitive.vertex_buffers;
-			for(var j = 0; j < buffers.length; ++j)
+			// Find and grab pointers to various buffers (position/uv/normal/tangent etc)
+			for(var j = 0; j < primitive.buffers.length; ++j)
 			{
-				var buffer = buffers[j];
+				var buffer = primitive.buffers[j];
 				if(buffer.attribute_name == "a_pos")     { primitive.positions = buffer; }
 				if(buffer.attribute_name == "a_normal")  { primitive.normals = buffer;   }
 				if(buffer.attribute_name == "a_uv")      { primitive.uvs = buffer;       }
@@ -217,11 +216,10 @@ Engine.Model =
 			}
 
 			// Generate vertex buffer objects
-			var vertex_buffers = primitive.vertex_buffers;
-			for(var j = 0; j < vertex_buffers.length; ++j)
+			for(var j = 0; j < primitive.buffers.length; ++j)
 			{
 				// Place vertex buffer object immediately inside buffer object
-				var buffer = vertex_buffers[j];
+				var buffer = primitive.buffers[j];
 				buffer.vbo = Engine.Gfx.CreateVertexBuffer(buffer);
 			}
 		}
@@ -234,7 +232,7 @@ Engine.Model =
 		return model_file;
 	},
 
-	PrepareUVs : function(primitive, uv_buffer, vertex_buffer)
+	PrepareUVs : function(primitive, uv_buffer, position_buffer)
 	{
 		// Create uv buffer if necessary
 		if(uv_buffer == null)
@@ -247,21 +245,21 @@ Engine.Model =
 				draw_mode      : "triangles",
 				stream         : [],
 			};
-			primitive.vertex_buffers.push(uv_buffer);
+			primitive.buffers.push(uv_buffer);
 		}
 
 		// For now, overlay uv's onto local x-z plane
-		for(var i = 0; i < vertex_buffer.stream.length; i += 3)
+		for(var i = 0; i < position_buffer.stream.length; i += 3)
 		{
-			var vx = vertex_buffer.stream[i];
-			var vz = vertex_buffer.stream[i + 2];
+			var vx = position_buffer.stream[i];
+			var vz = position_buffer.stream[i + 2];
 			uv_buffer.stream.push(vx / 2.0, vz / 2.0);
 		}
 
 		return uv_buffer;
 	},
 
-	PrepareNormals : function(primitive, normal_buffer, vertex_buffer, index_buffer)
+	PrepareNormals : function(primitive, normal_buffer, position_buffer, index_buffer)
 	{
 		// Create uv buffer if necessary
 		if(normal_buffer == null)
@@ -274,7 +272,7 @@ Engine.Model =
 				draw_mode      : "triangles",
 				stream         : [],
 			};
-			primitive.vertex_buffers.push(normal_buffer);
+			primitive.buffers.push(normal_buffer);
 		}
 
 		// Here we store a lookup, allowing us to quickly check which face(s) each vertex belongs to
@@ -305,9 +303,9 @@ Engine.Model =
 			add_lookup(idx2, face);
 
 			// Extract face vertices
-			v0 = vec3.fromValues(vertex_buffer.stream[(idx0 * 3)], vertex_buffer.stream[(idx0 * 3) + 1], vertex_buffer.stream[(idx0 * 3) + 2]);
-			v1 = vec3.fromValues(vertex_buffer.stream[(idx1 * 3)], vertex_buffer.stream[(idx1 * 3) + 1], vertex_buffer.stream[(idx1 * 3) + 2]);
-			v2 = vec3.fromValues(vertex_buffer.stream[(idx2 * 3)], vertex_buffer.stream[(idx2 * 3) + 1], vertex_buffer.stream[(idx2 * 3) + 2]);
+			v0 = vec3.fromValues(position_buffer.stream[(idx0 * 3)], position_buffer.stream[(idx0 * 3) + 1], position_buffer.stream[(idx0 * 3) + 2]);
+			v1 = vec3.fromValues(position_buffer.stream[(idx1 * 3)], position_buffer.stream[(idx1 * 3) + 1], position_buffer.stream[(idx1 * 3) + 2]);
+			v2 = vec3.fromValues(position_buffer.stream[(idx2 * 3)], position_buffer.stream[(idx2 * 3) + 1], position_buffer.stream[(idx2 * 3) + 2]);
 
 			// Calculate edges
 			vec3.subtract(edge_0, v1, v0);
@@ -343,7 +341,7 @@ Engine.Model =
 		return normal_buffer;
 	},
 
-	PrepareTangents : function(primitive, tangent_buffer, vertex_buffer, uv_buffer, index_buffer)
+	PrepareTangents : function(primitive, tangent_buffer, position_buffer, uv_buffer, index_buffer)
 	{
 		// Create tangent buffer if necessary
 		if(tangent_buffer == null)
@@ -356,11 +354,11 @@ Engine.Model =
 				draw_mode      : "triangles",
 				stream         : []
 			};
-			primitive.vertex_buffers.push(tangent_buffer);
+			primitive.buffers.push(tangent_buffer);
 		}
 
 		// Zero initialise tangent stream
-		for(var j = 0; j < vertex_buffer.stream.length; ++j)
+		for(var j = 0; j < position_buffer.stream.length; ++j)
 		{
 			tangent_buffer.stream[j] = 0;
 		}
@@ -374,9 +372,9 @@ Engine.Model =
 			var i2 = index_buffer.stream[j + 2];
 
 			// Grab triangle vertices
-			var v0 = [ vertex_buffer.stream[i0 * 3], vertex_buffer.stream[(i0 * 3) + 1], vertex_buffer.stream[(i0 * 3) + 2 ] ];
-			var v1 = [ vertex_buffer.stream[i1 * 3], vertex_buffer.stream[(i1 * 3) + 1], vertex_buffer.stream[(i1 * 3) + 2 ] ];
-			var v2 = [ vertex_buffer.stream[i2 * 3], vertex_buffer.stream[(i2 * 3) + 1], vertex_buffer.stream[(i2 * 3) + 2 ] ];
+			var v0 = [ position_buffer.stream[i0 * 3], position_buffer.stream[(i0 * 3) + 1], position_buffer.stream[(i0 * 3) + 2 ] ];
+			var v1 = [ position_buffer.stream[i1 * 3], position_buffer.stream[(i1 * 3) + 1], position_buffer.stream[(i1 * 3) + 2 ] ];
+			var v2 = [ position_buffer.stream[i2 * 3], position_buffer.stream[(i2 * 3) + 1], position_buffer.stream[(i2 * 3) + 2 ] ];
 
 			// Grab triangle uvs
 			var uv0 = [ uv_buffer.stream[i0 * 2],  uv_buffer.stream[(i0 * 2) + 1] ];
@@ -417,9 +415,9 @@ Engine.Model =
 		// for(var i = 0; i < model.model_data.primitives.length; ++i)
 		// {
 		// 	var prim = model.model_data.primitives[i];
-		// 	var verts = prim.vertex_buffers[0].stream;
-		// 	var indices = prim.vertex_buffers[1].stream;
-		// 	var normals = prim.vertex_buffers[3].stream;
+		// 	var verts = prim.buffers[0].stream;
+		// 	var indices = prim.buffers[1].stream;
+		// 	var normals = prim.buffers[3].stream;
 
 		// 	for(var i = 0; i < indices.length; i +=3)
 		// 	{

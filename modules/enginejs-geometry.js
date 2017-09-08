@@ -39,7 +39,7 @@ Engine.Geometry =
 		var half_z_size = z_size / 2;
 
 		// Setup empty model with 1 prim
-		var prim = { name : "Plane mesh", vertex_buffers : [] }
+		var prim = { name : "Plane mesh", buffers : [] }
 		var model = { name : "Plane", is_loaded : true, model_data : { primitives : [prim] } };
 
 		// Generate verts
@@ -56,7 +56,7 @@ Engine.Geometry =
 				vertex_buffer.stream.push(x_pos, 0, z_pos);
 			}
 		}
-		prim.vertex_buffers.push(vertex_buffer);
+		prim.buffers.push(vertex_buffer);
 
 		// Generate normals
 		if(!have_params || !Engine.Util.IsDefined(params.generate_normals) || params.generate_normals)
@@ -67,7 +67,7 @@ Engine.Geometry =
 			{
 				normal_buffer.stream.push(0, 1, 0); // surface is x-z plane
 			}
-			prim.vertex_buffers.push(normal_buffer);
+			prim.buffers.push(normal_buffer);
 		}
 
 		// Generate UVs?
@@ -84,7 +84,7 @@ Engine.Geometry =
 					uv_buffer.stream.push(u, v);
 				}
 			}
-			prim.vertex_buffers.push(uv_buffer);
+			prim.buffers.push(uv_buffer);
 		}
 
 		// Generate indices
@@ -102,7 +102,7 @@ Engine.Geometry =
 			index_buffer.stream.push(v0, v1, v2);
 			index_buffer.stream.push(v2, v1, v1 + 1);
 		}
-		prim.vertex_buffers.push(index_buffer);
+		prim.buffers.push(index_buffer);
 
 		// Generate and return model
 		return Engine.Model.PrepareModel(model);
@@ -130,7 +130,7 @@ Engine.Geometry =
 		}
 
 		// Setup empty model with 1 prim
-		var prim = { name : "Circle faces", vertex_buffers : [] }
+		var prim = { name : "Circle faces", buffers : [] }
 		var model = { name : "Circle", is_loaded : true, model_data : { primitives : [prim] } };
 
 		// Generate verts
@@ -142,7 +142,7 @@ Engine.Geometry =
 		{
 			vertex_buffer.stream.push(Math.cos(theta * i), Math.sin(theta * i), 0.0);
 		}
-		prim.vertex_buffers.push(vertex_buffer);
+		prim.buffers.push(vertex_buffer);
 
 		// Generate UVs?
 		if(!have_params || !Engine.Util.IsDefined(params.generate_uvs) || params.generate_uvs)
@@ -155,7 +155,7 @@ Engine.Geometry =
 			{
 				uv_buffer.stream.push(normalise(Math.cos(theta * i)), -normalise(Math.sin(theta * i)));
 			}
-			prim.vertex_buffers.push(uv_buffer);
+			prim.buffers.push(uv_buffer);
 		}
 
 		// Generate and return model
@@ -194,7 +194,7 @@ Engine.Geometry =
 		var pi = Math.PI;
 
 		// Setup empty model with 1 prim
-		var prim = { name : "Sphere faces", vertex_buffers : [] }
+		var prim = { name : "Sphere faces", buffers : [] }
 		var model = { name : "Sphere", is_loaded : true, model_data : { primitives : [prim] } };
 
 		// Generate verts
@@ -216,7 +216,7 @@ Engine.Geometry =
 			}
 		}
 		vertex_stream.push(0, -radius, 0);
-		prim.vertex_buffers.push(vertex_buffer);
+		prim.buffers.push(vertex_buffer);
 
 		// Generate normals
 		if(!have_params || !Engine.Util.IsDefined(params.generate_normals) || params.generate_normals)
@@ -229,7 +229,7 @@ Engine.Geometry =
 				var len = Math.sqrt((vert[0] * vert[0]) + (vert[1] * vert[1]) + (vert[2] * vert[2]));
 				normal_stream.push(vert[0] / len, vert[1] / len, vert[2] / len);
 			}
-			prim.vertex_buffers.push(normal_buffer);
+			prim.buffers.push(normal_buffer);
 		}
 
 		// Generate uvs
@@ -246,7 +246,7 @@ Engine.Geometry =
 				}
 			}
 			uv_stream.push(0, 0, 0);
-			prim.vertex_buffers.push(uv_buffer);
+			prim.buffers.push(uv_buffer);
 		}
 
 		// Generate indices
@@ -281,7 +281,7 @@ Engine.Geometry =
 			                  vertex_count - (lon + 2) - 1,
 			                  vertex_count - (lon + 1) - 1);
 		}
-		prim.vertex_buffers.push(index_buffer);
+		prim.buffers.push(index_buffer);
 
 		// Generate and return model
 		return Engine.Model.PrepareModel(model);
