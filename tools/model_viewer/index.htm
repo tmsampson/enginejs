@@ -36,7 +36,7 @@
 			mdl_f16           : { file : "model/f16/f16.obj", scale : 2.3, centre : true },
 			mdl_tree          : { file : "model/tree/OC41_1.obj", scale : 7, rotate : [ -90, 0, 0 ] },
 
-			mdl_cube_sponge   : { file : "enginejs/resources/models/cube-sponge.model" },
+			mdl_cube_sponge   : { file : "enginejs/resources/models/cube-sponge.model", rotate : [ 0, 45, 0 ] },
 		};
 
 		var model_index = 0;
@@ -177,13 +177,13 @@
 				object_models =
 				[
 					// Wavefront .obj files
-					resources["mdl_f16"],
-					resources["mdl_ring"],
-					resources["mdl_key"],
-					resources["mdl_bear"],
-					resources["mdl_dummy"],
-					resources["mdl_bunny"],
-					resources["mdl_tree"],
+					// resources["mdl_f16"],
+					// resources["mdl_ring"],
+					// resources["mdl_key"],
+					// resources["mdl_bear"],
+					// resources["mdl_dummy"],
+					// resources["mdl_bunny"],
+					// resources["mdl_tree"],
 
 					// Custom EngineJS model
 					resources["mdl_cube_sponge"],
@@ -359,7 +359,7 @@
 				<canvas style="margin:0px; width:100%; height:100%; vertical-align: bottom"></canvas>
 			</div>
 			<div class="right col scroll-y" style="color:blue">
-				<div id="accordion">
+				<div id="accordion" class="editor_accordion">
 					<h3 class="editor_section_heading">Lighting</h3>
 					<div class="editor_section">
 						<h4>Ambient Light</h4>
