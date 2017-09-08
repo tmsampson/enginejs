@@ -18,13 +18,18 @@ body { margin: 0; -webkit-text-size-adjust: 100%; }
 .body.row { top: 35px; bottom: 20px; background: #FFF; padding: 0px; }
 .footer.row { height: 20px; bottom: 0; background: #333; color: White; font-family: Segoe UI, Helvetica, Arial, Sans-Serif; }
 
-.left.col { right: 400px; left: 0px ; }
-.right.col { left: ; right: 0px ; width:400px; background: #696969; padding:0px; }
+.left.col { right: 340px; left: 0px ; }
+.right.col { left: ; right: 0px ; width:340px; background: #696969; padding:0px; }
 .header.row { height: 35px; padding:0px }
 .body.row { top: 35px; bottom: 20px; }
 .footer.row { height: 20px; bottom: ; font-size:12px; padding-left: 10px; padding-top:2px; }
 
 /* Editor styles */
+.editor_accordion
+{
+	zoom: 0.85; -moz-transform: scale(0.85);
+}
+
 .editor_section_heading
 {
 	margin-top:0px !important;
