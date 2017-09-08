@@ -6,7 +6,7 @@
 		[
 			{
 				"name"           : "faces",
-				"vertex_buffers" :
+				"buffers" :
 				[
 					{
 						"name"           : "vertices",

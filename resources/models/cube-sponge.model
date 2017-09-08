@@ -11,7 +11,7 @@
 			{
 				"name"           : "faces",
 				"material"       : "sponge",
-				"vertex_buffers" :
+				"buffers" :
 				[
 					{
 						"name"           : "vertices",

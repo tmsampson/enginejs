@@ -333,11 +333,11 @@ Engine.Model.Importers.OBJ =
 			var obj_prim = obj_prims[i];
 
 			// Setup equivalent model prim
-			var model_prim_vertex_buffers = [];
+			var model_prim_buffers = [];
 			var model_prim = 
 			{
 				name           : obj_prim.name,
-				vertex_buffers : model_prim_vertex_buffers
+				buffers        : model_prim_buffers
 			};
 
 			if(Engine.Util.IsDefined(obj_prim.material))
@@ -392,7 +392,7 @@ Engine.Model.Importers.OBJ =
 			// Generate enginejs vertex buffers from our expanded streams
 			if(prim_vertices.length > 0)
 			{
-				model_prim_vertex_buffers.push(
+				model_prim_buffers.push(
 				{
 					name           : "vertices",
 					attribute_name : "a_pos",
@@ -404,7 +404,7 @@ Engine.Model.Importers.OBJ =
 
 			if(prim_uvs.length > 0)
 			{
-				model_prim_vertex_buffers.push(
+				model_prim_buffers.push(
 				{
 					name           : "texture-coordinates",
 					attribute_name : "a_uv",
@@ -416,7 +416,7 @@ Engine.Model.Importers.OBJ =
 
 			if(prim_normals.length > 0)
 			{
-				model_prim_vertex_buffers.push(
+				model_prim_buffers.push(
 				{
 					name           : "normals",
 					attribute_name : "a_normal",
