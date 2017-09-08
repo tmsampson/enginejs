@@ -45,6 +45,10 @@
 
 		// ====================================================================================================================================
 		// Light
+		var cam = null; // initialised in populate_ui
+
+		// ====================================================================================================================================
+		// Light
 		var sun =
 		{
 			position   : [0, 5, 0],
@@ -103,6 +107,17 @@
 			$("#info_import_format").val(model.import_format);
 			$("#info_path").val(model_file_path);
 			$("#info_file_size").val((has_descriptor? model.descriptor.file_size : 0) + " bytes");
+
+			// Reset camera to centre about model centre
+			cam = new Engine.Camera.Perspective({ position: [0, 0, 0] });
+			cam.AttachHelper(new Engine.Camera.Helper.Orbit(
+			{
+				look_at : [0, (model.max_vert[1] - model.min_vert[1]) * 0.5, 0],
+				radius  : [5.5, 1.5, 10],
+				angles  : [1.58, 0.477],
+				min_y   : -(Math.PI / 2) - 0.2,
+				max_y   : (Math.PI / 2) - 0.1
+			}));
 		};
 
 		var bind_ui = function()
@@ -148,18 +163,6 @@
 				do_resize();
 				Engine.Canvas.EnableContextMenu(false);
 				Engine.Gfx.SetDirectionalLight(sun);
-
-				// ====================================================================================================================================
-				// Camera
-				var cam = new Engine.Camera.Perspective({ position: [0, 0, 0] });
-				cam.AttachHelper(new Engine.Camera.Helper.Orbit(
-				{
-					look_at : [0, 0, 0],
-					radius  : [5.5, 1.5, 10],
-					angles  : [1.58, 0.477],
-					min_y   : -(Math.PI / 2) - 0.2,
-					max_y   : (Math.PI / 2) - 0.1
-				}));
 
 				// ====================================================================================================================================
 				// Shadows
