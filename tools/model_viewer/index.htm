@@ -81,6 +81,7 @@
 
 			// Init general section
 			$("input[name='general_rotation_enabled']").ionCheckRadio();
+			$("input[name='general_wireframe_enabled']").ionCheckRadio();
 			$("input[name='general_draw_floor']").ionCheckRadio();
 			$("input[name='general_draw_floor']")[0].checked = true;
 			$("input[name='general_draw_normals']").ionCheckRadio();
@@ -232,9 +233,22 @@
 					// Draw model
 					if(override_material == null)
 					{
+						// Enable wireframe?
+						var enable_wireframe = $("input[name='general_wireframe_enabled']").is(":checked");
+						if(enable_wireframe)
+						{
+							Engine.Gfx.EnableWireframeMode(true);
+						}
+
 						// Main render pass | Normal draw with shadow sampling enabled
 						Engine.Gfx.SetShadowParams(shadow_rt, shadow_type, shadow_cam.mtx_view_proj);
 						Engine.Gfx.DrawModel(model, mtx_trans);
+
+						// Restore wireframe state?
+						if(enable_wireframe)
+						{
+							Engine.Gfx.EnableWireframeMode(false);
+						}
 
 						// Debug draw normals?
 						if($("input[name='general_draw_normals']").is(":checked"))
@@ -407,6 +421,10 @@
 						<div class="editor_row">
 							<div class="editor_label">Enable Rotation</div>
 							<label><input type="checkbox" name="general_rotation_enabled"></label>
+						</div>
+						<div class="editor_row">
+							<div class="editor_label">Enable Wireframe</div>
+							<label><input type="checkbox" name="general_wireframe_enabled"></label>
 						</div>
 						<div class="editor_row">
 							<div class="editor_label">Draw Floor</div>
