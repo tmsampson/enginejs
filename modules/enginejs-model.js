@@ -152,20 +152,19 @@ Engine.Model =
 			}
 
 			// Find and grab vertex buffers
-			var vertex_buffer = null, uv_buffer = null, normal_buffer = null, tangent_buffer = null, index_buffer = null;
 			var buffers = primitive.vertex_buffers;
 			for(var j = 0; j < buffers.length; ++j)
 			{
 				var buffer = buffers[j];
-				if(buffer.attribute_name == "a_pos")     { vertex_buffer = buffer;  }
-				if(buffer.attribute_name == "a_normal")  { normal_buffer = buffer;  }
-				if(buffer.attribute_name == "a_uv")      { uv_buffer = buffer;      }
-				if(buffer.attribute_name == "a_tangent") { tangent_buffer = buffer; }
-				if(buffer.name == "indices")             { index_buffer = buffer;   }
+				if(buffer.attribute_name == "a_pos")     { primitive.positions = buffer; }
+				if(buffer.attribute_name == "a_normal")  { primitive.normals = buffer;   }
+				if(buffer.attribute_name == "a_uv")      { primitive.uvs = buffer;       }
+				if(buffer.attribute_name == "a_tangent") { primitive.tangents = buffer;  }
+				if(buffer.name == "indices")             { primitive.indices = buffer;   }
 			}
 
 			// Ensure we have vertices!
-			if(vertex_buffer == null)
+			if(!Engine.Util.IsDefined(primitive.positions) || primitive.positions == null)
 			{
 				Engine.LogError("Model " + model_file + " '" + primitive.name + "' primitive has no vertex buffer!");
 				return;
@@ -173,47 +172,47 @@ Engine.Model =
 
 			// We only carry out further preparations using triangle topology
 			// TODO: Add support to prep functions for triangle strip / fan etc
-			if(vertex_buffer.draw_mode == "triangles")
+			if(primitive.positions.draw_mode == "triangles")
 			{
 				// Centre / scale model?
 				if(centre_on_import)
 				{
-					for(var j = 0; j < vertex_buffer.stream.length; j += 3)
+					for(var j = 0; j < primitive.positions.stream.length; j += 3)
 					{
-						vertex_buffer.stream[j + 0] -= centroid[0];
-						vertex_buffer.stream[j + 1] -= centroid[1];
-						vertex_buffer.stream[j + 2] -= centroid[2];
+						primitive.positions.stream[j + 0] -= centroid[0];
+						primitive.positions.stream[j + 1] -= centroid[1];
+						primitive.positions.stream[j + 2] -= centroid[2];
 					}
 				}
 
 				// Prepare indices?
 				// Note: For now, if we don't have an index buffer that's fine, but for the sake of simplicity / consistency,
-				//       let's build a temporary one now for further processing below...
-				if(index_buffer == null || index_buffer.stream.length == 0)
+				//       let's build one now for further processing below...
+				if(!Engine.Util.IsDefined(primitive.indices) || primitive.indices == null || primitive.indices.stream.length == 0)
 				{
-					index_buffer = { stream : [] };
-					for(var vertex = 0; vertex < vertex_buffer.stream.length / 3; ++vertex)
+					primitive.indices = { stream : [] };
+					for(var vertex = 0; vertex < primitive.positions.stream.length / 3; ++vertex)
 					{
-						index_buffer.stream.push(vertex);
+						primitive.indices.stream.push(vertex);
 					}
 				}
 
 				// Prepare UVs?
-				if(uv_buffer == null || uv_buffer.stream.length == 0)
+				if(!Engine.Util.IsDefined(primitive.uvs) || primitive.uvs == null || primitive.uvs.stream.length == 0)
 				{
-					uv_buffer = Engine.Model.PrepareUVs(primitive, uv_buffer, vertex_buffer);
+					primitive.uvs = Engine.Model.PrepareUVs(primitive, primitive.uvs, primitive.positions);
 				}
 
 				// Prepare normals?
-				if(normal_buffer == null || normal_buffer.stream.length == 0)
+				if(!Engine.Util.IsDefined(primitive.normals) || primitive.normals == null || primitive.normals.stream.length == 0)
 				{
-					normal_buffer = Engine.Model.PrepareNormals(primitive, normal_buffer, vertex_buffer, index_buffer);
+					primitive.normals = Engine.Model.PrepareNormals(primitive, primitive.normals, primitive.positions, primitive.indices);
 				}
 
 				// Prepare tangents?
-				if(tangent_buffer == null || tangent_buffer.stream.length == 0)
+				if(!Engine.Util.IsDefined(primitive.tangents) || primitive.tangents == null || primitive.tangents.stream.length == 0)
 				{
-					tangent_buffer = Engine.Model.PrepareTangents(primitive, tangent_buffer, vertex_buffer, uv_buffer, index_buffer);
+					primitive.tangents = Engine.Model.PrepareTangents(primitive, primitive.tangents, primitive.positions, primitive.uvs, primitive.indices);
 				}
 			}
 
@@ -226,6 +225,9 @@ Engine.Model =
 				buffer.vbo = Engine.Gfx.CreateVertexBuffer(buffer);
 			}
 		}
+
+		// Add some debug / helper functions
+		model_file.DebugDrawNormals = Engine.Model.DebugDrawNormals;
 
 		// Finalise loaded model
 		model_file.is_loaded = true;
@@ -406,6 +408,31 @@ Engine.Model =
 		}
 
 		return tangent_buffer;
+	},
+
+	DebugDrawNormals : function()
+	{
+		// var model = this;
+
+		// for(var i = 0; i < model.model_data.primitives.length; ++i)
+		// {
+		// 	var prim = model.model_data.primitives[i];
+		// 	var verts = prim.vertex_buffers[0].stream;
+		// 	var indices = prim.vertex_buffers[1].stream;
+		// 	var normals = prim.vertex_buffers[3].stream;
+
+		// 	for(var i = 0; i < indices.length; i +=3)
+		// 	{
+		// 		var vert_offset = indices[i] * 3;
+		// 		var vx = verts[vert_offset + 0];
+		// 		var vy = verts[vert_offset + 1];
+		// 		var vz = verts[vert_offset + 2];
+		// 		var vert = [ vx, vy, vz ];
+		// 		var normal = [ normals[vert_offset], normals[vert_offset + 1], normals[vert_offset + 2] ];
+		// 		var end = [ vert[0] + normal[0], vert[1] + normal[1], vert[2] + normal[2] ];
+		// 		Engine.Debug.DrawLine3D(cam, vert, end, Engine.Colour.Orange, 1);
+		// 	}
+		// }
 	},
 
 	// Custom importers hook in here
