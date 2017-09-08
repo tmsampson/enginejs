@@ -408,29 +408,47 @@ Engine.Model =
 		return tangent_buffer;
 	},
 
-	DebugDrawNormals : function()
+	DebugDrawNormals : function(cam, world_mtx)
 	{
-		// var model = this;
+		// Create 3x3 matrix for transforming normals
+		var world_mtx_no_trans = mat3.create();
+		mat3.fromMat4(world_mtx_no_trans, world_mtx);
+		var line_end = vec3.create();
 
-		// for(var i = 0; i < model.model_data.primitives.length; ++i)
-		// {
-		// 	var prim = model.model_data.primitives[i];
-		// 	var verts = prim.buffers[0].stream;
-		// 	var indices = prim.buffers[1].stream;
-		// 	var normals = prim.buffers[3].stream;
+		// For each primitive...
+		var prims = this.model_data.primitives
+		for(var i = 0; i < prims.length; ++i)
+		{
+			var prim = prims[i];
 
-		// 	for(var i = 0; i < indices.length; i +=3)
-		// 	{
-		// 		var vert_offset = indices[i] * 3;
-		// 		var vx = verts[vert_offset + 0];
-		// 		var vy = verts[vert_offset + 1];
-		// 		var vz = verts[vert_offset + 2];
-		// 		var vert = [ vx, vy, vz ];
-		// 		var normal = [ normals[vert_offset], normals[vert_offset + 1], normals[vert_offset + 2] ];
-		// 		var end = [ vert[0] + normal[0], vert[1] + normal[1], vert[2] + normal[2] ];
-		// 		Engine.Debug.DrawLine3D(cam, vert, end, Engine.Colour.Orange, 1);
-		// 	}
-		// }
+			// For each triangle...
+			for(var j = 0; j < prim.indices.stream.length; ++j)
+			{
+				// Grab and tranform position
+				var vert_offset = prim.indices.stream[j] * 3;
+				var line_start = vec3.fromValues
+				(
+					prim.positions.stream[vert_offset + 0],
+					prim.positions.stream[vert_offset + 1],
+					prim.positions.stream[vert_offset + 2]
+				);
+				vec3.transformMat4(line_start, line_start, world_mtx);
+
+				// Grab and transform normal
+				normal = vec3.fromValues
+				(
+					prim.normals.stream[vert_offset + 0],
+					prim.normals.stream[vert_offset + 1],
+					prim.normals.stream[vert_offset + 2]
+				);
+				vec3.transformMat3(normal, normal, world_mtx_no_trans);
+				vec3.normalize(normal, normal);
+
+				// Draw normal
+				vec3.add(line_end, line_start, normal);
+				Engine.Debug.DrawLine3D(cam, line_start, line_end, Engine.Colour.Orange, 1);
+			}
+		}
 	},
 
 	// Custom importers hook in here

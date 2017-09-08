@@ -231,6 +231,12 @@
 						// Main render pass | Normal draw with shadow sampling enabled
 						Engine.Gfx.SetShadowParams(shadow_rt, shadow_type, shadow_cam.mtx_view_proj);
 						Engine.Gfx.DrawModel(model, mtx_trans);
+
+						// Debug draw normals?
+						if($("input[name='general_draw_normals']").is(":checked"))
+						{
+							model.DebugDrawNormals(cam, mtx_trans);
+						}
 					}
 					else
 					{
@@ -320,31 +326,6 @@
 						Engine.Gfx.BindTexture(shadow_rt.depth_texture, 0);
 						Engine.Gfx.DrawQuad();
 					}
-
-					// Debug draw normals?
-					// if(Engine.Keyboard.IsPressed("n", true))
-					// {
-					// 	debug_draw_normals = !debug_draw_normals;
-					// }
-					// if(debug_draw_normals)
-					// {
-					// 	var model = resources["mdl_bear"];
-					// 	var prim = model.model_data.primitives[0];
-					// 	var verts = prim.vertex_buffers[0].stream;
-					// 	var indices = prim.vertex_buffers[1].stream;
-					// 	var normals = prim.vertex_buffers[3].stream;
-					// 	for(var i = 0; i < indices.length; i +=3)
-					// 	{
-					// 		var vert_offset = indices[i] * 3;
-					// 		var vx = verts[vert_offset + 0];
-					// 		var vy = verts[vert_offset + 1];
-					// 		var vz = verts[vert_offset + 2];
-					// 		var vert = [ vx, vy, vz ];
-					// 		var normal = [ normals[vert_offset], normals[vert_offset + 1], normals[vert_offset + 2] ];
-					// 		var end = [ vert[0] + normal[0], vert[1] + normal[1], vert[2] + normal[2] ];
-					// 		Engine.Debug.DrawLine3D(cam, vert, end, Engine.Colour.Orange, 1);
-					// 	}
-					// }
 				};
 				return on_render;
 			};
