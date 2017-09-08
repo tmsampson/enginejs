@@ -17,12 +17,8 @@
 
 * Add model viewer features
 	- Draw model-space basis axis (toggleable)
- 	- Move normal debug drawing code and make it work for all models (indexed or non-indexed)
- 	- Control lighting
- 	- Control rotation
- 	- Show details for sub-meshes / materials / poly count etc
- 	- Show / hide floor
- 	- Toggle roam / orbit cam
+	- Move normal debug drawing code and make it work for all models (indexed or non-indexed)
+	- Show details for sub-meshes / materials / poly count etc
 * Calculate bounding box for loaded models
 	- Need an accessor which will scale / rotate accordingly
 
