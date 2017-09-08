@@ -430,7 +430,7 @@ Engine.Model =
 			var vector_stream = null;
 			if(stream_index == Engine.Model.VERTEX_STREAM_INDEX_NORMAL)
 			{
-				if(!Engine.Util.IsDefined(prim.normals))
+				if(!Engine.Util.IsDefined(prim.normals) || prim.normals == null)
 				{
 					continue;
 				}
@@ -438,7 +438,7 @@ Engine.Model =
 			}
 			else if(stream_index == Engine.Model.VERTEX_STREAM_INDEX_TANGENT)
 			{
-				if(!Engine.Util.IsDefined(prim.tangents))
+				if(!Engine.Util.IsDefined(prim.tangents)  || prim.tangents == null)
 				{
 					continue;
 				}
