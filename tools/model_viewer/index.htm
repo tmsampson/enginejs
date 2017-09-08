@@ -80,6 +80,7 @@
 			$("input[name='general_draw_floor']").ionCheckRadio();
 			$("input[name='general_draw_floor']")[0].checked = true;
 			$("input[name='general_draw_normals']").ionCheckRadio();
+			$("input[name='general_draw_tangents']").ionCheckRadio();
 			$("input[name='general_draw_shadow_map_preview']").ionCheckRadio();
 			$("input[name='general_draw_shadow_map_preview']")[0].checked = true;
 			$("input[name='general_draw_skybox']").ionCheckRadio();
@@ -143,7 +144,6 @@
 				// ====================================================================================================================================
 				// Misc
 				var mtx_trans = mat4.create();
-				var debug_draw_normals = false;
 				do_resize();
 				Engine.Canvas.EnableContextMenu(false);
 				Engine.Gfx.SetDirectionalLight(sun);
@@ -236,6 +236,12 @@
 						if($("input[name='general_draw_normals']").is(":checked"))
 						{
 							model.DebugDrawNormals(cam, mtx_trans);
+						}
+
+						// Debug draw tangents?
+						if($("input[name='general_draw_tangents']").is(":checked"))
+						{
+							model.DebugDrawTangents(cam, mtx_trans);
 						}
 					}
 					else
@@ -398,6 +404,10 @@
 						<div class="editor_row">
 							<div class="editor_label">Draw Normals</div>
 							<label><input type="checkbox" name="general_draw_normals"></label>
+						</div>
+						<div class="editor_row">
+							<div class="editor_label">Draw Tangents</div>
+							<label><input type="checkbox" name="general_draw_tangents"></label>
 						</div>
 						<div class="editor_row">
 							<div class="editor_label">Draw Shadow Map</div>
