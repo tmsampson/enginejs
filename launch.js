@@ -125,62 +125,33 @@ for(var i = 0; i < samples.length; ++i)
 
 // Show splash screen
 var url = "http://" + GetLocalIPAddress() + ":" + config.port;
-console.log("==============================================================================");
-console.log("                     _____         _            __ _____                      ");
-console.log("                    |   __|___ ___|_|___ ___ __|  |   __|                     ");
-console.log("                    |   __|   | . | |   | -_|  |  |__   |                     ");
-console.log("                    |_____|_|_|_  |_|_|_|___|_____|_____|                     ");
-console.log("                              |___|                                           ");
-console.log("                                                                              ");
-console.log("==============================================================================");
-console.log("                            Development Server V1                             ");
-console.log("==============================================================================");
+console.log("================================================================");
+console.log("    ___               _                           _   ");
+console.log("   / _ \_   _ _______| | ___ _ __ ___   ___ _ __ | |_ ");
+console.log("  / /_)/ | | |_  /_  / |/ _ \ '_ ` _ \ / _ \ '_ \| __|");
+console.log(" / ___/| |_| |/ / / /| |  __/ | | | | |  __/ | | | |_ ");
+console.log("\/     \__,_/___/___|_|\___|_| |_| |_|\___|_| |_|\__|");
+console.log("                                                                ");
+console.log("================================================================");
+console.log("================================================================");
 console.log(" EngineJS root : " + enginejs_root);
 console.log("   Server root : " + enginejs_root);
 console.log("          Port : " + config.port);
 console.log("    Device URL : " + url);
-console.log("==============================================================================");
+console.log("================================================================");
 
 // Setup Webserver
 server.use(bodyParser.json());
 server.use("/", express.static(enginejs_root));
 SetProjectsFolder(config.project_folder);
 
-server.get('/server/launcher/get_project_details', function (req, res)
-{
-	var project_details =
-	{
-		folder   : config.project_folder,
-		projects : GetDirectories(config.project_folder)
-	};
-	res.send(to_json(project_details));
-});
-
-server.post('/server/launcher/set_project_folder', function (req, res)
-{
-	SetProjectsFolder(req.body.folder);
-	ApplyConfigChanges(config);
-});
-
-server.post('/server/launcher/create_new_project', function (req, res)
-{
-	if(fs.existsSync(config.project_folder + "/" + req.name))
-	{
-		res.send("already exists!");
-	}
-
-	console.log(req.body);
-});
-
 // Start Webserver
 server.listen(config.port);
 
-// Launch in chrome app shell
+// Puzzlement
+CreateSymlink(enginejs_root + "/puzzlement/enginejs", enginejs_root);
 locateChrome(function(chrome)
 {
-	var args = "--incognito " +
-	           "--app=" + url + "/launcher/index.htm " +
-	           "--enable-webgl " +
-	           "--ignore-gpu-blacklist";
+	var args = " " + url + "/puzzlement/puzzlement.htm?max=true";
 	child_process.exec(quotes(chrome) + args);
 });
