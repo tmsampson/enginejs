@@ -83,6 +83,18 @@ Core =
 		Core.Render();
 	},
 
+	WorldToCell : function(world_pos)
+	{
+		return [ Math.floor(world_pos[0] / Core.Map.FloorTileSize),
+		         0,
+		         Math.floor(world_pos[2] / Core.Map.FloorTileSize) + 1 ];
+	},
+
+	GetPlayerTile : function()
+	{
+		return Core.WorldToCell(Core.Camera.position);
+	},
+
 	GetDefaultFloorTileMaterial : function()
 	{
 		return Core.EditorEnabled? Editor.GetDebugFloorTileMat() : Core.Resources["mat_stone"];
@@ -94,12 +106,14 @@ Core =
 		Engine.Gfx.BindCamera(Core.Camera);
 
 		// Draw floor
-		Engine.Gfx.BindMaterial(Core.GetDefaultFloorTileMaterial());
+		var default_tile_material = Core.GetDefaultFloorTileMaterial();
+		default_tile_material.SetColour("albedo_colour", [1, 1, 1, 1]);
+		Engine.Gfx.BindMaterial(default_tile_material);
 		for(var x = -Core.Map.RoomSizeX / 2; x < Core.Map.RoomSizeX / 2; ++x)
 		{
 			for(var z = -Core.Map.RoomSizeZ / 2; z < Core.Map.RoomSizeZ / 2; ++z)
 			{
-				mat4.translate(Core.ScratchMatrix, Engine.Math.IdentityMatrix, [x * Core.Map.FloorTileSize, 0, z * Core.Map.FloorTileSize]);
+				mat4.translate(Core.ScratchMatrix, Engine.Math.IdentityMatrix, [x * Core.Map.FloorTileSize, 0, (z + 1) * Core.Map.FloorTileSize]);
 				mat4.scale(Core.ScratchMatrix, Core.ScratchMatrix, [Core.Map.FloorTileSize, 0, Core.Map.FloorTileSize]);
 				Engine.Gfx.DrawModel(Core.FloorTileModel, Core.ScratchMatrix, false, false);
 			}
