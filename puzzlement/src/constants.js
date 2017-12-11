@@ -2,4 +2,6 @@ Constants =
 {
 	MinRoomSize			: 1,
 	MaxRoomSize			: 50,
+	MinTileSize			: 0.4,
+	MaxTileSize			: 10,
 };
