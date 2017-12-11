@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+
+		<title>Puzzlement</title>
+
+		<!-- EngineJS -->
+		<script type="text/javascript" src="enginejs/jquery.js"></script>
+		<script type="text/javascript" src="enginejs/engine.js"></script>
+		<script type="text/javascript" src="src/core.js"></script>
+
+		<script language="javascript">
+		$(document).ready(function()
+		{
+			Engine.Init(Core.Init, Core.Resources);
+		});
+		</script>
+	</head>
+
+	<body bgcolor="black">
+		<canvas width="1024" height="640">
+	</body>
+</html>
