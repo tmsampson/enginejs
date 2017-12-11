@@ -48,5 +48,13 @@ Engine.Colour =
 		return "#" + component_to_hex(parseInt(colour[0] * 255)) +
 					 component_to_hex(parseInt(colour[1] * 255)) +
 					 component_to_hex(parseInt(colour[2] * 255));
-	}
+	},
+
+	Lerp      : function(colour_a, colour_b, t)
+	{
+		return [ (colour_a[0] * (1.0 - t)) + (colour_b[0] * t),
+		         (colour_a[1] * (1.0 - t)) + (colour_b[1] * t),
+		         (colour_a[2] * (1.0 - t)) + (colour_b[2] * t),
+		         (colour_a[3] * (1.0 - t)) + (colour_b[3] * t) ];
+	},
 };
