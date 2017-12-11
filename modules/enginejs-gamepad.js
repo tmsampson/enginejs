@@ -25,7 +25,8 @@ Engine.Gamepad =
 		              (navigator.webkitGetGamepads ? navigator.webkitGetGamepads : []);
 
 		// Process raw gamepads
-		for(var i = 0; i < raw_gamepads.length; ++i)
+		// for(var i = 0; i < raw_gamepads.length; ++i)
+		for(var i = 0; i < 1; ++i)
 		{
 			var raw_gamepad = raw_gamepads[i];
 			if(!raw_gamepad) { continue; }
