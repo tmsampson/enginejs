@@ -152,6 +152,6 @@ server.listen(config.port);
 CreateSymlink(enginejs_root + "/puzzlement/enginejs", enginejs_root);
 locateChrome(function(chrome)
 {
-	var args = " " + url + "/puzzlement/puzzlement.htm?max=true&edit=true";
+	var args = " " + url + "/puzzlement/puzzlement.htm?editor=true";
 	child_process.exec(quotes(chrome) + args);
 });
