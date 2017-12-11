@@ -29,8 +29,8 @@ Core =
 			colour				: [ 0.4, 0.4, 0.4 ],
 		},
 		FloorTileSize			: 1,
-		RoomSizeX				: 20,
-		RoomSizeZ				: 20,
+		RoomSizeX				: 4,
+		RoomSizeZ				: 4,
 	},
 
 	Init : function()

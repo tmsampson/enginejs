@@ -58,6 +58,11 @@ Engine.Keyboard =
 		return false;
 	},
 
+	WasJustPressed : function(key_name_or_list)
+	{
+		return Engine.Keyboard.IsPressed(key_name_or_list, true);
+	},
+
 	IsReleased : function(key_name_or_list, debounce)
 	{
 		// 'key_name_or_list' could be single value or list of keys to check, either
@@ -80,7 +85,12 @@ Engine.Keyboard =
 		}
 
 		return false;
-	}
+	},
+
+	WasJustReleased : function(key_name_or_list)
+	{
+		return Engine.Keyboard.IsReleased(key_name_or_list, true);
+	},
 };
 
 // *******************************************
