@@ -83,6 +83,21 @@ Core =
 		Core.Render();
 	},
 
+	IsValidTile : function(tile)
+	{
+		if(tile[0] < -(Core.Map.RoomSizeX / 2) || tile[0] >= (Core.Map.RoomSizeX / 2))
+		{
+			return false;
+		}
+
+		if(tile[2] <= -(Core.Map.RoomSizeZ / 2) || tile[2] > (Core.Map.RoomSizeZ / 2))
+		{
+			return false;
+		}
+
+		return true;
+	},
+
 	WorldToCell : function(world_pos)
 	{
 		return [ Math.floor(world_pos[0] / Core.Map.FloorTileSize),
