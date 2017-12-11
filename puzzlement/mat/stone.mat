@@ -12,7 +12,7 @@
 	{
 		"sampler2D"  :
 		{
-			"albedo_map"          : { "file": "img/stone_debug_a.jpg" },
+			"albedo_map"          : { "file": "img/stone_a.jpg" },
 			"normal_map"          : { "file": "img/stone_n.jpg" }
 		},
 		"float"      :

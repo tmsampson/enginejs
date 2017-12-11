@@ -1,14 +1,18 @@
 Core =
 {
+	// Resources
 	Resources :
 	{
-		mdl_floor_tile    : { file : "models/floor-tile.model"},
-		mat_stone         : { file : "mat/stone.mat"},
+		mdl_floor_tile			: { file : "models/floor-tile.model"},
+		mat_stone				: { file : "mat/stone.mat"},
+		mat_floor_debug			: { file : "mat/stone_debug.mat"},
 	},
 
+	// Editor
+	EditorEnabled				: false,
 
+	// Globals
 	ScratchMatrix				: null,
-	DefaultFloorTileMaterial	: null,
 	Camera						: null,
 	FloorTileModel				: null,
 	WallTileModel				: null,
@@ -36,18 +40,22 @@ Core =
 		Core.ScratchMatrix = mat4.create();
 
 		// ====================================================================================================================================
+		// Init editor?
+		if(Engine.Device.GetQueryString("editor"))
+		{
+			Core.EditorEnabled = true;
+			Editor.Init();
+		}
+
+		// ====================================================================================================================================
 		// Camera
 		Core.Camera = new Engine.Camera.Perspective({ position: [0, 1, 0] });
-		Core.Camera.AttachHelper(new Engine.Camera.Helper.Roam({ forward : [0, 0, -1] }));
+		Core.Camera.AttachHelper(new Engine.Camera.Helper.Roam({ forward : [0, 0, -1], invert_y : true }));
 
 		// ====================================================================================================================================
 		// Models
 		Core.FloorTileModel = Core.Resources["mdl_floor_tile"];
 		Core.WallTileModel = Engine.Geometry.MakePlane({ x_size : 2, z_size : 2});
-
-		// ====================================================================================================================================
-		// Materials
-		Core.DefaultFloorTileMaterial = Core.Resources["mat_stone"];
 
 		// ====================================================================================================================================
 		// Sun
@@ -64,8 +72,19 @@ Core =
 		// Update camera
 		Core.Camera.Update();
 
+		// Update editor?
+		if(Core.EditorEnabled)
+		{
+			Editor.Update();
+		}
+
 		// Render game
 		Core.Render();
+	},
+
+	GetDefaultFloorTileMaterial : function()
+	{
+		return Core.EditorEnabled? Editor.GetDebugFloorTileMat() : Core.Resources["mat_stone"];
 	},
 
 	Render : function()
@@ -74,7 +93,7 @@ Core =
 		Engine.Gfx.BindCamera(Core.Camera);
 
 		// Draw floor
-		Engine.Gfx.BindMaterial(Core.DefaultFloorTileMaterial);
+		Engine.Gfx.BindMaterial(Core.GetDefaultFloorTileMaterial());
 		for(var x = -Core.Map.RoomSizeX / 2; x < Core.Map.RoomSizeX / 2; ++x)
 		{
 			for(var z = -Core.Map.RoomSizeZ / 2; z < Core.Map.RoomSizeZ / 2; ++z)
@@ -83,6 +102,12 @@ Core =
 				mat4.scale(Core.ScratchMatrix, Core.ScratchMatrix, [Core.Map.FloorTileSize, 0, Core.Map.FloorTileSize]);
 				Engine.Gfx.DrawModel(Core.FloorTileModel, Core.ScratchMatrix, false, false);
 			}
+		}
+
+		// Render editor?
+		if(Core.EditorEnabled)
+		{
+			Editor.Render();
 		}
 	},
 };
