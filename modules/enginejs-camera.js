@@ -314,6 +314,7 @@ Engine.Camera.Helper =
 			}
 
 			// Update lookat
+			camera.forward = Engine.Vec3.Copy(this.forward);
 			camera.look_at[0] = camera.position[0] + this.forward[0];
 			camera.look_at[1] = camera.position[1] + this.forward[1];
 			camera.look_at[2] = camera.position[2] + this.forward[2];
