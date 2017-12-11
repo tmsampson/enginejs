@@ -1,0 +1,28 @@
+{
+	"version"        : 1.0,
+	"name"           : "Stone",
+	"type"           : "standard",
+	"config"         :
+	{
+		"lighting_enabled"        : true,
+		"specular_enabled"        : true,
+		"fresnel_enabled"         : false
+	},
+	"properties"     :
+	{
+		"sampler2D"  :
+		{
+			"albedo_map"          : { "file": "img/stone_debug_a.jpg" },
+			"normal_map"          : { "file": "img/stone_n.jpg" }
+		},
+		"float"      :
+		{
+			"specular_shininess"  : 25
+		},
+		"vec4"       :
+		{
+			"albedo_colour"       : [1, 1, 1, 1],
+			"specular_colour"     : [0.5, 0.5, 0.5, 1]
+		}
+	}
+}
