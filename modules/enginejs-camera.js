@@ -236,6 +236,7 @@ Engine.Camera.Helper =
 		this.look_speed        = [6, 6];
 		this.gamepad_deadzone  = 0.1;
 		this.mtx_look          = mat4.create();
+		this.invert_y          = false;
 
 		// Override defaults
 		$.extend(this, user_config);
@@ -321,7 +322,7 @@ Engine.Camera.Helper =
 		this.ApplyLook = function(delta)
 		{
 			mat4.rotate(this.mtx_look, Engine.Math.IdentityMatrix, Engine.Math.DegToRad(-delta[0] * this.look_speed[0] * Engine.Time.delta_s), [0, 1, 0]);
-			mat4.rotate(this.mtx_look, this.mtx_look, Engine.Math.DegToRad(delta[1] * this.look_speed[1] * Engine.Time.delta_s), this.right);
+			mat4.rotate(this.mtx_look, this.mtx_look, Engine.Math.DegToRad(delta[1] * this.look_speed[1] * (this.invert_y? -1 : 1) * Engine.Time.delta_s), this.right);
 			vec3.transformMat4(this.forward, this.forward, this.mtx_look);
 		};
 	},
