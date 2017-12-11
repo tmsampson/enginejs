@@ -4,6 +4,8 @@
 
 Engine.Vec3 =
 {
+	Zero : [0, 0, 0],
+
 	IsVec3 : function(v)
 	{
 		return v.length == 3;
