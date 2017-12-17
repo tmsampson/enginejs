@@ -22,6 +22,7 @@ Core =
 	// Map
 	Map :
 	{
+		Name					: "",
 		SkyColour				: [0.5, 0.5, 0.2],
 		Sun :
 		{

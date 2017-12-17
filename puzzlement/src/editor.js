@@ -82,11 +82,27 @@ Editor =
 			}
 		}
 
-		// Handle save
+		// Process command?
+		if(Engine.Keyboard.WasJustPressed("c"))
+		{
+			var command = prompt("Enter editor command:", "");
+			Editor.ExecuteCommand(command);
+		}
+
+		// Handle map save
 		if(Engine.Keyboard.WasJustPressed("m"))
 		{
-			var map_json_string = JSON.stringify(Core.Map, null, 4);
-			Engine.Util.DownloadText("foo.map", map_json_string);
+			Editor.SaveMap(Core.Map.Name);
+		}
+
+		// Handle map load?
+		if(Engine.Keyboard.WasJustPressed("l"))
+		{
+			var map_name = prompt("Enter a map to load:", "");
+			if(map_name.length > 0)
+			{
+				Core.LoadMap(map_name);
+			}
 		}
 
 		// Handle tile toggling
@@ -137,6 +153,52 @@ Editor =
 					// Apply next tile
 					Core.Map.FloorTiles[cell_id] = Core.Map.FloorTileMaterials[next_material_index];
 				}
+			}
+		}
+	},
+
+	SaveMap : function(map_name)
+	{
+		// Prompt for name?
+		if(Core.Map.Name == "" && map_name == "")
+		{
+			map_name = prompt("Please enter a map name:", "");
+		}
+
+		Core.Map.Name = map_name;
+		var map_json_string = JSON.stringify(Core.Map, null, 4);
+		Engine.Util.DownloadText(map_name + ".map", map_json_string);
+	},
+
+	ExecuteCommand : function(command_string)
+	{
+		var command_parts = command_string.toLowerCase().split(" ");
+		var command = command_parts[0];
+		var command_args = command_parts.slice(1, command_parts.length);
+		switch(command)
+		{
+			case "save":
+			{
+				var save_name = command_args.length > 0? command_args[0] : Core.Map.Name;
+				Editor.SaveMap(save_name);
+				break;
+			}
+			case "load":
+			{
+				if(command_args.length == 0)
+				{
+					alert("Must enter a valid map name to load");
+				}
+				else
+				{
+					Core.LoadMap(command_args[0]);
+				}
+				break;
+			}
+			default:
+			{
+				alert("Unrecognised command '" + command + "'");
+				break;
 			}
 		}
 	},
