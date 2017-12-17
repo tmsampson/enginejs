@@ -49,8 +49,16 @@ Core =
 		Engine.Device.Maximise();
 
 		// ====================================================================================================================================
+		// Load specific map?
+		var map_name = Engine.Device.GetQueryString("map");
+		if(map_name)
+		{
+			Core.LoadMap(map_name);
+		}
+
+		// ====================================================================================================================================
 		// Init editor?
-		if(Engine.Device.GetQueryString("editor"))
+		if(Engine.Device.GetQueryString("edit"))
 		{
 			Core.EditorEnabled = true;
 			Editor.Init();
@@ -104,6 +112,14 @@ Core =
 		}
 
 		return true;
+	},
+
+	LoadMap(map_name)
+	{
+		Engine.Net.FetchResource("maps/" + map_name + ".map", function(map)
+		{
+			Core.Map = map;
+		});
 	},
 
 	WorldToCell : function(world_pos)
