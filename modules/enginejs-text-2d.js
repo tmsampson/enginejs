@@ -230,6 +230,18 @@ Engine.Text2D =
 			this.div.hide();
 		};
 
+		this.SetVisible = function(state)
+		{
+			if(state && this.is_hidden)
+			{
+				this.Show();
+			}
+			else if(!state && !this.is_hidden)
+			{
+				this.Hide();
+			}
+		};
+
 		// Setup DOM element
 		this.Set(text);
 		this.UpdateCSSUser();
