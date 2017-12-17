@@ -7,6 +7,7 @@ Core =
 		mat_stone				: { file : "mat/stone.mat"},
 		mat_stone_debug			: { file : "mat/stone_debug.mat"},
 		mat_wood				: { file : "mat/wood.mat"},
+		mat_wool				: { file : "mat/wool.mat"},
 	},
 
 	// Editor
@@ -36,6 +37,7 @@ Core =
 		[
 			"mat_stone",
 			"mat_wood",
+			"mat_wool",
 		],
 		FloorTiles				: { },
 	},
