@@ -84,35 +84,51 @@ Editor =
 
 		// Handle click event
 		var gamepad = Engine.Gamepad.Pads[0];
-		var gamepad_click = gamepad && gamepad.IsPressed("rb", true);
-		var mouse_click = Engine.Mouse.IsPressed("left", true);
-		if((gamepad_click || mouse_click) && Editor.SelectedTile != null)
+		var gamepad_next = gamepad && gamepad.IsPressed("rb", true);
+		var gamepad_previous = gamepad && gamepad.IsPressed("lb", true);
+		if(Engine.Mouse.GetWheelDelta() > 0 || gamepad_next)
 		{
-			// Toggle tile (first slot always reserved for default tile which is not stored)
-			var cell_id = Core.GetCellId(Editor.SelectedTile);
-			if(Core.Map.FloorTiles[cell_id] == null && Core.Map.FloorTileMaterials.length > 0)
+			Editor.ToggleSelectedTile(1);
+		}
+		else if(Engine.Mouse.GetWheelDelta() < 0 || gamepad_previous)
+		{
+			Editor.ToggleSelectedTile(-1);
+		}
+	},
+
+	ToggleSelectedTile : function(direction)
+	{
+		// Must have a selected tile
+		if(Editor.SelectedTile == null)
+		{
+			return;
+		}
+
+		// Toggle tile (first slot always reserved for default tile which is not stored)
+		var cell_id = Core.GetCellId(Editor.SelectedTile);
+		if(Core.Map.FloorTiles[cell_id] == null && Core.Map.FloorTileMaterials.length > 0)
+		{
+			// Use 1st or final slot (never 0, 0 = default)
+			var next_material_index = direction > 0? 1 : Core.Map.FloorTileMaterials.length -1;
+			Core.Map.FloorTiles[cell_id] = Core.Map.FloorTileMaterials[next_material_index];
+		}
+		else
+		{
+			// Find next tile material..
+			var current_material_name = Core.Map.FloorTiles[cell_id];
+			var current_material_index = Core.GetMapMaterialIndexFromName(current_material_name);
+			if(current_material_index != -1)
 			{
-				// Use first material
-				Core.Map.FloorTiles[cell_id] = Core.Map.FloorTileMaterials[1];
-			}
-			else
-			{
-				// Find next tile material..
-				var current_material_name = Core.Map.FloorTiles[cell_id];
-				var current_material_index = Core.GetMapMaterialIndexFromName(current_material_name);
-				if(current_material_index != -1)
+				var next_material_index = (current_material_index + direction) % Core.Map.FloorTileMaterials.length;
+				if(next_material_index == 0)
 				{
-					var next_material_index = (current_material_index + 1) % Core.Map.FloorTileMaterials.length;
-					if(next_material_index == 0)
-					{
-						// Wrap around back to default tile (remove entry)
-						delete Core.Map.FloorTiles[cell_id];
-					}
-					else
-					{
-						// Apply next tile
-						Core.Map.FloorTiles[cell_id] = Core.Map.FloorTileMaterials[next_material_index];
-					}
+					// Wrap around back to default tile (remove entry)
+					delete Core.Map.FloorTiles[cell_id];
+				}
+				else
+				{
+					// Apply next tile
+					Core.Map.FloorTiles[cell_id] = Core.Map.FloorTileMaterials[next_material_index];
 				}
 			}
 		}
