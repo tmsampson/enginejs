@@ -1,9 +1,10 @@
 Editor =
 {
-	PlayerTileText 			: null,
+	SelectedTileText 		: null,
 	SelectedTileMaterial	: null,
 	CursorMaterial			: null,
 	SelectedTile			: null,
+	SelectedTileHitPos		: null,
 
 	GetDebugFloorTileMat : function()
 	{
@@ -17,19 +18,22 @@ Editor =
 		Editor.CursorMaterial = new Engine.Gfx.Material();
 
 		// Setup player tile debug text
-		Editor.PlayerTileText = new Engine.Text2D.TextBox("0",
+		Editor.SelectedTileText = new Engine.Text2D.TextBox("0",
 		{
 			colour     : "red",
 			background : "black",
-			prefix : "Selected Tile: ",
-			dock   : ["top", "left"]
+			prefix     : "Selected Tile: ",
+			dock       : ["top", "left"]
 		});
 	},
 
 	Update : function()
 	{
 		// Update player tile debug text
-		Editor.PlayerTileText.Set(Editor.SelectedTile);
+		Editor.SelectedTileText.Set(Editor.SelectedTile);
+
+		// Update selected tile raycast
+		Editor.SelectedTileHitPos = Engine.Intersect.RayPlane(Editor.SelectedTileHitPos, Core.Camera.position, Core.Camera.forward, [0, 1, 0], 0);
 
 		// Room dimensions
 		if(Engine.Keyboard.IsPressed("r"))
@@ -76,11 +80,14 @@ Editor =
 
 	Render : function()
 	{
-		var hit_pos = Engine.Intersect.RayPlane(hit_pos, Core.Camera.position, Core.Camera.forward, [0, 1, 0], 0);
-		if(hit_pos != null)
+		// Only draw selected tile text when raycast succeeds
+		var tile_selected = Editor.SelectedTileHitPos != null;
+		Editor.SelectedTileText.SetVisible(tile_selected);
+
+		if(tile_selected)
 		{
 			// Calculate selected tile
-			Editor.SelectedTile = Core.WorldToCell(hit_pos);
+			Editor.SelectedTile = Core.WorldToCell(Editor.SelectedTileHitPos);
 			var render_pos = Engine.Vec3.MultiplyScalar(Editor.SelectedTile, Core.Map.FloorTileSize);
 			render_pos[1] += Constants.ZFightOffset; // Prevent z-fighting with ground
 
@@ -98,10 +105,10 @@ Editor =
 
 			// Render cursor
 			var cursor_size = 0.03;
-			hit_pos[0] += cursor_size * 0.5; hit_pos[2] += cursor_size * 0.5; // Centre cursor
-			hit_pos[1] += (Constants.ZFightOffset * 2.0); // Prevent z-fighting with selected tile
+			Editor.SelectedTileHitPos[0] += cursor_size * 0.5; Editor.SelectedTileHitPos[2] += cursor_size * 0.5; // Centre cursor
+			Editor.SelectedTileHitPos[1] += (Constants.ZFightOffset * 2.0); // Prevent z-fighting with selected tile
 			Engine.Gfx.BindMaterial(Editor.CursorMaterial);
-			mat4.translate(Core.ScratchMatrix, Engine.Math.IdentityMatrix, hit_pos);
+			mat4.translate(Core.ScratchMatrix, Engine.Math.IdentityMatrix, Editor.SelectedTileHitPos);
 			mat4.scale(Core.ScratchMatrix, Core.ScratchMatrix, [0.1, 0, 0.1]);
 			Engine.Gfx.DrawModel(Core.FloorTileModel, Core.ScratchMatrix, false, false);
 		}
