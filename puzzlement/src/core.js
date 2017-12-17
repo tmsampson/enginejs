@@ -25,7 +25,7 @@ Core =
 		SkyColour				: [0.5, 0.5, 0.2],
 		Sun :
 		{
-			angle				: 0, // 0 = straight down y-axis
+			//angle				: 0, // 0 = straight down y-axis
 			direction			: [ 0, -1, 0 ],
 			ambient				: [ 0.4, 0.4, 0.4 ],
 			colour				: [ 0.4, 0.4, 0.4 ],
