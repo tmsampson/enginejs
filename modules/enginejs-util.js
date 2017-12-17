@@ -48,6 +48,23 @@ Engine.Util =
 		window.prompt("EngineJS: Copy to clipboard (Ctrl + C)", text);
 	},
 
+	DownloadText : function(filename, text)
+	{
+		var pom = document.createElement('a');
+		pom.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+		pom.setAttribute('download', filename);
+		if (document.createEvent)
+		{
+			var event = document.createEvent('MouseEvents');
+			event.initEvent('click', true, true);
+			pom.dispatchEvent(event);
+		}
+		else
+		{
+			pom.click();
+		}
+	},
+
 	Hash : function(x)
 	{
 		var string_to_hash = Engine.Util.IsString(x)? x : JSON.stringify(x);
