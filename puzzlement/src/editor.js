@@ -82,7 +82,14 @@ Editor =
 			}
 		}
 
-		// Handle click event
+		// Handle save
+		if(Engine.Keyboard.WasJustPressed("m"))
+		{
+			var map_json_string = JSON.stringify(Core.Map, null, 4);
+			Engine.Util.DownloadText("foo.map", map_json_string);
+		}
+
+		// Handle tile toggling
 		var gamepad = Engine.Gamepad.Pads[0];
 		var gamepad_next = gamepad && gamepad.IsPressed("rb", true);
 		var gamepad_previous = gamepad && gamepad.IsPressed("lb", true);
