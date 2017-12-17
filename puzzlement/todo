@@ -1,0 +1,3 @@
+* Introduce concept of editor mode (floor/wall etc)
+* Add ability to set tile materials
+* Add ability to serialise maps
