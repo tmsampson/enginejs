@@ -1,0 +1,77 @@
+{
+    "SkyColour": [
+        0.5,
+        0.5,
+        0.2
+    ],
+    "Sun": {
+        "direction": [
+            0,
+            -1,
+            0
+        ],
+        "ambient": [
+            0.4,
+            0.4,
+            0.4
+        ],
+        "colour": [
+            0.4,
+            0.4,
+            0.4
+        ]
+    },
+    "RoomSizeX": 22,
+    "RoomSizeZ": 12,
+    "FloorTileSize": 1,
+    "FloorTileMaterials": [
+        "mat_stone",
+        "mat_wood",
+        "mat_wool"
+    ],
+    "FloorTiles": {
+        "-5,0,5": "mat_wood",
+        "-5,0,4": "mat_wood",
+        "-5,0,3": "mat_wood",
+        "-5,0,2": "mat_wood",
+        "-2,0,3": "mat_wool",
+        "-2,0,4": "mat_wool",
+        "-2,0,5": "mat_wool",
+        "-1,0,5": "mat_wool",
+        "0,0,5": "mat_wool",
+        "-1,0,3": "mat_wool",
+        "0,0,3": "mat_wool",
+        "-2,0,2": "mat_wool",
+        "-2,0,1": "mat_wool",
+        "0,0,1": "mat_wool",
+        "-1,0,1": "mat_wool",
+        "-5,0,1": "mat_wood",
+        "-7,0,1": "mat_wood",
+        "-6,0,1": "mat_wood",
+        "-4,0,1": "mat_wood",
+        "-6,0,2": "mat_wood",
+        "-6,0,5": "mat_wood",
+        "-6,0,3": "mat_wood",
+        "-6,0,4": "mat_wood",
+        "2,0,1": "mat_wood",
+        "3,0,1": "mat_wood",
+        "2,0,3": "mat_wood",
+        "2,0,2": "mat_wood",
+        "3,0,4": "mat_wood",
+        "3,0,3": "mat_wood",
+        "3,0,5": "mat_wood",
+        "2,0,5": "mat_wood",
+        "5,0,1": "mat_wool",
+        "6,0,1": "mat_wool",
+        "8,0,1": "mat_wool",
+        "7,0,1": "mat_wool",
+        "6,0,2": "mat_wool",
+        "6,0,3": "mat_wool",
+        "6,0,4": "mat_wool",
+        "6,0,5": "mat_wool",
+        "7,0,2": "mat_wool",
+        "7,0,3": "mat_wool",
+        "7,0,4": "mat_wool",
+        "7,0,5": "mat_wool"
+    }
+}
