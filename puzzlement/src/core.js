@@ -5,7 +5,8 @@ Core =
 	{
 		mdl_floor_tile			: { file : "models/floor-tile.model"},
 		mat_stone				: { file : "mat/stone.mat"},
-		mat_floor_debug			: { file : "mat/stone_debug.mat"},
+		mat_stone_debug			: { file : "mat/stone_debug.mat"},
+		mat_wood				: { file : "mat/wood.mat"},
 	},
 
 	// Editor
@@ -28,9 +29,15 @@ Core =
 			ambient				: [ 0.4, 0.4, 0.4 ],
 			colour				: [ 0.4, 0.4, 0.4 ],
 		},
+		RoomSizeX				: 16,
+		RoomSizeZ				: 16,
 		FloorTileSize			: 1,
-		RoomSizeX				: 4,
-		RoomSizeZ				: 4,
+		FloorTileMaterials :
+		[
+			"mat_stone",
+			"mat_wood",
+		],
+		FloorTiles				: { },
 	},
 
 	Init : function()
@@ -105,6 +112,11 @@ Core =
 		         Math.floor(world_pos[2] / Core.Map.FloorTileSize) + 1 ];
 	},
 
+	GetCellId : function(cell)
+	{
+		return cell[0] + "," + cell[1] + "," + cell[2];
+	},
+
 	GetPlayerTile : function()
 	{
 		return Core.WorldToCell(Core.Camera.position);
@@ -112,7 +124,19 @@ Core =
 
 	GetDefaultFloorTileMaterial : function()
 	{
-		return Core.EditorEnabled? Editor.GetDebugFloorTileMat() : Core.Resources["mat_stone"];
+		return Core.EditorEnabled? Editor.GetDebugFloorTileMat() : Core.Resources[Core.Map.FloorTileMaterials[0]];
+	},
+
+	GetMapMaterialIndexFromName : function(material_name)
+	{
+		for(var i = 0; i < Core.Map.FloorTileMaterials.length; ++i)
+		{
+			if(Core.Map.FloorTileMaterials[i] == material_name)
+			{
+				return i;
+			}
+		}
+		return -1;
 	},
 
 	Render : function()
@@ -120,16 +144,38 @@ Core =
 		// Bind camera
 		Engine.Gfx.BindCamera(Core.Camera);
 
-		// Draw floor
+		// Draw default floor
 		var default_tile_material = Core.GetDefaultFloorTileMaterial();
 		Engine.Gfx.BindMaterial(default_tile_material);
 		for(var x = -Core.Map.RoomSizeX / 2; x < Core.Map.RoomSizeX / 2; ++x)
 		{
 			for(var z = -Core.Map.RoomSizeZ / 2; z < Core.Map.RoomSizeZ / 2; ++z)
 			{
-				mat4.translate(Core.ScratchMatrix, Engine.Math.IdentityMatrix, [x * Core.Map.FloorTileSize, 0, (z + 1) * Core.Map.FloorTileSize]);
-				mat4.scale(Core.ScratchMatrix, Core.ScratchMatrix, [Core.Map.FloorTileSize, 0, Core.Map.FloorTileSize]);
-				Engine.Gfx.DrawModel(Core.FloorTileModel, Core.ScratchMatrix, false, false);
+				var cell_id = Core.GetCellId([x, 0, z + 1]);
+				if(!(cell_id in Core.Map.FloorTiles))
+				{
+					mat4.translate(Core.ScratchMatrix, Engine.Math.IdentityMatrix, [x * Core.Map.FloorTileSize, 0, (z + 1) * Core.Map.FloorTileSize]);
+					mat4.scale(Core.ScratchMatrix, Core.ScratchMatrix, [Core.Map.FloorTileSize, 0, Core.Map.FloorTileSize]);
+					Engine.Gfx.DrawModel(Core.FloorTileModel, Core.ScratchMatrix, false, false);
+				}
+			}
+		}
+
+		// Draw custom tiles
+		var default_tile_material = Core.GetDefaultFloorTileMaterial();
+		for(var x = -Core.Map.RoomSizeX / 2; x < Core.Map.RoomSizeX / 2; ++x)
+		{
+			for(var z = -Core.Map.RoomSizeZ / 2; z < Core.Map.RoomSizeZ / 2; ++z)
+			{
+				var cell_id = Core.GetCellId([x, 0, z + 1]);
+				if(cell_id in Core.Map.FloorTiles)
+				{
+					var material_name = Core.Map.FloorTiles[cell_id];
+					Engine.Gfx.BindMaterial(Core.Resources[material_name]);
+					mat4.translate(Core.ScratchMatrix, Engine.Math.IdentityMatrix, [x * Core.Map.FloorTileSize, 0, (z + 1) * Core.Map.FloorTileSize]);
+					mat4.scale(Core.ScratchMatrix, Core.ScratchMatrix, [Core.Map.FloorTileSize, 0, Core.Map.FloorTileSize]);
+					Engine.Gfx.DrawModel(Core.FloorTileModel, Core.ScratchMatrix, false, false);
+				}
 			}
 		}
 

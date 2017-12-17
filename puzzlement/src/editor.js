@@ -8,13 +8,13 @@ Editor =
 
 	GetDebugFloorTileMat : function()
 	{
-		return Core.Resources["mat_floor_debug"];
+		return Core.Resources["mat_stone_debug"];
 	},
 
 	Init : function()
 	{
 		// Setup materials
-		Editor.SelectedTileMaterial = Engine.Gfx.Material.Clone(Editor.GetDebugFloorTileMat());
+		Editor.SelectedTileMaterial = new Engine.Gfx.Material();
 		Editor.CursorMaterial = new Engine.Gfx.Material();
 
 		// Setup player tile debug text
@@ -33,7 +33,12 @@ Editor =
 		Editor.SelectedTileText.Set(Editor.SelectedTile);
 
 		// Update selected tile raycast
+		Editor.SelectedTile = null; // Reset
 		Editor.SelectedTileHitPos = Engine.Intersect.RayPlane(Editor.SelectedTileHitPos, Core.Camera.position, Core.Camera.forward, [0, 1, 0], 0);
+		if(Editor.SelectedTileHitPos != null)
+		{
+			Editor.SelectedTile = Core.WorldToCell(Editor.SelectedTileHitPos);
+		}
 
 		// Room dimensions
 		if(Engine.Keyboard.IsPressed("r"))
@@ -76,32 +81,60 @@ Editor =
 				Core.Map.FloorTileSize -= 0.2;
 			}
 		}
+
+		// Handle click event
+		var gamepad = Engine.Gamepad.Pads[0];
+		var gamepad_click = gamepad && gamepad.IsPressed("rb", true);
+		var mouse_click = Engine.Mouse.IsPressed("left", true);
+		if((gamepad_click || mouse_click) && Editor.SelectedTile != null)
+		{
+			// Toggle tile (first slot always reserved for default tile which is not stored)
+			var cell_id = Core.GetCellId(Editor.SelectedTile);
+			if(Core.Map.FloorTiles[cell_id] == null && Core.Map.FloorTileMaterials.length > 0)
+			{
+				// Use first material
+				Core.Map.FloorTiles[cell_id] = Core.Map.FloorTileMaterials[1];
+			}
+			else
+			{
+				// Find next tile material (and wrap around)
+				var current_material_name = Core.Map.FloorTiles[cell_id];
+				var current_material_index = Core.GetMapMaterialIndexFromName(current_material_name);
+				if(current_material_index != -1)
+				{
+					var next_material_index = (current_material_index + 1) % Core.Map.FloorTileMaterials.length;
+					Core.Map.FloorTiles[cell_id] = Core.Map.FloorTileMaterials[next_material_index];
+				}
+			}
+		}
 	},
 
 	Render : function()
 	{
 		// Only draw selected tile text when raycast succeeds
-		var tile_selected = Editor.SelectedTileHitPos != null;
+		var tile_selected = Editor.SelectedTile != null;
 		Editor.SelectedTileText.SetVisible(tile_selected);
 
 		if(tile_selected)
 		{
 			// Calculate selected tile
-			Editor.SelectedTile = Core.WorldToCell(Editor.SelectedTileHitPos);
 			var render_pos = Engine.Vec3.MultiplyScalar(Editor.SelectedTile, Core.Map.FloorTileSize);
 			render_pos[1] += Constants.ZFightOffset; // Prevent z-fighting with ground
 
 			// Colour selected tile
-			var tint = Core.IsValidTile(Editor.SelectedTile)? Engine.Colour.Green : Engine.Colour.Red;
+			var selected_tile_colour = Core.IsValidTile(Editor.SelectedTile)? Engine.Colour.Green : Engine.Colour.Red;
 			var pulse_speed = 10;
-			var pulse_colour = Engine.Colour.Lerp([1, 1, 1, 1], tint, (Math.sin(Engine.Time.elapsed_s * pulse_speed) + 1) * 0.5);
-			Editor.SelectedTileMaterial.SetColour("albedo_colour", pulse_colour);
+			selected_tile_colour[3]= (Math.sin(Engine.Time.elapsed_s * pulse_speed) + 1) * 0.5;
+			Editor.SelectedTileMaterial.SetColour("albedo_colour", selected_tile_colour);
 
 			// Render selected tile
 			Engine.Gfx.BindMaterial(Editor.SelectedTileMaterial);
 			mat4.translate(Core.ScratchMatrix, Engine.Math.IdentityMatrix, render_pos);
 			mat4.scale(Core.ScratchMatrix, Core.ScratchMatrix, [Core.Map.FloorTileSize, 0, Core.Map.FloorTileSize]);
+			Engine.Gfx.EnableBlend(true);
+			Engine.Gfx.SetBlendMode(Engine.GL.SRC_ALPHA, Engine.GL.ONE_MINUS_SRC_ALPHA);
 			Engine.Gfx.DrawModel(Core.FloorTileModel, Core.ScratchMatrix, false, false);
+			Engine.Gfx.EnableBlend(false);
 
 			// Render cursor
 			var cursor_size = 0.03;
