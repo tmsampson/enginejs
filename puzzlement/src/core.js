@@ -122,7 +122,6 @@ Core =
 
 		// Draw floor
 		var default_tile_material = Core.GetDefaultFloorTileMaterial();
-		default_tile_material.SetColour("albedo_colour", [1, 1, 1, 1]);
 		Engine.Gfx.BindMaterial(default_tile_material);
 		for(var x = -Core.Map.RoomSizeX / 2; x < Core.Map.RoomSizeX / 2; ++x)
 		{
