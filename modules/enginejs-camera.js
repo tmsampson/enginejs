@@ -253,7 +253,7 @@ Engine.Camera.Helper =
 			// Apply mouse look?
 			if(process_mouse && (Engine.Mouse.IsPressed() || Engine.Mouse.IsPressed("right")))
 			{
-				this.ApplyLook(Engine.Mouse.GetDelta())
+				this.ApplyLook(Engine.Mouse.GetDelta(), false)
 			}
 
 			// Apply gamepad look
@@ -261,11 +261,11 @@ Engine.Camera.Helper =
 			{
 				var delta = gamepad.GetRightStick();
 				delta[0] *= 20; delta[1] *= 20;
-				this.ApplyLook(delta);
+				this.ApplyLook(delta, true);
 			}
 
 			// Apply strafe?
-			var strafe_speed = (Engine.Keyboard.IsPressed("shift") || (gamepad && gamepad.IsPressed("rt")))? this.strafe_speed_fast : this.strafe_speed;
+			var strafe_speed = (Engine.Keyboard.IsPressed("shift") || (gamepad && gamepad.IsPressed("lt")))? this.strafe_speed_fast : this.strafe_speed;
 			var strafe_delta = Engine.Time.delta_s * strafe_speed;
 			if(gamepad)
 			{
@@ -320,10 +320,10 @@ Engine.Camera.Helper =
 			camera.look_at[2] = camera.position[2] + this.forward[2];
 		};
 
-		this.ApplyLook = function(delta)
+		this.ApplyLook = function(delta, allow_invert)
 		{
 			mat4.rotate(this.mtx_look, Engine.Math.IdentityMatrix, Engine.Math.DegToRad(-delta[0] * this.look_speed[0] * Engine.Time.delta_s), [0, 1, 0]);
-			mat4.rotate(this.mtx_look, this.mtx_look, Engine.Math.DegToRad(delta[1] * this.look_speed[1] * (this.invert_y? -1 : 1) * Engine.Time.delta_s), this.right);
+			mat4.rotate(this.mtx_look, this.mtx_look, Engine.Math.DegToRad(delta[1] * this.look_speed[1] * ((this.invert_y && allow_invert)? -1 : 1) * Engine.Time.delta_s), this.right);
 			vec3.transformMat4(this.forward, this.forward, this.mtx_look);
 		};
 	},
