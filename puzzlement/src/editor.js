@@ -167,7 +167,7 @@ Editor =
 
 		Core.Map.Name = map_name;
 		var map_json_string = JSON.stringify(Core.Map, null, 4);
-		Engine.Util.DownloadText(map_name + ".map", map_json_string);
+		Engine.Util.DownloadText(map_name + Constants.MapFileExtension, map_json_string);
 	},
 
 	ExecuteCommand : function(command_string)

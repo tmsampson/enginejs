@@ -117,7 +117,7 @@ Core =
 
 	LoadMap(map_name)
 	{
-		Engine.Net.FetchResource("maps/" + map_name + ".map", function(map)
+		Engine.Net.FetchResource("maps/" + map_name + Constants.MapFileExtension, function(map)
 		{
 			Core.Map = map;
 		});
