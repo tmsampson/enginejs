@@ -97,13 +97,22 @@ Editor =
 			}
 			else
 			{
-				// Find next tile material (and wrap around)
+				// Find next tile material..
 				var current_material_name = Core.Map.FloorTiles[cell_id];
 				var current_material_index = Core.GetMapMaterialIndexFromName(current_material_name);
 				if(current_material_index != -1)
 				{
 					var next_material_index = (current_material_index + 1) % Core.Map.FloorTileMaterials.length;
-					Core.Map.FloorTiles[cell_id] = Core.Map.FloorTileMaterials[next_material_index];
+					if(next_material_index == 0)
+					{
+						// Wrap around back to default tile (remove entry)
+						delete Core.Map.FloorTiles[cell_id];
+					}
+					else
+					{
+						// Apply next tile
+						Core.Map.FloorTiles[cell_id] = Core.Map.FloorTileMaterials[next_material_index];
+					}
 				}
 			}
 		}
