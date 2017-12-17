@@ -1,3 +1,2 @@
-* Add ability to load maps via query string
 * Add ability to load maps via prompt
 * Introduce concept of editor mode (floor/wall etc)
