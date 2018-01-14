@@ -1,0 +1,54 @@
+{
+	"name"       : "Wall",
+	"model_data" :
+	{
+		"primitives" :
+		[
+			{
+				"name"           : "face",
+				"buffers" :
+				[
+					{
+						"name"           : "vertices",
+						"attribute_name" : "a_pos",
+						"item_size"      : 3,
+						"draw_mode"      : "triangle_strip",
+						"stream"         :
+						[
+							1.0, 1.0, -1.0,
+							1.0, 0.0, -1.0,
+							0.0, 1.0, -1.0,
+							0.0, 0.0, -1.0
+						]
+					},
+					{
+						"name"           : "normals",
+						"attribute_name" : "a_normal",
+						"item_size"      : 3,
+						"draw_mode"      : "triangle_strip",
+						"stream"         :
+						[
+							0.0, 0.0, -1.0,
+							0.0, 0.0, -1.0,
+							0.0, 0.0, -1.0,
+							0.0, 0.0, -1.0
+						]
+					},
+					{
+						"name"           : "texture-coordinates",
+						"attribute_name" : "a_uv",
+						"item_size"      : 2,
+						"draw_mode"      : "triangle_strip",
+						"stream"         :
+						[
+							1.0, 1.0,
+							1.0, 0.0,
+							0.0, 1.0,
+							0.0, 0.0
+						]
+					}
+				]
+			}
+		]
+	}
+}
