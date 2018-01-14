@@ -191,15 +191,27 @@ Core =
 		Engine.Gfx.BindMaterial(Core.Resources["mat_cobbles"]);
 
 		// Draw wall (back)
-		mat4.translate(Core.ScratchMatrix, Engine.Math.IdentityMatrix, [0, 0, 0]);
+		mat4.translate(Core.ScratchMatrix, Engine.Math.IdentityMatrix, [0.5, 0, -0.5]);
 		mat4.scale(Core.ScratchMatrix, Core.ScratchMatrix, [Core.Map.FloorTileSize, Core.Map.WallHeight, Core.Map.FloorTileSize]);
 		Engine.Gfx.DrawModel(Core.WallTileModel, Core.ScratchMatrix, false, false);
 
+		// Draw wall (left)
+		mat4.scale(Core.ScratchMatrix, Engine.Math.IdentityMatrix, [Core.Map.FloorTileSize, Core.Map.WallHeight, Core.Map.FloorTileSize]);
+		mat4.translate(Core.ScratchMatrix, Core.ScratchMatrix, [0.5, 0, -0.5]);
+		mat4.rotate(Core.ScratchMatrix, Core.ScratchMatrix, 3.141/2.0, [0, 1, 0]);
+		Engine.Gfx.DrawModel(Core.WallTileModel, Core.ScratchMatrix, false, false);
+
 		// Draw wall (right)
-		//mat4.rotate(Core.ScratchMatrix, Engine.Math.IdentityMatrix, 90, [0, 1, 0]);
-		//mat4.translate(Core.ScratchMatrix, Core.ScratchMatrix, [0, 0, 0]);
-		//mat4.scale(Core.ScratchMatrix, Core.ScratchMatrix, [Core.Map.FloorTileSize, Core.Map.WallHeight, Core.Map.FloorTileSize]);
-		//Engine.Gfx.DrawModel(Core.WallTileModel, Core.ScratchMatrix, false, false);
+		mat4.scale(Core.ScratchMatrix, Engine.Math.IdentityMatrix, [Core.Map.FloorTileSize, Core.Map.WallHeight, Core.Map.FloorTileSize]);
+		mat4.translate(Core.ScratchMatrix, Core.ScratchMatrix, [0.5, 0, -0.5]);
+		mat4.rotate(Core.ScratchMatrix, Core.ScratchMatrix, -3.141/2.0, [0, 1, 0]);
+		Engine.Gfx.DrawModel(Core.WallTileModel, Core.ScratchMatrix, false, false);
+
+		// Draw wall (front)
+		mat4.scale(Core.ScratchMatrix, Engine.Math.IdentityMatrix, [Core.Map.FloorTileSize, Core.Map.WallHeight, Core.Map.FloorTileSize]);
+		mat4.translate(Core.ScratchMatrix, Core.ScratchMatrix, [0.5, 0, -0.5]);
+		mat4.rotate(Core.ScratchMatrix, Core.ScratchMatrix, 3.141, [0, 1, 0]);
+		Engine.Gfx.DrawModel(Core.WallTileModel, Core.ScratchMatrix, false, false);
 
 		// Draw custom tiles
 		var default_tile_material = Core.GetDefaultFloorTileMaterial();
