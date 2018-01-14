@@ -4,10 +4,12 @@ Core =
 	Resources :
 	{
 		mdl_floor_tile			: { file : "models/floor-tile.model"},
+		mdl_wall				: { file : "models/wall.model"},
 		mat_stone				: { file : "mat/stone.mat"},
 		mat_stone_debug			: { file : "mat/stone_debug.mat"},
 		mat_wood				: { file : "mat/wood.mat"},
 		mat_wool				: { file : "mat/wool.mat"},
+		mat_cobbles				: { file : "mat/cobbles.mat"},
 	},
 
 	// Editor
@@ -33,6 +35,7 @@ Core =
 		RoomSizeX				: 16,
 		RoomSizeZ				: 16,
 		FloorTileSize			: 1,
+		WallHeight				: 2,
 		FloorTileMaterials :
 		[
 			"mat_stone",
@@ -73,7 +76,7 @@ Core =
 		// ====================================================================================================================================
 		// Models
 		Core.FloorTileModel = Core.Resources["mdl_floor_tile"];
-		Core.WallTileModel = Engine.Geometry.MakePlane({ x_size : 2, z_size : 2});
+		Core.WallTileModel = Core.Resources["mdl_wall"];
 
 		// ====================================================================================================================================
 		// Sun
@@ -100,6 +103,14 @@ Core =
 		Core.Render();
 	},
 
+	LoadMap(map_name)
+	{
+		Engine.Net.FetchResource("maps/" + map_name + Constants.MapFileExtension, function(map)
+		{
+			Core.Map = map;
+		});
+	},
+
 	IsValidTile : function(tile)
 	{
 		if(tile[0] < -(Core.Map.RoomSizeX / 2) || tile[0] >= (Core.Map.RoomSizeX / 2))
@@ -113,14 +124,6 @@ Core =
 		}
 
 		return true;
-	},
-
-	LoadMap(map_name)
-	{
-		Engine.Net.FetchResource("maps/" + map_name + Constants.MapFileExtension, function(map)
-		{
-			Core.Map = map;
-		});
 	},
 
 	WorldToCell : function(world_pos)
@@ -178,6 +181,25 @@ Core =
 				}
 			}
 		}
+
+		// Setup wall material (tiling uvs to match height)
+		var wall_material = Core.Resources["mat_cobbles"];
+		var uv_repeat = [1, Core.Map.WallHeight];
+		wall_material.SetVec2("albedo_map_repeat", uv_repeat);
+		wall_material.SetVec2("normal_map_repeat", uv_repeat);
+		wall_material.SetVec2("specular_map_repeat", uv_repeat);
+		Engine.Gfx.BindMaterial(Core.Resources["mat_cobbles"]);
+
+		// Draw wall (back)
+		mat4.translate(Core.ScratchMatrix, Engine.Math.IdentityMatrix, [0, 0, 0]);
+		mat4.scale(Core.ScratchMatrix, Core.ScratchMatrix, [Core.Map.FloorTileSize, Core.Map.WallHeight, Core.Map.FloorTileSize]);
+		Engine.Gfx.DrawModel(Core.WallTileModel, Core.ScratchMatrix, false, false);
+
+		// Draw wall (right)
+		//mat4.rotate(Core.ScratchMatrix, Engine.Math.IdentityMatrix, 90, [0, 1, 0]);
+		//mat4.translate(Core.ScratchMatrix, Core.ScratchMatrix, [0, 0, 0]);
+		//mat4.scale(Core.ScratchMatrix, Core.ScratchMatrix, [Core.Map.FloorTileSize, Core.Map.WallHeight, Core.Map.FloorTileSize]);
+		//Engine.Gfx.DrawModel(Core.WallTileModel, Core.ScratchMatrix, false, false);
 
 		// Draw custom tiles
 		var default_tile_material = Core.GetDefaultFloorTileMaterial();

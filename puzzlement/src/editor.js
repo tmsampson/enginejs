@@ -40,7 +40,7 @@ Editor =
 			Editor.SelectedTile = Core.WorldToCell(Editor.SelectedTileHitPos);
 		}
 
-		// Room dimensions
+		// Edit room dimensions?
 		if(Engine.Keyboard.IsPressed("r"))
 		{
 			if(Engine.Keyboard.WasJustPressed("right") && Core.Map.RoomSizeX < Constants.MaxRoomSize - 2)
@@ -61,7 +61,7 @@ Editor =
 			}
 		}
 
-		// Tile dimensions
+		// Edit tile dimensions?
 		if(Engine.Keyboard.IsPressed("t"))
 		{
 			if(Engine.Keyboard.WasJustPressed("right") && Core.Map.FloorTileSize < Constants.MaxTileSize)
