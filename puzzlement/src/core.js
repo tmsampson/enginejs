@@ -21,6 +21,12 @@ Core =
 	FloorTileModel				: null,
 	WallTileModel				: null,
 
+	// Wall flags
+	WALL_FLAG_BACK				: 0b0001,
+	WALL_FLAG_RIGHT				: 0b0010,
+	WALL_FLAG_FRONT				: 0b0100,
+	WALL_FLAG_LEFT				: 0b1000,
+
 	// Map
 	Map :
 	{
@@ -128,9 +134,18 @@ Core =
 
 	WorldToCell : function(world_pos)
 	{
+		// Maps any (unquantized) world position to a cell
 		return [ Math.floor(world_pos[0] / Core.Map.FloorTileSize),
 		         0,
 		         Math.floor(world_pos[2] / Core.Map.FloorTileSize) + 1 ];
+	},
+
+	CellToWorld : function(cell)
+	{
+		// Maps cell (3 component array) to world space (back left of tile)
+		return [ cell[0] * Core.Map.FloorTileSize,
+		         0,
+		         cell[2] * Core.Map.FloorTileSize ];
 	},
 
 	GetCellId : function(cell)
@@ -190,28 +205,10 @@ Core =
 		wall_material.SetVec2("specular_map_repeat", uv_repeat);
 		Engine.Gfx.BindMaterial(Core.Resources["mat_cobbles"]);
 
-		// Draw wall (back)
-		mat4.translate(Core.ScratchMatrix, Engine.Math.IdentityMatrix, [0.5, 0, -0.5]);
-		mat4.scale(Core.ScratchMatrix, Core.ScratchMatrix, [Core.Map.FloorTileSize, Core.Map.WallHeight, Core.Map.FloorTileSize]);
-		Engine.Gfx.DrawModel(Core.WallTileModel, Core.ScratchMatrix, false, false);
-
-		// Draw wall (left)
-		mat4.scale(Core.ScratchMatrix, Engine.Math.IdentityMatrix, [Core.Map.FloorTileSize, Core.Map.WallHeight, Core.Map.FloorTileSize]);
-		mat4.translate(Core.ScratchMatrix, Core.ScratchMatrix, [0.5, 0, -0.5]);
-		mat4.rotate(Core.ScratchMatrix, Core.ScratchMatrix, 3.141/2.0, [0, 1, 0]);
-		Engine.Gfx.DrawModel(Core.WallTileModel, Core.ScratchMatrix, false, false);
-
-		// Draw wall (right)
-		mat4.scale(Core.ScratchMatrix, Engine.Math.IdentityMatrix, [Core.Map.FloorTileSize, Core.Map.WallHeight, Core.Map.FloorTileSize]);
-		mat4.translate(Core.ScratchMatrix, Core.ScratchMatrix, [0.5, 0, -0.5]);
-		mat4.rotate(Core.ScratchMatrix, Core.ScratchMatrix, -3.141/2.0, [0, 1, 0]);
-		Engine.Gfx.DrawModel(Core.WallTileModel, Core.ScratchMatrix, false, false);
-
-		// Draw wall (front)
-		mat4.scale(Core.ScratchMatrix, Engine.Math.IdentityMatrix, [Core.Map.FloorTileSize, Core.Map.WallHeight, Core.Map.FloorTileSize]);
-		mat4.translate(Core.ScratchMatrix, Core.ScratchMatrix, [0.5, 0, -0.5]);
-		mat4.rotate(Core.ScratchMatrix, Core.ScratchMatrix, 3.141, [0, 1, 0]);
-		Engine.Gfx.DrawModel(Core.WallTileModel, Core.ScratchMatrix, false, false);
+		// Draw wall
+		Core.RenderWall([0, 0, 0], Core.WALL_FLAG_BACK);
+		Core.RenderWall([-1, 0, 0], Core.WALL_FLAG_BACK | Core.WALL_FLAG_LEFT);
+		Core.RenderWall([1, 0, 0], Core.WALL_FLAG_BACK | Core.WALL_FLAG_RIGHT);
 
 		// Draw custom tiles
 		var default_tile_material = Core.GetDefaultFloorTileMaterial();
@@ -235,6 +232,49 @@ Core =
 		if(Core.EditorEnabled)
 		{
 			Editor.Render();
+		}
+	},
+
+	RenderWall : function(cell, sides)
+	{
+		var cell_centre = Core.CellToWorld(cell);
+		cell_centre[0] += (Core.Map.FloorTileSize * 0.5);
+		cell_centre[2] -= (Core.Map.FloorTileSize * 0.5);
+		var rotation = Engine.Math.DegToRad(90);
+
+		// Draw back wall?
+		if(sides & Core.WALL_FLAG_BACK)
+		{
+			mat4.translate(Core.ScratchMatrix, Engine.Math.IdentityMatrix, cell_centre);
+			mat4.scale(Core.ScratchMatrix, Core.ScratchMatrix, [Core.Map.FloorTileSize, Core.Map.WallHeight, Core.Map.FloorTileSize]);
+			Engine.Gfx.DrawModel(Core.WallTileModel, Core.ScratchMatrix, false, false);
+		}
+
+		// Draw right wall?
+		if(sides & Core.WALL_FLAG_RIGHT)
+		{
+			mat4.scale(Core.ScratchMatrix, Engine.Math.IdentityMatrix, [Core.Map.FloorTileSize, Core.Map.WallHeight, Core.Map.FloorTileSize]);
+			mat4.translate(Core.ScratchMatrix, Core.ScratchMatrix, cell_centre);
+			mat4.rotate(Core.ScratchMatrix, Core.ScratchMatrix, -rotation, [0, 1, 0]);
+			Engine.Gfx.DrawModel(Core.WallTileModel, Core.ScratchMatrix, false, false);
+		}
+
+		// Draw left wall?
+		if(sides & Core.WALL_FLAG_LEFT)
+		{
+			mat4.scale(Core.ScratchMatrix, Engine.Math.IdentityMatrix, [Core.Map.FloorTileSize, Core.Map.WallHeight, Core.Map.FloorTileSize]);
+			mat4.translate(Core.ScratchMatrix, Core.ScratchMatrix, cell_centre);
+			mat4.rotate(Core.ScratchMatrix, Core.ScratchMatrix, rotation, [0, 1, 0]);
+			Engine.Gfx.DrawModel(Core.WallTileModel, Core.ScratchMatrix, false, false);
+		}
+
+		if(sides & Core.WALL_FLAG_FRONT)
+		{
+			// Draw wall (front)
+			mat4.scale(Core.ScratchMatrix, Engine.Math.IdentityMatrix, [Core.Map.FloorTileSize, Core.Map.WallHeight, Core.Map.FloorTileSize]);
+			mat4.translate(Core.ScratchMatrix, Core.ScratchMatrix, cell_centre);
+			mat4.rotate(Core.ScratchMatrix, Core.ScratchMatrix, rotation * 2.0, [0, 1, 0]);
+			Engine.Gfx.DrawModel(Core.WallTileModel, Core.ScratchMatrix, false, false);
 		}
 	},
 };
