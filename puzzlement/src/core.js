@@ -49,6 +49,10 @@ Core =
 			"mat_wool",
 		],
 		FloorTiles				: { },
+		WallMaterials :
+		[
+			"mat_cobbles"
+		],
 	},
 
 	Init : function()
@@ -205,7 +209,7 @@ Core =
 		wall_material.SetVec2("specular_map_repeat", uv_repeat);
 		Engine.Gfx.BindMaterial(Core.Resources["mat_cobbles"]);
 
-		// Draw wall
+		// Draw walls
 		Core.RenderWall([0, 0, 0], Core.WALL_FLAG_BACK);
 		Core.RenderWall([-1, 0, 0], Core.WALL_FLAG_BACK | Core.WALL_FLAG_LEFT);
 		Core.RenderWall([1, 0, 0], Core.WALL_FLAG_BACK | Core.WALL_FLAG_RIGHT);
