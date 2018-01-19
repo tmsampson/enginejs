@@ -211,6 +211,9 @@ Editor =
 
 		if(tile_selected)
 		{
+			// Cache state
+			var depth_was_enabled = Engine.Gfx.IsDepthTestEnabled();
+
 			// Calculate selected tile
 			var render_pos = Engine.Vec3.MultiplyScalar(Editor.SelectedTile, Core.Map.FloorTileSize);
 			render_pos[1] += Constants.ZFightOffset; // Prevent z-fighting with ground
@@ -227,6 +230,7 @@ Editor =
 			mat4.scale(Core.ScratchMatrix, Core.ScratchMatrix, [Core.Map.FloorTileSize, 0, Core.Map.FloorTileSize]);
 			Engine.Gfx.EnableBlend(true);
 			Engine.Gfx.SetBlendMode(Engine.GL.SRC_ALPHA, Engine.GL.ONE_MINUS_SRC_ALPHA);
+			Engine.Gfx.EnableDepthTest(false);
 			Engine.Gfx.DrawModel(Core.FloorTileModel, Core.ScratchMatrix, false, false);
 			Engine.Gfx.EnableBlend(false);
 
@@ -238,6 +242,9 @@ Editor =
 			mat4.translate(Core.ScratchMatrix, Engine.Math.IdentityMatrix, Editor.SelectedTileHitPos);
 			mat4.scale(Core.ScratchMatrix, Core.ScratchMatrix, [0.1, 0, 0.1]);
 			Engine.Gfx.DrawModel(Core.FloorTileModel, Core.ScratchMatrix, false, false);
+
+			// Restore state
+			Engine.Gfx.EnableDepthTest(depth_was_enabled);
 		}
 	},
 };
