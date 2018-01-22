@@ -144,6 +144,16 @@ Core =
 		         Math.floor(world_pos[2] / Core.Map.FloorTileSize) + 1 ];
 	},
 
+	WorldToCellPos : function(world_pos)
+	{
+		// Maps any (unquantized) world position to cell space (0..1)
+		var cell = Core.WorldToCell(world_pos);
+		var cell_pos = Core.CellToWorld(cell);
+		var x = (world_pos[0] - cell_pos[0]) / Core.Map.FloorTileSize;
+		var z = (world_pos[2] - cell_pos[2]) / Core.Map.FloorTileSize;
+		return [x, -z];
+	},
+
 	CellToWorld : function(cell)
 	{
 		// Maps cell (3 component array) to world space (back left of tile)
@@ -201,19 +211,6 @@ Core =
 			}
 		}
 
-		// Setup wall material (tiling uvs to match height)
-		var wall_material = Core.Resources["mat_cobbles"];
-		var uv_repeat = [1, Core.Map.WallHeight];
-		wall_material.SetVec2("albedo_map_repeat", uv_repeat);
-		wall_material.SetVec2("normal_map_repeat", uv_repeat);
-		wall_material.SetVec2("specular_map_repeat", uv_repeat);
-		Engine.Gfx.BindMaterial(Core.Resources["mat_cobbles"]);
-
-		// Draw walls
-		Core.RenderWall([0, 0, 0], Core.WALL_FLAG_BACK);
-		Core.RenderWall([-1, 0, 0], Core.WALL_FLAG_BACK | Core.WALL_FLAG_LEFT);
-		Core.RenderWall([1, 0, 0], Core.WALL_FLAG_BACK | Core.WALL_FLAG_RIGHT);
-
 		// Draw custom tiles
 		var default_tile_material = Core.GetDefaultFloorTileMaterial();
 		for(var x = -Core.Map.RoomSizeX / 2; x < Core.Map.RoomSizeX / 2; ++x)
@@ -231,6 +228,22 @@ Core =
 				}
 			}
 		}
+
+		// Setup wall material (tiling uvs to match height)
+		var wall_material = Core.Resources["mat_cobbles"];
+		var uv_repeat = [1, Core.Map.WallHeight];
+		wall_material.SetVec2("albedo_map_repeat", uv_repeat);
+		wall_material.SetVec2("normal_map_repeat", uv_repeat);
+		wall_material.SetVec2("specular_map_repeat", uv_repeat);
+		Engine.Gfx.BindMaterial(Core.Resources["mat_cobbles"]);
+
+		// Draw walls
+		Core.RenderWall([0, 0, 0], Core.WALL_FLAG_BACK);
+		Core.RenderWall([-1, 0, 0], Core.WALL_FLAG_BACK | Core.WALL_FLAG_LEFT);
+		Core.RenderWall([1, 0, 0], Core.WALL_FLAG_BACK | Core.WALL_FLAG_RIGHT);
+
+		// Draw sky box?
+		Engine.Gfx.DrawSkybox(100, null);
 
 		// Render editor?
 		if(Core.EditorEnabled)
@@ -257,27 +270,27 @@ Core =
 		// Draw right wall?
 		if(sides & Core.WALL_FLAG_RIGHT)
 		{
-			mat4.scale(Core.ScratchMatrix, Engine.Math.IdentityMatrix, [Core.Map.FloorTileSize, Core.Map.WallHeight, Core.Map.FloorTileSize]);
-			mat4.translate(Core.ScratchMatrix, Core.ScratchMatrix, cell_centre);
+			mat4.translate(Core.ScratchMatrix, Engine.Math.IdentityMatrix, cell_centre);
 			mat4.rotate(Core.ScratchMatrix, Core.ScratchMatrix, -rotation, [0, 1, 0]);
+			mat4.scale(Core.ScratchMatrix, Core.ScratchMatrix, [Core.Map.FloorTileSize, Core.Map.WallHeight, Core.Map.FloorTileSize]);
 			Engine.Gfx.DrawModel(Core.WallTileModel, Core.ScratchMatrix, false, false);
 		}
 
 		// Draw left wall?
 		if(sides & Core.WALL_FLAG_LEFT)
 		{
-			mat4.scale(Core.ScratchMatrix, Engine.Math.IdentityMatrix, [Core.Map.FloorTileSize, Core.Map.WallHeight, Core.Map.FloorTileSize]);
-			mat4.translate(Core.ScratchMatrix, Core.ScratchMatrix, cell_centre);
+			mat4.translate(Core.ScratchMatrix, Engine.Math.IdentityMatrix, cell_centre);
 			mat4.rotate(Core.ScratchMatrix, Core.ScratchMatrix, rotation, [0, 1, 0]);
+			mat4.scale(Core.ScratchMatrix, Core.ScratchMatrix, [Core.Map.FloorTileSize, Core.Map.WallHeight, Core.Map.FloorTileSize]);
 			Engine.Gfx.DrawModel(Core.WallTileModel, Core.ScratchMatrix, false, false);
 		}
 
+		// Draw front wall?
 		if(sides & Core.WALL_FLAG_FRONT)
 		{
-			// Draw wall (front)
-			mat4.scale(Core.ScratchMatrix, Engine.Math.IdentityMatrix, [Core.Map.FloorTileSize, Core.Map.WallHeight, Core.Map.FloorTileSize]);
-			mat4.translate(Core.ScratchMatrix, Core.ScratchMatrix, cell_centre);
+			mat4.translate(Core.ScratchMatrix, Engine.Math.IdentityMatrix, cell_centre);
 			mat4.rotate(Core.ScratchMatrix, Core.ScratchMatrix, rotation * 2.0, [0, 1, 0]);
+			mat4.scale(Core.ScratchMatrix, Core.ScratchMatrix, [Core.Map.FloorTileSize, Core.Map.WallHeight, Core.Map.FloorTileSize]);
 			Engine.Gfx.DrawModel(Core.WallTileModel, Core.ScratchMatrix, false, false);
 		}
 	},
