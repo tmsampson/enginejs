@@ -566,7 +566,7 @@ Engine.Gfx =
 	DrawSkybox : function(scale, skybox_texture)
 	{
 		// Select skybox texture
-		if(!Engine.Util.IsDefined(skybox_texture))
+		if(!skybox_texture || !Engine.Util.IsDefined(skybox_texture))
 		{
 			skybox_texture = this.default_reflection_map;
 		}
