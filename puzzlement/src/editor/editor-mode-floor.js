@@ -12,14 +12,6 @@ Editor.Mode_Floor = function()
 	this.Update = function()
 	{
 		// Edit tile dimensions?
-		if(Engine.Keyboard.WasJustPressed("right") && Core.Map.FloorTileSize < Constants.MaxTileSize)
-		{
-			Core.Map.FloorTileSize += 0.2;
-		}
-		else if(Engine.Keyboard.WasJustPressed("left") && Core.Map.FloorTileSize > Constants.MinTileSize)
-		{
-			Core.Map.FloorTileSize -= 0.2;
-		}
 		if(Engine.Keyboard.WasJustPressed("up") && Core.Map.FloorTileSize < Constants.MaxTileSize)
 		{
 			Core.Map.FloorTileSize += 0.2;
@@ -29,7 +21,17 @@ Editor.Mode_Floor = function()
 			Core.Map.FloorTileSize -= 0.2;
 		}
 
-		// Handle tile toggling
+		// Handle tile toggling (keyboard)
+		if(Engine.Keyboard.WasJustPressed("right"))
+		{
+			this.ToggleSelectedTile(1);
+		}
+		else if(Engine.Keyboard.WasJustPressed("left"))
+		{
+			this.ToggleSelectedTile(-1);
+		}
+
+		// Handle tile toggling (mouse & gamepad)
 		var gamepad = Engine.Gamepad.Pads[0];
 		var gamepad_next = gamepad && gamepad.IsPressed("rb", true);
 		var gamepad_previous = gamepad && gamepad.IsPressed("lb", true);
