@@ -1,0 +1,18 @@
+{
+	"version"        : 1.0,
+	"name"           : "Wall Select",
+	"type"           : "standard",
+	"config"         :
+	{
+		"lighting_enabled"        : false,
+		"specular_enabled"        : false,
+		"fresnel_enabled"         : false
+	},
+	"properties"     :
+	{
+		"sampler2D"  :
+		{
+			"albedo_map"          : { "file": "img/wall_select_right.png" }
+		}
+	}
+}
