@@ -24,6 +24,10 @@ Engine.Gfx =
 		                                      Engine.GL.getExtension("MOZ_WEBGL_depth_texture") ||
 		                                      Engine.GL.getExtension("WEBKIT_WEBGL_depth_texture");
 
+		// Default state
+		Engine.GL.cullFace(Engine.GL.BACK);
+		Engine.GL.enable(Engine.GL.CULL_FACE);
+
 		// Extensions report
 		Engine.Log("[extension] Anisotropic filtering: " + (Engine.Gfx.Extension_Anisotropic_Filtering? "ENABLED" : "DISABLED"));
 		Engine.Log("[extension] Depth textures: " + (Engine.Gfx.Extension_Depth_Textures? "ENABLED" : "DISABLED"));
@@ -835,14 +839,12 @@ Engine.Gfx =
 		var offset = optional_offset || 0;
 		var count  = optional_count  || this.current_vertex_buffer_object.item_count;
 
-		// Set face culling
-		var enable_backface_culling = (draw_mode == Engine.GL.TRIANGLES);
-		Engine.GL.cullFace(Engine.GL.BACK);
-		if(enable_backface_culling)
-		{
-			Engine.GL.enable(Engine.GL.CULL_FACE);
-		}
-		else
+		// Force disable back-face culling?
+		// Note: Only allow back-face culling if we're using "trangles" topology, even if the bound material
+		//       is marked as single sided.
+		var prevent_backface_culling = (draw_mode != Engine.GL.TRIANGLES);
+		var backface_culling_was_enabled = Engine.GL.isEnabled(Engine.GL.CULL_FACE);
+		if(prevent_backface_culling && backface_culling_was_enabled)
 		{
 			Engine.GL.disable(Engine.GL.CULL_FACE);
 		}
@@ -856,6 +858,12 @@ Engine.Gfx =
 		{
 			// Draw non-indexed
 			Engine.GL.drawArrays(draw_mode, offset, count);
+		}
+
+		// Restore culling state (only if we force disabled it above)?
+		if(prevent_backface_culling && backface_culling_was_enabled)
+		{
+			Engine.GL.enable(Engine.GL.CULL_FACE);
 		}
 	},
 
@@ -901,6 +909,11 @@ Engine.Gfx =
 	EnableDepthTest : function(new_value)
 	{
 		this.SetStateBool(Engine.GL.DEPTH_TEST, new_value);
+	},
+
+	EnableBackFaceCulling : function(new_value)
+	{
+		this.SetStateBool(Engine.GL.CULL_FACE, new_value);
 	},
 
 	IsDepthTestEnabled : function()
@@ -1049,6 +1062,7 @@ Engine.Gfx =
 // **********************************************
 Engine.Gfx.StateTracking[Engine.GL.BLEND]      = 0;
 Engine.Gfx.StateTracking[Engine.GL.DEPTH_TEST] = 0;
+Engine.Gfx.StateTracking[Engine.GL.CULL_FACE]  = 0;
 Engine.Gfx.ResizeViewport();
 
 Engine.Gfx.ShaderPropertySetterFuncFromString =

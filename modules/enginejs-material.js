@@ -97,6 +97,19 @@ Engine.Gfx.Material = function(prevent_default)
 		{
 			this.BindProperties();
 		}
+
+		// 4. Setup face culling
+		// Note: This may be later overriden if the submitted mesh is not using triangle topology
+		var is_single_sided = Engine.Util.IsDefined(this.config["single_sided"]) && this.config["single_sided"];
+		if(is_single_sided)
+		{
+			Engine.GL.cullFace(Engine.GL.BACK);
+			Engine.GL.enable(Engine.GL.CULL_FACE);
+		}
+		else
+		{
+			Engine.GL.disable(Engine.GL.CULL_FACE);
+		}
 	};
 
 	this.BindStandardProperties = function()
