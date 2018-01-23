@@ -1,12 +1,12 @@
 Editor.Mode_Floor = function()
 {
 	this.Name 					= "FLOOR";
-	this.SelectedTileMaterial	= null,
+	this.SelectedCellMaterial	= null,
 	this.EnableCursor 			= true;
 
 	this.Init = function()
 	{
-		this.SelectedTileMaterial = new Engine.Gfx.Material();
+		this.SelectedCellMaterial = new Engine.Gfx.Material();
 	};
 
 	this.Update = function()
@@ -24,11 +24,11 @@ Editor.Mode_Floor = function()
 		// Handle tile toggling (keyboard)
 		if(Engine.Keyboard.WasJustPressed("right"))
 		{
-			this.ToggleSelectedTile(1);
+			this.ToggleSelectedCell(1);
 		}
 		else if(Engine.Keyboard.WasJustPressed("left"))
 		{
-			this.ToggleSelectedTile(-1);
+			this.ToggleSelectedCell(-1);
 		}
 
 		// Handle tile toggling (mouse & gamepad)
@@ -37,40 +37,40 @@ Editor.Mode_Floor = function()
 		var gamepad_previous = gamepad && gamepad.IsPressed("lb", true);
 		if(Engine.Mouse.GetWheelDelta() > 0 || gamepad_next)
 		{
-			this.ToggleSelectedTile(1);
+			this.ToggleSelectedCell(1);
 		}
 		else if(Engine.Mouse.GetWheelDelta() < 0 || gamepad_previous)
 		{
-			this.ToggleSelectedTile(-1);
+			this.ToggleSelectedCell(-1);
 		}
 	};
 
 	this.Render = function()
 	{
-		if(Editor.SelectedTile == null)
+		if(Editor.SelectedCell == null)
 		{
 			Editor.SubText.Set("");
 			return;
 		}
 
 		// Update debug text
-		Editor.SubText.Set(Editor.SelectedTile);
+		Editor.SubText.Set(Editor.SelectedCell);
 
 		// Cache state
 		var depth_was_enabled = Engine.Gfx.IsDepthTestEnabled();
 
 		// Calculate selected tile
-		var render_pos = Engine.Vec3.MultiplyScalar(Editor.SelectedTile, Core.Map.FloorTileSize);
+		var render_pos = Engine.Vec3.MultiplyScalar(Editor.SelectedCell, Core.Map.FloorTileSize);
 		render_pos[1] += Constants.ZFightOffset; // Prevent z-fighting with ground
 
 		// Colour selected tile
-		var selected_tile_colour = Core.IsValidTile(Editor.SelectedTile)? Engine.Colour.Green : Engine.Colour.Red;
+		var selected_tile_colour = Core.IsValidCell(Editor.SelectedCell)? Engine.Colour.Green : Engine.Colour.Red;
 		var pulse_speed = 10;
 		selected_tile_colour[3]= (Math.sin(Engine.Time.elapsed_s * pulse_speed) + 1) * 0.5;
-		this.SelectedTileMaterial.SetColour("albedo_colour", selected_tile_colour);
+		this.SelectedCellMaterial.SetColour("albedo_colour", selected_tile_colour);
 
 		// Render selected tile
-		Engine.Gfx.BindMaterial(this.SelectedTileMaterial);
+		Engine.Gfx.BindMaterial(this.SelectedCellMaterial);
 		mat4.translate(Core.ScratchMatrix, Engine.Math.IdentityMatrix, render_pos);
 		mat4.scale(Core.ScratchMatrix, Core.ScratchMatrix, [Core.Map.FloorTileSize, 0, Core.Map.FloorTileSize]);
 		Engine.Gfx.EnableBlend(true);
@@ -83,16 +83,16 @@ Editor.Mode_Floor = function()
 		Engine.Gfx.EnableDepthTest(depth_was_enabled);
 	};
 
-	this.ToggleSelectedTile = function(direction)
+	this.ToggleSelectedCell = function(direction)
 	{
 		// Must have a selected tile
-		if(Editor.SelectedTile == null)
+		if(Editor.SelectedCell == null)
 		{
 			return;
 		}
 
 		// Toggle tile (first slot always reserved for default tile which is not stored)
-		var cell_id = Core.GetCellId(Editor.SelectedTile);
+		var cell_id = Core.GetCellId(Editor.SelectedCell);
 		if(Core.Map.FloorTiles[cell_id] == null && Core.Map.FloorTileMaterials.length > 0)
 		{
 			// Use 1st or final slot (never 0, 0 = default)

@@ -10,6 +10,10 @@ Core =
 		mat_wood				: { file : "mat/wood.mat"},
 		mat_wool				: { file : "mat/wool.mat"},
 		mat_cobbles				: { file : "mat/cobbles.mat"},
+		mat_rug1				: { file : "mat/rug1.mat"},
+		mat_rug2				: { file : "mat/rug2.mat"},
+		mat_paving				: { file : "mat/paving.mat"},
+		mat_wallpaper1			: { file : "mat/wallpaper1.mat"},
 		mat_wall_select_back	: { file : "mat/wall_select_back.mat"},
 		mat_wall_select_right	: { file : "mat/wall_select_right.mat"},
 		mat_wall_select_front	: { file : "mat/wall_select_front.mat"},
@@ -51,12 +55,16 @@ Core =
 			"mat_stone",
 			"mat_wood",
 			"mat_wool",
+			"mat_rug1",
+			"mat_rug2",
+			"mat_paving"
 		],
 		FloorTiles				: { },
 		WallMaterials :
 		[
 			"mat_cobbles",
-			"mat_wood"
+			"mat_wood",
+			"mat_wallpaper1"
 		],
 		Walls 					: { }
 	},
@@ -127,14 +135,14 @@ Core =
 		});
 	},
 
-	IsValidTile : function(tile)
+	IsValidCell : function(cell)
 	{
-		if(tile[0] < -(Core.Map.RoomSizeX / 2) || tile[0] >= (Core.Map.RoomSizeX / 2))
+		if(cell[0] < -(Core.Map.RoomSizeX / 2) || cell[0] >= (Core.Map.RoomSizeX / 2))
 		{
 			return false;
 		}
 
-		if(tile[2] <= -(Core.Map.RoomSizeZ / 2) || tile[2] > (Core.Map.RoomSizeZ / 2))
+		if(cell[2] <= -(Core.Map.RoomSizeZ / 2) || cell[2] > (Core.Map.RoomSizeZ / 2))
 		{
 			return false;
 		}
@@ -251,21 +259,27 @@ Core =
 				// Draw custom wall(s)?
 				if(cell_id in Core.Map.Walls)
 				{
+					Engine.Gfx.EnableBackFaceCulling(true);
 					var wall_entry = Core.Map.Walls[cell_id];
 					for (var wall in wall_entry)
 					{
 						// Setup wall material (tiling uvs to match height)
+						var wall = parseInt(wall);
+						var single_sided = Core.IsWallSingleSided(cell, wall);
+						Engine.Log("single_sided = " + single_sided);
 						var wall_material_name = wall_entry[wall];
 						var wall_material = Core.Resources[wall_material_name];
 						var uv_repeat = [1, Core.Map.WallHeight];
 						wall_material.SetVec2("albedo_map_repeat", uv_repeat);
 						wall_material.SetVec2("normal_map_repeat", uv_repeat);
 						wall_material.SetVec2("specular_map_repeat", uv_repeat);
+						wall_material.SetConfig("single_sided", single_sided);
 						Engine.Gfx.BindMaterial(wall_material);
 
 						// Draw wall
 						Core.RenderWall(cell, wall);
 					}
+					Engine.Gfx.EnableBackFaceCulling(false);
 				}
 			}
 		}
@@ -278,6 +292,44 @@ Core =
 		{
 			Editor.Render();
 		}
+	},
+
+	GetOppositeCell : function(cell, wall)
+	{
+		switch(wall)
+		{
+			case Core.WALL_FLAG_BACK:
+				return [ cell[0], cell[1], cell[2] -1 ];
+			case Core.WALL_FLAG_RIGHT:
+				return [ cell[0] + 1, cell[1], cell[2] ];
+			case Core.WALL_FLAG_FRONT:
+				return [ cell[0], cell[1], cell[2] + 1];
+			case Core.WALL_FLAG_LEFT:
+				return [ cell[0] - 1, cell[1], cell[2] ];
+		};
+	},
+
+	GetOppositeWall : function(wall)
+	{
+		switch(wall)
+		{
+			case Core.WALL_FLAG_BACK:
+				return Core.WALL_FLAG_FRONT;
+			case Core.WALL_FLAG_RIGHT:
+				return Core.WALL_FLAG_LEFT;
+			case Core.WALL_FLAG_FRONT:
+				return Core.WALL_FLAG_BACK;
+			case Core.WALL_FLAG_LEFT:
+				return Core.WALL_FLAG_RIGHT;
+		};
+	},
+
+	IsWallSingleSided : function(cell, wall)
+	{
+		var opposite_cell = Core.GetOppositeCell(cell, wall);
+		var opposite_cell_id = Core.GetCellId(opposite_cell);
+		var opposite_wall = Core.GetOppositeWall(wall);
+		return Engine.Util.IsDefined(Core.Map.Walls[opposite_cell_id]) && Engine.Util.IsDefined(Core.Map.Walls[opposite_cell_id][opposite_wall]);
 	},
 
 	RenderWall : function(cell, sides)

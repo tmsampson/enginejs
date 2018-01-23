@@ -15,13 +15,13 @@ Editor.Mode_Walls = function()
 
 	this.Update = function()
 	{
-		if(Editor.SelectedTile != null)
+		if(Editor.SelectedCell != null)
 		{
 			// Update debug text
-			Editor.SubText.Set(Editor.SelectedTile);
+			Editor.SubText.Set(Editor.SelectedCell);
 
 			// Calculate cell pos (0..1 in each axis)
-			var cell_pos = Core.WorldToCellPos(Editor.SelectedTileHitPos);
+			var cell_pos = Core.WorldToCellPos(Editor.SelectedCellHitPos);
 			if(cell_pos[0] < 0.3)
 			{
 				this.SelectedWall = Core.WALL_FLAG_LEFT;
@@ -81,13 +81,13 @@ Editor.Mode_Walls = function()
 	this.ToggleSelectedWall = function(direction)
 	{
 		// Must have a selected tile
-		if(Editor.SelectedTile == null || this.SelectedWall < 0)
+		if(Editor.SelectedCell == null || this.SelectedWall < 0)
 		{
 			return;
 		}
 
 		// Toggle wall (first slot always reserved for default tile which is not stored)
-		var cell_id = Core.GetCellId(Editor.SelectedTile);
+		var cell_id = Core.GetCellId(Editor.SelectedCell);
 		if(Core.Map.Walls[cell_id] == null && Core.Map.WallMaterials.length > 0)
 		{
 			// Create new entry for this cell
@@ -119,7 +119,7 @@ Editor.Mode_Walls = function()
 	this.DeleteSelectedWall = function()
 	{
 		// Does an entry for this cell exist?
-		var cell_id = Core.GetCellId(Editor.SelectedTile);
+		var cell_id = Core.GetCellId(Editor.SelectedCell);
 		if(!Engine.Util.IsDefined(Core.Map.Walls[cell_id]))
 		{
 			return;
@@ -137,7 +137,7 @@ Editor.Mode_Walls = function()
 
 	this.Render = function()
 	{
-		if(Editor.SelectedTile == null)
+		if(Editor.SelectedCell == null)
 		{
 			Editor.SubText.Set("");
 			return;
@@ -147,7 +147,7 @@ Editor.Mode_Walls = function()
 		var depth_was_enabled = Engine.Gfx.IsDepthTestEnabled();
 
 		// Calculate selected tile
-		var render_pos = Engine.Vec3.MultiplyScalar(Editor.SelectedTile, Core.Map.FloorTileSize);
+		var render_pos = Engine.Vec3.MultiplyScalar(Editor.SelectedCell, Core.Map.FloorTileSize);
 		render_pos[1] += Constants.ZFightOffset; // Prevent z-fighting with ground
 
 		// Render selected tile
