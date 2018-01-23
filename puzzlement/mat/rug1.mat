@@ -1,0 +1,18 @@
+{
+	"version"        : 1.0,
+	"name"           : "Rug #1",
+	"type"           : "standard",
+	"config"         :
+	{
+		"lighting_enabled"        : false,
+		"specular_enabled"        : false,
+		"fresnel_enabled"         : false
+	},
+	"properties"     :
+	{
+		"sampler2D"  :
+		{
+			"albedo_map"          : { "file": "img/rug1_a.jpg" }
+		}
+	}
+}
