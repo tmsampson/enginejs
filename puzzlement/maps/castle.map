@@ -130,11 +130,15 @@
         "-3,0,-1": {
             "1": "mat_cobbles"
         },
-        "-3,0,-2": {},
+        "-3,0,-2": {
+            "2": "mat_cobbles"
+        },
         "-2,0,-3": {
             "8": "mat_wallpaper1"
         },
-        "-3,0,-4": {},
+        "-3,0,-4": {
+            "2": "mat_cobbles"
+        },
         "-2,0,-4": {
             "1": "mat_wallpaper1",
             "8": "mat_wallpaper1"
@@ -150,7 +154,8 @@
             "2": "mat_wallpaper1"
         },
         "2,0,-4": {
-            "1": "mat_cobbles"
+            "1": "mat_cobbles",
+            "8": "mat_cobbles"
         },
         "3,0,-4": {
             "1": "mat_cobbles"
@@ -159,7 +164,9 @@
             "1": "mat_cobbles",
             "2": "mat_cobbles"
         },
-        "2,0,-3": {},
+        "2,0,-3": {
+            "8": "mat_cobbles"
+        },
         "1,0,-2": {
             "2": "mat_wallpaper1",
             "4": "mat_cobbles"
@@ -206,9 +213,26 @@
         "0,0,-2": {
             "4": "mat_cobbles"
         },
-        "0,0,-5": {},
+        "0,0,-5": {
+            "4": "mat_cobbles"
+        },
         "1,0,-3": {
             "2": "mat_wallpaper1"
+        },
+        "2,0,-2": {
+            "8": "mat_cobbles"
+        },
+        "-3,0,-3": {
+            "2": "mat_cobbles"
+        },
+        "-2,0,-5": {
+            "4": "mat_cobbles"
+        },
+        "-1,0,-5": {
+            "4": "mat_cobbles"
+        },
+        "1,0,-5": {
+            "4": "mat_cobbles"
         }
     }
 }
