@@ -1,0 +1,102 @@
+{
+    "Name": "walls",
+    "SkyColour": [
+        0.5,
+        0.5,
+        0.2
+    ],
+    "Sun": {
+        "direction": [
+            0,
+            -1,
+            0
+        ],
+        "ambient": [
+            0.4,
+            0.4,
+            0.4
+        ],
+        "colour": [
+            0.4,
+            0.4,
+            0.4
+        ]
+    },
+    "RoomSizeX": 16,
+    "RoomSizeZ": 16,
+    "FloorTileSize": 1,
+    "WallHeight": 1.5,
+    "FloorTileMaterials": [
+        "mat_stone",
+        "mat_wood",
+        "mat_wool"
+    ],
+    "FloorTiles": {
+        "0,0,2": "mat_wood",
+        "1,0,2": "mat_wood",
+        "2,0,2": "mat_wood",
+        "3,0,3": "mat_wood",
+        "3,0,2": "mat_wood",
+        "3,0,1": "mat_wood",
+        "2,0,1": "mat_wood",
+        "1,0,1": "mat_wood",
+        "0,0,1": "mat_wood",
+        "0,0,0": "mat_wood",
+        "1,0,0": "mat_wood",
+        "0,0,-1": "mat_wood",
+        "2,0,-1": "mat_wood",
+        "2,0,0": "mat_wood",
+        "3,0,0": "mat_wood"
+    },
+    "WallMaterials": [
+        "mat_cobbles"
+    ],
+    "Walls": {
+        "0,0,-1": {
+            "1": "mat_cobbles",
+            "2": "mat_cobbles",
+            "8": "mat_cobbles"
+        },
+        "1,0,-1": {
+            "4": "mat_cobbles"
+        },
+        "2,0,-1": {
+            "1": "mat_cobbles",
+            "2": "mat_cobbles",
+            "8": "mat_cobbles"
+        },
+        "3,0,-1": {
+            "4": "mat_cobbles"
+        },
+        "0,0,0": {
+            "8": "mat_cobbles"
+        },
+        "0,0,1": {
+            "8": "mat_cobbles"
+        },
+        "3,0,0": {
+            "2": "mat_cobbles"
+        },
+        "3,0,1": {
+            "2": "mat_cobbles"
+        },
+        "3,0,2": {
+            "2": "mat_cobbles"
+        },
+        "3,0,3": {
+            "2": "mat_cobbles",
+            "4": "mat_cobbles",
+            "8": "mat_cobbles"
+        },
+        "2,0,2": {
+            "4": "mat_cobbles"
+        },
+        "1,0,2": {
+            "4": "mat_cobbles"
+        },
+        "0,0,2": {
+            "4": "mat_cobbles",
+            "8": "mat_cobbles"
+        }
+    }
+}
