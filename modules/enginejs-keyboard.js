@@ -5,8 +5,9 @@
 Engine.KeyboardKeyCodeMap =
 {
 	// Common
-	"left" : 37, "right" : 39, "up"    : 38, "down"  : 40,
-	"ctrl" : 17, "alt"   : 18, "shift" : 16, "space" : 32,
+	"left"   : 37, "right" : 39, "up"    : 38, "down"  : 40,
+	"ctrl"   : 17, "alt"   : 18, "shift" : 16, "space" : 32,
+	"delete" : 46,
 
 	// Function keys
 	"f9" : 120, "f10" : 121,
