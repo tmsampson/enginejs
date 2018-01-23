@@ -21,7 +21,7 @@
 		},
 		"vec4"       :
 		{
-			"specular_colour"     : [1, 1, 1, 1]
+			"specular_colour"     : [0.5, 0.5, 0.5, 0.5]
 		}
 	}
 }
