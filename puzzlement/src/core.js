@@ -55,8 +55,10 @@ Core =
 		FloorTiles				: { },
 		WallMaterials :
 		[
-			"mat_cobbles"
+			"mat_cobbles",
+			"mat_wood"
 		],
+		Walls 					: { }
 	},
 
 	Init : function()
@@ -181,11 +183,23 @@ Core =
 		return Core.EditorEnabled? Editor.GetDebugFloorTileMat() : Core.Resources[Core.Map.FloorTileMaterials[0]];
 	},
 
-	GetMapMaterialIndexFromName : function(material_name)
+	GetFloorTileMaterialIndexFromName : function(material_name)
 	{
 		for(var i = 0; i < Core.Map.FloorTileMaterials.length; ++i)
 		{
 			if(Core.Map.FloorTileMaterials[i] == material_name)
+			{
+				return i;
+			}
+		}
+		return -1;
+	},
+
+	GetWallMaterialIndexFromName : function(material_name)
+	{
+		for(var i = 0; i < Core.Map.WallMaterials.length; ++i)
+		{
+			if(Core.Map.WallMaterials[i] == material_name)
 			{
 				return i;
 			}
@@ -215,13 +229,16 @@ Core =
 			}
 		}
 
-		// Draw custom tiles
+		// Draw custom elements
 		var default_tile_material = Core.GetDefaultFloorTileMaterial();
 		for(var x = -Core.Map.RoomSizeX / 2; x < Core.Map.RoomSizeX / 2; ++x)
 		{
 			for(var z = -Core.Map.RoomSizeZ / 2; z < Core.Map.RoomSizeZ / 2; ++z)
 			{
-				var cell_id = Core.GetCellId([x, 0, z + 1]);
+				var cell = [x, 0, z + 1];
+				var cell_id = Core.GetCellId(cell);
+
+				// Draw custom tile?
 				if(cell_id in Core.Map.FloorTiles)
 				{
 					var material_name = Core.Map.FloorTiles[cell_id];
@@ -230,21 +247,28 @@ Core =
 					mat4.scale(Core.ScratchMatrix, Core.ScratchMatrix, [Core.Map.FloorTileSize, 0, Core.Map.FloorTileSize]);
 					Engine.Gfx.DrawModel(Core.FloorTileModel, Core.ScratchMatrix, false, false);
 				}
+
+				// Draw custom wall(s)?
+				if(cell_id in Core.Map.Walls)
+				{
+					var wall_entry = Core.Map.Walls[cell_id];
+					for (var wall in wall_entry)
+					{
+						// Setup wall material (tiling uvs to match height)
+						var wall_material_name = wall_entry[wall];
+						var wall_material = Core.Resources[wall_material_name];
+						var uv_repeat = [1, Core.Map.WallHeight];
+						wall_material.SetVec2("albedo_map_repeat", uv_repeat);
+						wall_material.SetVec2("normal_map_repeat", uv_repeat);
+						wall_material.SetVec2("specular_map_repeat", uv_repeat);
+						Engine.Gfx.BindMaterial(wall_material);
+
+						// Draw wall
+						Core.RenderWall(cell, wall);
+					}
+				}
 			}
 		}
-
-		// Setup wall material (tiling uvs to match height)
-		var wall_material = Core.Resources["mat_cobbles"];
-		var uv_repeat = [1, Core.Map.WallHeight];
-		wall_material.SetVec2("albedo_map_repeat", uv_repeat);
-		wall_material.SetVec2("normal_map_repeat", uv_repeat);
-		wall_material.SetVec2("specular_map_repeat", uv_repeat);
-		Engine.Gfx.BindMaterial(Core.Resources["mat_cobbles"]);
-
-		// Draw walls
-		Core.RenderWall([0, 0, 0], Core.WALL_FLAG_BACK);
-		Core.RenderWall([-1, 0, 0], Core.WALL_FLAG_BACK | Core.WALL_FLAG_LEFT);
-		Core.RenderWall([1, 0, 0], Core.WALL_FLAG_BACK | Core.WALL_FLAG_RIGHT);
 
 		// Draw sky box?
 		Engine.Gfx.DrawSkybox(100, null);

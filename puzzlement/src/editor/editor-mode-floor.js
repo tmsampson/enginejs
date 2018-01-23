@@ -103,7 +103,7 @@ Editor.Mode_Floor = function()
 		{
 			// Find next tile material..
 			var current_material_name = Core.Map.FloorTiles[cell_id];
-			var current_material_index = Core.GetMapMaterialIndexFromName(current_material_name);
+			var current_material_index = Core.GetFloorTileMaterialIndexFromName(current_material_name);
 			if(current_material_index != -1)
 			{
 				var next_material_index = (current_material_index + direction) % Core.Map.FloorTileMaterials.length;
