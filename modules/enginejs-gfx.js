@@ -441,7 +441,7 @@ Engine.Gfx =
 		img_object.src = descriptor.file;
 	},
 
-	BindTexture : function(texture, idx, sampler_name)
+	BindTexture : function(texture, idx, sampler_name, ignore_errors)
 	{
 		// We support binding by our texture (wrapper) object or raw WebGL texture
 		var tx_resource = texture.hasOwnProperty("resource")? texture.resource :
@@ -453,7 +453,7 @@ Engine.Gfx =
 		// Bind texture
 		Engine.GL.activeTexture(Engine.GL.TEXTURE0 + idx);
 		Engine.GL.bindTexture(Engine.GL.TEXTURE_2D, tx_resource);
-		this.SetShaderProperty(sampler_name, idx, Engine.Gfx.SP_SAMPLER);
+		this.SetShaderProperty(sampler_name, idx, Engine.Gfx.SP_SAMPLER, ignore_errors);
 	},
 
 	BindCubeMap : function(cube_map, idx, sampler_name)
@@ -608,13 +608,6 @@ Engine.Gfx =
 		this.directional_light = directional_light;
 	},
 
-	SetShadowParams : function(shadow_map_rt, shadow_map_type, shadow_map_mtx)
-	{
-		this.shadow_map_rt = shadow_map_rt;
-		this.shadow_map_type = shadow_map_type;
-		this.shadow_map_mtx = shadow_map_mtx;
-	},
-
 	BindMaterial : function(material, use_shadows)
 	{
 		material.Bind(this.directional_light, use_shadows);
@@ -724,6 +717,68 @@ Engine.Gfx =
 	},
 
 	// **********************************************
+	// Shadow mapping functionality
+	// **********************************************
+	InitShadowMapping : function(resolution, mode)
+	{
+		// Set mode
+		this.shadow_map_mode = mode;
+
+		// Create shadow matrices?
+		if(this.shadow_map_mtx_view == null) { this.shadow_map_mtx_view = mat4.create(); }
+		if(this.shadow_map_mtx_proj == null) { this.shadow_map_mtx_proj = mat4.create(); }
+		if(this.shadow_map_mtx_view_proj == null) { this.shadow_map_mtx_view_proj = mat4.create(); }
+		if(this.shadow_map_preview_mtx == null) { this.shadow_map_preview_mtx = mat4.create(); }
+
+		// Create render target
+		if(!Engine.Math.IsPowerOfTwo(resolution))
+		{
+			Engine.LogError("Could not create shadow map, specified resolution must be power-of-two)");
+		}
+		this.shadow_map_rt = Engine.Gfx.CreateRenderTarget("Shadow", resolution, resolution, true);
+
+		// Create shadow map preview cam
+		this.shadow_map_preview_cam = new Engine.Camera.Orthographic();
+
+		// Create shadow map preview shader program
+		this.shadow_map_preview_program = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_general_transformed_uv_flipped"],
+		                                                                 Engine.Resources["fs_unlit_textured"]);
+	},
+
+	BeginShadowMappingPass : function()
+	{
+		// Bind and clear shadow mapping render-target
+		Engine.Gfx.BindRenderTarget(this.shadow_map_rt);
+		Engine.Gfx.Clear(Engine.Colour.Red);
+
+		// Setup matrices for shadow rendering
+		mat4.lookAt(this.shadow_map_mtx_view, this.directional_light.position, [0, 0, 0], [0, 0, 1]);
+		mat4.ortho(this.shadow_map_mtx_proj,-10, 10, -10, 10, -5, 40);
+		mat4.multiply(this.shadow_map_mtx_view_proj, this.shadow_map_mtx_proj, this.shadow_map_mtx_view);
+
+		// Bind shadow rendering shader
+		Engine.Gfx.BindMaterial(Engine.Resources["mat_shadow_mapping_render"], false);
+
+		// Set shadow rendering matrices
+		this.SetShaderProperty("u_trans_view", this.shadow_map_mtx_view, Engine.Gfx.SP_MATRIX4);
+		this.SetShaderProperty("u_trans_proj", this.shadow_map_mtx_proj, Engine.Gfx.SP_MATRIX4);
+
+		// Bind viewport for shadow rendering
+		Engine.GL.viewport(0, 0, this.shadow_map_rt.size[0], this.shadow_map_rt.size[1]);
+	},
+
+	EndShadowMappingPass : function()
+	{
+		// Unbind shadow mapping render-target
+		Engine.Gfx.UnBindRenderTarget(this.shadow_map_rt);
+	},
+
+	EnableShadowMappingPreview : function(enable)
+	{
+		this.shadow_map_preview_enabled = enable;
+	},
+
+	// **********************************************
 	// Model functionality
 	// **********************************************
 	DrawModel : function(model, world_mtx, bind_materials, bind_shadow_map, submit_geometry)
@@ -797,11 +852,11 @@ Engine.Gfx =
 			if(bind_shadow_map && Engine.Gfx.shadow_map_rt != null)
 			{
 				// Bind shadow map texture (depth only)
-				Engine.Gfx.BindTexture(Engine.Gfx.shadow_map_rt.depth_texture, 3, "u_shadow_map");
+				Engine.Gfx.BindTexture(Engine.Gfx.shadow_map_rt.depth_texture, 3, "u_shadow_map", true);
 
 				// Bind shadow map uniforms
-				Engine.Gfx.SetShaderProperty("u_shadow_type", Engine.Gfx.shadow_map_type, Engine.Gfx.SP_INT)
-				Engine.Gfx.SetShaderProperty("u_trans_shadow", Engine.Gfx.shadow_map_mtx, Engine.Gfx.SP_MATRIX4);
+				Engine.Gfx.SetShaderProperty("u_shadow_type", Engine.Gfx.shadow_map_mode, Engine.Gfx.SP_INT, true)
+				Engine.Gfx.SetShaderProperty("u_trans_shadow", Engine.Gfx.shadow_map_mtx_view_proj, Engine.Gfx.SP_MATRIX4, true);
 			}
 
 			// Submit geometry for drawing?
@@ -982,6 +1037,22 @@ Engine.Gfx =
 		                                                            Engine.Resources["fs_skybox"]);
 	},
 
+	RenderOverlay : function()
+	{
+		// Render shadow map preview?
+		if(this.shadow_map_preview_enabled && this.shadow_map_rt != null)
+		{
+			this.shadow_map_preview_cam.Update();
+			Engine.Gfx.BindCamera(this.shadow_map_preview_cam);
+			Engine.Gfx.BindShaderProgram(this.shadow_map_preview_program);
+			mat4.translate(this.shadow_map_preview_mtx, Engine.Math.IdentityMatrix, [ Engine.Canvas.GetWidth() - this.shadow_map_preview_size[0] - this.shadow_map_preview_padding[0], Engine.Canvas.GetHeight() - this.shadow_map_preview_size[1] - this.shadow_map_preview_padding[1], 0]);
+			mat4.scale(this.shadow_map_preview_mtx, this.shadow_map_preview_mtx, [this.shadow_map_preview_size[0], this.shadow_map_preview_size[1], 0.0]);
+			Engine.Gfx.SetShaderProperty("u_trans_world", this.shadow_map_preview_mtx, Engine.Gfx.SP_MATRIX4);
+			Engine.Gfx.BindTexture(this.shadow_map_rt.depth_texture, 0);
+			Engine.Gfx.DrawQuad();
+		}
+	},
+
 	// **********************************************
 	// Properties
 	// **********************************************
@@ -1000,11 +1071,23 @@ Engine.Gfx =
 	skybox_shader_program : null, // Compiled during PreGameLoopInit
 
 	// **********************************************
-	// Shadow stuff (WIP)
+	// Shadow stuff
 	// **********************************************
-	shadow_map_rt       : null,
-	shadow_map_type     : 0,
-	shadow_map_mtx      : null,
+	shadow_map_rt               : null,
+	shadow_map_mode             : 0,
+	shadow_map_mtx_view         : null,
+	shadow_map_mtx_proj         : null,
+	shadow_map_mtx_view_proj    : null,
+	shadow_map_enable_preview   : false,
+
+	// ====================================================================================================================================
+	// Shadow preview
+	shadow_map_preview_enabled  : false,
+	shadow_map_preview_size     : [100, 100],
+	shadow_map_preview_padding  : [10, 10],
+	shadow_map_preview_mtx      : null,
+	shadow_map_preview_cam      : null,
+	shadow_map_preview_program  : null,
 
 	// **********************************************
 	// Look up tables
