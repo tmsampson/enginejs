@@ -1,0 +1,8 @@
+{
+	"version"        : 1.0,
+	"name"           : "Shadow",
+	"type"           : "custom",
+	"shader"         : "enginejs/resources/shaders/3d/shadow-mapping-render.fs",
+	"shader-defines" : "",
+	"properties"     : { }
+}
