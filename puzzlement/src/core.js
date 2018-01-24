@@ -42,9 +42,13 @@ Core =
 		SkyColour				: [0.5, 0.5, 0.2],
 		Sun :
 		{
-			direction			: [ 0, -1, 0 ],
-			ambient				: [ 0.4, 0.4, 0.4 ],
-			colour				: [ 0.4, 0.4, 0.4 ],
+			position   : [0, 20, 0],
+			angle      : 45,	// -90 --> 90 arc
+			direction  : [ 0, -1, 0 ],
+			ambient    : [ 0.6, 0.6, 0.6 ],
+			colour     : [ 0.4, 0.4, 0.4 ],
+			arc_radius : [30, 15],
+			arc_lift   : 20
 		},
 		RoomSizeX				: 16,
 		RoomSizeZ				: 16,
@@ -75,6 +79,13 @@ Core =
 		// Misc
 		Core.ScratchMatrix = mat4.create();
 		Engine.Device.Maximise();
+
+		// ====================================================================================================================================
+		// Shadow config
+		var shadow_mode = 2;
+		var shadow_resolution = 1024;
+		Engine.Gfx.InitShadowMapping(shadow_resolution, shadow_mode);
+		Engine.Gfx.EnableShadowMappingPreview(true);
 
 		// ====================================================================================================================================
 		// Load specific map?
@@ -113,6 +124,28 @@ Core =
 		// Clear
 		Engine.Gfx.Clear(Core.Map.SkyColour);
 		Engine.Gfx.SetDepthTestMode(Engine.GL.LESS, true);
+
+		// ***************************************************************************
+		// ***************************************************************************
+		// ***************************************************************************
+		// ***************************************************************************
+		// Update sun
+		Core.Map.Sun.angle -= Engine.Mouse.GetWheelDelta() / 50;
+		Core.Map.Sun.angle = Engine.Math.Clamp(Core.Map.Sun.angle, -90, 90);
+
+		// Update light position
+		Core.Map.Sun.position[0] = Math.sin(Engine.Math.DegToRad(Core.Map.Sun.angle)) * Core.Map.Sun.arc_radius[0];
+		Core.Map.Sun.position[1] = Core.Map.Sun.arc_lift + Math.cos(Engine.Math.DegToRad(Core.Map.Sun.angle)) * Core.Map.Sun.arc_radius[1];
+		Core.Map.Sun.position[2] = 8;
+
+		// Update light direction
+		var len = Math.sqrt((Core.Map.Sun.position[0] * Core.Map.Sun.position[0]) + (Core.Map.Sun.position[1]  * Core.Map.Sun.position[1]));
+		Core.Map.Sun.direction = [ -Core.Map.Sun.position[0] / len, -Core.Map.Sun.position[1] / len, 0 ];
+		Engine.Gfx.SetDirectionalLight(Core.Map.Sun);
+		// ***************************************************************************
+		// ***************************************************************************
+		// ***************************************************************************
+		// ***************************************************************************
 
 		// Update camera
 		Core.Camera.Update();
@@ -217,12 +250,36 @@ Core =
 
 	Render : function()
 	{
-		// Bind camera
+		// Shadow pass
+		Engine.Gfx.BeginShadowMappingPass();
+		for(var x = -Core.Map.RoomSizeX / 2; x < Core.Map.RoomSizeX / 2; ++x)
+		{
+			for(var z = -Core.Map.RoomSizeZ / 2; z < Core.Map.RoomSizeZ / 2; ++z)
+			{
+				var cell = [x, 0, z + 1];
+				var cell_id = Core.GetCellId(cell);
+
+				// Draw custom wall(s)?
+				if(cell_id in Core.Map.Walls)
+				{
+					var wall_entry = Core.Map.Walls[cell_id];
+					for (var wall in wall_entry)
+					{
+						// Draw wall to shadow map
+						var wall = parseInt(wall);
+						Core.RenderWall(cell, wall);
+					}
+				}
+			}
+		}
+		Engine.Gfx.EndShadowMappingPass();
+
+		// Bind main camera
 		Engine.Gfx.BindCamera(Core.Camera);
 
 		// Draw default floor
 		var default_tile_material = Core.GetDefaultFloorTileMaterial();
-		Engine.Gfx.BindMaterial(default_tile_material);
+		Engine.Gfx.BindMaterial(default_tile_material, true);
 		for(var x = -Core.Map.RoomSizeX / 2; x < Core.Map.RoomSizeX / 2; ++x)
 		{
 			for(var z = -Core.Map.RoomSizeZ / 2; z < Core.Map.RoomSizeZ / 2; ++z)
@@ -232,7 +289,7 @@ Core =
 				{
 					mat4.translate(Core.ScratchMatrix, Engine.Math.IdentityMatrix, [x * Core.Map.FloorTileSize, 0, (z + 1) * Core.Map.FloorTileSize]);
 					mat4.scale(Core.ScratchMatrix, Core.ScratchMatrix, [Core.Map.FloorTileSize, 0, Core.Map.FloorTileSize]);
-					Engine.Gfx.DrawModel(Core.FloorTileModel, Core.ScratchMatrix, false, false);
+					Engine.Gfx.DrawModel(Core.FloorTileModel, Core.ScratchMatrix, false, true);
 				}
 			}
 		}
@@ -250,10 +307,10 @@ Core =
 				if(cell_id in Core.Map.FloorTiles)
 				{
 					var material_name = Core.Map.FloorTiles[cell_id];
-					Engine.Gfx.BindMaterial(Core.Resources[material_name]);
+					Engine.Gfx.BindMaterial(Core.Resources[material_name], true);
 					mat4.translate(Core.ScratchMatrix, Engine.Math.IdentityMatrix, [x * Core.Map.FloorTileSize, 0, (z + 1) * Core.Map.FloorTileSize]);
 					mat4.scale(Core.ScratchMatrix, Core.ScratchMatrix, [Core.Map.FloorTileSize, 0, Core.Map.FloorTileSize]);
-					Engine.Gfx.DrawModel(Core.FloorTileModel, Core.ScratchMatrix, false, false);
+					Engine.Gfx.DrawModel(Core.FloorTileModel, Core.ScratchMatrix, false, true);
 				}
 
 				// Draw custom wall(s)?
@@ -266,7 +323,6 @@ Core =
 						// Setup wall material (tiling uvs to match height)
 						var wall = parseInt(wall);
 						var single_sided = Core.IsWallSingleSided(cell, wall);
-						Engine.Log("single_sided = " + single_sided);
 						var wall_material_name = wall_entry[wall];
 						var wall_material = Core.Resources[wall_material_name];
 						var uv_repeat = [1, Core.Map.WallHeight];
@@ -274,7 +330,7 @@ Core =
 						wall_material.SetVec2("normal_map_repeat", uv_repeat);
 						wall_material.SetVec2("specular_map_repeat", uv_repeat);
 						wall_material.SetConfig("single_sided", single_sided);
-						Engine.Gfx.BindMaterial(wall_material);
+						Engine.Gfx.BindMaterial(wall_material, true);
 
 						// Draw wall
 						Core.RenderWall(cell, wall);
@@ -332,7 +388,7 @@ Core =
 		return Engine.Util.IsDefined(Core.Map.Walls[opposite_cell_id]) && Engine.Util.IsDefined(Core.Map.Walls[opposite_cell_id][opposite_wall]);
 	},
 
-	RenderWall : function(cell, sides)
+	RenderWall : function(cell, sides, is_shadow_pass)
 	{
 		var cell_centre = Core.CellToWorld(cell);
 		cell_centre[0] += (Core.Map.FloorTileSize * 0.5);
