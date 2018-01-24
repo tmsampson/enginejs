@@ -339,6 +339,10 @@ var Engine =
 			// Debug draw
 			Engine.Debug.Render();
 
+			// Graphics overlay
+			// Note: This is for things like shadow map preview etc
+			Engine.Gfx.RenderOverlay();
+
 			// Kick touch input
 			Engine.Touch.Update();
 			Engine.Gfx.first_frame = false;

@@ -25,9 +25,7 @@
 			mat_wood          : { file : "mat/wood.mat"},
 			mat_snooker_ball  : { file : "mat/snooker-ball.mat"},
 			mat_carpet        : { file : "mat/carpet.mat"},
-
 			mat_floor         : { file : "mat/floor.mat"},
-			mat_shadow        : { file : "mat/shadow.mat"},
 		};
 
 		$(document).ready(function()
@@ -46,16 +44,11 @@
 				cam.AttachHelper(new Engine.Camera.Helper.Roam({ forward : [0, 0, 1] }));
 
 				// ====================================================================================================================================
-				// Shadows
-				var shadow_type = 2;
-				var shadow_rt = Engine.Gfx.CreateRenderTarget("Shadow", 1024, 1024, true);
-				var shadow_preview_enabled = true;
-				var shadow_cam = new Engine.Camera.Orthographic({ size : [1024, 1024] });
-				var shadow_preview_size = [100, 100];
-				var shadow_preview_padding = [10, 10];
-				var shadow_preview_cam = new Engine.Camera.Orthographic();
-				var shadow_preview_program  = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_general_transformed_uv_flipped"],
-				                              Engine.Resources["fs_unlit_textured"]);
+				// Shadow config
+				var shadow_mode = 2;
+				var shadow_resolution = 1024;
+				Engine.Gfx.InitShadowMapping(shadow_resolution, shadow_mode);
+				Engine.Gfx.EnableShadowMappingPreview(true);
 
 				// ====================================================================================================================================
 				// Models
@@ -155,7 +148,7 @@
 					Engine.Debug.DrawLine3D(cam, sun.position, [0, 0, 0], Engine.Colour.Orange, 1);
 				};
 
-				var DrawObjects = function(override_material)
+				var DrawObjects = function(is_shadow_pass)
 				{
 					var mat_index = 0;
 					for(var i = -5; i <= 5; ++i)
@@ -173,18 +166,16 @@
 
 							// Draw model
 							var model = object_models[model_index];
-							Engine.Gfx.BindMaterial(materials[mat_index++ % materials.length]);
-							if(override_material == null)
+							if(is_shadow_pass)
 							{
-								// Main render pass | Normal draw with shadow sampling enabled
-								Engine.Gfx.SetShadowParams(shadow_rt, shadow_type, shadow_cam.mtx_view_proj);
-								Engine.Gfx.DrawModel(model, mtx_trans, false);
+								// Shadow pass
+								Engine.Gfx.DrawModel(model, mtx_trans, false, false);
 							}
 							else
 							{
-								// Shadow pass | Uses custom shadow material, with shadow sampling disabled
-								Engine.Gfx.BindMaterial(override_material, false);
-								Engine.Gfx.DrawModel(model, mtx_trans, false, false);
+								// Main pass
+								Engine.Gfx.BindMaterial(materials[mat_index++ % materials.length], true);
+								Engine.Gfx.DrawModel(model, mtx_trans, false);
 							}
 						}
 					}
@@ -193,7 +184,7 @@
 				var RenderMainPass = function()
 				{
 					// Clear
-					Engine.Gfx.Clear(Engine.Colour.Black);
+					Engine.Gfx.Clear(Engine.Colour.Blue);
 					Engine.Gfx.SetDepthTestMode(Engine.GL.LESS, true);
 
 					// Update & bind camera
@@ -221,30 +212,16 @@
 					// Draw floor
 					mat4.scale(mtx_trans, Engine.Math.IdentityMatrix, [100, 1, 100]);
 					Engine.Gfx.BindMaterial(resources["mat_floor"], true);
-					Engine.Gfx.SetShadowParams(shadow_rt, shadow_type, shadow_cam.mtx_view_proj);
 					Engine.Gfx.DrawModel(floor_model, mtx_trans, false);
 
-					DrawObjects();
+					DrawObjects(false);
 				};
 
 				var RenderShadowPass = function()
 				{
-					Engine.Gfx.BindRenderTarget(shadow_rt);
-					var lookat = [0, 0, 0];
-					Engine.Gfx.Clear(Engine.Colour.Blue);
-					shadow_cam.Update();
-
-					// fix this manual code
-					mat4.lookAt(shadow_cam.mtx_view, sun.position, lookat, [0, 0, 1]);
-					mat4.ortho(shadow_cam.mtx_proj,-20, 20, -20, 20, -10, 80);
-					mat4.multiply(shadow_cam.mtx_view_proj, shadow_cam.mtx_proj, shadow_cam.mtx_view);
-					mat4.invert(shadow_cam.mtx_view_inverse, shadow_cam.mtx_view);
-
-					Engine.Gfx.BindCamera(shadow_cam);
-
-					DrawObjects(resources["mat_shadow"]);
-
-					Engine.Gfx.UnBindRenderTarget(shadow_rt);
+					Engine.Gfx.BeginShadowMappingPass();
+					DrawObjects(true);
+					Engine.Gfx.EndShadowMappingPass();
 				};
 
 				var on_render = function()
@@ -257,21 +234,7 @@
 
 					if(Engine.Keyboard.IsPressed("l", true))
 					{
-						shadow_type = (shadow_type + 1) % 3;
-					}
-
-					// Shadow map preview?
-					if(Engine.Keyboard.IsPressed("p", true)) { shadow_preview_enabled = !shadow_preview_enabled; }
-					if(shadow_preview_enabled)
-					{
-						shadow_preview_cam.Update();
-						Engine.Gfx.BindCamera(shadow_preview_cam);
-						Engine.Gfx.BindShaderProgram(shadow_preview_program);
-						mat4.translate(mtx_trans, Engine.Math.IdentityMatrix, [ Engine.Canvas.GetWidth() - shadow_preview_size[0] - shadow_preview_padding[0], Engine.Canvas.GetHeight() - shadow_preview_size[1] - shadow_preview_padding[1], 0]);
-						mat4.scale(mtx_trans, mtx_trans, [shadow_preview_size[0], shadow_preview_size[1], 0.0]);
-						Engine.Gfx.SetShaderProperty("u_trans_world", mtx_trans, Engine.Gfx.SP_MATRIX4);
-						Engine.Gfx.BindTexture(shadow_rt.depth_texture, 0);
-						Engine.Gfx.DrawQuad();
+						shadow_mode = (shadow_mode + 1) % 3;
 					}
 				};
 				return on_render;
