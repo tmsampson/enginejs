@@ -25,6 +25,7 @@ Editor =
 		Editor.Modes.push(new Editor.Mode_Scene());
 		Editor.Modes.push(new Editor.Mode_Floor());
 		Editor.Modes.push(new Editor.Mode_Walls());
+		Editor.Modes.push(new Editor.Mode_Lighting());
 
 		// Init modes
 		for(var i = 0; i < Editor.Modes.length; ++i)
@@ -68,15 +69,19 @@ Editor =
 		// Switch modes?
 		if(Engine.Keyboard.WasJustPressed("1"))
 		{
-			Editor.CurrentMode = 0;
+			Editor.CurrentMode = 0; // Scene
 		}
 		else if(Engine.Keyboard.WasJustPressed("2"))
 		{
-			Editor.CurrentMode = 1;
+			Editor.CurrentMode = 1; // Floor
 		}
 		else if(Engine.Keyboard.WasJustPressed("3"))
 		{
-			Editor.CurrentMode = 2;
+			Editor.CurrentMode = 2; // Walls
+		}
+		else if(Engine.Keyboard.WasJustPressed("4"))
+		{
+			Editor.CurrentMode = 3; // Lighting
 		}
 
 		// Update current mode

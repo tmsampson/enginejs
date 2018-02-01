@@ -126,28 +126,6 @@ Core =
 		Engine.Gfx.Clear(Core.Map.SkyColour);
 		Engine.Gfx.SetDepthTestMode(Engine.GL.LESS, true);
 
-		// ***************************************************************************
-		// ***************************************************************************
-		// ***************************************************************************
-		// ***************************************************************************
-		// Update sun
-		Core.Map.Sun.angle -= Engine.Mouse.GetWheelDelta() / 50;
-		Core.Map.Sun.angle = Engine.Math.Clamp(Core.Map.Sun.angle, -90, 90);
-
-		// Update light position
-		Core.Map.Sun.position[0] = Math.sin(Engine.Math.DegToRad(Core.Map.Sun.angle)) * Core.Map.Sun.arc_radius[0];
-		Core.Map.Sun.position[1] = Core.Map.Sun.arc_lift + Math.cos(Engine.Math.DegToRad(Core.Map.Sun.angle)) * Core.Map.Sun.arc_radius[1];
-		Core.Map.Sun.position[2] = 8;
-
-		// Update light direction
-		var len = Math.sqrt((Core.Map.Sun.position[0] * Core.Map.Sun.position[0]) + (Core.Map.Sun.position[1]  * Core.Map.Sun.position[1]));
-		Core.Map.Sun.direction = [ -Core.Map.Sun.position[0] / len, -Core.Map.Sun.position[1] / len, 0 ];
-		Engine.Gfx.SetDirectionalLight(Core.Map.Sun);
-		// ***************************************************************************
-		// ***************************************************************************
-		// ***************************************************************************
-		// ***************************************************************************
-
 		// Switch modes (editor / game)?
 		if(Engine.Keyboard.WasJustPressed("enter"))
 		{
