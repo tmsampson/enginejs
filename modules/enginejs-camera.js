@@ -154,11 +154,19 @@ Engine.Camera =
 		this.far      = 1000;
 		$.extend(this, user_config); // Override defaults
 
+		// Initialise forward / right vectors
+		this.forward  = Engine.Vec3.Normalise(Engine.Vec3.Subtract(this.look_at, this.position));
+		this.right    = Engine.Vec3.CrossProduct(this.forward, this.up);
+
 		this.UpdateMatrices = function()
 		{
 			this.aspect = Engine.Canvas.GetAspectRatio();
 			mat4.lookAt(this.mtx_view, this.position, this.look_at, this.up);
 			mat4.perspective(this.mtx_proj, this.fov, this.aspect, this.near, this.far);
+
+			// Update forward / right vectors
+			this.forward  = Engine.Vec3.Normalise(Engine.Vec3.Subtract(this.look_at, this.position));
+			this.right    = Engine.Vec3.CrossProduct(this.forward, this.up);
 		};
 
 		this.WorldToCanvas = function(world_pos)
@@ -314,7 +322,6 @@ Engine.Camera.Helper =
 			}
 
 			// Update lookat
-			camera.forward = Engine.Vec3.Copy(this.forward);
 			camera.look_at[0] = camera.position[0] + this.forward[0];
 			camera.look_at[1] = camera.position[1] + this.forward[1];
 			camera.look_at[2] = camera.position[2] + this.forward[2];
