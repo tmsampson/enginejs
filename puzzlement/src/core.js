@@ -23,9 +23,11 @@ Core =
 	// Editor
 	EditorEnabled				: false,
 
+	// Player
+	Player						: null,
+
 	// Globals
 	ScratchMatrix				: null,
-	Camera						: null,
 	FloorTileModel				: null,
 	WallTileModel				: null,
 
@@ -85,7 +87,6 @@ Core =
 		var shadow_mode = 2;
 		var shadow_resolution = 1024;
 		Engine.Gfx.InitShadowMapping(shadow_resolution, shadow_mode);
-		Engine.Gfx.EnableShadowMappingPreview(true);
 
 		// ====================================================================================================================================
 		// Load specific map?
@@ -104,9 +105,9 @@ Core =
 		}
 
 		// ====================================================================================================================================
-		// Camera
-		Core.Camera = new Engine.Camera.Perspective({ position: [0, 1, 0] });
-		Core.Camera.AttachHelper(new Engine.Camera.Helper.Roam({ forward : [0, 0, -1], invert_y : true }));
+		// Init player
+		Core.MainPlayer = new Core.Player();
+		Core.MainPlayer.Init();
 
 		// ====================================================================================================================================
 		// Models
@@ -147,14 +148,34 @@ Core =
 		// ***************************************************************************
 		// ***************************************************************************
 
-		// Update camera
-		Core.Camera.Update();
+		// Switch modes (editor / game)?
+		if(Engine.Keyboard.WasJustPressed("enter"))
+		{
+			if(Core.EditorEnabled)
+			{
+				Core.EditorEnabled = false;
+				Editor.OnExit();
+			}
+			else
+			{
+				Core.EditorEnabled = true;
+				Editor.OnEnter();
+			}
+		}
 
-		// Update editor?
+		// Update (editor / game)
 		if(Core.EditorEnabled)
 		{
 			Editor.Update();
 		}
+		else
+		{
+			Core.MainPlayer.Update();
+		}
+
+		// Update camera
+		var active_camera = Core.GetActiveCamera();
+		active_camera.Update();
 
 		// Render game
 		Core.Render();
@@ -166,6 +187,11 @@ Core =
 		{
 			Core.Map = map;
 		});
+	},
+
+	GetActiveCamera()
+	{
+		return Core.EditorEnabled? Editor.Camera : Core.MainPlayer.Camera;
 	},
 
 	IsValidCell : function(cell)
@@ -216,7 +242,7 @@ Core =
 
 	GetPlayerTile : function()
 	{
-		return Core.WorldToCell(Core.Camera.position);
+		return Core.WorldToCell(Core.MainPlayer.Position);
 	},
 
 	GetDefaultFloorTileMaterial : function()
@@ -273,9 +299,10 @@ Core =
 			}
 		}
 		Engine.Gfx.EndShadowMappingPass();
+		Engine.Gfx.EnableShadowMappingPreview(Core.EditorEnabled);
 
-		// Bind main camera
-		Engine.Gfx.BindCamera(Core.Camera);
+		// Bind active camera
+		Engine.Gfx.BindCamera(Core.GetActiveCamera());
 
 		// Draw default floor
 		var default_tile_material = Core.GetDefaultFloorTileMaterial();

@@ -1,5 +1,6 @@
 Editor =
 {
+	Camera					: null,
 	CurrentMode				: 0,
 	Modes					: [],
 	MainText				: null,
@@ -16,6 +17,10 @@ Editor =
 
 	Init : function()
 	{
+		// Init camera
+		Editor.Camera = new Engine.Camera.Perspective({ position: [0, 1, 0], look_at : [0, 1, -1] });
+		Editor.Camera.AttachHelper(new Engine.Camera.Helper.Roam({ forward : [0, 0, -1], invert_y : true }));
+
 		// Setup modes
 		Editor.Modes.push(new Editor.Mode_Scene());
 		Editor.Modes.push(new Editor.Mode_Floor());
@@ -54,7 +59,7 @@ Editor =
 
 		// Update selected tile raycast
 		Editor.SelectedCell = null; // Reset
-		Editor.SelectedCellHitPos = Engine.Intersect.RayPlane(Editor.SelectedCellHitPos, Core.Camera.position, Core.Camera.forward, [0, 1, 0], 0);
+		Editor.SelectedCellHitPos = Engine.Intersect.RayPlane(Editor.SelectedCellHitPos, Editor.Camera.position, Editor.Camera.forward, [0, 1, 0], 0);
 		if(Editor.SelectedCellHitPos != null)
 		{
 			Editor.SelectedCell = Core.WorldToCell(Editor.SelectedCellHitPos);
@@ -99,6 +104,18 @@ Editor =
 				Core.LoadMap(map_name);
 			}
 		}
+	},
+
+	OnEnter : function()
+	{
+		Editor.MainText.Show();
+		Editor.SubText.Show();
+	},
+
+	OnExit : function()
+	{
+		Editor.MainText.Hide();
+		Editor.SubText.Hide();
 	},
 
 	SaveMap : function(map_name)
