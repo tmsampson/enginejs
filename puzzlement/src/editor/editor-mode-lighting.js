@@ -5,9 +5,15 @@ Editor.Mode_Lighting = function()
 
 	this.Init = function()
 	{
+		this.UpdateLight();
 	};
 
 	this.Update = function()
+	{
+		this.UpdateLight();
+	};
+
+	this.UpdateLight = function()
 	{
 		// Update directional light angle
 		Core.Map.Sun.angle -= Engine.Mouse.GetWheelDelta() / 50;
