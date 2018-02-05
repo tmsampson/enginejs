@@ -17,7 +17,7 @@
 		},
 		"float"      :
 		{
-			"specular_shininess"  : 4
+			"specular_shininess"  : 10
 		},
 		"vec4"       :
 		{
