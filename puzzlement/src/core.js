@@ -45,12 +45,9 @@ Core =
 		Sun :
 		{
 			position   : [0, 20, 0],
-			angle      : 45,	// -90 --> 90 arc
-			direction  : [ 0, -1, 0 ],
+			direction  : [0, -1, 0],
 			ambient    : [ 0.6, 0.6, 0.6 ],
 			colour     : [ 0.4, 0.4, 0.4 ],
-			arc_radius : [30, 15],
-			arc_lift   : 20
 		},
 		RoomSizeX				: 16,
 		RoomSizeZ				: 16,
@@ -116,7 +113,6 @@ Core =
 
 		// ====================================================================================================================================
 		// Sun
-		Engine.Gfx.SetDirectionalLight(Core.Map.Sun);
 		return Core.Update;
 	},
 
@@ -254,6 +250,9 @@ Core =
 
 	Render : function()
 	{
+		// Bind light(s)
+		Engine.Gfx.SetDirectionalLight(Core.Map.Sun);
+
 		// Shadow pass
 		Engine.Gfx.BeginShadowMappingPass();
 		for(var x = -Core.Map.RoomSizeX / 2; x < Core.Map.RoomSizeX / 2; ++x)
