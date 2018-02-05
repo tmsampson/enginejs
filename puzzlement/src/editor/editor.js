@@ -1,5 +1,6 @@
 Editor =
 {
+	IsInitialised			: false,
 	Camera					: null,
 	CurrentMode				: 0,
 	Modes					: [],
@@ -51,6 +52,9 @@ Editor =
 			size       : 15,
 			position   : [50, 30]
 		});
+
+		// Done
+		IsInitialised = true;
 	},
 
 	Update : function()
@@ -113,6 +117,12 @@ Editor =
 
 	OnEnter : function()
 	{
+		// Make sure we're initialised
+		if(!this.IsInitialised)
+		{
+			this.Init();
+		}
+
 		Editor.MainText.Show();
 		Editor.SubText.Show();
 	},
