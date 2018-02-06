@@ -86,7 +86,7 @@ Editor.Mode_Walls = function()
 			return;
 		}
 
-		// Toggle wall (first slot always reserved for default tile which is not stored)
+		// Toggle wall
 		var cell_id = Core.GetCellId(Editor.SelectedCell);
 		if(Core.Map.Walls[cell_id] == null && Core.Map.WallMaterials.length > 0)
 		{

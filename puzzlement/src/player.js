@@ -21,6 +21,7 @@ Core.Player = function()
 	this.TimeSpentMoving = 0;
 	this.Camera = null;
 	this.ScratchMatrix = null;
+	this.CollisionRadius = 0.2;
 
 	this.Init = function()
 	{
@@ -31,36 +32,49 @@ Core.Player = function()
 
 	this.ProcessInput = function()
 	{
-		var has_moved = false;
+		var move_attempted = false;
 		var is_running = Engine.Keyboard.IsPressed("shift");
 		var move_speed = is_running? this.RunSpeed : this.WalkSpeed;
+		var movement_delta = [0, 0, 0];
 
 		// Strafe forwards
 		if(Engine.Keyboard.IsPressed("w"))
 		{
-			this.Position = Engine.Vec3.Add(this.Position, Engine.Vec3.MultiplyScalar(this.Forward, move_speed));
-			has_moved = true;
+			movement_delta = Engine.Vec3.MultiplyScalar(this.Forward, move_speed);
+			move_attempted = true;
 		}
 
 		// Strafe backwards
 		if(Engine.Keyboard.IsPressed("s"))
 		{
-			this.Position = Engine.Vec3.Add(this.Position, Engine.Vec3.MultiplyScalar(this.Forward, -move_speed));
-			has_moved = true;
+			movement_delta = Engine.Vec3.MultiplyScalar(this.Forward, -move_speed);
+			move_attempted = true;
 		}
 
 		// Strafe left
 		if(Engine.Keyboard.IsPressed("a"))
 		{
-			this.Position = Engine.Vec3.Add(this.Position, Engine.Vec3.MultiplyScalar(this.Right, -move_speed));
-			has_moved = true;
+			movement_delta = Engine.Vec3.MultiplyScalar(this.Right, -move_speed);
+			move_attempted = true;
 		}
 
 		// Strafe right
 		if(Engine.Keyboard.IsPressed("d"))
 		{
-			this.Position = Engine.Vec3.Add(this.Position, Engine.Vec3.MultiplyScalar(this.Right, move_speed));
-			has_moved = true;
+			movement_delta = Engine.Vec3.MultiplyScalar(this.Right, move_speed);
+			move_attempted = true;
+		}
+
+		// Apply movement?
+		var has_moved = false;
+		if(move_attempted)
+		{
+			var destination = Engine.Vec3.Add(this.Position, movement_delta);
+			if(Collision.PositionIsValid(destination, this.CollisionRadius))
+			{
+				this.Position = destination;
+				has_moved = true;
+			}
 		}
 
 		// Look?
