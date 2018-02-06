@@ -203,7 +203,7 @@ Core =
 
 	CellToWorld : function(cell)
 	{
-		// Maps cell (3 component array) to world space (back left of tile)
+		// Maps cell (3 component array) to world space (front left of tile)
 		return [ cell[0] * Core.Map.FloorTileSize,
 		         0,
 		         cell[2] * Core.Map.FloorTileSize ];
@@ -214,7 +214,7 @@ Core =
 		return cell[0] + "," + cell[1] + "," + cell[2];
 	},
 
-	GetPlayerTile : function()
+	GetPlayerCell : function()
 	{
 		return Core.WorldToCell(Core.MainPlayer.Position);
 	},
@@ -276,7 +276,7 @@ Core =
 			}
 		}
 		Engine.Gfx.EndShadowMappingPass();
-		Engine.Gfx.EnableShadowMappingPreview(Core.EditorEnabled);
+		Engine.Gfx.EnableShadowMappingPreview(Core.EditorEnabled && Editor.CurrentMode == 3);
 
 		// Bind active camera
 		Engine.Gfx.BindCamera(Core.GetActiveCamera());
