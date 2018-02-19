@@ -25,7 +25,7 @@ Core.Player = function()
 	this.TimeSpentMoving = 0;
 	this.Camera = null;
 	this.ScratchMatrix = null;
-	this.CollisionRadius = 0.2;
+	this.CollisionRadius = 0.25;
 
 	this.Init = function()
 	{

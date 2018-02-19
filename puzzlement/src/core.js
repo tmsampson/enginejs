@@ -86,6 +86,10 @@ Core =
 		Engine.Gfx.InitShadowMapping(shadow_resolution, shadow_mode);
 
 		// ====================================================================================================================================
+		// Graphics state
+		Engine.Gfx.EnableBackFaceCulling(true);
+
+		// ====================================================================================================================================
 		// Load specific map?
 		var map_name = Engine.Device.GetQueryString("map");
 		if(map_name)
@@ -320,26 +324,22 @@ Core =
 				// Draw custom wall(s)?
 				if(cell_id in Core.Map.Walls)
 				{
-					Engine.Gfx.EnableBackFaceCulling(true);
 					var wall_entry = Core.Map.Walls[cell_id];
 					for (var wall in wall_entry)
 					{
 						// Setup wall material (tiling uvs to match height)
 						var wall = parseInt(wall);
-						var single_sided = Core.IsWallSingleSided(cell, wall);
 						var wall_material_name = wall_entry[wall];
 						var wall_material = Core.Resources[wall_material_name];
 						var uv_repeat = [1, Core.Map.WallHeight];
 						wall_material.SetVec2("albedo_map_repeat", uv_repeat);
 						wall_material.SetVec2("normal_map_repeat", uv_repeat);
 						wall_material.SetVec2("specular_map_repeat", uv_repeat);
-						wall_material.SetConfig("single_sided", single_sided);
 						Engine.Gfx.BindMaterial(wall_material, true);
 
 						// Draw wall
 						Core.RenderWall(cell, wall);
 					}
-					Engine.Gfx.EnableBackFaceCulling(false);
 				}
 			}
 		}
@@ -384,7 +384,7 @@ Core =
 		};
 	},
 
-	IsWallSingleSided : function(cell, wall)
+	HasOppositeWall : function(cell, wall)
 	{
 		var opposite_cell = Core.GetOppositeCell(cell, wall);
 		var opposite_cell_id = Core.GetCellId(opposite_cell);
