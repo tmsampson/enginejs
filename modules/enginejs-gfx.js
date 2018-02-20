@@ -27,6 +27,7 @@ Engine.Gfx =
 		// Default state
 		Engine.GL.cullFace(Engine.GL.BACK);
 		Engine.GL.enable(Engine.GL.CULL_FACE);
+		Engine.GL.depthFunc(Engine.Gfx.StateTracking["DepthMode"]);
 
 		// Extensions report
 		Engine.Log("[extension] Anisotropic filtering: " + (Engine.Gfx.Extension_Anisotropic_Filtering? "ENABLED" : "DISABLED"));
@@ -339,11 +340,8 @@ Engine.Gfx =
 		{
 			uniform_location = Engine.GL.getUniformLocation(program.resource, constant_name);
 
-			// Cache for later?
-			if(uniform_location != null)
-			{
-				program.uniform_location_cache[constant_name] = uniform_location;
-			}
+			// Cache for later
+			program.uniform_location_cache[constant_name] = uniform_location;
 		}
 
 		// Set the constant
@@ -595,7 +593,7 @@ Engine.Gfx =
 		var previous_state = Engine.Gfx.IsDepthTestEnabled();			// backup state
 		var previous_mode = Engine.Gfx.GetDepthTestMode();				// backup state
 		Engine.Gfx.SetDepthTestMode(Engine.GL.LEQUAL, true);
-		this.DrawModel(Engine.Resources["mdl_skybox"], null, false);
+		this.DrawModel(Engine.Resources["mdl_skybox"], null, false, false);
 		Engine.Gfx.EnableDepthTest(previous_state);						// restore state
 		Engine.Gfx.SetDepthTestMode(previous_mode);						// restore state
 	},
@@ -608,9 +606,14 @@ Engine.Gfx =
 		this.directional_light = directional_light;
 	},
 
+	last_bound_material : null,
 	BindMaterial : function(material, use_shadows)
 	{
-		material.Bind(this.directional_light, use_shadows);
+		if(this.last_bound_material == null || this.last_bound_material != material)
+		{
+			material.Bind(this.directional_light, use_shadows);
+			this.last_bound_material = material;
+		}
 	},
 
 	// **********************************************
@@ -781,6 +784,7 @@ Engine.Gfx =
 	// **********************************************
 	// Model functionality
 	// **********************************************
+	last_bound_model_prim : null,
 	DrawModel : function(model, world_mtx, bind_materials, bind_shadow_map, submit_geometry)
 	{
 		// Possible use cases:
@@ -809,31 +813,38 @@ Engine.Gfx =
 		for(var i = 0; i < prims.length; ++i)
 		{
 			var index_buffer = null;
+			var buffers = prims[i].buffers;
 
 			// Bind vertex buffers
-			var buffers = prims[i].buffers;
-			for(var j = 0; j < buffers.length; ++j)
+			if(this.last_bound_model_prim == null || this.last_bound_model_prim != prims[i])
 			{
-				// Is this an index buffer?
-				if(buffers[j].vbo.buffer_type == Engine.GL.ELEMENT_ARRAY_BUFFER)
+				for(var j = 0; j < buffers.length; ++j)
 				{
-					// Only allow a single index buffer per-prim
-					if(index_buffer)
+					// Is this an index buffer?
+					if(buffers[j].vbo.buffer_type == Engine.GL.ELEMENT_ARRAY_BUFFER)
 					{
-						Engine.LogError("Model '" + model.name + "' primitive: " + i + ", attempting to bind multiple index buffers");
-						return false;
+						// Only allow a single index buffer per-prim
+						if(index_buffer)
+						{
+							Engine.LogError("Model '" + model.name + "' primitive: " + i + ", attempting to bind multiple index buffers");
+							return false;
+						}
+
+						// Always bind index buffers last
+						index_buffer = buffers[j];
+						continue;
 					}
 
-					// Always bind index buffers last
-					index_buffer = buffers[j];
-					continue;
+					this.BindVertexBuffer(buffers[j].vbo);
 				}
 
-				this.BindVertexBuffer(buffers[j].vbo);
+				// Always bind index buffer last
+				if(index_buffer)
+				{
+					this.BindVertexBuffer(index_buffer.vbo);
+				}
+				this.last_bound_model_prim = prims[i];
 			}
-
-			// Always bind index buffer last
-			if(index_buffer) { this.BindVertexBuffer(index_buffer.vbo); }
 
 			// Bind material?
 			if(bind_materials)
@@ -966,6 +977,11 @@ Engine.Gfx =
 		this.SetStateBool(Engine.GL.DEPTH_TEST, new_value);
 	},
 
+	EnableDepthWrite : function(new_value)
+	{
+		Engine.GL.depthMask(new_value);
+	},
+
 	EnableBackFaceCulling : function(new_value)
 	{
 		this.SetStateBool(Engine.GL.CULL_FACE, new_value);
@@ -978,13 +994,22 @@ Engine.Gfx =
 
 	SetDepthTestMode : function(mode, also_enable)
 	{
-		Engine.GL.depthFunc(mode);
-		if(also_enable) { this.EnableDepthTest(true); }
+		// Set depth function (if changed)
+		if(mode != Engine.Gfx.StateTracking["DepthMode"])
+		{
+			Engine.GL.depthFunc(mode);
+		}
+
+		// Also enable depth test?
+		if(also_enable)
+		{
+			this.EnableDepthTest(true);
+		}
 	},
 
 	GetDepthTestMode : function()
 	{
-		return Engine.GL.getParameter(Engine.GL.DEPTH_FUNC);
+		return Engine.Gfx.StateTracking["DepthMode"];
 	},
 
 	// **********************************************
@@ -1146,6 +1171,8 @@ Engine.Gfx =
 Engine.Gfx.StateTracking[Engine.GL.BLEND]      = 0;
 Engine.Gfx.StateTracking[Engine.GL.DEPTH_TEST] = 0;
 Engine.Gfx.StateTracking[Engine.GL.CULL_FACE]  = 0;
+Engine.Gfx.StateTracking[Engine.GL.CULL_FACE]  = 0;
+Engine.Gfx.StateTracking["DepthMode"] = Engine.GL.LESS;
 Engine.Gfx.ResizeViewport();
 
 Engine.Gfx.ShaderPropertySetterFuncFromString =

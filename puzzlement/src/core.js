@@ -82,7 +82,7 @@ Core =
 		// ====================================================================================================================================
 		// Shadow config
 		var shadow_mode = 2;
-		var shadow_resolution = 1024;
+		var shadow_resolution = 512;
 		Engine.Gfx.InitShadowMapping(shadow_resolution, shadow_mode);
 
 		// ====================================================================================================================================
@@ -122,10 +122,6 @@ Core =
 
 	Update : function()
 	{
-		// Clear
-		Engine.Gfx.Clear(Core.Map.SkyColour);
-		Engine.Gfx.SetDepthTestMode(Engine.GL.LESS, true);
-
 		// Switch modes (editor / game)?
 		if(Engine.Keyboard.WasJustPressed("enter"))
 		{
@@ -218,6 +214,12 @@ Core =
 		return cell[0] + "," + cell[1] + "," + cell[2];
 	},
 
+	GetCellFromId : function(cell_id)
+	{
+		var components = cell_id.split(',');
+		return [ parseInt(components[0]), parseInt(components[1]), parseInt(components[2]) ];
+	},
+
 	GetPlayerCell : function()
 	{
 		return Core.WorldToCell(Core.MainPlayer.Position);
@@ -254,6 +256,10 @@ Core =
 
 	Render : function()
 	{
+		// Clear
+		Engine.Gfx.Clear(Core.Map.SkyColour);
+		Engine.Gfx.SetDepthTestMode(Engine.GL.LESS, true);
+
 		// Bind light(s)
 		Engine.Gfx.SetDirectionalLight(Core.Map.Sun);
 
@@ -286,23 +292,20 @@ Core =
 		Engine.Gfx.BindCamera(Core.GetActiveCamera());
 
 		// Draw default floor
-		var default_tile_material = Core.GetDefaultFloorTileMaterial();
-		Engine.Gfx.BindMaterial(default_tile_material, true);
-		for(var x = -Core.Map.RoomSizeX / 2; x < Core.Map.RoomSizeX / 2; ++x)
-		{
-			for(var z = -Core.Map.RoomSizeZ / 2; z < Core.Map.RoomSizeZ / 2; ++z)
-			{
-				var cell_id = Core.GetCellId([x, 0, z + 1]);
-				if(!(cell_id in Core.Map.FloorTiles))
-				{
-					mat4.translate(Core.ScratchMatrix, Engine.Math.IdentityMatrix, [x * Core.Map.FloorTileSize, 0, (z + 1) * Core.Map.FloorTileSize]);
-					mat4.scale(Core.ScratchMatrix, Core.ScratchMatrix, [Core.Map.FloorTileSize, 0, Core.Map.FloorTileSize]);
-					Engine.Gfx.DrawModel(Core.FloorTileModel, Core.ScratchMatrix, false, true);
-				}
-			}
-		}
+		var default_floor_tile_material = Core.GetDefaultFloorTileMaterial();
+		Engine.Gfx.BindMaterial(default_floor_tile_material, true);
+		var default_floor_tile_repeat = [ Core.Map.RoomSizeX, Core.Map.RoomSizeZ ];
+		default_floor_tile_material.SetVec2("albedo_map_repeat", default_floor_tile_repeat);
+		default_floor_tile_material.SetVec2("normal_map_repeat", default_floor_tile_repeat);
+		default_floor_tile_material.SetVec2("specular_map_repeat", default_floor_tile_repeat);
+		var x = -Core.Map.RoomSizeX * 0.5;
+		var z = Core.Map.RoomSizeZ * 0.5;
+		mat4.translate(Core.ScratchMatrix, Engine.Math.IdentityMatrix, [x * Core.Map.FloorTileSize, 0, z * Core.Map.FloorTileSize]);
+		mat4.scale(Core.ScratchMatrix, Core.ScratchMatrix, [Core.Map.RoomSizeX * Core.Map.FloorTileSize, 0, Core.Map.RoomSizeZ * Core.Map.FloorTileSize]);
+		Engine.Gfx.DrawModel(Core.FloorTileModel, Core.ScratchMatrix, false, true);
 
 		// Draw custom elements
+		var view_angle = Engine.Math.DegToRad(90);
 		var default_tile_material = Core.GetDefaultFloorTileMaterial();
 		for(var x = -Core.Map.RoomSizeX / 2; x < Core.Map.RoomSizeX / 2; ++x)
 		{
@@ -311,34 +314,40 @@ Core =
 				var cell = [x, 0, z + 1];
 				var cell_id = Core.GetCellId(cell);
 
-				// Draw custom tile?
-				if(cell_id in Core.Map.FloorTiles)
-				{
-					var material_name = Core.Map.FloorTiles[cell_id];
-					Engine.Gfx.BindMaterial(Core.Resources[material_name], true);
-					mat4.translate(Core.ScratchMatrix, Engine.Math.IdentityMatrix, [x * Core.Map.FloorTileSize, 0, (z + 1) * Core.Map.FloorTileSize]);
-					mat4.scale(Core.ScratchMatrix, Core.ScratchMatrix, [Core.Map.FloorTileSize, 0, Core.Map.FloorTileSize]);
-					Engine.Gfx.DrawModel(Core.FloorTileModel, Core.ScratchMatrix, false, true);
-				}
+				var player_to_cell = Engine.Vec3.Subtract(cell, Core.MainPlayer.Position);
+				var angle = Engine.Vec3.Angle(player_to_cell, Core.MainPlayer.Forward);
 
-				// Draw custom wall(s)?
-				if(cell_id in Core.Map.Walls)
+				if(angle < view_angle)
 				{
-					var wall_entry = Core.Map.Walls[cell_id];
-					for (var wall in wall_entry)
+					// Draw custom tile?
+					if(cell_id in Core.Map.FloorTiles)
 					{
-						// Setup wall material (tiling uvs to match height)
-						var wall = parseInt(wall);
-						var wall_material_name = wall_entry[wall];
-						var wall_material = Core.Resources[wall_material_name];
-						var uv_repeat = [1, Core.Map.WallHeight];
-						wall_material.SetVec2("albedo_map_repeat", uv_repeat);
-						wall_material.SetVec2("normal_map_repeat", uv_repeat);
-						wall_material.SetVec2("specular_map_repeat", uv_repeat);
-						Engine.Gfx.BindMaterial(wall_material, true);
+						var material_name = Core.Map.FloorTiles[cell_id];
+						Engine.Gfx.BindMaterial(Core.Resources[material_name], true);
+						mat4.translate(Core.ScratchMatrix, Engine.Math.IdentityMatrix, [x * Core.Map.FloorTileSize, 0.001, (z + 1) * Core.Map.FloorTileSize]);
+						mat4.scale(Core.ScratchMatrix, Core.ScratchMatrix, [Core.Map.FloorTileSize, 0, Core.Map.FloorTileSize]);
+						Engine.Gfx.DrawModel(Core.FloorTileModel, Core.ScratchMatrix, false, true);
+					}
 
-						// Draw wall
-						Core.RenderWall(cell, wall);
+					// Draw custom wall(s)?
+					if(cell_id in Core.Map.Walls)
+					{
+						var wall_entry = Core.Map.Walls[cell_id];
+						for (var wall in wall_entry)
+						{
+							// Setup wall material (tiling uvs to match height)
+							var wall = parseInt(wall);
+							var wall_material_name = wall_entry[wall];
+							var wall_material = Core.Resources[wall_material_name];
+							var uv_repeat = [1, Core.Map.WallHeight];
+							wall_material.SetVec2("albedo_map_repeat", uv_repeat);
+							wall_material.SetVec2("normal_map_repeat", uv_repeat);
+							wall_material.SetVec2("specular_map_repeat", uv_repeat);
+							Engine.Gfx.BindMaterial(wall_material, true);
+
+							// Draw wall
+							Core.RenderWall(cell, wall);
+						}
 					}
 				}
 			}
@@ -353,6 +362,8 @@ Core =
 			Editor.Render();
 		}
 	},
+
+	Average : 0,
 
 	GetOppositeCell : function(cell, wall)
 	{
@@ -392,7 +403,7 @@ Core =
 		return Engine.Util.IsDefined(Core.Map.Walls[opposite_cell_id]) && Engine.Util.IsDefined(Core.Map.Walls[opposite_cell_id][opposite_wall]);
 	},
 
-	RenderWall : function(cell, sides, is_shadow_pass)
+	RenderWall : function(cell, sides)
 	{
 		var cell_centre = Core.CellToWorld(cell);
 		cell_centre[0] += (Core.Map.FloorTileSize * 0.5);

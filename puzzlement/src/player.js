@@ -41,16 +41,20 @@ Core.Player = function()
 		var move_speed = (is_running? this.RunSpeed : this.WalkSpeed) * Engine.Time.delta_s;
 		var movement_delta = [0, 0, 0];
 
+		// Calculate surface forwards
+		var surface_forward = Engine.Vec3.Copy(this.Forward); surface_forward[1] = 0.0;
+		surface_forward = Engine.Vec3.Normalise(surface_forward);
+
 		// Strafe forwards
 		if(Engine.Keyboard.IsPressed("w"))
 		{
-			movement_delta = Engine.Vec3.MultiplyScalar(this.Forward, move_speed);
+			movement_delta = Engine.Vec3.MultiplyScalar(surface_forward, move_speed);
 		}
 
 		// Strafe backwards
 		if(Engine.Keyboard.IsPressed("s"))
 		{
-			movement_delta = Engine.Vec3.MultiplyScalar(this.Forward, -move_speed);
+			movement_delta = Engine.Vec3.MultiplyScalar(surface_forward, -move_speed);
 		}
 
 		// Strafe left
@@ -70,7 +74,7 @@ Core.Player = function()
 		{
 			var left_stick = gamepad.GetLeftStick();
 			var right = Engine.Vec3.MultiplyScalar(this.Right, move_speed * left_stick[0]);
-			var forward = Engine.Vec3.MultiplyScalar(this.Forward, move_speed * left_stick[1]);
+			var forward = Engine.Vec3.MultiplyScalar(surface_forward, move_speed * left_stick[1]);
 			var strafe = Engine.Vec3.Add(right, forward);
 			movement_delta = Engine.Vec3.Add(movement_delta, strafe);
 		}
@@ -96,7 +100,6 @@ Core.Player = function()
 			{
 				look_delta[1] *= -1;
 			}
-			Engine.Log(look_delta);
 		}
 		else if(gamepad)
 		{

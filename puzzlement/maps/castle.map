@@ -36,7 +36,7 @@
     "RoomSizeX": 16,
     "RoomSizeZ": 16,
     "FloorTileSize": 1,
-    "WallHeight": 9,
+    "WallHeight": 2.5,
     "FloorTileMaterials": [
         "mat_stone",
         "mat_wood",
