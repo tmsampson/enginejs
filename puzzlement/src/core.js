@@ -305,7 +305,7 @@ Core =
 		Engine.Gfx.DrawModel(Core.FloorTileModel, Core.ScratchMatrix, false, true);
 
 		// Draw custom elements
-		var view_angle = Engine.Math.DegToRad(90);
+		var view_angle = Engine.Math.DegToRad(180);
 		var default_tile_material = Core.GetDefaultFloorTileMaterial();
 		for(var x = -Core.Map.RoomSizeX / 2; x < Core.Map.RoomSizeX / 2; ++x)
 		{
