@@ -69,6 +69,16 @@ Core.Player = function()
 			movement_delta = Engine.Vec3.MultiplyScalar(this.Right, move_speed);
 		}
 
+		// Touch strafe
+		if(Engine.Touch.IsSwipedUp())
+		{
+			movement_delta = Engine.Vec3.MultiplyScalar(surface_forward, move_speed * 20);
+		}
+		if(Engine.Touch.IsSwipedDown())
+		{
+			movement_delta = Engine.Vec3.MultiplyScalar(surface_forward, -move_speed * 20);
+		}
+
 		// Gamepad strafe
 		if(gamepad)
 		{
@@ -108,6 +118,14 @@ Core.Player = function()
 			{
 				look_delta[1] *= -1;
 			}
+		}
+		else if(Engine.Touch.IsSwipedLeft())
+		{
+			look_delta[0] =-1500;
+		}
+		else if(Engine.Touch.IsSwipedRight())
+		{
+			look_delta[0] = 1500;
 		}
 
 		// Apply look?
