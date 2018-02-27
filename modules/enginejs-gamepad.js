@@ -102,6 +102,11 @@ Engine.Gamepad =
 			}
 		};
 
+		this.WasJustPressed = function(button_name_or_list)
+		{
+			return this.IsPressed(button_name_or_list, true);
+		};
+
 		this.IsReleased = function(button_name_or_list, debounce)
 		{
 			// 'button_name_or_list' could be single value or list of buttons to check, either
@@ -123,6 +128,11 @@ Engine.Gamepad =
 				if(debounce && just_released || !debounce && !pressed_this_frame[button_name])
 					return true;
 			}
+		};
+
+		this.WasJustReleased = function(button_name_or_list)
+		{
+			return this.IsReleased(button_name_or_list, true);
 		};
 
 		this.GetLeftStick = function()
