@@ -52,7 +52,8 @@ Core =
 		RoomSizeX				: 16,
 		RoomSizeZ				: 16,
 		FloorTileSize			: 1,
-		WallHeight				: 2,
+		WallHeight				: 3,
+		DoorHeight				: 2,
 		FloorTileMaterials :
 		[
 			"mat_stone",
@@ -275,12 +276,14 @@ Core =
 				// Draw custom wall(s)?
 				if(cell_id in Core.Map.Walls)
 				{
-					var wall_entry = Core.Map.Walls[cell_id];
-					for (var wall in wall_entry)
+					var wall_cell_entry = Core.Map.Walls[cell_id];
+					for (var wall in wall_cell_entry)
 					{
 						// Draw wall to shadow map
-						var wall = parseInt(wall);
-						Core.RenderWall(cell, wall);
+						var wall_flag = parseInt(wall);
+						var wall_entry = wall_cell_entry[wall];
+						var wall_height = wall_entry.is_doorway? Core.Map.WallHeight - Core.Map.DoorHeight : Core.Map.WallHeight;
+						Core.RenderWall(cell, wall_flag, wall_height, wall_entry.is_doorway);
 					}
 				}
 			}
@@ -332,21 +335,23 @@ Core =
 					// Draw custom wall(s)?
 					if(cell_id in Core.Map.Walls)
 					{
-						var wall_entry = Core.Map.Walls[cell_id];
-						for (var wall in wall_entry)
+						var wall_cell_entry = Core.Map.Walls[cell_id];
+						for (var wall in wall_cell_entry)
 						{
 							// Setup wall material (tiling uvs to match height)
-							var wall = parseInt(wall);
-							var wall_material_name = wall_entry[wall];
+							var wall_flag = parseInt(wall);
+							var wall_entry = wall_cell_entry[wall_flag];
+							var wall_material_name = wall_entry.material;
 							var wall_material = Core.Resources[wall_material_name];
-							var uv_repeat = [1, Core.Map.WallHeight];
+							var wall_height = wall_entry.is_doorway? Core.Map.WallHeight - Core.Map.DoorHeight : Core.Map.WallHeight;
+							var uv_repeat = [1, wall_height];
 							wall_material.SetVec2("albedo_map_repeat", uv_repeat);
 							wall_material.SetVec2("normal_map_repeat", uv_repeat);
 							wall_material.SetVec2("specular_map_repeat", uv_repeat);
 							Engine.Gfx.BindMaterial(wall_material, true);
 
 							// Draw wall
-							Core.RenderWall(cell, wall);
+							Core.RenderWall(cell, wall_flag, wall_height, wall_entry.is_doorway);
 						}
 					}
 				}
@@ -403,10 +408,11 @@ Core =
 		return Engine.Util.IsDefined(Core.Map.Walls[opposite_cell_id]) && Engine.Util.IsDefined(Core.Map.Walls[opposite_cell_id][opposite_wall]);
 	},
 
-	RenderWall : function(cell, sides)
+	RenderWall : function(cell, sides, wall_height, is_doorway)
 	{
 		var cell_centre = Core.CellToWorld(cell);
 		cell_centre[0] += (Core.Map.FloorTileSize * 0.5);
+		cell_centre[1] += is_doorway? Core.Map.DoorHeight : 0;
 		cell_centre[2] -= (Core.Map.FloorTileSize * 0.5);
 		var rotation = Engine.Math.DegToRad(90);
 
@@ -414,7 +420,7 @@ Core =
 		if(sides & Core.WALL_FLAG_BACK)
 		{
 			mat4.translate(Core.ScratchMatrix, Engine.Math.IdentityMatrix, cell_centre);
-			mat4.scale(Core.ScratchMatrix, Core.ScratchMatrix, [Core.Map.FloorTileSize, Core.Map.WallHeight, Core.Map.FloorTileSize]);
+			mat4.scale(Core.ScratchMatrix, Core.ScratchMatrix, [Core.Map.FloorTileSize, wall_height, Core.Map.FloorTileSize]);
 			Engine.Gfx.DrawModel(Core.WallTileModel, Core.ScratchMatrix, false, false);
 		}
 
@@ -423,7 +429,7 @@ Core =
 		{
 			mat4.translate(Core.ScratchMatrix, Engine.Math.IdentityMatrix, cell_centre);
 			mat4.rotate(Core.ScratchMatrix, Core.ScratchMatrix, -rotation, [0, 1, 0]);
-			mat4.scale(Core.ScratchMatrix, Core.ScratchMatrix, [Core.Map.FloorTileSize, Core.Map.WallHeight, Core.Map.FloorTileSize]);
+			mat4.scale(Core.ScratchMatrix, Core.ScratchMatrix, [Core.Map.FloorTileSize, wall_height, Core.Map.FloorTileSize]);
 			Engine.Gfx.DrawModel(Core.WallTileModel, Core.ScratchMatrix, false, false);
 		}
 
@@ -432,7 +438,7 @@ Core =
 		{
 			mat4.translate(Core.ScratchMatrix, Engine.Math.IdentityMatrix, cell_centre);
 			mat4.rotate(Core.ScratchMatrix, Core.ScratchMatrix, rotation, [0, 1, 0]);
-			mat4.scale(Core.ScratchMatrix, Core.ScratchMatrix, [Core.Map.FloorTileSize, Core.Map.WallHeight, Core.Map.FloorTileSize]);
+			mat4.scale(Core.ScratchMatrix, Core.ScratchMatrix, [Core.Map.FloorTileSize, wall_height, Core.Map.FloorTileSize]);
 			Engine.Gfx.DrawModel(Core.WallTileModel, Core.ScratchMatrix, false, false);
 		}
 
@@ -441,7 +447,7 @@ Core =
 		{
 			mat4.translate(Core.ScratchMatrix, Engine.Math.IdentityMatrix, cell_centre);
 			mat4.rotate(Core.ScratchMatrix, Core.ScratchMatrix, rotation * 2.0, [0, 1, 0]);
-			mat4.scale(Core.ScratchMatrix, Core.ScratchMatrix, [Core.Map.FloorTileSize, Core.Map.WallHeight, Core.Map.FloorTileSize]);
+			mat4.scale(Core.ScratchMatrix, Core.ScratchMatrix, [Core.Map.FloorTileSize, wall_height, Core.Map.FloorTileSize]);
 			Engine.Gfx.DrawModel(Core.WallTileModel, Core.ScratchMatrix, false, false);
 		}
 	},
