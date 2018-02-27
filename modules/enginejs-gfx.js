@@ -606,14 +606,9 @@ Engine.Gfx =
 		this.directional_light = directional_light;
 	},
 
-	last_bound_material : null,
 	BindMaterial : function(material, use_shadows)
 	{
-		if(this.last_bound_material == null || this.last_bound_material != material)
-		{
-			material.Bind(this.directional_light, use_shadows);
-			this.last_bound_material = material;
-		}
+		material.Bind(this.directional_light, use_shadows);
 	},
 
 	// **********************************************
