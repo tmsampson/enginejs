@@ -1,13 +1,16 @@
 Core.Player = function()
 {
 	// Player config
-	this.WalkSpeed = 1.5;
+	this.WalkSpeed = 2.0;
+	this.CrouchSpeed = 1.0;
 	this.RunSpeed = 3;
-	this.HeadHeight = 1;
+	this.HeadHeightStanding = 1.5;
+	this.HeadHeightCrouched = 1.0;
 	this.HeadBobHeight = 0.01;
 	this.HeadBobSpeed = 12;
 	this.HeadBobHeightRunning = 0.015;
 	this.HeadBobSpeedRunning = 16;
+	this.CrouchBlendSpeed = 2.9;
 
 	// Input config
 	this.MouseLookSensitivity = [ 2.5, 2.5 ];
@@ -16,7 +19,7 @@ Core.Player = function()
 	this.GamepadInvertY = true;
 
 	// Transform
-	this.Position = [0, this.HeadHeight, 0];
+	this.Position = [0, this.HeadHeightStanding, 0];
 	this.Up = [0, 1, 0];
 	this.Forward = [0, 0, -1];
 	this.Right = [1, 0, 0];
@@ -26,6 +29,8 @@ Core.Player = function()
 	this.Camera = null;
 	this.ScratchMatrix = null;
 	this.CollisionRadius = 0.25;
+	this.CurrentHeadHeight = this.HeadHeightStanding;
+	this.IsCrouching = false;
 
 	this.Init = function()
 	{
@@ -37,8 +42,8 @@ Core.Player = function()
 	this.ProcessInput = function()
 	{
 		var gamepad = Engine.Gamepad.Pads[0];
-		var is_running = Engine.Keyboard.IsPressed("shift") || (gamepad && gamepad.IsPressed("lt"));
-		var move_speed = (is_running? this.RunSpeed : this.WalkSpeed) * Engine.Time.delta_s;
+		var is_running = this.CanRun() && (Engine.Keyboard.IsPressed("shift") || (gamepad && gamepad.IsPressed("lt")));
+		var move_speed = (is_running? this.RunSpeed : (this.IsCrouching? this.CrouchSpeed : this.WalkSpeed)) * Engine.Time.delta_s;
 		var movement_delta = [0, 0, 0];
 
 		// Calculate surface forwards
@@ -141,11 +146,44 @@ Core.Player = function()
 		// Update basis
 		this.Right = Engine.Vec3.CrossProduct(this.Forward, this.Up);
 
-		// Apply head bob
-		var head_bob_speed = is_running? this.HeadBobSpeedRunning : this.HeadBobSpeed;
-		var head_bob_height = is_running? this.HeadBobHeightRunning : this.HeadBobHeight;
-		this.TimeSpentMoving = has_moved? this.TimeSpentMoving + Engine.Time.delta_s : 0;
-		this.Position[1] = this.HeadHeight + (Math.sin(this.TimeSpentMoving * head_bob_speed) * head_bob_height);
+		// Toggle crouch?
+		if(Engine.Keyboard.WasJustPressed("shift") ||(gamepad && gamepad.WasJustPressed("b")))
+		{
+			this.IsCrouching = !this.IsCrouching;
+		}
+
+		// Calculate target head height
+		var target_head_height = this.IsCrouching? this.HeadHeightCrouched : this.HeadHeightStanding
+		var head_bob_offset = 0;
+
+		// Interpolate towards target?
+		var interpolate_head_height = (Engine.Math.Abs(this.CurrentHeadHeight - target_head_height) > 0.01);
+		if(interpolate_head_height)
+		{
+			// Blend towards target head height
+			var is_moving_down = target_head_height < this.CurrentHeadHeight;
+			var interpolation_speed = this.CrouchBlendSpeed * Engine.Time.delta_s;
+			this.CurrentHeadHeight = is_moving_down? Engine.Math.Max(this.CurrentHeadHeight - interpolation_speed, target_head_height) :
+													 Engine.Math.Min(this.CurrentHeadHeight + interpolation_speed, target_head_height)
+		}
+		else
+		{
+			// Snap to target head height
+			this.CurrentHeadHeight = target_head_height;
+
+			// Apply head bob?
+			if(!this.IsCrouching)
+			{
+				var head_bob_speed = is_running? this.HeadBobSpeedRunning : this.HeadBobSpeed;
+				var head_bob_height = is_running? this.HeadBobHeightRunning : this.HeadBobHeight;
+				this.TimeSpentMoving = has_moved? this.TimeSpentMoving + Engine.Time.delta_s : 0;
+				head_bob_offset = (Math.sin(this.TimeSpentMoving * head_bob_speed) * head_bob_height);
+			}
+
+		}
+
+		// Apply final head height
+		this.Position[1] = this.CurrentHeadHeight + head_bob_offset;
 	};
 
 	this.Update = function()
@@ -154,5 +192,10 @@ Core.Player = function()
 		this.Camera.position = this.Position;
 		this.Camera.look_at = Engine.Vec3.Add(this.Camera.position, this.Forward);
 		this.Camera.Update();
+	};
+
+	this.CanRun = function()
+	{
+		return !this.IsCrouching;
 	};
 }
