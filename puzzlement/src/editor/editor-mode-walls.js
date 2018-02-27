@@ -43,11 +43,11 @@ Editor.Mode_Walls = function()
 		// Handle tile toggling (keyboard)
 		if(Engine.Keyboard.WasJustPressed("right"))
 		{
-			this.ToggleSelectedWall(1);
+			this.ToggleWallMaterial(1);
 		}
 		else if(Engine.Keyboard.WasJustPressed("left"))
 		{
-			this.ToggleSelectedWall(-1);
+			this.ToggleWallMaterial(-1);
 		}
 		else if(Engine.Keyboard.WasJustPressed("delete"))
 		{
@@ -60,11 +60,17 @@ Editor.Mode_Walls = function()
 		var gamepad_previous = gamepad && gamepad.IsPressed("lb", true);
 		if(Engine.Mouse.GetWheelDelta() > 0 || gamepad_next)
 		{
-			this.ToggleSelectedWall(1);
+			this.ToggleWallMaterial(1);
 		}
 		else if(Engine.Mouse.GetWheelDelta() < 0 || gamepad_previous)
 		{
-			this.ToggleSelectedWall(-1);
+			this.ToggleWallMaterial(-1);
+		}
+
+		// Handle doorway toggle
+		if(Engine.Keyboard.WasJustPressed("p") || (gamepad && gamepad.IsPressed("a", true)))
+		{
+			this.ToggleDoorway();
 		}
 
 		// Edit wall height?
@@ -78,7 +84,7 @@ Editor.Mode_Walls = function()
 		}
 	};
 
-	this.ToggleSelectedWall = function(direction)
+	this.ToggleWallMaterial = function(direction)
 	{
 		// Must have a selected tile
 		if(Editor.SelectedCell == null || this.SelectedWall < 0)
@@ -86,34 +92,54 @@ Editor.Mode_Walls = function()
 			return;
 		}
 
-		// Toggle wall
+		// Create new entry for this cell?
 		var cell_id = Core.GetCellId(Editor.SelectedCell);
 		if(Core.Map.Walls[cell_id] == null && Core.Map.WallMaterials.length > 0)
 		{
-			// Create new entry for this cell
-			var next_material_index = direction > 0? 0 : Core.Map.WallMaterials.length -1;
 			Core.Map.Walls[cell_id] = { };
-			Core.Map.Walls[cell_id][this.SelectedWall] = Core.Map.WallMaterials[next_material_index];
+		}
+
+		// Create new entry for this wall?
+		if(!Engine.Util.IsDefined(Core.Map.Walls[cell_id][this.SelectedWall]))
+		{
+			var next_material_index = direction > 0? 0 : Core.Map.WallMaterials.length -1;
+			Core.Map.Walls[cell_id][this.SelectedWall] =
+			{
+				material   : Core.Map.WallMaterials[next_material_index],
+				is_doorway : false,
+			};
 		}
 		else
 		{
-			if(!Engine.Util.IsDefined(Core.Map.Walls[cell_id][this.SelectedWall]))
+			// Update entry for this wall
+			var current_material_name = Core.Map.Walls[cell_id][this.SelectedWall];
+			var current_material_index = Core.GetWallMaterialIndexFromName(current_material_name);
+			if(current_material_index != -1)
 			{
-				// Create new entry for this wall
-				Core.Map.Walls[cell_id][this.SelectedWall] = Core.Map.WallMaterials[0];
-			}
-			else
-			{
-				// Update entry for this wall
-				var current_material_name = Core.Map.Walls[cell_id][this.SelectedWall];
-				var current_material_index = Core.GetWallMaterialIndexFromName(current_material_name);
-				if(current_material_index != -1)
-				{
-					var next_material_index = (Core.Map.WallMaterials.length + current_material_index + direction) % Core.Map.WallMaterials.length;
-					Core.Map.Walls[cell_id][this.SelectedWall] = Core.Map.WallMaterials[next_material_index];
-				}
+				var next_material_index = (Core.Map.WallMaterials.length + current_material_index + direction) % Core.Map.WallMaterials.length;
+				Core.Map.Walls[cell_id][this.SelectedWall].material = Core.Map.WallMaterials[next_material_index];
 			}
 		}
+	};
+
+	this.ToggleDoorway = function()
+	{
+		// Must have a selected tile
+		if(Editor.SelectedCell == null || this.SelectedWall < 0)
+		{
+			return;
+		}
+
+		// Must have an existing cell & wall entry
+		var cell_id = Core.GetCellId(Editor.SelectedCell);
+		if(Core.Map.Walls[cell_id] == null || !Engine.Util.IsDefined(Core.Map.Walls[cell_id][this.SelectedWall]))
+		{
+			return;
+		}
+
+		// Toggle doorway
+		var wall_entry = Core.Map.Walls[cell_id][this.SelectedWall];
+		wall_entry.is_doorway = !wall_entry.is_doorway;
 	};
 
 	this.DeleteSelectedWall = function()
@@ -137,7 +163,7 @@ Editor.Mode_Walls = function()
 
 	this.Render = function()
 	{
-		if(Editor.SelectedCell == null)
+		if(Editor.SelectedCell == null || this.SelectedWall == -1)
 		{
 			Editor.SubText.Set("");
 			return;

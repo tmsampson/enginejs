@@ -3,7 +3,9 @@ Collision =
 	IsWallPresent : function(cell, cell_id, wall)
 	{
 		// Check internal wall
-		if(Core.Map.Walls[cell_id] != null && Core.Map.Walls[cell_id][wall] != null)
+		if(Core.Map.Walls[cell_id] != null &&
+		   Core.Map.Walls[cell_id][wall] != null &&
+		  !Core.Map.Walls[cell_id][wall].is_doorway)
 		{
 			return true;
 		}
@@ -12,7 +14,9 @@ Collision =
 		var opposite_cell = Core.GetOppositeCell(cell, wall);
 		var opposite_cell_id = Core.GetCellId(opposite_cell);
 		var opposite_wall = Core.GetOppositeWall(wall);
-		if(Core.Map.Walls[opposite_cell_id] != null && Core.Map.Walls[opposite_cell_id][opposite_wall] != null)
+		if(Core.Map.Walls[opposite_cell_id] != null && 
+		   Core.Map.Walls[opposite_cell_id][opposite_wall] != null &&
+		  !Core.Map.Walls[opposite_cell_id][opposite_wall].is_doorway)
 		{
 			return true;
 		}

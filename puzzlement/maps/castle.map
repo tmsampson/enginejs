@@ -37,6 +37,7 @@
     "RoomSizeZ": 16,
     "FloorTileSize": 1,
     "WallHeight": 5.5,
+    "DoorHeight": 2,
     "FloorTileMaterials": [
         "mat_stone",
         "mat_wood",
@@ -91,11 +92,17 @@
         "-2,0,3": "mat_paving",
         "-2,0,4": "mat_paving",
         "0,0,4": "mat_paving",
-        "0,0,3": "mat_paving",
         "0,0,5": "mat_paving",
         "0,0,6": "mat_paving",
         "0,0,7": "mat_paving",
-        "0,0,8": "mat_paving"
+        "0,0,8": "mat_paving",
+        "0,0,3": "mat_paving",
+        "1,0,3": "mat_paving",
+        "1,0,4": "mat_paving",
+        "1,0,5": "mat_paving",
+        "1,0,6": "mat_paving",
+        "1,0,7": "mat_paving",
+        "1,0,8": "mat_paving"
     },
     "WallMaterials": [
         "mat_cobbles",
@@ -103,151 +110,293 @@
         "mat_wallpaper1"
     ],
     "Walls": {
-        "-1,0,-1": {},
-        "-2,0,-1": {
-            "1": "mat_cobbles"
+        "-1,0,-1": {
+            "1": {
+                "material": "mat_cobbles",
+                "is_doorway": true
+            }
         },
-        "-1,0,-2": {},
+        "-2,0,-1": {
+            "1": {
+                "material": "mat_cobbles"
+            }
+        },
+        "-1,0,-2": {
+            "4": {
+                "material": "mat_cobbles",
+                "is_doorway": true
+            }
+        },
         "-4,0,2": {
-            "8": "mat_cobbles"
+            "8": {
+                "material": "mat_cobbles"
+            }
         },
         "-4,0,1": {
-            "8": "mat_cobbles"
+            "8": {
+                "material": "mat_cobbles"
+            }
         },
         "-4,0,0": {
-            "8": "mat_cobbles"
+            "8": {
+                "material": "mat_cobbles"
+            }
         },
         "-4,0,-1": {
-            "1": "mat_cobbles",
-            "8": "mat_cobbles"
+            "1": {
+                "material": "mat_cobbles"
+            },
+            "8": {
+                "material": "mat_cobbles"
+            }
         },
         "-4,0,3": {
-            "1": "mat_cobbles"
+            "1": {
+                "material": "mat_cobbles"
+            }
         },
         "-3,0,3": {
-            "1": "mat_cobbles"
+            "1": {
+                "material": "mat_cobbles"
+            }
         },
         "-2,0,3": {
-            "1": "mat_cobbles"
+            "1": {
+                "material": "mat_cobbles",
+                "is_doorway": false
+            }
         },
-        "-1,0,3": {},
-        "3,0,3": {},
-        "2,0,3": {},
-        "1,0,3": {},
+        "-1,0,3": {
+            "1": {
+                "material": "mat_cobbles",
+                "is_doorway": true
+            }
+        },
+        "3,0,3": {
+            "1": {
+                "material": "mat_cobbles",
+                "is_doorway": false
+            }
+        },
+        "2,0,3": {
+            "1": {
+                "material": "mat_cobbles",
+                "is_doorway": false
+            }
+        },
+        "1,0,3": {
+            "1": {
+                "material": "mat_cobbles",
+                "is_doorway": false
+            }
+        },
         "-3,0,-1": {
-            "1": "mat_cobbles"
+            "1": {
+                "material": "mat_cobbles"
+            }
         },
         "-3,0,-2": {
-            "2": "mat_cobbles"
+            "2": {
+                "material": "mat_cobbles"
+            }
         },
         "-2,0,-3": {
-            "8": "mat_wallpaper1"
+            "8": {
+                "material": "mat_wallpaper1"
+            }
         },
         "-3,0,-4": {
-            "2": "mat_cobbles"
+            "2": {
+                "material": "mat_cobbles"
+            }
         },
         "-2,0,-4": {
-            "1": "mat_wallpaper1",
-            "8": "mat_wallpaper1"
+            "1": {
+                "material": "mat_wallpaper1"
+            },
+            "8": {
+                "material": "mat_wallpaper1"
+            }
         },
         "-1,0,-4": {
-            "1": "mat_wallpaper1"
+            "1": {
+                "material": "mat_wallpaper1"
+            }
         },
         "0,0,-4": {
-            "1": "mat_wallpaper1"
+            "1": {
+                "material": "mat_wallpaper1"
+            }
         },
         "1,0,-4": {
-            "1": "mat_wallpaper1",
-            "2": "mat_wallpaper1"
+            "1": {
+                "material": "mat_wallpaper1"
+            },
+            "2": {
+                "material": "mat_wallpaper1"
+            }
         },
         "2,0,-4": {
-            "1": "mat_cobbles",
-            "8": "mat_cobbles"
+            "1": {
+                "material": "mat_cobbles"
+            },
+            "8": {
+                "material": "mat_cobbles"
+            }
         },
         "3,0,-4": {
-            "1": "mat_cobbles"
+            "1": {
+                "material": "mat_cobbles"
+            }
         },
         "4,0,-4": {
-            "1": "mat_cobbles",
-            "2": "mat_cobbles"
+            "1": {
+                "material": "mat_cobbles"
+            },
+            "2": {
+                "material": "mat_cobbles"
+            }
         },
         "2,0,-3": {
-            "8": "mat_cobbles"
+            "8": {
+                "material": "mat_cobbles"
+            }
         },
         "1,0,-2": {
-            "2": "mat_wallpaper1",
-            "4": "mat_cobbles"
+            "2": {
+                "material": "mat_wallpaper1"
+            },
+            "4": {
+                "material": "mat_cobbles"
+            }
         },
         "1,0,-1": {
-            "2": "mat_cobbles"
+            "1": {
+                "material": "mat_cobbles",
+                "is_doorway": false
+            },
+            "2": {
+                "material": "mat_cobbles"
+            }
         },
-        "3,0,2": {
-            "4": "mat_cobbles"
-        },
+        "3,0,2": {},
         "3,0,1": {},
         "3,0,0": {},
-        "3,0,-1": {},
+        "3,0,-1": {
+            "4": {
+                "material": "mat_cobbles",
+                "is_doorway": true
+            }
+        },
         "3,0,-2": {},
         "3,0,-3": {},
         "4,0,-3": {
-            "2": "mat_cobbles"
+            "2": {
+                "material": "mat_cobbles"
+            }
         },
         "4,0,-2": {
-            "2": "mat_cobbles"
+            "2": {
+                "material": "mat_cobbles"
+            }
         },
         "4,0,-1": {
-            "2": "mat_cobbles",
-            "4": "mat_cobbles"
+            "2": {
+                "material": "mat_cobbles"
+            },
+            "4": {
+                "material": "mat_cobbles"
+            }
         },
         "4,0,0": {
-            "2": "mat_cobbles"
+            "2": {
+                "material": "mat_cobbles"
+            }
         },
         "4,0,1": {
-            "2": "mat_cobbles"
+            "2": {
+                "material": "mat_cobbles"
+            }
         },
         "4,0,2": {
-            "2": "mat_cobbles",
-            "4": "mat_cobbles"
+            "2": {
+                "material": "mat_cobbles"
+            }
         },
         "2,0,-1": {
-            "4": "mat_cobbles"
+            "4": {
+                "material": "mat_cobbles"
+            }
         },
-        "0,0,2": {
-            "4": "mat_cobbles"
-        },
+        "0,0,2": {},
         "-2,0,-2": {
-            "4": "mat_cobbles",
-            "8": "mat_wallpaper1"
+            "4": {
+                "material": "mat_cobbles"
+            },
+            "8": {
+                "material": "mat_wallpaper1"
+            }
         },
         "0,0,-2": {
-            "4": "mat_cobbles"
+            "4": {
+                "material": "mat_cobbles"
+            }
         },
         "0,0,-5": {
-            "4": "mat_cobbles"
+            "4": {
+                "material": "mat_cobbles"
+            }
         },
         "1,0,-3": {
-            "2": "mat_wallpaper1"
+            "2": {
+                "material": "mat_wallpaper1"
+            }
         },
         "2,0,-2": {
-            "8": "mat_cobbles"
+            "8": {
+                "material": "mat_cobbles"
+            }
         },
         "-3,0,-3": {
-            "2": "mat_cobbles"
+            "2": {
+                "material": "mat_cobbles"
+            }
         },
         "-2,0,-5": {
-            "4": "mat_cobbles"
+            "4": {
+                "material": "mat_cobbles"
+            }
         },
         "-1,0,-5": {
-            "4": "mat_cobbles"
+            "4": {
+                "material": "mat_cobbles"
+            }
         },
         "1,0,-5": {
-            "4": "mat_cobbles"
+            "4": {
+                "material": "mat_cobbles"
+            }
         },
-        "2,0,2": {
-            "4": "mat_cobbles"
+        "2,0,2": {},
+        "1,0,2": {},
+        "0,0,-1": {
+            "1": {
+                "material": "mat_cobbles",
+                "is_doorway": false
+            }
         },
-        "1,0,2": {
-            "4": "mat_cobbles"
+        "-1,0,2": {},
+        "4,0,3": {
+            "1": {
+                "material": "mat_cobbles",
+                "is_doorway": false
+            }
+        },
+        "0,0,3": {
+            "1": {
+                "material": "mat_cobbles",
+                "is_doorway": true
+            }
         }
     }
 }
