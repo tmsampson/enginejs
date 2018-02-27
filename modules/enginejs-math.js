@@ -14,6 +14,16 @@ Engine.Math =
 		return x > 0? x : -x;
 	},
 
+	Min : function(x, y)
+	{
+		return Math.min(x, y);
+	},
+
+	Max : function(x, y)
+	{
+		return Math.max(x, y);
+	},
+
 	Clamp : function(x, min, max)
 	{
 		return Math.min(Math.max(x, min), max);
