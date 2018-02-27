@@ -1,0 +1,11 @@
+# MTL written from D:\3D\furniture\Chair\chair 01\chair 01.obj
+newmtl chair_01
+map_Ka chair_albedo.jpg
+map_Ks chair_specular.jpg
+bump chair_normal.jpg
+Kd 0.48 0.48 0.48
+Ns 20
+d 1
+illum 2
+Ka 0 0 0
+Ks 0.04 0.04 0.04

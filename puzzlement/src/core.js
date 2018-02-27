@@ -4,20 +4,21 @@ Core =
 	Resources :
 	{
 		mdl_floor_tile			: { file : "models/floor-tile.model"},
-		mdl_wall				: { file : "models/wall.model"},
-		mat_stone				: { file : "mat/stone.mat"},
-		mat_stone_debug			: { file : "mat/stone_debug.mat"},
-		mat_wood				: { file : "mat/wood.mat"},
-		mat_wool				: { file : "mat/wool.mat"},
-		mat_cobbles				: { file : "mat/cobbles.mat"},
-		mat_rug1				: { file : "mat/rug1.mat"},
-		mat_rug2				: { file : "mat/rug2.mat"},
-		mat_paving				: { file : "mat/paving.mat"},
-		mat_wallpaper1			: { file : "mat/wallpaper1.mat"},
-		mat_wall_select_back	: { file : "mat/wall_select_back.mat"},
-		mat_wall_select_right	: { file : "mat/wall_select_right.mat"},
-		mat_wall_select_front	: { file : "mat/wall_select_front.mat"},
-		mat_wall_select_left	: { file : "mat/wall_select_left.mat"},
+		mdl_chair				: { file : "models/chair/chair.obj" },
+		mdl_wall				: { file : "models/wall.model" },
+		mat_stone				: { file : "mat/stone.mat" },
+		mat_stone_debug			: { file : "mat/stone_debug.mat" },
+		mat_wood				: { file : "mat/wood.mat" },
+		mat_wool				: { file : "mat/wool.mat" },
+		mat_cobbles				: { file : "mat/cobbles.mat" },
+		mat_rug1				: { file : "mat/rug1.mat" },
+		mat_rug2				: { file : "mat/rug2.mat" },
+		mat_paving				: { file : "mat/paving.mat" },
+		mat_wallpaper1			: { file : "mat/wallpaper1.mat" },
+		mat_wall_select_back	: { file : "mat/wall_select_back.mat" },
+		mat_wall_select_right	: { file : "mat/wall_select_right.mat" },
+		mat_wall_select_front	: { file : "mat/wall_select_front.mat" },
+		mat_wall_select_left	: { file : "mat/wall_select_left.mat" },
 	},
 
 	// Editor
@@ -288,6 +289,11 @@ Core =
 				}
 			}
 		}
+
+		// Draw chair
+		mat4.translate(Core.ScratchMatrix, Engine.Math.IdentityMatrix, [0, 0, 0]);
+		Engine.Gfx.DrawModel(Core.Resources["mdl_chair"], Core.ScratchMatrix, false, false);
+
 		Engine.Gfx.EndShadowMappingPass();
 		Engine.Gfx.EnableShadowMappingPreview(Core.EditorEnabled && Editor.CurrentMode == 3);
 
@@ -357,6 +363,10 @@ Core =
 				}
 			}
 		}
+
+		// Draw chair
+		mat4.translate(Core.ScratchMatrix, Engine.Math.IdentityMatrix, [0, 0, 0]);
+		Engine.Gfx.DrawModel(Core.Resources["mdl_chair"], Core.ScratchMatrix);
 
 		// Draw sky box?
 		Engine.Gfx.DrawSkybox(100, null);
