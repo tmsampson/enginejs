@@ -68,9 +68,8 @@
 				mass			: mass,
 				inverse_mass	: 1.0 / mass,
 				colour			: colour,
-				linear_velocity	: [100, 0, 0],
-				linear_drag		: 0.05,
-				accumulated_impulse : [0, 0, 0],
+				linear_velocity	: [0, 0, 0],
+				linear_drag		: 0.1,
 			};
 			return body;
 		}
@@ -89,10 +88,6 @@
 
 		function integrate_body(body, delta_s)
 		{
-			// Integrat impulse
-			//var accumulated_velocity = Engine.Vec3.Add(body.linear_velocity, body.accumulated_impulse);
-			//body.accumulated_impulse = [0, 0, 0];
-
 			// Integrate position
 			var position_delta = Engine.Vec3.MultiplyScalar(body.linear_velocity, delta_s);
 			body.position = Engine.Vec3.Add(body.position, position_delta);
@@ -103,6 +98,20 @@
 
 		function solve_constraint(constraint, delta_s)
 		{
+			var desired_sepration = 0.0;
+			if(separation_dist > (constraint.max_separation + 0.1))
+			{
+				desired_sepration = constraint.max_separation;
+			}
+			else if(separation_dist < (constraint.min_separation - 0.1))
+			{
+				desired_sepration = constraint.min_separation;
+			}
+			else
+			{
+				return;
+			}
+
 			var pos_a = constraint.body_a.position;
 			var pos_b = constraint.body_b.position;
 			var vel_a = constraint.body_a.linear_velocity;
@@ -114,12 +123,9 @@
 			var separation_dist = Engine.Vec3.Length(separation_vec);
 			var separation_dir = Engine.Vec3.Normalise(separation_vec);
 
-			if(separation_dist <= (constraint.max_separation + 0.1))
-				return;
-
 			var relative_velocity = Engine.Vec3.Subtract(vel_b, vel_a);
 			var relative_velocity_on_axis = Engine.Vec3.Dot(relative_velocity, separation_dir);
-			var dist_delta = separation_dist - constraint.max_separation;
+			var dist_delta = separation_dist - desired_sepration;
 
 			var impulse_magnitude = relative_velocity_on_axis + (dist_delta / delta_s);
 			impulse_magnitude /= (inv_mass_a + inv_mass_b);
@@ -147,17 +153,21 @@
 				var bodies = [];
 				var centre = Engine.Canvas.GetCentre();
 				var radius = 32;
-				var b1 = make_body(centre, radius, 10000.0, Engine.Colour.Red);
-				var b2 = make_body([centre[0] + (radius * 2.0), centre[1] + (radius * 2.0), 0], radius, 1.0, Engine.Colour.Green);
+				var b1 = make_body(centre, radius, 1.0, Engine.Colour.Red);
+				var b2 = make_body([centre[0] + (radius * 2.0), centre[1] + (radius * 2.0), 0], radius, 1.0, Engine.Colour.Red);
+				var b3 = make_body([centre[0] + (radius * 2.0), centre[1] - (radius * 2.0), 0], radius, 1.0, Engine.Colour.Green);
 				bodies.push(b1);
 				bodies.push(b2);
+				bodies.push(b3);
 
 				// Setup constraints
 				var constraints = [];
 				var min_separation = radius * 2.0;
 				var max_separation = min_separation + 100;
 				var c1 = make_constraint(b1, b2, min_separation, max_separation);
+				var c2 = make_constraint(b2, b3, min_separation, max_separation);
 				constraints.push(c1);
+				constraints.push(c2);
 
 				var on_render = function()
 				{
@@ -168,8 +178,8 @@
 					Engine.Gfx.BindCamera(cam);
 
 					// Handle input
-					var controlled_body = b2;
-					var move_speed = 100;
+					var controlled_body = b3;
+					var move_speed = 300;
 					if(Engine.Keyboard.IsPressed("left"))  { controlled_body.linear_velocity[0] = -move_speed; }
 					if(Engine.Keyboard.IsPressed("right")) { controlled_body.linear_velocity[0] = move_speed;  }
 					if(Engine.Keyboard.IsPressed("up"))    { controlled_body.linear_velocity[1] = move_speed;  }
