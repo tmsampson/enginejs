@@ -10,7 +10,19 @@
 		<script type="text/javascript" src="enginejs/jquery.js"></script>
 		<script type="text/javascript" src="enginejs/engine.js"></script>
 
+		<!-- Scenes -->
+		<script type="text/javascript" src="scenes.js"></script>
+
 		<script language="javascript">
+
+		// Scene
+		var scene_index = 0;
+		var scene_name = "";
+		var gravity_enabled = false;
+		var gravity = [ 0, -980, 0 ];
+		var bodies = [];
+		var constraints = [];
+		var controlled_body = null;
 
 		// Circle
 		var circle_verts =
@@ -69,7 +81,8 @@
 				inverse_mass	: 1.0 / mass,
 				colour			: colour,
 				linear_velocity	: [0, 0, 0],
-				linear_drag		: 0.1,
+				linear_drag		: 0.01,
+				acceleration	: [0, 0, 0]
 			};
 			return body;
 		}
@@ -92,12 +105,27 @@
 			var position_delta = Engine.Vec3.MultiplyScalar(body.linear_velocity, delta_s);
 			body.position = Engine.Vec3.Add(body.position, position_delta);
 
+			// Integrate veocity?
+			if(body.mass < 100)
+			{
+				var accel = Engine.Vec3.Add(body.acceleration, gravity_enabled? gravity : [0, 0, 0]);
+				var velocity_delta = Engine.Vec3.MultiplyScalar(accel, delta_s);
+				body.linear_velocity = Engine.Vec3.Add(body.linear_velocity, velocity_delta);
+			}
+
 			// Apply drag
-			body.linear_velocity = Engine.Vec3.MultiplyScalar(body.linear_velocity, 1.0 - body.linear_drag);
+			var drag = body.linear_drag * (gravity_enabled? 1 : 5);
+			body.linear_velocity = Engine.Vec3.MultiplyScalar(body.linear_velocity, 1.0 - drag);
 		}
 
 		function solve_constraint(constraint, delta_s)
 		{
+			var pos_a = constraint.body_a.position;
+			var pos_b = constraint.body_b.position;
+
+			var separation_vec = Engine.Vec3.Subtract(pos_b, pos_a);
+			var separation_dist = Engine.Vec3.Length(separation_vec);
+
 			var desired_sepration = 0.0;
 			if(separation_dist > (constraint.max_separation + 0.1))
 			{
@@ -112,21 +140,17 @@
 				return;
 			}
 
-			var pos_a = constraint.body_a.position;
-			var pos_b = constraint.body_b.position;
 			var vel_a = constraint.body_a.linear_velocity;
 			var vel_b = constraint.body_b.linear_velocity;
-			var inv_mass_a = constraint.body_a.inverse_mass;
-			var inv_mass_b = constraint.body_b.inverse_mass;
-
-			var separation_vec = Engine.Vec3.Subtract(pos_b, pos_a);
-			var separation_dist = Engine.Vec3.Length(separation_vec);
+			
 			var separation_dir = Engine.Vec3.Normalise(separation_vec);
 
 			var relative_velocity = Engine.Vec3.Subtract(vel_b, vel_a);
 			var relative_velocity_on_axis = Engine.Vec3.Dot(relative_velocity, separation_dir);
 			var dist_delta = separation_dist - desired_sepration;
 
+			var inv_mass_a = constraint.body_a.inverse_mass;
+			var inv_mass_b = constraint.body_b.inverse_mass;
 			var impulse_magnitude = relative_velocity_on_axis + (dist_delta / delta_s);
 			impulse_magnitude /= (inv_mass_a + inv_mass_b);
 			var impulse = Engine.Vec3.MultiplyScalar(separation_dir, impulse_magnitude);
@@ -149,44 +173,96 @@
 				var program = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_general_transformed"],
 				                                             Engine.Resources["fs_unlit_colour"]);
 
-				// Setup bodies
-				var bodies = [];
-				var centre = Engine.Canvas.GetCentre();
-				var radius = 32;
-				var b1 = make_body(centre, radius, 1.0, Engine.Colour.Red);
-				var b2 = make_body([centre[0] + (radius * 2.0), centre[1] + (radius * 2.0), 0], radius, 1.0, Engine.Colour.Red);
-				var b3 = make_body([centre[0] + (radius * 2.0), centre[1] - (radius * 2.0), 0], radius, 1.0, Engine.Colour.Green);
-				bodies.push(b1);
-				bodies.push(b2);
-				bodies.push(b3);
+				// Setup text
+				var text = new Engine.Text2D.TextBox("0",
+				{
+					prefix : "Scene: ",
+					dock   : ["top", "left"],
+					colour : "white"
+				});
 
-				// Setup constraints
-				var constraints = [];
-				var min_separation = radius * 2.0;
-				var max_separation = min_separation + 100;
-				var c1 = make_constraint(b1, b2, min_separation, max_separation);
-				var c2 = make_constraint(b2, b3, min_separation, max_separation);
-				constraints.push(c1);
-				constraints.push(c2);
+				// Load first scene
+				bodies = [];
+				constraints = [];
+				scenes[0]();
 
 				var on_render = function()
 				{
 					Engine.Gfx.Clear(Engine.Colour.Black);
+					var gamepad = Engine.Gamepad.Pads[0];
 
 					// Update & bind camera
 					cam.Update();
 					Engine.Gfx.BindCamera(cam);
 
-					// Handle input
-					var controlled_body = b3;
-					var move_speed = 300;
-					if(Engine.Keyboard.IsPressed("left"))  { controlled_body.linear_velocity[0] = -move_speed; }
-					if(Engine.Keyboard.IsPressed("right")) { controlled_body.linear_velocity[0] = move_speed;  }
-					if(Engine.Keyboard.IsPressed("up"))    { controlled_body.linear_velocity[1] = move_speed;  }
-					if(Engine.Keyboard.IsPressed("down"))  { controlled_body.linear_velocity[1] = -move_speed; }
+					// Handle movement
+					if(controlled_body != null)
+					{
+						var fast = Engine.Keyboard.IsPressed("space") || (gamepad && gamepad.IsPressed("b"));
+						var move_speed = 20000 * (fast? 3 : 1) * Engine.Time.delta_s;
+						if(Engine.Keyboard.IsPressed("a")) { controlled_body.linear_velocity[0] = -move_speed; }
+						if(Engine.Keyboard.IsPressed("d")) { controlled_body.linear_velocity[0] = +move_speed; }
+						if(Engine.Keyboard.IsPressed("w")) { controlled_body.linear_velocity[1] = +move_speed; }
+						if(Engine.Keyboard.IsPressed("s")) { controlled_body.linear_velocity[1] = -move_speed; }
+
+						// Process gamepad input?
+						if(gamepad)
+						{
+							controlled_body.linear_velocity[0] += gamepad.GetLeftStick()[0] * move_speed * 0.2;
+							controlled_body.linear_velocity[1] += gamepad.GetLeftStick()[1] * move_speed * 0.2;
+						}
+					}
+
+					// Update text
+					text.Set(scene_name);
+
+					// Shorten constraint?
+					if(Engine.Keyboard.IsPressed("o") || (gamepad && gamepad.IsPressed("lt")))
+					{
+						for(var i = 0; i < constraints.length; ++i)
+						{
+							if(constraints[i].max_separation > (constraints[i].min_separation + 1))
+								constraints[i].max_separation -= 0.5;
+						}
+					}
+
+					// Lengthen constraint?
+					if(Engine.Keyboard.IsPressed("p") || (gamepad && gamepad.IsPressed("rt")))
+					{
+						for(var i = 0; i < constraints.length; ++i)
+							constraints[i].max_separation += 0.5;
+					}
+
+					// Toggle gravity
+					if(Engine.Keyboard.IsPressed("g", true) || (gamepad && gamepad.IsPressed("y", true)))
+					{
+						gravity_enabled = !gravity_enabled;
+					}
+
+					// Reset scene?
+					if(Engine.Keyboard.IsPressed("r", true) || (gamepad && gamepad.IsPressed("a", true)))
+					{
+						bodies = [];
+						constraints = [];
+						scenes[scene_index]();
+					}
+
+					// Toggle scene?
+					var left =  Engine.Keyboard.IsPressed("left", true) || (gamepad && gamepad.IsPressed("lb", true));
+					var right =  Engine.Keyboard.IsPressed("right", true) || (gamepad && gamepad.IsPressed("rb", true));
+					var toggle_dir = left? -1 : (right? 1 : 0);
+					if(toggle_dir != 0)
+					{
+						scene_index += toggle_dir;
+						if(scene_index > scenes.length -1) { scene_index = 0; }
+						if(scene_index < 0) { scene_index = scenes.length - 1; }
+						bodies = [];
+						constraints = [];
+						scenes[scene_index]();
+					}
 
 					// Solve constraints
-					var delta_s = Engine.Time.delta_s;
+					var delta_s = Math.min(Engine.Time.delta_s, 1.0 / 60.0);
 					for(var i = 0; i < constraints.length; ++i)
 					{
 						solve_constraint(constraints[i], delta_s);
