@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="stylesheet" href="../sample.css">
+		
+		<title>Engine Sample: Distance Constraint</title>
+
+		<!-- EngineJS -->
+		<script type="text/javascript" src="enginejs/jquery.js"></script>
+		<script type="text/javascript" src="enginejs/engine.js"></script>
+
+		<script language="javascript">
+
+		// Circle
+		var circle_verts =
+		{
+			attribute_name : "a_pos",
+			item_size      : 3,
+			draw_mode      : "triangle_fan",
+			stream         : generate_circle_verts(40)
+		};
+
+		var circle_vbo = null;
+
+		function generate_circle_verts(segment_count)
+		{
+			var verts = [0.0, 0.0, 0.0]; var theta = (2 * Math.PI) / segment_count;
+			for(var i = 0; i <= segment_count; ++i)
+			{
+				verts.push(Math.cos(theta * i), Math.sin(theta * i), 0.0);
+			}
+			return verts;
+		}
+
+		function render_body(body)
+		{
+			var mtx_trans = mat4.create();
+			Engine.Gfx.BindVertexBuffer(body.vbo);
+			mat4.translate(mtx_trans, Engine.Math.IdentityMatrix, body.position);
+			mat4.scale(mtx_trans, mtx_trans, body.scale);
+			Engine.Gfx.SetShaderProperty("u_trans_world", mtx_trans, Engine.Gfx.SP_MATRIX4);
+			Engine.Gfx.SetShaderProperty("u_colour", body.colour, Engine.Gfx.SP_COLOUR);
+			Engine.Gfx.DrawArray();
+		}
+
+		function render_constraint(constraint)
+		{
+			var pos_a = constraint.body_a.position;
+			var pos_b = constraint.body_b.position;
+			var delta = Engine.Vec3.Subtract(pos_b, pos_a);
+			var delta_unit = Engine.Vec3.Normalise(delta);
+			var midpoint = Engine.Vec3.MultiplyScalar(Engine.Vec3.Add(pos_a, pos_b), 0.5);
+			var separation = Engine.Vec3.Length(delta);
+			var extent_a = Engine.Vec3.Add(midpoint, Engine.Vec3.MultiplyScalar(delta_unit, constraint.max_separation * -0.5));
+			var extent_b = Engine.Vec3.Add(midpoint, Engine.Vec3.MultiplyScalar(delta_unit, constraint.max_separation * 0.5));
+			Engine.Debug.DrawLine(extent_a, extent_b, Engine.Colour.Blue, 3);
+			Engine.Debug.DrawLine(pos_a, pos_b, Engine.Colour.Orange, 3);
+		}
+
+		function make_body(position, scale, mass, colour)
+		{
+			var body =
+			{
+				vbo				: circle_vbo,
+				position		: position,
+				scale			: [scale, scale, 0.0],
+				mass			: mass,
+				inverse_mass	: 1.0 / mass,
+				colour			: colour,
+				linear_velocity	: [100, 0, 0],
+				linear_drag		: 0.05,
+				accumulated_impulse : [0, 0, 0],
+			};
+			return body;
+		}
+
+		function make_constraint(body_a, body_b, min, max)
+		{
+			var constraint =
+			{
+				body_a			: body_a,
+				body_b			: body_b,
+				min_separation	: min,
+				max_separation	: max
+			};
+			return constraint;
+		}
+
+		function integrate_body(body, delta_s)
+		{
+			// Integrat impulse
+			//var accumulated_velocity = Engine.Vec3.Add(body.linear_velocity, body.accumulated_impulse);
+			//body.accumulated_impulse = [0, 0, 0];
+
+			// Integrate position
+			var position_delta = Engine.Vec3.MultiplyScalar(body.linear_velocity, delta_s);
+			body.position = Engine.Vec3.Add(body.position, position_delta);
+
+			// Apply drag
+			body.linear_velocity = Engine.Vec3.MultiplyScalar(body.linear_velocity, 1.0 - body.linear_drag);
+		}
+
+		function solve_constraint(constraint, delta_s)
+		{
+			var pos_a = constraint.body_a.position;
+			var pos_b = constraint.body_b.position;
+			var vel_a = constraint.body_a.linear_velocity;
+			var vel_b = constraint.body_b.linear_velocity;
+			var inv_mass_a = constraint.body_a.inverse_mass;
+			var inv_mass_b = constraint.body_b.inverse_mass;
+
+			var separation_vec = Engine.Vec3.Subtract(pos_b, pos_a);
+			var separation_dist = Engine.Vec3.Length(separation_vec);
+			var separation_dir = Engine.Vec3.Normalise(separation_vec);
+
+			if(separation_dist <= (constraint.max_separation + 0.1))
+				return;
+
+			var relative_velocity = Engine.Vec3.Subtract(vel_b, vel_a);
+			var relative_velocity_on_axis = Engine.Vec3.Dot(relative_velocity, separation_dir);
+			var dist_delta = separation_dist - constraint.max_separation;
+
+			var impulse_magnitude = relative_velocity_on_axis + (dist_delta / delta_s);
+			impulse_magnitude /= (inv_mass_a + inv_mass_b);
+			var impulse = Engine.Vec3.MultiplyScalar(separation_dir, impulse_magnitude);
+
+			var impulse_a = Engine.Vec3.MultiplyScalar(impulse, inv_mass_a);
+			var impulse_b = Engine.Vec3.MultiplyScalar(impulse, inv_mass_b);
+			constraint.body_a.linear_velocity = Engine.Vec3.Add(constraint.body_a.linear_velocity, impulse_a);
+			constraint.body_b.linear_velocity = Engine.Vec3.Subtract(constraint.body_b.linear_velocity, impulse_b);
+		}
+
+		$(document).ready(function()
+		{
+			Engine.Init(function()
+			{
+				// Setup VBOs (vertex buffer objects)
+				circle_vbo = Engine.Gfx.CreateVertexBuffer(circle_verts);
+
+				// Setup camera / shader program
+				var cam = new Engine.Camera.Orthographic();
+				var program = Engine.Gfx.CreateShaderProgram(Engine.Resources["vs_general_transformed"],
+				                                             Engine.Resources["fs_unlit_colour"]);
+
+				// Setup bodies
+				var bodies = [];
+				var centre = Engine.Canvas.GetCentre();
+				var radius = 32;
+				var b1 = make_body(centre, radius, 10000.0, Engine.Colour.Red);
+				var b2 = make_body([centre[0] + (radius * 2.0), centre[1] + (radius * 2.0), 0], radius, 1.0, Engine.Colour.Green);
+				bodies.push(b1);
+				bodies.push(b2);
+
+				// Setup constraints
+				var constraints = [];
+				var min_separation = radius * 2.0;
+				var max_separation = min_separation + 100;
+				var c1 = make_constraint(b1, b2, min_separation, max_separation);
+				constraints.push(c1);
+
+				var on_render = function()
+				{
+					Engine.Gfx.Clear(Engine.Colour.Black);
+
+					// Update & bind camera
+					cam.Update();
+					Engine.Gfx.BindCamera(cam);
+
+					// Handle input
+					var controlled_body = b2;
+					var move_speed = 100;
+					if(Engine.Keyboard.IsPressed("left"))  { controlled_body.linear_velocity[0] = -move_speed; }
+					if(Engine.Keyboard.IsPressed("right")) { controlled_body.linear_velocity[0] = move_speed;  }
+					if(Engine.Keyboard.IsPressed("up"))    { controlled_body.linear_velocity[1] = move_speed;  }
+					if(Engine.Keyboard.IsPressed("down"))  { controlled_body.linear_velocity[1] = -move_speed; }
+
+					// Solve constraints
+					var delta_s = Engine.Time.delta_s;
+					for(var i = 0; i < constraints.length; ++i)
+					{
+						solve_constraint(constraints[i], delta_s);
+					}
+
+					// Integrate bodies
+					for(var i = 0; i < bodies.length; ++i)
+					{
+						integrate_body(bodies[i], delta_s);
+					}
+
+					// Render bodies
+					Engine.Gfx.BindShaderProgram(program);
+					for(var i = 0; i < bodies.length; ++i)
+					{
+						render_body(bodies[i]);
+					}
+
+					// Render constraints
+					for(var i = 0; i < constraints.length; ++i)
+					{
+						render_constraint(constraints[i]);
+					}
+				};
+				return on_render;
+			});
+		});
+		</script>
+	</head>
+
+	<body>
+		<canvas width="512" height="512"></canvas>
+	</body>
+</html>
