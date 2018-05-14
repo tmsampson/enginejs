@@ -15,6 +15,9 @@
 
 		<script language="javascript">
 
+		// Global setup
+		var iteration_count = 3;
+
 		// Scene setup
 		var scene_index = 0;
 		var scene_name = "";
@@ -171,6 +174,24 @@
 			constraint.body_b.linear_velocity = Engine.Vec3.Subtract(constraint.body_b.linear_velocity, impulse_b);
 		}
 
+		function solve_collision(body_a, body_b)
+		{
+			var a_to_b = Engine.Vec2.Subtract(body_b.position, body_a.position);
+			var distance_sqr = Engine.Vec2.LengthSquared(a_to_b);
+			var min_separation = (body_a.scale[0] + body_b.scale[0]);
+			var min_separation_sqr = min_separation * min_separation;
+			if(distance_sqr >= min_separation_sqr)
+			{
+				return;
+			}
+			var distance = Engine.Vec2.Length(a_to_b);
+			var penetration = min_separation - distance;
+			var shift = penetration * 0.5;
+			var a_to_b_dir = Engine.Vec2.Normalise(a_to_b);
+			body_a.position[0] -= a_to_b_dir[0] * shift; body_a.position[1] -= a_to_b_dir[1] * shift;
+			body_b.position[0] += a_to_b_dir[0] * shift; body_b.position[1] += a_to_b_dir[1] * shift;
+		}
+
 		$(document).ready(function()
 		{
 			Engine.Init(function()
@@ -310,17 +331,31 @@
 						scenes[scene_index]();
 					}
 
-					// Solve constraints
+					// Run iterations
 					var delta_s = Math.min(Engine.Time.delta_s, 1.0 / 60.0);
-					for(var i = 0; i < constraints.length; ++i)
+					for(var i = 0; i < iteration_count; ++i)
 					{
-						solve_constraint(constraints[i], delta_s);
-					}
+						// Solve constraints
+						for(var i = 0; i < constraints.length; ++i)
+						{
+							solve_constraint(constraints[i], delta_s);
+						}
 
-					// Integrate bodies
-					for(var i = 0; i < bodies.length; ++i)
-					{
-						integrate_body(bodies[i], delta_s);
+						// Integrate bodies
+						for(var i = 0; i < bodies.length; ++i)
+						{
+							integrate_body(bodies[i], delta_s);
+						}
+
+						// Solve collisions (n^2 for now...)
+						for(var i = 0; i < bodies.length; ++i)
+						{
+							for(var j = i + 1; j < bodies.length; ++j)
+							{
+								solve_collision(bodies[i], bodies[j]);
+							}
+						}
+						
 					}
 
 					// Render bodies
