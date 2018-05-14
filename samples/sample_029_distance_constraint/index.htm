@@ -15,14 +15,19 @@
 
 		<script language="javascript">
 
-		// Scene
+		// Scene setup
 		var scene_index = 0;
 		var scene_name = "";
 		var gravity_enabled = false;
 		var gravity = [ 0, -980, 0 ];
+
+		// Scene contents
 		var bodies = [];
 		var constraints = [];
 		var controlled_body = null;
+
+		// Mouse movement
+		var is_dragging = false;
 
 		// Circle
 		var circle_verts =
@@ -32,7 +37,6 @@
 			draw_mode      : "triangle_fan",
 			stream         : generate_circle_verts(40)
 		};
-
 		var circle_vbo = null;
 
 		function generate_circle_verts(segment_count)
@@ -45,6 +49,7 @@
 			return verts;
 		}
 
+		// Render body (spheres)
 		function render_body(body)
 		{
 			var mtx_trans = mat4.create();
@@ -56,6 +61,7 @@
 			Engine.Gfx.DrawArray();
 		}
 
+		// Render constraints / joints (lines)
 		function render_constraint(constraint)
 		{
 			var pos_a = constraint.body_a.position;
@@ -70,6 +76,7 @@
 			Engine.Debug.DrawLine(pos_a, pos_b, Engine.Colour.Orange, 3);
 		}
 
+		// Generate body
 		function make_body(position, scale, mass, colour)
 		{
 			var body =
@@ -87,6 +94,7 @@
 			return body;
 		}
 
+		// Generate constraint
 		function make_constraint(body_a, body_b, min, max)
 		{
 			var constraint =
@@ -99,6 +107,7 @@
 			return constraint;
 		}
 
+		// Integrate body
 		function integrate_body(body, delta_s)
 		{
 			// Integrate position
@@ -118,6 +127,7 @@
 			body.linear_velocity = Engine.Vec3.MultiplyScalar(body.linear_velocity, 1.0 - drag);
 		}
 
+		// Solve distance constraint
 		function solve_constraint(constraint, delta_s)
 		{
 			var pos_a = constraint.body_a.position;
@@ -195,7 +205,7 @@
 					cam.Update();
 					Engine.Gfx.BindCamera(cam);
 
-					// Handle movement
+					// Handle keyboard movement
 					if(controlled_body != null)
 					{
 						var fast = Engine.Keyboard.IsPressed("space") || (gamepad && gamepad.IsPressed("b"));
@@ -210,6 +220,45 @@
 						{
 							controlled_body.linear_velocity[0] += gamepad.GetLeftStick()[0] * move_speed * 0.2;
 							controlled_body.linear_velocity[1] += gamepad.GetLeftStick()[1] * move_speed * 0.2;
+						}
+					}
+
+					// Handle mouse movement (dragging)
+					if(controlled_body != null)
+					{
+						if(is_dragging)
+						{
+							var follow_speed = 200.0;
+							var mouse_pos = Engine.Mouse.GetPosition();
+							var body_to_mouse = Engine.Vec2.Subtract(mouse_pos, controlled_body.position);
+							var distance_to_mouse = Engine.Vec2.Length(body_to_mouse);
+							if(distance_to_mouse >= follow_speed)
+							{
+								var body_to_mouse_dir = Engine.Vec2.Normalise(body_to_mouse);
+								controlled_body.linear_velocity[0] += body_to_mouse_dir[0] * follow_speed;
+								controlled_body.linear_velocity[1] += body_to_mouse_dir[1] * follow_speed;
+							}
+							else
+							{
+								controlled_body.linear_velocity[0] += body_to_mouse[0];
+								controlled_body.linear_velocity[1] += body_to_mouse[1];
+							}
+							
+							if(Engine.Mouse.IsReleased("left", true))
+							{
+								is_dragging = false;
+							}
+						}
+						else if(Engine.Mouse.IsPressed("left", true))
+						{
+							// Is mouse over the controlled body?
+							var mouse_pos = Engine.Mouse.GetPosition();
+							var body_to_mouse = Engine.Vec2.Subtract(mouse_pos, controlled_body.position);
+							var distance_to_mouse = Engine.Vec2.Length(body_to_mouse);
+							if(distance_to_mouse <= controlled_body.scale[0])
+							{
+								is_dragging = true;
+							}
 						}
 					}
 
