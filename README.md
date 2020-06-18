@@ -1,6 +1,3 @@
-![logo.png](https://bitbucket.org/repo/7nBkno/images/2724549215-logo.png)
-> A lightweight, simplistic library for developing games for the web, utilising HTML, CSS and WebGL.
-
 Welcome to the EngineJS codebase
 =======================
 EngineJS is a small hobby project of mine, designed to facilitate the development and rapid prototyping of 2D and 3D games for the web, targetting desktop, tablet and mobile.
